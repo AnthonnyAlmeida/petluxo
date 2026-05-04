@@ -6,11 +6,16 @@ import { wa } from '../../lib/whatsapp.js';
 
 export function Navbar() {
   const [scrolled, setScrolled] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const close = () => setOpen(false);
+
   return (
     <header className={`nav ${scrolled ? "scrolled" : ""}`}>
       <div className="wrap nav-inner">
@@ -28,6 +33,33 @@ export function Navbar() {
             <Icon.Wa className="wa-icon"/> WhatsApp
           </a>
         </div>
+        <button
+          className={`nav-burger${open ? " open" : ""}`}
+          onClick={() => setOpen(o => !o)}
+          aria-label={open ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={open}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <div className={`nav-drawer${open ? " open" : ""}`} aria-hidden={!open}>
+        <nav className="nav-drawer-links">
+          <a href="#produtos" className="nav-drawer-link" onClick={close}>Produtos</a>
+          <a href="#sobre" className="nav-drawer-link" onClick={close}>Sobre</a>
+          <a href="#contato" className="nav-drawer-link" onClick={close}>Contato</a>
+        </nav>
+        <a
+          className="btn btn-primary nav-drawer-cta"
+          href={wa("Olá! Vim do site PetLuxo e gostaria de mais informações.")}
+          target="_blank"
+          rel="noopener"
+          onClick={close}
+        >
+          <Icon.Wa className="wa-icon"/> Falar no WhatsApp
+        </a>
       </div>
     </header>
   );
