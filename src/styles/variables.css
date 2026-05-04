@@ -1,0 +1,22 @@
+/* PetLuxo — Design Tokens */
+:root {
+  --vinho: #6B1E2B;
+  --vinho-soft: #7A2A38;
+  --offwhite: #F8F6F3;
+  --bege: #E8DED2;
+  --bege-soft: #EFE7DC;
+  --dourado: #C6A96B;
+  --dourado-soft: #D4BC85;
+  --caramelo: #B08968;
+  --cinza: #D9D9D9;
+  --cinza-soft: #ECEAE6;
+  --ink: #2A2522;
+  --ink-soft: #5C5550;
+
+  --serif: "Cormorant Garamond", "Times New Roman", serif;
+  --sans: "Inter", -apple-system, system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --max: 1320px;
+  --pad: clamp(24px, 4vw, 64px);
+}
