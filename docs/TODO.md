@@ -1,4 +1,78 @@
-# O que ainda falta fazer
+# Status do Projeto PetLuxo
+
+---
+
+## Pendente
+
+### Alta prioridade
+
+- [ ] **Novos produtos** — quando sua mãe enviar os dados (nome, descrição, preço, categoria, foto), adicionar em `src/data/products.js` e colocar a imagem em `public/images/products/`
+- [ ] **og:image 1200×630px** — criar uma imagem de capa do site nessa proporção e atualizar `og:image` e `twitter:image` no `index.html` (atualmente aponta para a foto do produto destaque, que não está na proporção ideal)
+
+### Pós-domínio
+
+- [ ] **Substituir domínio placeholder** — quando o domínio for definido, substituir `SEU-DOMINIO-AQUI.com.br` em 4 lugares (ver comando abaixo)
+- [ ] **Deploy na Vercel** — ver `docs/DEPLOY.md` para o passo a passo completo
+
+### Opcional
+
+- [ ] **Google Analytics** — adicionar script de rastreamento após o deploy e definição do domínio
+- [ ] **Favicon com logo real** — substituir o favicon genérico pela logo oficial da PetLuxo em SVG
+
+---
+
+## Concluído ✓
+
+### Base técnica
+- [x] **Migração de Babel CDN para Vite** — bundle 168 KB (53 KB gzip), build em ~3s, hot reload instantâneo
+- [x] **tweaks-panel excluído do bundle de produção** — `DevTweaks` só carrega quando `import.meta.env.DEV` é verdadeiro
+- [x] **CSS limpo** — código morto removido (~164 linhas), arquivo com 1381 linhas sem regras não utilizadas
+
+### Layout e componentes
+- [x] **Responsividade completa** — breakpoints 980px (tablet), 768px (mobile), 480px (mobile pequeno)
+- [x] **Menu hambúrguer mobile** — drawer animado com links e botão WhatsApp; fecha ao clicar em qualquer link
+- [x] **Página 404 customizada** — `NotFound.jsx` + `public/404.html` com redirect para `/` via sessionStorage
+
+### Produtos e catálogo
+- [x] **8 produtos reais** — fotos, descrições e preços em `src/data/products.js` (gitignored)
+- [x] **3 categorias** — `mais-vendidos`, `conforto`, `couro`
+- [x] **Carrossel com setas laterais e swipe touch** — setas via flexbox (desktop), swipe 50px threshold (mobile), estado isolado por instância
+- [x] **Múltiplos carrosséis por categoria** — "Mais Vendidos" sempre visível; demais categorias expandem com animação `grid-template-rows`
+- [x] **Produto em destaque** — Sofá PetLuxo Essence com foto e preço reais em `Featured.jsx`
+
+### Conteúdo real
+- [x] **Hero com textos reais** — supertítulo, headline em 3 linhas, subtítulo e 3 métricas da marca
+- [x] **Seção Sobre Nós** — foto real, headline e copy da marca
+- [x] **Footer com dados reais** — CNPJ `23.833.930/0001-21`, email `petluxo.service@gmail.com`, Instagram `@petluxo_produtospremium`
+
+### SEO e infraestrutura
+- [x] **SEO básico** — meta description atualizada, Open Graph completo, Twitter Card, favicon linkado
+- [x] **robots.txt e sitemap.xml** — existem em `public/` (domínio placeholder a trocar após deploy)
+- [x] **wa-fab removido** — botão flutuante sem destino real removido do `index.html`
+- [x] **Auditoria pré-deploy** — todos os itens críticos resolvidos (links mortos, imagens, placeholders, og:image)
+
+### Documentação
+- [x] **docs/README.md** — visão geral, stack, estrutura de pastas e comandos
+- [x] **docs/DECISIONS.md** — 7 decisões técnicas documentadas
+- [x] **docs/DEPLOY.md** — passo a passo para Vercel (interface e CLI)
+- [x] **docs/TODO.md** — este arquivo
+
+---
+
+## Quando o domínio for definido
+
+Substituir `SEU-DOMINIO-AQUI.com.br` em **4 lugares**:
+
+| Arquivo | Campo |
+|---|---|
+| `index.html` | `og:url` |
+| `index.html` | `og:image` e `twitter:image` |
+| `public/robots.txt` | `Sitemap:` |
+| `public/sitemap.xml` | `<loc>` |
+
+```bash
+grep -r "SEU-DOMINIO-AQUI" --include="*.html" --include="*.txt" --include="*.xml" .
+```
 
 ## Alta prioridade
 

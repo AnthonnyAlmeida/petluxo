@@ -24,7 +24,7 @@ export function Navbar() {
           <a href="#sobre" className="nav-link">Sobre</a>
           <a href="#contato" className="nav-link">Contato</a>
         </nav>
-        <a href="#" className="brand-mark">
+        <a href="/" className="brand-mark">
           <span className="logo-disc"></span>
           <span><b>PETLUXO</b></span>
         </a>
