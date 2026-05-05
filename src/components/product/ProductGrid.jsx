@@ -19,7 +19,7 @@ function usePerView() {
   return perView;
 }
 
-export function ProductGrid({ products, onQuick, resetKey }) {
+export function ProductGrid({ products, onQuick, resetKey, title }) {
   const perView = usePerView();
   const totalPages = Math.ceil(products.length / perView);
   const [index, setIndex] = React.useState(0);
@@ -31,9 +31,11 @@ export function ProductGrid({ products, onQuick, resetKey }) {
 
   const canPrev = index > 0;
   const canNext = index < totalPages - 1;
+  const showControls = totalPages > 1;
 
   return (
     <div className="carousel">
+      {title && <h3 className="carousel-title">{title}</h3>}
       <div className="carousel-outer">
         <div className="carousel-viewport">
           <div
@@ -55,38 +57,40 @@ export function ProductGrid({ products, onQuick, resetKey }) {
           </div>
         </div>
       </div>
-      <div className="carousel-controls">
-        <button
-          className="carousel-arrow"
-          onClick={() => setIndex(i => i - 1)}
-          disabled={!canPrev}
-          aria-label="Anterior"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16">
-            <path d="M19 12H5M11 5l-7 7 7 7"/>
-          </svg>
-        </button>
-        <div className="carousel-dots">
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i}
-              className={`carousel-dot${i === index ? ' active' : ''}`}
-              onClick={() => setIndex(i)}
-              aria-label={`Página ${i + 1}`}
-            />
-          ))}
+      {showControls && (
+        <div className="carousel-controls">
+          <button
+            className="carousel-arrow"
+            onClick={() => setIndex(i => i - 1)}
+            disabled={!canPrev}
+            aria-label="Anterior"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16">
+              <path d="M19 12H5M11 5l-7 7 7 7"/>
+            </svg>
+          </button>
+          <div className="carousel-dots">
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i}
+                className={`carousel-dot${i === index ? ' active' : ''}`}
+                onClick={() => setIndex(i)}
+                aria-label={`Página ${i + 1}`}
+              />
+            ))}
+          </div>
+          <button
+            className="carousel-arrow"
+            onClick={() => setIndex(i => i + 1)}
+            disabled={!canNext}
+            aria-label="Próximo"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16">
+              <path d="M5 12h14M13 5l7 7-7 7"/>
+            </svg>
+          </button>
         </div>
-        <button
-          className="carousel-arrow"
-          onClick={() => setIndex(i => i + 1)}
-          disabled={!canNext}
-          aria-label="Próximo"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16">
-            <path d="M5 12h14M13 5l7 7-7 7"/>
-          </svg>
-        </button>
-      </div>
+      )}
     </div>
   );
 }

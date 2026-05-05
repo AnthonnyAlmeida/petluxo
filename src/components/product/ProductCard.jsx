@@ -1,29 +1,26 @@
 /* PetLuxo — ProductCard */
 
 import React from 'react';
-import { Icon, PlaceholderArt } from '../../icons.jsx';
+import { Icon } from '../../icons.jsx';
 
 export function ProductCard({ product, index, onQuick }) {
   return (
     <article className={`product reveal d${(index % 5) + 1}`} onClick={() => onQuick(product)}>
       <div className="stage">
-        <span className="num">Nº 0{product.id}</span>
         <button className="qa-btn" aria-label="Visualizar"><Icon.Plus/></button>
-        <div className="placeholder">
-          {PlaceholderArt[product.art]}
-          <span className="ph-label">{product.tag}</span>
-        </div>
+        <img src={product.image} alt={product.name} className="product-img" />
         {product.badge && (
-          <span className={`badge ${product.badge === "ATELIER" ? "gold" : ""}`}>
-            {product.badge}
-          </span>
+          <span className="badge">{product.badge}</span>
         )}
       </div>
       <div className="meta">
-        <div>
-          <div className="name">{product.name}<small>{product.sub}</small></div>
+        <div className="name">{product.name}</div>
+        <div className="price-col">
+          {product.originalPrice && (
+            <span className="price-original">{product.originalPrice}</span>
+          )}
+          <div className="price">{product.price}<small>via WhatsApp</small></div>
         </div>
-        <div className="price">{product.price}<small>via WhatsApp</small></div>
       </div>
     </article>
   );

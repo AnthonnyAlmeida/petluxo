@@ -1,27 +1,17 @@
 /* PetLuxo — Products
- * Usa ProductGrid e os dados de PRODUCTS (src/data/products.js).
+ * Múltiplos carrosséis por categoria com expansão suave.
  */
 
 import React from 'react';
 import { Icon } from '../../icons.jsx';
-import { wa } from '../../lib/whatsapp.js';
-import { PRODUCTS } from '../../data/products.js';
+import { CATEGORIES, PRODUCTS } from '../../data/products.js';
 import { ProductGrid } from '../product/ProductGrid.jsx';
 
-const CATS = [
-  { label: "Todos",      value: null          },
-  { label: "Coleiras",   value: "coleiras"    },
-  { label: "Camas",      value: "camas"       },
-  { label: "Higiene",    value: "higiene"     },
-  { label: "Acessórios", value: "acessorios"  },
-];
+const featuredProducts  = PRODUCTS.filter(p => p.category === 'mais-vendidos');
+const extraCategories   = CATEGORIES.filter(c => c.id !== 'mais-vendidos');
 
 export function Products({ onQuick }) {
-  const [active, setActive] = React.useState(null);
-
-  const filtered = active
-    ? PRODUCTS.filter(p => p.category === active)
-    : PRODUCTS;
+  const [expanded, setExpanded] = React.useState(false);
 
   return (
     <section className="section-pad" id="produtos">
@@ -35,23 +25,34 @@ export function Products({ onQuick }) {
               Tudo que o seu <i className="italic gold-text">pet</i><br/>precisa.
             </h2>
           </div>
-          <div className="right reveal d2">
-            {CATS.map(c => (
-              <button
-                key={c.label}
-                className={`cat-chip ${active === c.value ? "active" : ""}`}
-                onClick={() => setActive(c.value)}
-              >
-                {c.label}
-              </button>
-            ))}
-          </div>
         </div>
 
-        <ProductGrid products={filtered} onQuick={onQuick} resetKey={active}/>
+        <ProductGrid products={featuredProducts} onQuick={onQuick} />
 
-        <div className="reveal" style={{textAlign:"center", marginTop:80}}>
-          <a className="btn btn-ghost" href={wa("Olá! Gostaria de ver mais produtos PetLuxo.")} target="_blank" rel="noopener">Ver mais produtos <Icon.ArrowR/></a>
+        {!expanded && (
+          <div className="reveal" style={{textAlign:"center", marginTop:56}}>
+            <button className="btn btn-ghost" onClick={() => setExpanded(true)}>
+              Ver mais produtos <Icon.ArrowR/>
+            </button>
+          </div>
+        )}
+
+        <div className={`products-expand${expanded ? ' open' : ''}`}>
+          <div className="products-expand-inner">
+            {extraCategories.map(cat => {
+              const catProducts = PRODUCTS.filter(p => p.category === cat.id);
+              if (!catProducts.length) return null;
+              return (
+                <div key={cat.id} className="products-category-block">
+                  <ProductGrid
+                    products={catProducts}
+                    onQuick={onQuick}
+                    title={cat.label}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

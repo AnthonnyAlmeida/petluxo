@@ -5,3 +5,9 @@ node_modules
 dist
 .DS_Store
 *.log
+
+# Ignorar imagens de produtos
+public/images/products/
+
+# Ignorar dados de produtos (contém descrições e preços reais)
+src/data/products.js
