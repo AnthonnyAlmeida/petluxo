@@ -8,9 +8,21 @@ import { wa } from '../../lib/whatsapp.js';
 import { PRODUCTS } from '../../data/products.js';
 import { ProductGrid } from '../product/ProductGrid.jsx';
 
+const CATS = [
+  { label: "Todos",      value: null          },
+  { label: "Coleiras",   value: "coleiras"    },
+  { label: "Camas",      value: "camas"       },
+  { label: "Higiene",    value: "higiene"     },
+  { label: "Acessórios", value: "acessorios"  },
+];
+
 export function Products({ onQuick }) {
-  const [active, setActive] = React.useState("Tudo");
-  const cats = ["Tudo", "Coleiras", "Mesa", "Repouso", "Banho"];
+  const [active, setActive] = React.useState(null);
+
+  const filtered = active
+    ? PRODUCTS.filter(p => p.category === active)
+    : PRODUCTS;
+
   return (
     <section className="section-pad" id="produtos">
       <div className="wrap">
@@ -24,13 +36,19 @@ export function Products({ onQuick }) {
             </h2>
           </div>
           <div className="right reveal d2">
-            {cats.map(c => (
-              <button key={c} className={`cat-chip ${active === c ? "active" : ""}`} onClick={() => setActive(c)}>{c}</button>
+            {CATS.map(c => (
+              <button
+                key={c.label}
+                className={`cat-chip ${active === c.value ? "active" : ""}`}
+                onClick={() => setActive(c.value)}
+              >
+                {c.label}
+              </button>
             ))}
           </div>
         </div>
 
-        <ProductGrid products={PRODUCTS} onQuick={onQuick} resetKey={active}/>
+        <ProductGrid products={filtered} onQuick={onQuick} resetKey={active}/>
 
         <div className="reveal" style={{textAlign:"center", marginTop:80}}>
           <a className="btn btn-ghost" href={wa("Olá! Gostaria de ver mais produtos PetLuxo.")} target="_blank" rel="noopener">Ver mais produtos <Icon.ArrowR/></a>

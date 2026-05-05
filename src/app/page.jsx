@@ -9,72 +9,72 @@ import { Products } from '../components/sections/Products.jsx';
 import { Story } from '../components/sections/Story.jsx';
 import { Differentials } from '../components/sections/Differentials.jsx';
 import { CTA } from '../components/sections/CTA.jsx';
+import { NotFound } from '../components/sections/NotFound.jsx';
 import { ProductModal } from '../components/product/ProductModal.jsx';
-import { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakToggle } from '../tweaks-panel.jsx';
 import { useScrollEffects } from '../hooks/useScroll.js';
 
-const TWEAK_DEFAULTS = {
-  accent: "dourado",
-  showFab: true,
-  showGrain: true,
-  headerStyle: "discreto",
-};
+/* TweaksPanel — carregado apenas em desenvolvimento.
+ * O Vite elimina este import do bundle de produção via dead-code elimination
+ * porque import.meta.env.DEV é uma constante false em build. */
+const DevTweaks = import.meta.env.DEV
+  ? React.lazy(() => import('./DevTweaks.jsx'))
+  : null;
+
+/* Roteamento simples via pathname.
+ * O public/404.html grava o pathname no sessionStorage e redireciona para /,
+ * onde este hook restaura a rota correta. */
+function useRoute() {
+  const [path, setPath] = React.useState(() => {
+    const redirected = sessionStorage.getItem('redirect');
+    if (redirected) {
+      sessionStorage.removeItem('redirect');
+      return redirected;
+    }
+    return window.location.pathname;
+  });
+  React.useEffect(() => {
+    const onPop = () => setPath(window.location.pathname);
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+  return path;
+}
 
 export default function App() {
   const [quick, setQuick] = React.useState(null);
-  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const route = useRoute();
 
   /* Efeitos de scroll e paralaxe */
   useScrollEffects();
 
-  /* Aplica tweaks de tema */
-  React.useEffect(() => {
-    const root = document.documentElement;
-    const accents = {
-      dourado: { caramelo: "#B08968", dourado: "#C6A96B" },
-      vinho:   { caramelo: "#6B1E2B", dourado: "#8B3344" },
-      grafite: { caramelo: "#3F3A36", dourado: "#6B655F" },
-    };
-    const a = accents[tweaks.accent] || accents.dourado;
-    root.style.setProperty("--caramelo", a.caramelo);
-    root.style.setProperty("--dourado", a.dourado);
-
-    document.getElementById("waFab").style.display = tweaks.showFab ? "" : "none";
-    document.querySelector(".grain").style.display = tweaks.showGrain ? "" : "none";
-  }, [tweaks]);
+  /* O site é single-page: só "/" é uma rota válida */
+  const isHome = route === '/' || route === '';
 
   return (
     <>
       <Navbar/>
-      <main>
-        <Hero/>
-        <Featured/>
-        <Products onQuick={setQuick}/>
-        <Story/>
-        <Differentials/>
-        <CTA/>
-      </main>
+      {isHome ? (
+        <main>
+          <Hero/>
+          <Featured/>
+          <Products onQuick={setQuick}/>
+          <Story/>
+          <Differentials/>
+          <CTA/>
+        </main>
+      ) : (
+        <main>
+          <NotFound/>
+        </main>
+      )}
       <Footer/>
-      <ProductModal product={quick} onClose={() => setQuick(null)}/>
+      {isHome && <ProductModal product={quick} onClose={() => setQuick(null)}/>}
 
-      <TweaksPanel title="Tweaks">
-        <TweakSection title="Identidade">
-          <TweakRadio
-            label="Tom de acento"
-            value={tweaks.accent}
-            options={[
-              { value: "dourado", label: "Dourado" },
-              { value: "vinho",   label: "Vinho"   },
-              { value: "grafite", label: "Grafite" },
-            ]}
-            onChange={v => setTweak("accent", v)}
-          />
-        </TweakSection>
-        <TweakSection title="Atmosfera">
-          <TweakToggle label="Botão WhatsApp flutuante" value={tweaks.showFab}   onChange={v => setTweak("showFab", v)}/>
-          <TweakToggle label="Textura de papel (grão)"  value={tweaks.showGrain} onChange={v => setTweak("showGrain", v)}/>
-        </TweakSection>
-      </TweaksPanel>
+      {import.meta.env.DEV && DevTweaks && (
+        <React.Suspense fallback={null}>
+          <DevTweaks/>
+        </React.Suspense>
+      )}
     </>
   );
 }

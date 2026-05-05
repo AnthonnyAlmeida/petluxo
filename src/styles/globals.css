@@ -1285,6 +1285,45 @@ section { position: relative; }
   background: rgba(42, 37, 34, 0.4);
 }
 
+/* ---------- 404 Not Found ---------- */
+.notfound {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px var(--pad) 80px;
+  text-align: center;
+  background:
+    radial-gradient(800px 500px at 50% 100%, rgba(198,169,107,0.12), transparent 60%),
+    var(--offwhite);
+}
+.notfound-inner {
+  max-width: 560px;
+}
+.notfound-num {
+  font-size: clamp(100px, 20vw, 180px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  background: linear-gradient(135deg, #C6A96B 0%, #E0C896 50%, #B08968 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.notfound-title {
+  font-size: clamp(36px, 6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+.notfound-sub {
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 44px;
+}
+
 /* ---------- Mobile Nav Drawer ---------- */
 .nav-drawer {
   position: absolute;

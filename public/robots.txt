@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TROCAR DOMÍNIO: substituir "SEU-DOMINIO-AQUI.com.br" abaixo
+Sitemap: https://SEU-DOMINIO-AQUI.com.br/sitemap.xml
