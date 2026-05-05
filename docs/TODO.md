@@ -2,32 +2,36 @@
 
 ## Alta prioridade
 
-Essas tarefas são necessárias antes de mostrar o site para qualquer cliente.
+Essas tarefas são necessárias antes de publicar o site.
 
-- [ ] **Produtos reais** — atualizar `src/data/products.js` com nome, descrição, preço, categoria e imagem reais de cada produto. Adicionar campo `category` compatível com os filtros ("Coleiras", "Mesa", "Repouso", "Banho")
-- [ ] **Imagens dos produtos** — substituir os placeholders SVG por fotos reais. Colocar as imagens em `public/images/products/` e referenciar nos dados
-- [ ] **Footer real** — substituir dados fictícios por e-mail real, link do Instagram, e CNPJ correto
-- [ ] **Produto em destaque** — preencher a seção Featured (`src/components/sections/Featured.jsx`) com um produto real
-- [ ] **Meta description específica** — quando o site tiver conteúdo real, reescrever a description do SEO com palavras-chave do negócio
-- [ ] **og:image real 1200×630** — criar ou exportar uma imagem de capa do site nessa proporção, colocar em `public/` e atualizar a URL no `index.html`
+- [ ] **Footer real** — substituir dados fictícios por e-mail real, link do Instagram e CNPJ correto em `src/components/layout/Footer.jsx`
+- [ ] **Meta description específica** — reescrever a `<meta name="description">` no `index.html` com palavras-chave reais do negócio
+- [ ] **og:image real 1200×630** — criar imagem de capa do site nessa proporção, colocar em `public/` e atualizar a URL no `index.html`
+- [ ] **Seção "Sobre"** — a seção Story (`src/components/sections/Story.jsx`) tem conteúdo genérico. Substituir pela história real da PetLuxo
 
 ## Média prioridade
 
 Melhorias importantes mas que não bloqueiam o lançamento.
 
-- [ ] **Filtros de categoria funcionando** — os botões de filtro (Coleiras, Mesa, Repouso, Banho) ainda não filtram nada porque os produtos não têm campo `category`. Depois de preencher os produtos reais, o filtro passa a funcionar sem alteração de código
-- [ ] **Remover tweaks-panel do build de produção** — o painel de tweaks de design (`src/tweaks-panel.jsx`) está incluído no bundle de produção. Para remover, basta apagar a importação e uso em `src/app/page.jsx`
-- [ ] **Página 404** — criar um componente de página não encontrada e configurar no Vite ou no servidor de hospedagem
-- [ ] **Seção "Sobre"** — a seção Story (`src/components/sections/Story.jsx`) tem conteúdo genérico. Substituir pela história real da PetLuxo
+- [ ] **Google Analytics ou similar** — adicionar script de rastreamento após definir o domínio
+- [ ] **Favicon com logo real** — substituir o favicon atual pela logo oficial da PetLuxo em SVG
+- [ ] **Sitemap automático** — o `public/sitemap.xml` é manual. Quando o site crescer com mais páginas, considerar geração automática
 
 ## Baixa prioridade
 
-Melhorias para depois do lançamento.
-
-- [ ] **Google Analytics ou similar** — adicionar script de rastreamento após definir o domínio
 - [ ] **Domínio e deploy** — ver `docs/DEPLOY.md` para o passo a passo
-- [ ] **Favicon com logo real** — substituir o favicon atual (letra "P" genérica) pela logo oficial da PetLuxo em SVG
-- [ ] **Sitemap automático** — o `public/sitemap.xml` é manual. Quando o site crescer com mais páginas, considerar geração automática
+
+---
+
+## Concluído ✓
+
+- [x] **Produtos reais** — `src/data/products.js` reescrito com 11 produtos reais (nome, descrição, preço, originalPrice, bullets, categoria, imagem, badge). Arquivo gitignored por conter dados sensíveis
+- [x] **Imagens dos produtos** — fotos reais em `public/images/products/`. Pasta gitignored
+- [x] **Produto em destaque** — Featured.jsx preenchido com produto real (Sofá PetLuxo Essence)
+- [x] **Sistema de carrosséis por categoria** — substituiu os filtros de chips. Carrossel "Mais Vendidos" sempre visível + botão "Ver mais produtos" que expande os demais com animação suave
+- [x] **Remover tweaks-panel do build** — `DevTweaks` só é carregado quando `import.meta.env.DEV` é verdadeiro; não entra no bundle de produção
+- [x] **Página 404** — componente `NotFound.jsx` + `public/404.html` configurados
+- [x] **Hero com imagem real** — `public/images/image-hero.png` substituiu o placeholder
 
 ---
 
@@ -35,14 +39,13 @@ Melhorias para depois do lançamento.
 
 Substituir `SEU-DOMINIO-AQUI.com.br` em **4 lugares**:
 
-| Arquivo | Linha | Campo |
-|---|---|---|
-| `index.html` | `og:url` | URL canônica do site |
-| `index.html` | `og:image` e `twitter:image` | URL absoluta da imagem de capa |
-| `public/robots.txt` | `Sitemap:` | URL do sitemap |
-| `public/sitemap.xml` | `<loc>` | URL raiz do site |
+| Arquivo | Campo |
+|---|---|
+| `index.html` | `og:url` |
+| `index.html` | `og:image` e `twitter:image` |
+| `public/robots.txt` | `Sitemap:` |
+| `public/sitemap.xml` | `<loc>` |
 
-Dica rápida para encontrar todos de uma vez:
 ```bash
 grep -r "SEU-DOMINIO-AQUI" --include="*.html" --include="*.txt" --include="*.xml" .
 ```

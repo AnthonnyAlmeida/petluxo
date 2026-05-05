@@ -21,26 +21,30 @@ petluxo/
 │   ├── favicon.svg      # Ícone da aba do navegador
 │   ├── robots.txt       # Instruções para robôs de busca
 │   ├── sitemap.xml      # Mapa do site para SEO
-│   └── images/          # Imagens de produtos e branding
-├── assets/              # Assets importados pelo Vite (logo, hero)
-│   └── hero/
+│   ├── 404.html         # Página de erro para SPAs (redirect para /)
+│   └── images/
+│       ├── brand/       # Logo e assets de marca
+│       ├── image-hero.png        # Imagem principal do hero
+│       └── products/    # Fotos dos produtos (gitignored — não estão no repo)
+├── assets/              # Assets importados pelo Vite (logo)
 ├── src/
 │   ├── app/
-│   │   └── page.jsx     # Componente raiz (App), renderiza todas as seções
+│   │   ├── page.jsx     # Componente raiz (App), renderiza todas as seções
+│   │   └── DevTweaks.jsx # Painel de design — carregado apenas em dev
 │   ├── components/
 │   │   ├── layout/      # Navbar (com menu hambúrguer) e Footer
 │   │   ├── product/     # ProductCard, ProductGrid (carrossel), ProductModal
-│   │   ├── sections/    # Hero, Featured, Products, Story, Differentials, CTA
+│   │   ├── sections/    # Hero, Featured, Products, Story, Differentials, CTA, NotFound
 │   │   └── ui/          # Button, Container, Section (primitivos reutilizáveis)
 │   ├── data/
-│   │   └── products.js  # Lista de produtos (fonte de verdade dos dados)
+│   │   └── products.js  # Catálogo de produtos (gitignored — contém dados sensíveis)
 │   ├── hooks/
 │   │   └── useScroll.js # Animações de scroll (IntersectionObserver + parallax)
 │   ├── lib/
 │   │   └── whatsapp.js  # Gera links de WhatsApp com mensagem pré-preenchida
 │   ├── styles/
 │   │   ├── variables.css  # Design tokens: cores, fontes, espaçamentos
-│   │   └── globals.css    # Todos os estilos do site (~1300 linhas)
+│   │   └── globals.css    # Todos os estilos do site (~1500 linhas)
 │   ├── icons.jsx          # Ícones SVG inline (sem biblioteca externa)
 │   ├── tweaks-panel.jsx   # Painel de ajustes de design (apenas em dev)
 │   └── main.jsx           # Entry point: monta o React no DOM
@@ -49,6 +53,8 @@ petluxo/
 ├── .env.example         # Modelo das variáveis de ambiente
 └── docs/                # Esta pasta — documentação do projeto
 ```
+
+> **Atenção:** `src/data/products.js` e `public/images/products/` estão no `.gitignore` — não existem no repositório, apenas localmente e no servidor de produção. Para configurar em um novo ambiente, crie o arquivo manualmente a partir do modelo em `src/data/products.example.js` (se disponível).
 
 ## Como rodar localmente
 

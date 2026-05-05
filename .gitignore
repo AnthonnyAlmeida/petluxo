@@ -8,6 +8,7 @@ dist
 
 # Ignorar imagens de produtos
 public/images/products/
+public/images/image-hero.png
 
 # Ignorar dados de produtos (contém descrições e preços reais)
 src/data/products.js

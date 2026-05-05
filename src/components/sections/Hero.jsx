@@ -3,7 +3,7 @@
 import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { wa } from '../../lib/whatsapp.js';
-import heroPet from '../../../assets/hero/hero-pet.png';
+import heroImg from '../../../assets/hero/image-hero.png';
 
 export function Hero() {
   return (
@@ -42,7 +42,7 @@ export function Hero() {
           <div className="stage-ring r1"></div>
           <div className="stage-ring r2"></div>
           <div className="logo-card" id="logoCard">
-            <img src={heroPet} alt="PetLuxo"/>
+            <img src={heroImg} alt="PetLuxo"/>
             <div className="frame"></div>
             <div className="est">PETLUXO · BR</div>
             <div className="corner-tag">

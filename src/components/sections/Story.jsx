@@ -1,23 +1,19 @@
 /* PetLuxo — Story */
 
 import React from 'react';
+import sobreImg from '../../../assets/sobre_nos/foto_sobre_nos.jpeg';
 
 export function Story() {
   return (
     <section className="story" id="sobre">
       <div className="wrap story-grid">
-        <div style={{position:"relative"}} className="reveal">
+        <div className="reveal">
           <div className="story-art">
-            <div className="ph-label">
-              <span>IMAGEM DA MARCA · 4:5
-                <b>PetLuxo</b>
-              </span>
-            </div>
-          </div>
-          <div className="story-overlap">
-            <div className="quote-mark">&ldquo;</div>
-            <p>Qualidade e cuidado em cada produto, porque o seu pet merece o melhor.</p>
-            <div className="src">— PETLUXO</div>
+            <img
+              src={sobreImg}
+              alt="Sobre a PetLuxo"
+              style={{width:"100%", height:"100%", objectFit:"cover", display:"block"}}
+            />
           </div>
         </div>
 
@@ -26,16 +22,16 @@ export function Story() {
             <span className="num">03</span><span className="line"></span><span>SOBRE NÓS</span>
           </div>
           <h2 className="serif reveal d1">
-            Produtos de<br/><i className="italic gold-text">qualidade</i><br/>para pets.
+            Onde o amor<br/><i className="italic gold-text">encontra o luxo</i><br/>que seu pet merece.
           </h2>
           <p className="lead reveal d2">
-            A PetLuxo oferece uma seleção de produtos premium para a vida com pets, com foco em qualidade, durabilidade e estilo.
+            Na PetLuxo, acreditamos que o cuidado com os nossos pets vai muito além do básico. É uma expressão de amor, estilo e atenção aos detalhes.
           </p>
           <p className="reveal d3">
-            Trabalhamos com materiais de qualidade e atenção ao detalhe em cada produto. Nossa missão é oferecer o melhor para o seu animal.
+            Somos uma curadoria apaixonada por selecionar produtos exclusivos, sofisticados e funcionais, pensados para proporcionar conforto, bem-estar e elegância aos pets que fazem parte da família.
           </p>
           <p className="reveal d3">
-            Atendimento direto e personalizado via WhatsApp.
+            Cada item da nossa coleção é escolhido com um olhar criterioso, unindo design refinado, qualidade superior e aquele toque especial que transforma o dia a dia em uma experiência única.
           </p>
         </div>
       </div>

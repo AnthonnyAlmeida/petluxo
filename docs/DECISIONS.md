@@ -51,7 +51,58 @@ Evitar dependências externas mantém o bundle pequeno e o código sob controle 
 
 ---
 
-## 3. Responsividade com breakpoints 980px / 768px / 480px
+## 6. Sistema de múltiplos carrosséis por categoria (substituiu filtros de chips)
+
+**Situação anterior:**
+A seção de produtos tinha botões de filtro por categoria (chips) que filtravam um único `ProductGrid`. Clicar num chip atualizava os produtos exibidos.
+
+**Por que mudar:**
+- A UX de filtrar ocultava produtos: o usuário via apenas a categoria selecionada, perdendo a visão do catálogo completo
+- Com produtos reais em 6 categorias distintas, a navegação por chips fragmentava a experiência
+- Queria garantir que "Mais Vendidos" ficasse sempre visível como âncora principal
+
+**Como foi implementado:**
+- `CATEGORIES` define a ordem de exibição das categorias em `src/data/products.js`
+- Carrossel "Mais Vendidos" sempre visível com título próprio via prop `title`
+- Botão "Ver mais produtos" expande os demais carrosséis com animação `grid-template-rows: 0fr → 1fr`
+- Botão "Ver menos" recolhe e rola suavemente de volta ao topo da seção via `scrollIntoView`
+- Cada `ProductGrid` recebe `title` e oculta setas/dots automaticamente quando `totalPages <= 1`
+- Carrossel com menos produtos que `perView` recebe classe `carousel--single` que centraliza o card via flexbox
+
+**Campo `category` virou array:**
+Para permitir que um produto apareça em mais de uma categoria (ex: "Mais Vendidos" + "Brinquedos"), o campo `category` de cada produto é agora um array de strings. Os filtros usam `.includes(id)` em vez de `=== id`.
+
+---
+
+## 4. `products.js` e imagens de produtos excluídos do Git
+
+**Motivação:**
+O arquivo `src/data/products.js` contém descrições detalhadas, preços e estratégia de posicionamento. As imagens de produtos são ativos de negócio sensíveis.
+
+**Como foi feito:**
+- Adicionado `src/data/products.js` e `public/images/products/` ao `.gitignore`
+- Executado `git rm --cached` para remover do índice sem deletar os arquivos locais
+- O arquivo e as imagens existem localmente e no servidor de produção, mas não no repositório público
+
+---
+
+## 5. Hero image movida de `assets/` para `public/`
+
+**Situação anterior:**
+A imagem do hero (`hero-pet.png`) era importada via `import heroPet from '../../../assets/hero/hero-pet.png'` e incluída no bundle pelo Vite (2,1 MB processados no build).
+
+**Por que mudar:**
+- A imagem real é servida diretamente de `public/`, sem bundling
+- Elimina 2,1 MB do bundle e reduz o tempo de build
+- Consistente com a abordagem já usada para as imagens de produtos
+
+**Como foi feito:**
+- Nova imagem colocada em `public/images/image-hero.png`
+- Import removido de `Hero.jsx`; `src` atualizado para o caminho estático `/images/image-hero.png`
+
+---
+
+## 6. Responsividade com breakpoints 980px / 768px / 480px
 
 **Situação original:**
 O CSS tinha um único breakpoint em 980px que apenas escondia a navbar e reorganizava algumas grades. Mobile era inacessível.

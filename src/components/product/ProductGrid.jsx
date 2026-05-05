@@ -34,7 +34,7 @@ export function ProductGrid({ products, onQuick, resetKey, title }) {
   const showControls = totalPages > 1;
 
   return (
-    <div className="carousel">
+    <div className={`carousel${products.length < perView ? ' carousel--single' : ''}`}>
       {title && <h3 className="carousel-title">{title}</h3>}
       <div className="carousel-outer">
         <div className="carousel-viewport">
