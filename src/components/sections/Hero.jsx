@@ -11,15 +11,15 @@ export function Hero() {
       <div className="wrap hero-grid">
         <div>
           <div className="eyebrow reveal in" style={{marginBottom:36}}>
-            <span className="dot"></span>PRODUTOS PARA PETS · QUALIDADE PREMIUM
+            <span className="dot"></span>CURADORIA EXCLUSIVA · PARA QUEM EXIGE O MELHOR
           </div>
           <h1 className="serif hero-headline">
-            <span className="line"><span>Produtos</span></span>
-            <span className="line"><span><i className="italic gold-text">premium</i></span></span>
-            <span className="line"><span>para o seu pet.</span></span>
+            <span className="line"><span>O luxo que</span></span>
+            <span className="line"><span><i className="italic gold-text">ele merece,</i></span></span>
+            <span className="line"><span>a elegância que você aprecia.</span></span>
           </h1>
           <p className="hero-sub">
-            PetLuxo oferece produtos de qualidade para a vida com pets. Elegância, durabilidade e conforto em cada item.
+            Cada peça da nossa coleção é selecionada com rigor, para pets que vivem com o mesmo padrão que seus donos.
           </p>
           <div className="hero-cta-row">
             <a className="btn btn-primary" href={wa("Olá! Vim do site PetLuxo e gostaria de fazer um pedido.")} target="_blank" rel="noopener">
@@ -31,9 +31,9 @@ export function Hero() {
             </a>
           </div>
           <div className="hero-meta">
-            <div><div className="k serif">Qualidade</div><div className="v">Garantida</div></div>
-            <div><div className="k serif">Entrega</div><div className="v">Todo o Brasil</div></div>
-            <div><div className="k serif">São Paulo</div><div className="v">Origem</div></div>
+            <div><div className="k serif">Qualidade</div><div className="v">PREMIUM</div></div>
+            <div><div className="k serif">Entrega</div><div className="v">TODO O BRASIL</div></div>
+            <div><div className="k serif">Atendimento</div><div className="v">VIA WHATSAPP</div></div>
           </div>
         </div>
 
@@ -52,7 +52,7 @@ export function Hero() {
           </div>
           <div className="float-card fc1">
             <div className="label">QUALIDADE</div>
-            <div className="val serif italic">Materiais selecionados</div>
+            <div className="val serif italic">Curadoria exclusiva</div>
           </div>
           <div className="float-card fc2">
             <div className="label">ENTREGA · BR</div>

@@ -30,17 +30,14 @@ export function Footer() {
             <h4>Contato</h4>
             <ul>
               <li><a href={wa("Olá!")} target="_blank" rel="noopener">WhatsApp</a></li>
-              <li><a href="#">contato@petluxo.com</a></li>
-              <li><a href="#">Entregas</a></li>
+              <li><a href="mailto:petluxo.service@gmail.com">petluxo.service@gmail.com</a></li>
             </ul>
           </div>
         </div>
         <div className="foot-bottom">
-          <span>© 2026 PETLUXO · CNPJ 00.000.000/0001-00</span>
+          <span>© 2026 PETLUXO · CNPJ 23.833.930/0001-21</span>
           <div className="links">
-            <a href="#">Privacidade</a>
-            <a href="#">Termos</a>
-            <a href="#">Instagram</a>
+            <a href="https://www.instagram.com/petluxo_produtospremium" target="_blank" rel="noopener">Instagram</a>
           </div>
         </div>
       </div>

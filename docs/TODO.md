@@ -4,10 +4,8 @@
 
 Essas tarefas são necessárias antes de publicar o site.
 
-- [ ] **Footer real** — substituir dados fictícios por e-mail real, link do Instagram e CNPJ correto em `src/components/layout/Footer.jsx`
 - [ ] **Meta description específica** — reescrever a `<meta name="description">` no `index.html` com palavras-chave reais do negócio
 - [ ] **og:image real 1200×630** — criar imagem de capa do site nessa proporção, colocar em `public/` e atualizar a URL no `index.html`
-- [ ] **Seção "Sobre"** — a seção Story (`src/components/sections/Story.jsx`) tem conteúdo genérico. Substituir pela história real da PetLuxo
 
 ## Média prioridade
 
@@ -25,13 +23,19 @@ Melhorias importantes mas que não bloqueiam o lançamento.
 
 ## Concluído ✓
 
-- [x] **Produtos reais** — `src/data/products.js` reescrito com 11 produtos reais (nome, descrição, preço, originalPrice, bullets, categoria, imagem, badge). Arquivo gitignored por conter dados sensíveis
+- [x] **Footer real** — CNPJ `23.833.930/0001-21`, email `petluxo.service@gmail.com` (mailto), Instagram `@petluxo_produtospremium` (link real). Links mortos sem destino removidos
+- [x] **Seção "Sobre"** — Story.jsx preenchida com imagem real, título e copy da marca, sobreposição de contraste e moldura editorial dupla
+- [x] **Hero copy real** — supertítulo, headline em 3 linhas, subtítulo e bloco de 3 métricas atualizados com textos reais da marca
+- [x] **Produtos reais** — `src/data/products.js` com 8 produtos ativos, 3 categorias (`mais-vendidos`, `conforto`, `couro`). Arquivo gitignored
 - [x] **Imagens dos produtos** — fotos reais em `public/images/products/`. Pasta gitignored
-- [x] **Produto em destaque** — Featured.jsx preenchido com produto real (Sofá PetLuxo Essence)
-- [x] **Sistema de carrosséis por categoria** — substituiu os filtros de chips. Carrossel "Mais Vendidos" sempre visível + botão "Ver mais produtos" que expande os demais com animação suave
-- [x] **Remover tweaks-panel do build** — `DevTweaks` só é carregado quando `import.meta.env.DEV` é verdadeiro; não entra no bundle de produção
+- [x] **Produto em destaque** — Featured.jsx preenchido com produto real (Sofá PetLuxo Essence, id 12)
+- [x] **Sistema de carrosséis por categoria** — carrossel "Mais Vendidos" sempre visível + botão "Ver mais produtos" que expande os demais com animação suave
+- [x] **Carrossel: setas laterais e swipe** — setas absolutas posicionadas via flexbox no `.carousel-outer` (desktop), ocultas em ≤768px. Swipe touch com detecção de direção (50px threshold) sem interferir no scroll vertical
+- [x] **Carrossel: estado isolado por instância** — correção de bug onde setas de outros carrosséis eram clipadas pelo `overflow:hidden` do container de expansão. Solução: flex em vez de `position:absolute` nas setas laterais
+- [x] **Limpeza de CSS** — removidos ~164 linhas de regras mortas (`.icon-btn`, `.cat-chip`, `.product-grid`, `.toast`, `.wa-fab` etc.)
+- [x] **Remover tweaks-panel do build** — `DevTweaks` só é carregado quando `import.meta.env.DEV` é verdadeiro
 - [x] **Página 404** — componente `NotFound.jsx` + `public/404.html` configurados
-- [x] **Hero com imagem real** — `public/images/image-hero.png` substituiu o placeholder
+- [x] **Hero com imagem real** — `assets/hero/image-hero.png` importado via Vite
 
 ---
 

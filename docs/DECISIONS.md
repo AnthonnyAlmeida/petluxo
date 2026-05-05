@@ -70,7 +70,32 @@ A seção de produtos tinha botões de filtro por categoria (chips) que filtrava
 - Carrossel com menos produtos que `perView` recebe classe `carousel--single` que centraliza o card via flexbox
 
 **Campo `category` virou array:**
-Para permitir que um produto apareça em mais de uma categoria (ex: "Mais Vendidos" + "Brinquedos"), o campo `category` de cada produto é agora um array de strings. Os filtros usam `.includes(id)` em vez de `=== id`.
+Para permitir que um produto apareça em mais de uma categoria (ex: "Mais Vendidos" + "Couro"), o campo `category` de cada produto é agora um array de strings. Os filtros usam `.includes(id)` em vez de `=== id`.
+
+**Estado atual do catálogo:** 8 produtos em 3 categorias — `mais-vendidos`, `conforto`, `couro`.
+
+---
+
+## 7. Carrossel: setas laterais e navegação por swipe
+
+**Motivação:**
+A navegação original dependia apenas das setas e dots na barra inferior do carrossel. Em desktop, as setas estavam longe do conteúdo; em mobile, não havia suporte a swipe.
+
+**Setas laterais (desktop):**
+- Dois `<button>` com classes `.carousel-arrow.carousel-arrow-side.--prev/next` inseridos dentro do `.carousel-outer`, como irmãos do `.carousel-viewport`
+- `.carousel-outer` é `display: flex; align-items: center` — as setas ficam alinhadas verticalmente ao centro dos cards sem `position: absolute`
+- Mesma aparência das setas inferiores (`.carousel-arrow`): círculo 48px, borda suave, hover dourado
+- Ocultas em `≤ 768px` via `display: none`
+
+**Por que flexbox em vez de `position: absolute`:**
+O container de expansão de categorias usa `overflow: hidden` para a animação `grid-template-rows`. Setas com `left/right: -24px` (fora do `.carousel-outer`) eram clipadas dentro desse container. Com flexbox, as setas nunca ultrapassam os limites — o bug não existe.
+
+**Swipe touch (mobile):**
+- `onTouchStart/Move/End` no `.carousel-viewport`
+- Três refs: `touchStartX`, `touchStartY`, `dragging`
+- `onTouchMove` só chama `e.preventDefault()` (bloqueando o scroll da página) quando o deslocamento horizontal é maior que o vertical e ultrapassa 8px — scroll vertical normal não é afetado
+- Limiar de 50px horizontal para avançar/voltar página
+- `.carousel-viewport { touch-action: pan-y }` reforça ao browser que scroll vertical é permitido
 
 ---
 
@@ -97,8 +122,9 @@ A imagem do hero (`hero-pet.png`) era importada via `import heroPet from '../../
 - Consistente com a abordagem já usada para as imagens de produtos
 
 **Como foi feito:**
-- Nova imagem colocada em `public/images/image-hero.png`
-- Import removido de `Hero.jsx`; `src` atualizado para o caminho estático `/images/image-hero.png`
+- Imagem colocada em `assets/hero/image-hero.png` e importada via `import heroImg from '../../../assets/hero/image-hero.png'` em `Hero.jsx`
+- Vite processa e faz hash do arquivo no build (`image-hero-[hash].png`)
+- Adicionado `assets/hero/image-hero.png` ao `.gitignore` (ativo sensível)
 
 ---
 
