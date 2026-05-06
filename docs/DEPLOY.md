@@ -1,16 +1,29 @@
 # Deploy na Vercel
 
-O PetLuxo é um site 100% estático — não tem backend, banco de dados nem servidor. O deploy é simples: a Vercel executa `npm run build` e serve os arquivos da pasta `dist/`.
+O PetLuxo é um site 100% estático — não tem backend, banco de dados nem servidor. O deploy é automático: a cada `git push` para a branch `main`, a Vercel executa `npm run build` e publica os arquivos da pasta `dist/`.
 
-## Pré-requisitos
+**Site em produção:** https://petluxo.vercel.app
+
+## Como funciona
+
+O repositório `github.com/AnthonnyAlmeida/petluxo` está conectado à Vercel. O fluxo é:
+
+1. Editar arquivos localmente
+2. `npm run build` (verificar que compila sem erros)
+3. `git add -A && git commit -m "..." && git push`
+4. A Vercel detecta o push e faz o deploy automaticamente em ~1 minuto
+
+## Pré-requisitos para um novo ambiente
 
 - Conta na [Vercel](https://vercel.com) (gratuita para projetos pessoais)
 - Node.js instalado na sua máquina
-- Repositório no GitHub (já criado: `github.com/AnthonnyAlmeida/petluxo`)
+- Acesso ao repositório: `github.com/AnthonnyAlmeida/petluxo`
 
 ---
 
-## Opção 1 — Deploy pela interface da Vercel (mais fácil)
+## Setup inicial (já feito — documentação para referência)
+
+### Pela interface da Vercel
 
 1. Acesse [vercel.com](https://vercel.com) e faça login
 2. Clique em **"Add New Project"**
@@ -21,68 +34,20 @@ O PetLuxo é um site 100% estático — não tem backend, banco de dados nem ser
    - **Output Directory:** `dist`
 5. Clique em **Deploy**
 
-Pronto. A Vercel vai gerar uma URL pública como `petluxo.vercel.app`.
-
-A partir daí, toda vez que você fizer `git push` para a branch `main`, o site atualiza automaticamente.
-
----
-
-## Opção 2 — Deploy pela linha de comando (Vercel CLI)
+### Pela linha de comando (Vercel CLI)
 
 ```bash
-# 1. Instale a Vercel CLI globalmente
 npm install -g vercel
-
-# 2. Faça login na sua conta Vercel
 vercel login
-
-# 3. Na raiz do projeto, rode o deploy
 cd /home/anthonnyalmeida/petluxo
-vercel
-
-# Siga as perguntas:
-# - Set up and deploy? Yes
-# - Which scope? (sua conta)
-# - Link to existing project? No (primeira vez)
-# - Project name? petluxo
-# - Directory? ./
-# - Override settings? No
+vercel --prod
 ```
-
-Para deploys seguintes, basta rodar `vercel --prod` para ir direto para produção.
-
----
-
-## Variáveis de ambiente na Vercel
-
-Se você definiu um número de WhatsApp personalizado no `.env.local`, precisa configurar a variável também na Vercel:
-
-1. No painel da Vercel, entre no projeto
-2. Vá em **Settings → Environment Variables**
-3. Adicione:
-   - **Name:** `VITE_WHATSAPP_PHONE`
-   - **Value:** seu número (ex: `5511999999999`)
-   - **Environment:** Production, Preview, Development
-
----
-
-## Domínio customizado
-
-Após o deploy, para usar um domínio próprio (ex: `petluxo.com.br`):
-
-1. No painel da Vercel, entre no projeto
-2. Vá em **Settings → Domains**
-3. Clique em **Add Domain** e digite seu domínio
-4. A Vercel vai mostrar os registros DNS para configurar no seu provedor de domínio (ex: Registro.br, GoDaddy, Cloudflare)
-5. Após configurar o DNS, o HTTPS é ativado automaticamente pela Vercel (certificado gratuito via Let's Encrypt)
-
-Depois de configurar o domínio, lembre de atualizar as 4 ocorrências de `SEU-DOMINIO-AQUI.com.br` no projeto (ver `docs/TODO.md`).
 
 ---
 
 ## Verificar se o deploy está correto
 
-Após o deploy, cheque:
+Após cada deploy, cheque:
 
 - [ ] Site carrega sem erros no navegador
 - [ ] Botões de WhatsApp funcionam (abrem conversa correta)
@@ -90,3 +55,18 @@ Após o deploy, cheque:
 - [ ] Imagens carregam (hero, logo, produtos)
 - [ ] Favicon aparece na aba do navegador
 - [ ] Acessar `/robots.txt` e `/sitemap.xml` retorna os arquivos corretos
+- [ ] Google Analytics recebe eventos (verificar em GA4 → Tempo Real)
+
+---
+
+## Domínio
+
+O site usa a URL gratuita da Vercel (`petluxo.vercel.app`). Para adicionar domínio próprio no futuro:
+
+1. No painel da Vercel, entre no projeto
+2. Vá em **Settings → Domains**
+3. Clique em **Add Domain** e digite o domínio
+4. Configure os registros DNS no provedor (Registro.br, GoDaddy, Cloudflare)
+5. HTTPS é ativado automaticamente via Let’s Encrypt
+6. Após confirmar, atualizar `og:url`, `og:image`, `twitter:image`, `robots.txt` e `sitemap.xml` com o novo domínio
+

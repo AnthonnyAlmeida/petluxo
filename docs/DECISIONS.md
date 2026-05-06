@@ -72,7 +72,7 @@ A seção de produtos tinha botões de filtro por categoria (chips) que filtrava
 **Campo `category` virou array:**
 Para permitir que um produto apareça em mais de uma categoria (ex: "Mais Vendidos" + "Couro"), o campo `category` de cada produto é agora um array de strings. Os filtros usam `.includes(id)` em vez de `=== id`.
 
-**Estado atual do catálogo:** 8 produtos em 3 categorias — `mais-vendidos`, `conforto`, `couro`.
+**Estado atual do catálogo:** 12 produtos em 5 categorias — `mais-vendidos`, `conforto`, `couro`, `dining-collection`, `brinquedos`.
 
 ---
 
@@ -99,15 +99,18 @@ O container de expansão de categorias usa `overflow: hidden` para a animação 
 
 ---
 
-## 4. `products.js` e imagens de produtos excluídos do Git
+## 4. Imagens de produtos vão para o Git
+
+**Situação anterior:**
+`src/data/products.js` e `public/images/products/` estavam no `.gitignore` por conterem dados sensíveis de negócio.
+
+**Mudança:**
+- `public/images/products/` foi removido do `.gitignore` — as imagens de produtos agora vão para o repositório
+- `src/data/products.js` também não está mais no `.gitignore`
+- Apenas `public/images/image-hero.png` permanece gitignored (imagem de 2,1MB processada pelo Vite via `assets/`)
 
 **Motivação:**
-O arquivo `src/data/products.js` contém descrições detalhadas, preços e estratégia de posicionamento. As imagens de produtos são ativos de negócio sensíveis.
-
-**Como foi feito:**
-- Adicionado `src/data/products.js` e `public/images/products/` ao `.gitignore`
-- Executado `git rm --cached` para remover do índice sem deletar os arquivos locais
-- O arquivo e as imagens existem localmente e no servidor de produção, mas não no repositório público
+Com o site em produção na Vercel, as imagens precisam estar no repositório para o deploy funcionar automaticamente a cada `git push`.
 
 ---
 

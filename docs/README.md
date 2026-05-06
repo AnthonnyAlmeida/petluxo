@@ -4,6 +4,11 @@
 
 PetLuxo é um site institucional de e-commerce de produtos premium para pets. O site apresenta os produtos da loja, conta a história da marca e direciona os clientes para o WhatsApp para fechar pedidos. Não há carrinho de compras nem backend — é um site 100% estático.
 
+## URLs
+
+- **Produção:** https://petluxo.vercel.app
+- **Repositório:** https://github.com/AnthonnyAlmeida/petluxo
+
 ## Stack
 
 | Tecnologia | Versão | Para que serve |
@@ -12,6 +17,7 @@ PetLuxo é um site institucional de e-commerce de produtos premium para pets. O 
 | Vite | 6.4.2 | Bundler e servidor de desenvolvimento |
 | CSS puro | — | Estilização completa sem frameworks de UI |
 | Google Fonts | — | Cormorant Garamond (serif) + Inter (sans) + JetBrains Mono |
+| Google Analytics | G-KKMV5VHR48 | Rastreamento de visitas via gtag.js |
 
 ## Estrutura de pastas
 
@@ -22,11 +28,11 @@ petluxo/
 │   ├── robots.txt       # Instruções para robôs de busca
 │   ├── sitemap.xml      # Mapa do site para SEO
 │   ├── 404.html         # Página de erro para SPAs (redirect para /)
+│   ├── og-image.png     # Imagem de capa 1200×630 para redes sociais
 │   └── images/
 │       ├── brand/       # Logo e assets de marca
-│       ├── image-hero.png        # Imagem principal do hero
-│       └── products/    # Fotos dos produtos (gitignored — não estão no repo)
-├── assets/              # Assets importados pelo Vite (logo)
+│       └── products/    # Fotos dos produtos (vão para o git)
+├── assets/              # Assets importados pelo Vite (logo, hero)
 ├── src/
 │   ├── app/
 │   │   ├── page.jsx     # Componente raiz (App), renderiza todas as seções
@@ -37,7 +43,7 @@ petluxo/
 │   │   ├── sections/    # Hero, Featured, Products, Story, Differentials, CTA, NotFound
 │   │   └── ui/          # Button, Container, Section (primitivos reutilizáveis)
 │   ├── data/
-│   │   └── products.js  # Catálogo de produtos (gitignored — contém dados sensíveis)
+│   │   └── products.js  # Catálogo de produtos — fonte de verdade
 │   ├── hooks/
 │   │   └── useScroll.js # Animações de scroll (IntersectionObserver + parallax)
 │   ├── lib/
@@ -50,11 +56,10 @@ petluxo/
 │   └── main.jsx           # Entry point: monta o React no DOM
 ├── index.html           # Shell HTML principal com todas as meta tags
 ├── vite.config.js       # Configuração mínima do Vite
-├── .env.example         # Modelo das variáveis de ambiente
 └── docs/                # Esta pasta — documentação do projeto
 ```
 
-> **Atenção:** `src/data/products.js` e `public/images/products/` estão no `.gitignore` — não existem no repositório, apenas localmente e no servidor de produção. Para configurar em um novo ambiente, crie o arquivo manualmente a partir do modelo em `src/data/products.example.js` (se disponível).
+> **Imagens:** `public/images/image-hero.png` está no `.gitignore`. Todas as demais imagens (products/, brand/, og-image.png) vão para o git normalmente.
 
 ## Como rodar localmente
 
@@ -86,10 +91,36 @@ Os arquivos finais são gerados na pasta `dist/`. Para visualizar o build localm
 npm run preview
 ```
 
+## Catálogo de produtos
+
+**11 produtos em 5 categorias:**
+
+| ID | Nome | Categorias |
+|---|---|---|
+| 1 | Brinquedo Interativo de Pelúcia | mais-vendidos, brinquedos |
+| 3 | Garrafa Portátil Premium para Pets | mais-vendidos, dining-collection |
+| 4 | Comedouro Elevado Premium | dining-collection |
+| 6 | Refúgio PetLuxo Cozy | conforto |
+| 8 | Bolsa Transporte PetLuxo | couro |
+| 9 | Kit Milano Camelo | couro |
+| 10 | Porta Saquinhos em Couro | couro |
+| 12 | Sofá PetLuxo Essence | conforto |
+| 13 | Sofá Ortopédico Lounge PetLuxo™ | mais-vendidos, conforto |
+| 14 | Cama PetLuxo CloudNest™ | conforto |
+| 15 | Coleira PetLuxo Atena™ | couro |
+| 16 | Comedouro Maison Élevé™ | mais-vendidos, dining-collection |
+
+**Categorias disponíveis:**
+
+| ID | Label |
+|---|---|
+| `mais-vendidos` | Mais Vendidos |
+| `conforto` | Conforto & Estilo |
+| `couro` | Essenciais em Couro |
+| `dining-collection` | Dining Collection |
+| `brinquedos` | Brinquedos |
+
 ## Variáveis de ambiente
 
-Copie `.env.example` para `.env.local` e ajuste conforme necessário:
+O número de WhatsApp é configurado em `src/lib/whatsapp.js` diretamente. Não há variáveis de ambiente em uso no momento.
 
-| Variável | Descrição | Padrão |
-|---|---|---|
-| `VITE_WHATSAPP_PHONE` | Número de WhatsApp com DDD e código do país | `5561994063917` |
