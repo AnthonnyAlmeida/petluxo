@@ -4,9 +4,11 @@
  */
 
 export const CATEGORIES = [
-  { id: 'mais-vendidos', label: 'Mais Vendidos'       },
-  { id: 'conforto',      label: 'Conforto & Estilo'   },
-  { id: 'couro',         label: 'Essenciais em Couro' },
+  { id: 'mais-vendidos',      label: 'Mais Vendidos'       },
+  { id: 'conforto',           label: 'Conforto & Estilo'   },
+  { id: 'couro',              label: 'Essenciais em Couro' },
+  { id: 'dining-collection',  label: 'Dining Collection'   },
+  { id: 'brinquedos',         label: 'Brinquedos'          },
 ];
 
 export const PRODUCTS = [
@@ -17,7 +19,7 @@ export const PRODUCTS = [
     bullets: [],
     price: 'R$ 149,90',
     originalPrice: 'R$ 179,90',
-    category: ['mais-vendidos'],
+    category: ['mais-vendidos', 'brinquedos'],
     image: '/images/products/brinquedo_interativo.jpeg',
     badge: 'MAIS VENDIDO',
   },
@@ -28,7 +30,7 @@ export const PRODUCTS = [
     bullets: [],
     price: 'R$ 189,90',
     originalPrice: 'R$ 219,90',
-    category: ['mais-vendidos'],
+    category: ['mais-vendidos', 'dining-collection'],
     image: '/images/products/garrafa.jpeg',
     badge: 'MAIS VENDIDO',
   },
@@ -39,9 +41,34 @@ export const PRODUCTS = [
     bullets: [],
     price: 'R$ 249,90',
     originalPrice: null,
-    category: ['conforto'],
+    category: ['dining-collection'],
     image: '/images/products/comedouro_elevado.jpeg',
     badge: null,
+  },
+  {
+    id: 16,
+    name: 'Comedouro Maison Élevé™ | Cerâmica Premium com Suporte Elevado',
+    shortName: 'Comedouro Maison Élevé™',
+    subtitle: 'Transforme a hora da alimentação em um momento de elegância.',
+    description: 'O Comedouro Maison Élevé™ foi criado para tutores que valorizam conforto, sofisticação e uma decoração harmoniosa para o lar. Com design minimalista em cerâmica premium e suporte elevado em madeira natural, ele proporciona uma postura mais confortável para o pet, além de trazer um toque luxuoso e moderno ao ambiente. Perfeito para cães e gatos que merecem uma experiência refinada todos os dias.',
+    bullets: [
+      'Cerâmica premium resistente e sofisticada',
+      'Base elevada para maior conforto na alimentação',
+      'Design minimalista inspirado na estética nórdica',
+      'Fácil de limpar',
+      'Ideal para água ou ração',
+      'Combina perfeitamente com ambientes modernos e elegantes',
+    ],
+    price: 'a partir de R$ 289,90',
+    prices: [
+      { size: '800ml',  price: 'R$ 289,90' },
+      { size: '1200ml', price: 'R$ 329,90' },
+      { size: '1800ml', price: 'R$ 389,90' },
+    ],
+    originalPrice: null,
+    category: ['mais-vendidos', 'dining-collection'],
+    image: '/images/products/comedouro_maison.jpeg',
+    badge: 'BEST SELLER',
   },
   {
     id: 6,
