@@ -14,12 +14,13 @@ export function ProductCard({ product, index, onQuick }) {
         )}
       </div>
       <div className="meta">
-        <div className="name">{product.name}</div>
+        <div className="name">{product.shortName || product.name}</div>
         <div className="price-col">
           {product.originalPrice && (
             <span className="price-original">{product.originalPrice}</span>
           )}
-          <div className="price">{product.price}<small>via WhatsApp</small></div>
+          <div className="price">{product.price}</div>
+          <small className="price-via">VIA WHATSAPP</small>
         </div>
       </div>
     </article>
