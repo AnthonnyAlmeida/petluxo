@@ -14,18 +14,30 @@ export function ProductModal({ product, onClose }) {
           <img src={product.image} alt={product.name} className="modal-img" />
         </div>
         <div className="modal-info">
-          <h3 className="serif">{product.name}</h3>
-          {product.originalPrice && (
-            <div className="modal-price-original">{product.originalPrice}</div>
-          )}
-          <div className="price serif">{product.price}</div>
-          <p>{product.description}</p>
-          {product.bullets && product.bullets.length > 0 && (
-            <ul className="modal-bullets">
-              {product.bullets.map((b, i) => <li key={i}>{b}</li>)}
-            </ul>
-          )}
-          <div className="row">
+          <div className="modal-info-header">
+            <h3 className="serif">{product.name}</h3>
+            {product.originalPrice && (
+              <div className="modal-price-original">{product.originalPrice}</div>
+            )}
+            {product.prices ? (
+              <div className="price serif">
+                {product.prices.map((p, i) => (
+                  <div key={i}>{p.size} — {p.price}</div>
+                ))}
+              </div>
+            ) : (
+              <div className="price serif">{product.price}</div>
+            )}
+          </div>
+          <div className="modal-scroll">
+            <p>{product.description}</p>
+            {product.bullets && product.bullets.length > 0 && (
+              <ul className="modal-bullets">
+                {product.bullets.map((b, i) => <li key={i}>{b}</li>)}
+              </ul>
+            )}
+          </div>
+          <div className="modal-info-footer row">
             <a className="btn btn-primary" href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener">
               <Icon.Wa className="wa-icon"/> Consultar
             </a>

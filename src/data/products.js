@@ -135,7 +135,7 @@ export const PRODUCTS = [
     originalPrice: null,
     category: ['mais-vendidos', 'conforto'],
     image: '/images/products/sofa-ortopedico.jpeg',
-    badge: null,
+    badge: 'MAIS VENDIDO',
   },
   {
     id: 14,
@@ -151,7 +151,12 @@ export const PRODUCTS = [
       'Fácil de limpar',
       'Estética clean luxury',
     ],
-    price: 'Tam. P: R$ 329,90 · Tam. M: R$ 397,90 · Tam. G: R$ 459,90',
+    price: 'a partir de R$ 329,90',
+    prices: [
+      { size: 'Tam. P', price: 'R$ 329,90' },
+      { size: 'Tam. M', price: 'R$ 397,90' },
+      { size: 'Tam. G', price: 'R$ 459,90' },
+    ],
     originalPrice: null,
     category: ['conforto'],
     image: '/images/products/cama_petluxo.jpeg',
