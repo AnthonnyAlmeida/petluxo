@@ -37,11 +37,21 @@ export function ProductModal({ product, onClose }) {
               </ul>
             )}
           </div>
-          <div className="modal-info-footer row">
-            <a className="btn btn-primary" href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener">
-              <Icon.Wa className="wa-icon"/> Consultar
-            </a>
-            <button className="btn btn-ghost" onClick={onClose}>Continuar</button>
+          <div className="modal-info-footer modal-btn-stack">
+            {product.buyLink && !product.prices ? (
+              <>
+                <a className="btn btn-primary btn-full" href={product.buyLink} target="_blank" rel="noopener noreferrer">
+                  COMPRAR AGORA
+                </a>
+                <a className="btn btn-outline btn-full" href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener noreferrer">
+                  <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
+                </a>
+              </>
+            ) : (
+              <a className="btn btn-primary btn-full" href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener noreferrer">
+                <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
+              </a>
+            )}
           </div>
         </div>
       </div>

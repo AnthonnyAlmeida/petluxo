@@ -189,6 +189,18 @@ button {
   border-color: var(--caramelo);
   background: rgba(232, 222, 210, 0.5);
 }
+.btn-outline {
+  background: transparent;
+  color: var(--vinho);
+  border: 1.5px solid var(--vinho);
+}
+.btn-outline:hover {
+  background: rgba(107, 30, 43, 0.06);
+}
+.btn-full {
+  width: 100%;
+  justify-content: center;
+}
 .btn-gold {
   background: linear-gradient(135deg, #D4BC85 0%, #C6A96B 50%, #B08968 100%);
   color: #fff;
@@ -974,6 +986,7 @@ section { position: relative; overflow-x: hidden; }
   margin-bottom: 24px;
 }
 .modal-info-footer { flex-shrink: 0; }
+.modal-btn-stack { display: flex; flex-direction: column; gap: 12px; }
 .modal-close {
   position: absolute;
   top: 20px; right: 20px;

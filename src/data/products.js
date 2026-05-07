@@ -7,8 +7,9 @@ export const CATEGORIES = [
   { id: 'mais-vendidos',      label: 'Mais Vendidos'       },
   { id: 'conforto',           label: 'Conforto & Estilo'   },
   { id: 'couro',              label: 'Essenciais em Couro' },
-  { id: 'dining-collection',  label: 'Dining Collection'   },
+  { id: 'colecao-casa',       label: 'Coleção Casa'      },
   { id: 'brinquedos',         label: 'Brinquedos'          },
+  { id: 'colecao-passeio',    label: 'Coleção Passeio'   },
 ];
 
 export const PRODUCTS = [
@@ -22,6 +23,7 @@ export const PRODUCTS = [
     category: ['mais-vendidos', 'brinquedos'],
     image: '/images/products/brinquedo_interativo.jpeg',
     badge: 'MAIS VENDIDO',
+    buyLink: 'https://pag.ae/81K6Dbu-q',
   },
   {
     id: 3,
@@ -30,9 +32,10 @@ export const PRODUCTS = [
     bullets: [],
     price: 'R$ 189,90',
     originalPrice: 'R$ 219,90',
-    category: ['mais-vendidos', 'dining-collection'],
+    category: ['mais-vendidos', 'colecao-casa'],
     image: '/images/products/garrafa.jpeg',
     badge: 'MAIS VENDIDO',
+    buyLink: 'https://pag.ae/81J8xDn2N',
   },
   {
     id: 4,
@@ -41,14 +44,14 @@ export const PRODUCTS = [
     bullets: [],
     price: 'R$ 249,90',
     originalPrice: null,
-    category: ['dining-collection'],
+    category: ['colecao-casa'],
     image: '/images/products/comedouro_elevado.jpeg',
     badge: null,
   },
   {
     id: 16,
     name: 'Comedouro Maison Élevé™ | Cerâmica Premium com Suporte Elevado',
-    shortName: 'Comedouro Maison Élevé™',
+    shortName: 'Comedouro Maison Élevé',
     subtitle: 'Transforme a hora da alimentação em um momento de elegância.',
     description: 'O Comedouro Maison Élevé™ foi criado para tutores que valorizam conforto, sofisticação e uma decoração harmoniosa para o lar. Com design minimalista em cerâmica premium e suporte elevado em madeira natural, ele proporciona uma postura mais confortável para o pet, além de trazer um toque luxuoso e moderno ao ambiente. Perfeito para cães e gatos que merecem uma experiência refinada todos os dias.',
     bullets: [
@@ -66,9 +69,9 @@ export const PRODUCTS = [
       { size: '1800ml', price: 'R$ 389,90' },
     ],
     originalPrice: null,
-    category: ['mais-vendidos', 'dining-collection'],
+    category: ['mais-vendidos', 'colecao-casa'],
     image: '/images/products/comedouro_maison.jpeg',
-    badge: 'BEST SELLER',
+    badge: 'MAIS VENDIDO',
   },
   {
     id: 12,
@@ -78,6 +81,7 @@ export const PRODUCTS = [
     price: 'R$ 497,00',
     originalPrice: null,
     category: ['conforto'],
+    buyLink: 'https://pag.ae/81J1KU12M',
     image: '/images/products/produtodestaquepetluxo.jpeg',
     badge: null,
   },
@@ -91,6 +95,7 @@ export const PRODUCTS = [
     category: ['conforto'],
     image: '/images/products/cozy.jpeg',
     badge: null,
+    buyLink: 'https://pag.ae/81J8cPYS6',
   },
   {
     id: 8,
@@ -108,6 +113,7 @@ export const PRODUCTS = [
     category: ['couro'],
     image: '/images/products/bolsa_transporte.jpeg',
     badge: null,
+    buyLink: 'https://pag.ae/81K3S7Am5',
   },
   {
     id: 9,
@@ -126,6 +132,7 @@ export const PRODUCTS = [
     category: ['couro'],
     image: '/images/products/kit_milano.jpeg',
     badge: null,
+    buyLink: 'https://pag.ae/81K3Zv1ga',
   },
   {
     id: 10,
@@ -143,6 +150,7 @@ export const PRODUCTS = [
     category: ['couro'],
     image: '/images/products/porta_saquinho.jpeg',
     badge: null,
+    buyLink: 'https://pag.ae/81K3Kjy9v',
   },
   {
     id: 13,
@@ -208,5 +216,27 @@ export const PRODUCTS = [
     category: ['couro'],
     image: '/images/products/coleira_petluxo.jpeg',
     badge: null,
+  },
+  {
+    id: 17,
+    name: 'Bolsa Voyage Signature™️ | Transporte Luxury para Pets',
+    shortName: 'Bolsa Voyage Signature',
+    subtitle: 'Elegância, conforto e sofisticação em cada detalhe.',
+    description: 'A Bolsa Voyage Signature™️ foi criada para transformar viagens e passeios em experiências luxuosas ao lado do seu pet. Com design minimalista premium, acabamento matelassê sofisticado e estrutura aconchegante, ela une perfeitamente estética refinada e funcionalidade moderna. Seu interior confortável e espaçoso proporciona mais segurança e bem-estar para cães e gatos, enquanto o visual clean e contemporâneo combina com uma rotina elegante e sofisticada. Ideal para tutores que enxergam o pet como parte do seu lifestyle.',
+    bullets: [
+      'Design minimalista premium',
+      'Acabamento matelassê sofisticado',
+      'Estrutura confortável e aconchegante',
+      'Material resistente e fácil de limpar',
+      'Ideal para viagens, passeios e transporte diário',
+      'Visual elegante inspirado em marcas internacionais boutique',
+      'Perfeita para cães e gatos pequenos e médios',
+    ],
+    price: 'R$ 429,00',
+    originalPrice: null,
+    category: ['colecao-passeio'],
+    image: '/images/products/bolsa_voyage.jpeg',
+    badge: null,
+    buyLink: null,
   },
 ];
