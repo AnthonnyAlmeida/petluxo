@@ -47,6 +47,7 @@ export const PRODUCTS = [
     category: ['colecao-casa'],
     image: '/images/products/comedouro_elevado.jpeg',
     badge: null,
+    buyLink: 'https://pag.ae/81LGWC7X4',
   },
   {
     id: 16,
@@ -72,6 +73,7 @@ export const PRODUCTS = [
     category: ['mais-vendidos', 'colecao-casa'],
     image: '/images/products/comedouro_maison.jpeg',
     badge: 'MAIS VENDIDO',
+    buyLink: 'https://pag.ae/81LGZCXsP',
   },
   {
     id: 12,
@@ -171,6 +173,7 @@ export const PRODUCTS = [
     category: ['mais-vendidos', 'conforto'],
     image: '/images/products/sofa-ortopedico.jpeg',
     badge: 'MAIS VENDIDO',
+    buyLink: 'https://pag.ae/81LH1xxX4',
   },
   {
     id: 14,
@@ -196,6 +199,7 @@ export const PRODUCTS = [
     category: ['conforto'],
     image: '/images/products/cama_petluxo.jpeg',
     badge: null,
+    buyLink: 'https://pag.ae/81LH8SGzp',
   },
   {
     id: 15,
@@ -216,6 +220,7 @@ export const PRODUCTS = [
     category: ['couro'],
     image: '/images/products/coleira_petluxo.jpeg',
     badge: null,
+    buyLink: 'https://pag.ae/81LHbyHKp',
   },
   {
     id: 17,
@@ -237,6 +242,6 @@ export const PRODUCTS = [
     category: ['colecao-passeio'],
     image: '/images/products/bolsa_voyage.jpeg',
     badge: null,
-    buyLink: null,
+    buyLink: 'https://pag.ae/81LHebDYP',
   },
 ];
