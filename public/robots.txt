@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # TROCAR DOMÍNIO: substituir "SEU-DOMINIO-AQUI.com.br" abaixo
-Sitemap: https://petluxo.vercel.app/sitemap.xml
+Sitemap: https://petluxostory.com.br/sitemap.xml
