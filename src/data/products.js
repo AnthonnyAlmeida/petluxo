@@ -73,7 +73,11 @@ export const PRODUCTS = [
     category: ['mais-vendidos', 'colecao-casa'],
     image: '/images/products/comedouro_maison.jpeg',
     badge: 'MAIS VENDIDO',
-    buyLink: 'https://pag.ae/81LGZCXsP',
+    buyLinks: [
+      { size: '800ml',  link: 'https://pag.ae/81LGZCXsP' },
+      { size: '1200ml', link: 'https://pag.ae/81LHgsgcP' },
+      { size: '1800ml', link: 'https://pag.ae/81LHi4Ret' },
+    ],
   },
   {
     id: 12,
