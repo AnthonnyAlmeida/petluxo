@@ -203,7 +203,11 @@ export const PRODUCTS = [
     category: ['conforto'],
     image: '/images/products/cama_petluxo.jpeg',
     badge: null,
-    buyLink: 'https://pag.ae/81LH8SGzp',
+    buyLinks: [
+      { size: 'Tam. P', link: 'https://pag.ae/81LH8SGzp' },
+      { size: 'Tam. M', link: 'https://pag.ae/81LHw9Qb8' },
+      { size: 'Tam. G', link: 'https://pag.ae/81LHxFzTK' },
+    ],
   },
   {
     id: 15,
