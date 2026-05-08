@@ -595,12 +595,6 @@ section { position: relative; overflow-x: hidden; }
   transform: translateY(-6px);
   box-shadow: 0 30px 60px -25px rgba(42,37,34,0.25);
 }
-.product .stage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 60% 50% at 50% 30%, rgba(255,255,255,0.5), transparent 60%);
-}
 .product .qa-btn {
   position: absolute;
   top: 16px; right: 16px;
