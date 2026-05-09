@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Icon } from '../../icons.jsx';
-import { wa } from '../../lib/whatsapp.js';
 import heroImg from '../../../assets/hero/image-hero.png';
 
 export function Hero() {
@@ -22,18 +21,15 @@ export function Hero() {
             Cada peça da nossa coleção é selecionada com rigor, para pets que vivem com o mesmo padrão que seus donos.
           </p>
           <div className="hero-cta-row">
-            <a className="btn btn-primary" href={wa("Olá! Vim do site PetLuxo e gostaria de fazer um pedido.")} target="_blank" rel="noopener">
-              <Icon.Wa className="wa-icon"/> Pedir via WhatsApp
-              <Icon.ArrowR className="arr"/>
-            </a>
-            <a className="btn btn-ghost" href="#produtos">
+            <a className="btn btn-primary" href="#produtos">
               Ver produtos
+              <Icon.ArrowR className="arr"/>
             </a>
           </div>
           <div className="hero-meta">
             <div><div className="k serif">Qualidade</div><div className="v">PREMIUM</div></div>
             <div><div className="k serif">Entrega</div><div className="v">TODO O BRASIL</div></div>
-            <div><div className="k serif">Atendimento</div><div className="v">VIA WHATSAPP</div></div>
+            <div><div className="k serif">Compra</div><div className="v">100% ONLINE</div></div>
           </div>
         </div>
 

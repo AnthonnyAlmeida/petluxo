@@ -14,20 +14,22 @@ export function CTA() {
       </div>
       <div className="wrap cta-content">
         <div className="eyebrow reveal" style={{justifyContent:"center", display:"inline-flex"}}>
-          <span className="dot"></span>ATENDIMENTO VIA WHATSAPP · SEG–SÁB
+          <span className="dot"></span>COMPRA SEGURA · ENTREGA EM TODO O BRASIL
         </div>
         <h2 className="serif reveal d1">
           Pronto para<br/>
-          <i className="italic gold-text">fazer seu pedido?</i>
+          <i className="italic gold-text">começar a comprar?</i>
         </h2>
         <p className="reveal d2">
-          Entre em contato pelo WhatsApp. Respondemos rapidamente com informações sobre produtos, preços e entrega.
+          Explore nossa coleção e finalize sua compra com segurança. Dúvidas? Estamos no WhatsApp.
         </p>
         <div className="cta-row reveal d3">
-          <a className="btn btn-primary" href={wa("Olá! Vim do site PetLuxo e gostaria de fazer um pedido.")} target="_blank" rel="noopener">
-            <Icon.Wa className="wa-icon"/> Falar via WhatsApp <Icon.ArrowR className="arr"/>
+          <a className="btn btn-primary" href="#produtos">
+            VER PRODUTOS <Icon.ArrowR className="arr"/>
           </a>
-          <a className="btn btn-gold" href="#produtos">Ver produtos</a>
+          <a className="btn btn-gold" href={wa("Olá! Gostaria de tirar uma dúvida sobre os produtos PetLuxo.")} target="_blank" rel="noopener">
+            <Icon.Wa className="wa-icon"/> FALAR VIA WHATSAPP
+          </a>
         </div>
         <div className="cta-meta reveal d4">
           <span><span className="dotg"></span>Resposta rápida</span>

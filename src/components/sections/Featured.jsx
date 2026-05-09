@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Icon } from '../../icons.jsx';
-import { wa } from '../../lib/whatsapp.js';
+import { PRODUCTS } from '../../data/products.js';
 
 export function Featured() {
   return (
@@ -32,10 +32,10 @@ export function Featured() {
             Transforme os momentos de descanso do seu pet em uma verdadeira experiência de conforto premium. Design moderno, estrutura ortopédica e acabamento sofisticado para ambientes refinados.
           </p>
           <div className="reveal d5" style={{display:"flex", gap:14, flexWrap:"wrap"}}>
-            <a className="btn btn-primary" href={wa("Olá! Tenho interesse no Sofá Ortopédico Lounge PetLuxo™.")} target="_blank" rel="noopener">
-              <Icon.Wa className="wa-icon"/> Consultar via WhatsApp <Icon.ArrowR className="arr"/>
+            <a className="btn btn-primary" href={PRODUCTS.find(p => p.id === 13)?.buyLink} target="_blank" rel="noopener">
+              COMPRAR AGORA <Icon.ArrowR className="arr"/>
             </a>
-            <a className="btn btn-ghost" href="#produtos">Ver todos os produtos</a>
+            <a className="btn btn-ghost" href="#produtos">VER TODOS OS PRODUTOS</a>
           </div>
         </div>
       </div>

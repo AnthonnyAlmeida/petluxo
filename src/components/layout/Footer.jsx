@@ -16,7 +16,7 @@ export function Footer() {
             <h4>Produtos</h4>
             <ul>
               <li><a href="#produtos">Ver todos</a></li>
-              <li><a href={wa("Olá! Gostaria de ver os produtos PetLuxo.")} target="_blank" rel="noopener">Pedir via WhatsApp</a></li>
+              <li><a href="#produtos">Explorar coleção</a></li>
             </ul>
           </div>
           <div>

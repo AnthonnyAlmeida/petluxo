@@ -5,7 +5,7 @@ import { Icon } from '../../icons.jsx';
 
 const DIFFS = [
   { num: "01", title: "Qualidade garantida",          body: "Produtos selecionados com atenção à qualidade dos materiais, durabilidade e conforto para o seu animal." },
-  { num: "02", title: "Atendimento via WhatsApp",      body: "Atendimento direto, rápido e personalizado. Tire dúvidas, faça pedidos e acompanhe sua entrega pelo WhatsApp." },
+  { num: "02", title: "Atendimento via WhatsApp",      body: "Tire suas dúvidas e acompanhe seu pedido pelo WhatsApp. Atendimento direto, rápido e personalizado." },
   { num: "03", title: "Entrega em todo o Brasil",      body: "Enviamos para qualquer cidade do Brasil com embalagem cuidadosa e rastreamento garantido." },
   { num: "04", title: "Produtos para toda rotina",     body: "Coleiras, camas, acessórios, higiene e mais. Tudo que o seu pet precisa no dia a dia." },
 ];
