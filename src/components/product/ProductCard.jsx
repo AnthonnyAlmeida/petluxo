@@ -20,7 +20,9 @@ export function ProductCard({ product, index, onQuick }) {
             <span className="price-original">{product.originalPrice}</span>
           )}
           <div className="price">{product.price}</div>
-          <small className="price-via">VIA WHATSAPP</small>
+          <small className="price-via">
+            {product.buyLink || product.buyLinks ? 'COMPRAR AGORA' : 'VIA WHATSAPP'}
+          </small>
         </div>
       </div>
     </article>
