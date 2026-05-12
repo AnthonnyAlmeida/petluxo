@@ -2,7 +2,9 @@
 
 O PetLuxo é um site 100% estático — não tem backend, banco de dados nem servidor. O deploy é automático: a cada `git push` para a branch `main`, a Vercel executa `npm run build` e publica os arquivos da pasta `dist/`.
 
-**Site em produção:** https://petluxo.vercel.app
+**Site em produção:** https://petluxostory.com.br
+
+> ⚠️ O repositório deve permanecer **público**. O Vercel Hobby Plan não faz deploy de repositórios privados. Se o deploy parar de funcionar, verifique a visibilidade do repositório no GitHub primeiro.
 
 ## Como funciona
 
@@ -45,12 +47,34 @@ vercel --prod
 
 ---
 
+## Domínio customizado (já configurado)
+
+O site usa o domínio próprio `petluxostory.com.br`, registrado no Registro.br.
+
+**Como foi configurado:**
+1. No painel da Vercel → projeto → **Settings → Domains** → adicionado `petluxostory.com.br`
+2. No Registro.br → configurados os nameservers:
+   - `ns1.vercel-dns.com`
+   - `ns2.vercel-dns.com`
+3. A Vercel gerencia automaticamente os registros DNS e o HTTPS via Let's Encrypt
+
+**Arquivos atualizados com o domínio real:**
+- `index.html` — `og:url`, `og:image`, `twitter:image`
+- `public/robots.txt` — `Sitemap:` e `Host:`
+- `public/sitemap.xml` — todas as URLs
+
+**Para trocar o domínio no futuro:**
+Atualizar as URLs em todos os arquivos acima e no painel da Vercel.
+
+---
+
 ## Verificar se o deploy está correto
 
 Após cada deploy, cheque:
 
 - [ ] Site carrega sem erros no navegador
-- [ ] Botões de WhatsApp funcionam (abrem conversa correta)
+- [ ] Botões "COMPRAR AGORA" abrem o link PagBank correto em nova aba
+- [ ] Botões WhatsApp funcionam (abrem conversa correta)
 - [ ] Menu hambúrguer funciona no celular
 - [ ] Imagens carregam (hero, logo, produtos)
 - [ ] Favicon aparece na aba do navegador
@@ -59,14 +83,19 @@ Após cada deploy, cheque:
 
 ---
 
-## Domínio
+---
 
-O site usa a URL gratuita da Vercel (`petluxo.vercel.app`). Para adicionar domínio próprio no futuro:
+## Se o deploy parar de funcionar
 
-1. No painel da Vercel, entre no projeto
-2. Vá em **Settings → Domains**
-3. Clique em **Add Domain** e digite o domínio
-4. Configure os registros DNS no provedor (Registro.br, GoDaddy, Cloudflare)
-5. HTTPS é ativado automaticamente via Let’s Encrypt
-6. Após confirmar, atualizar `og:url`, `og:image`, `twitter:image`, `robots.txt` e `sitemap.xml` com o novo domínio
+Verificar nesta ordem:
+
+1. **Repositório privado?** — O Vercel Hobby Plan não faz deploy de repos privados. Tornar público no GitHub e forçar redeploy:
+   ```bash
+   git commit --allow-empty -m "fix: force redeploy after repo visibility change"
+   git push
+   ```
+
+2. **Build com erros?** — Rodar `npm run build` localmente e corrigir antes do push
+
+3. **Vercel desconectado do GitHub?** — Reconectar no painel: Settings → Git → Reconnect
 

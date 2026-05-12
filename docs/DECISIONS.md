@@ -153,3 +153,63 @@ O bloco `.nav-burger { display: none }` estava posicionado após o `@media (max-
 
 **Tap targets:**
 Todos os elementos interativos têm área mínima de 44×44px (recomendação de acessibilidade da Apple e Google): chips de filtro, setas do carrossel, hambúrguer, botão fechar modal.
+
+---
+
+## 8. Repositório público obrigatório (Vercel Hobby Plan)
+
+**Situação:**
+O repositório foi tornado privado em algum momento, causando falha silenciosa no deploy automático da Vercel.
+
+**Causa:**
+O Vercel Hobby Plan (gratuito) só faz deploy de repositórios públicos. Repositórios privados exigem plano Pro.
+
+**Solução:**
+Manter o repositório `github.com/AnthonnyAlmeida/petluxo` **sempre público**. Após tornar público novamente, foi necessário forçar redeploy com commit vazio:
+```bash
+git commit --allow-empty -m "fix: force redeploy after repo visibility change"
+git push
+```
+
+---
+
+## 9. Modal com seletor de tamanho (buyLinks array)
+
+**Motivação:**
+Produtos como Cama CloudNest™ (id 14) e Comedouro Maison Élevé (id 16) têm variações de tamanho com preços e links de compra distintos.
+
+**Como foi implementado:**
+- Campo `buyLinks: [{ size, link }]` — array de links por tamanho
+- Campo `prices: [{ size, price }]` — array de preços por tamanho
+- `price` do produto vira `"a partir de R$ X"` (menor preço)
+- Em `ProductModal.jsx`, `useState(selectedSize)` inicializado no primeiro tamanho via `useEffect`
+- Preço exibido e link do botão COMPRAR AGORA são derivados via `.find()` do tamanho selecionado
+- Produtos com `buyLinks` não têm `buyLink` — campos mutuamente exclusivos
+
+---
+
+## 10. CTA dinâmico no card (COMPRAR AGORA vs VIA WHATSAPP)
+
+**Motivação:**
+Com a integração do PagBank, passou a existir distinção clara entre produtos com link de compra direta e produtos que apenas redirecionam para WhatsApp.
+
+**Como foi implementado em `ProductCard.jsx`:**
+```jsx
+{product.buyLink || product.buyLinks ? 'COMPRAR AGORA' : 'VIA WHATSAPP'}
+```
+
+**No modal (`ProductModal.jsx`)**, o footer segue 3 estados:
+1. `buyLinks` presente → "COMPRAR AGORA" (tamanho selecionado) + "CONSULTAR VIA WHATSAPP"
+2. `buyLink` presente → "COMPRAR AGORA" (link direto) + "CONSULTAR VIA WHATSAPP"
+3. Nenhum dos dois → apenas "CONSULTAR VIA WHATSAPP"
+
+---
+
+## 11. Narrativa: WhatsApp → compra direta via PagBank
+
+**Situação original:**
+Toda a narrativa do site direcionava para WhatsApp como canal principal de venda.
+
+**O que mudou:**
+Com a integração PagBank, o botão principal no modal passou a ser "COMPRAR AGORA". WhatsApp ficou como canal secundário de consulta. Produtos sem link PagBank ainda usam WhatsApp como primário. O CTA no card reflete a mesma hierarquia.
+

@@ -34,7 +34,7 @@ export const PRODUCTS = [
     originalPrice: 'R$ 219,90',
     category: ['colecao-casa'],
     image: '/images/products/garrafa.jpeg',
-    badge: 'MAIS VENDIDOS',
+    badge: null,
     buyLink: 'https://pag.ae/81J8xDn2N',
   },
   {

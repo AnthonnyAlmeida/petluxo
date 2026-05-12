@@ -2,11 +2,11 @@
 
 ## O que é
 
-PetLuxo é um site institucional de e-commerce de produtos premium para pets. O site apresenta os produtos da loja, conta a história da marca e direciona os clientes para o WhatsApp para fechar pedidos. Não há carrinho de compras nem backend — é um site 100% estático.
+PetLuxo é um site institucional de e-commerce de produtos premium para pets (cães e gatos). O site apresenta o catálogo, conta a história da marca e direciona os clientes para compra direta via PagBank ou consulta via WhatsApp. Não há carrinho de compras nem backend — é um site 100% estático.
 
 ## URLs
 
-- **Produção:** https://petluxo.vercel.app
+- **Produção:** https://petluxostory.com.br
 - **Repositório:** https://github.com/AnthonnyAlmeida/petluxo
 
 ## Stack
@@ -18,6 +18,7 @@ PetLuxo é um site institucional de e-commerce de produtos premium para pets. O 
 | CSS puro | — | Estilização completa sem frameworks de UI |
 | Google Fonts | — | Cormorant Garamond (serif) + Inter (sans) + JetBrains Mono |
 | Google Analytics | G-KKMV5VHR48 | Rastreamento de visitas via gtag.js |
+| PagBank | — | Links de pagamento direto (`buyLink` / `buyLinks`) |
 
 ## Estrutura de pastas
 
@@ -93,13 +94,13 @@ npm run preview
 
 ## Catálogo de produtos
 
-**11 produtos em 5 categorias:**
+**20 produtos em 6 categorias:**
 
 | ID | Nome | Categorias |
 |---|---|---|
 | 1 | Brinquedo Interativo de Pelúcia | mais-vendidos, brinquedos |
-| 3 | Garrafa Portátil Premium para Pets | mais-vendidos, dining-collection |
-| 4 | Comedouro Elevado Premium | dining-collection |
+| 3 | Garrafa Portátil Premium para Pets | colecao-casa |
+| 4 | Comedouro Elevado Premium | colecao-casa, conforto |
 | 6 | Refúgio PetLuxo Cozy | conforto |
 | 8 | Bolsa Transporte PetLuxo | couro |
 | 9 | Kit Milano Camelo | couro |
@@ -108,7 +109,11 @@ npm run preview
 | 13 | Sofá Ortopédico Lounge PetLuxo™ | mais-vendidos, conforto |
 | 14 | Cama PetLuxo CloudNest™ | conforto |
 | 15 | Coleira PetLuxo Atena™ | couro |
-| 16 | Comedouro Maison Élevé™ | mais-vendidos, dining-collection |
+| 16 | Comedouro Maison Élevé™ | mais-vendidos, colecao-casa |
+| 17 | Bolsa Voyage Signature™️ | colecao-passeio |
+| 18 | Cama Suspensa Rattan Élysée | conforto |
+| 19 | Arranhador Bola de Sisal Maison | brinquedos |
+| 20 | Cama Suspensa Rattan Aura | mais-vendidos, conforto |
 
 **Categorias disponíveis:**
 
@@ -117,10 +122,13 @@ npm run preview
 | `mais-vendidos` | Mais Vendidos |
 | `conforto` | Conforto & Estilo |
 | `couro` | Essenciais em Couro |
-| `dining-collection` | Dining Collection |
+| `colecao-casa` | Coleção Casa |
 | `brinquedos` | Brinquedos |
+| `colecao-passeio` | Coleção Passeio |
 
 ## Variáveis de ambiente
 
-O número de WhatsApp é configurado em `src/lib/whatsapp.js` diretamente. Não há variáveis de ambiente em uso no momento.
+O número de WhatsApp é configurado em `src/lib/whatsapp.js` como fallback: `5561994063917`. Pode ser sobrescrito via variável de ambiente `VITE_WHATSAPP_PHONE` (não configurada na Vercel atualmente — usa o padrão hardcoded).
+
+> Para detalhes completos de arquitetura, catálogo e decisões técnicas, ver `AI_CONTEXT.md` na raiz do projeto.
 

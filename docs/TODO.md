@@ -1,7 +1,9 @@
 # Status do Projeto PetLuxo
 
-**Site em produção:** https://petluxo.vercel.app
+**Site em produção:** https://petluxostory.com.br
 **Deploy:** automático via Vercel a cada `git push` para `main`
+
+> ⚠️ O repositório deve permanecer **público**. O Vercel Hobby Plan não faz deploy de repositórios privados.
 
 ---
 
@@ -9,13 +11,12 @@
 
 ### Alta prioridade
 
-- [ ] **Novos produtos** — quando houver novos itens, adicionar em `src/data/products.js` com todos os campos obrigatórios e colocar a imagem em `public/images/products/`
-- [ ] **Favicon com logo real** — substituir o favicon atual pela logo oficial da PetLuxo em SVG
+- [ ] **Favicon com logo real** — substituir o favicon atual pela logo oficial da PetLuxo em SVG com as cores corretas da marca
 
 ### Média prioridade
 
 - [ ] **Sitemap automático** — o `public/sitemap.xml` é manual. Quando o site crescer com mais páginas, considerar geração automática
-- [ ] **og:image com dimensões corretas** — a imagem atual (`og-image.png`) deve estar em 1200×630px para otimização correta nas redes sociais
+- [ ] **og:image — limpar cache** — imagem atualizada recentemente. Usar LinkedIn Post Inspector (linkedin.com/post-inspector) e Facebook Sharing Debugger para forçar re-scrape
 
 ---
 
@@ -25,7 +26,7 @@
 
 | Campo | Descrição |
 |---|---|
-| `id` | Número único sequencial |
+| `id` | Número único. Próximo disponível: **21** |
 | `name` | Nome completo (usado no modal) |
 | `shortName` | Nome curto (usado no card do carrossel) |
 | `subtitle` | Frase curta de impacto |
@@ -33,9 +34,11 @@
 | `bullets` | Array de destaques/características |
 | `price` | Preço exibido no card. Para produtos com tamanhos: `"a partir de R$ X"` |
 | `prices` | Array `{ size, price }` para produtos com múltiplos tamanhos (opcional) |
-| `badge` | Texto do selo ex: `"MAIS VENDIDO"`, `"BEST SELLER"`, ou `null` |
+| `badge` | Texto do selo: `"MAIS VENDIDOS"` ou `null` |
 | `image` | Caminho ex: `"/images/products/nome-do-arquivo.jpeg"` |
 | `category` | Array de categorias ex: `["mais-vendidos", "conforto"]` |
+| `buyLink` | URL PagBank para produto único (omitir se usar buyLinks) |
+| `buyLinks` | Array `{ size, link }` para produtos com múltiplos tamanhos (opcional) |
 
 ### Categorias disponíveis
 
@@ -44,8 +47,9 @@
 | `mais-vendidos` | Mais Vendidos (sempre visível sem expandir) |
 | `conforto` | Conforto & Estilo |
 | `couro` | Essenciais em Couro |
-| `dining-collection` | Dining Collection |
+| `colecao-casa` | Coleção Casa |
 | `brinquedos` | Brinquedos |
+| `colecao-passeio` | Coleção Passeio |
 
 ### Imagens de produtos
 
@@ -58,33 +62,37 @@
 ## Concluído ✓
 
 ### Infraestrutura e deploy
-- [x] **Site em produção na Vercel** — https://petluxo.vercel.app, deploy automático a cada push
-- [x] **Domínio configurado** — `petluxo.vercel.app` em `og:url`, `og:image`, `twitter:image`, `robots.txt`, `sitemap.xml`
+- [x] **Site em produção na Vercel** — https://petluxostory.com.br, deploy automático a cada push
+- [x] **Domínio customizado** — `petluxostory.com.br` configurado via Registro.br com NS Vercel (`ns1/ns2.vercel-dns.com`)
+- [x] **Domínio configurado nas meta tags** — `og:url`, `og:image`, `twitter:image`, `robots.txt`, `sitemap.xml` todos com domínio real
 - [x] **Google Analytics** — script gtag.js com ID `G-KKMV5VHR48` configurado em `index.html`
-- [x] **og:image real** — `public/og-image.png` configurado em `og:image` e `twitter:image`
+- [x] **og:image atualizada** — `public/og-image.png` configurado em `og:image` e `twitter:image`
 - [x] **Meta description atualizada** — copy com palavras-chave reais do negócio
-- [x] **Migração de Babel CDN para Vite** — bundle 171KB (54KB gzip), build em ~3s, hot reload instantâneo
-- [x] **tweaks-panel excluído do bundle de produção** — `DevTweaks` só carrega quando `import.meta.env.DEV` é verdadeiro
+- [x] **Migração de Babel CDN para Vite** — bundle ~183KB (57KB gzip), build em ~5s, hot reload instantâneo
+- [x] **DevTweaks excluído do bundle de produção** — `DevTweaks` só carrega quando `import.meta.env.DEV` é verdadeiro
 - [x] **Página 404 customizada** — `NotFound.jsx` + `public/404.html` com redirect para `/` via sessionStorage
 - [x] **robots.txt e sitemap.xml** — configurados com domínio real em `public/`
 
 ### Catálogo e produtos
-- [x] **12 produtos reais** — fotos, descrições e preços em `src/data/products.js`
-- [x] **5 categorias** — `mais-vendidos`, `conforto`, `couro`, `dining-collection`, `brinquedos`
-- [x] **Produto destaque atualizado** — Featured.jsx com Sofá Ortopédico Lounge PetLuxo™ (id 13)
-- [x] **Produtos com múltiplos tamanhos** — campo `prices: [{ size, price }]` + `price: "a partir de R$ X"` (ids 14 e 16)
-- [x] **Layout do card em coluna** — `shortName` → preço → "VIA WHATSAPP" (flex-direction: column, alinhamento à esquerda)
-- [x] **Imagens de produtos no git** — `public/images/products/` não está mais no `.gitignore`
+- [x] **20 produtos reais** — fotos, descrições, preços e links PagBank em `src/data/products.js`
+- [x] **6 categorias** — `mais-vendidos`, `conforto`, `couro`, `colecao-casa`, `brinquedos`, `colecao-passeio`
+- [x] **Produto destaque** — `Featured.jsx` com Sofá Ortopédico Lounge PetLuxo™ (id 13)
+- [x] **Produtos com múltiplos tamanhos** — `prices: [{ size, price }]` + `buyLinks: [{ size, link }]` (ids 14 e 16)
+- [x] **PagBank integrado** — todos os 20 produtos têm `buyLink` ou `buyLinks`
+- [x] **CTA dinâmico no card** — "COMPRAR AGORA" se tem buyLink/buyLinks, "VIA WHATSAPP" se não tem
+- [x] **Badges padronizados** — todos no plural: `"MAIS VENDIDOS"`
+- [x] **Imagens de produtos no git** — `public/images/products/` não está no `.gitignore`
 
 ### Layout e componentes
-- [x] **Modal com scroll interno no mobile** — `.modal-scroll` com `overflow-y: auto`, `min-height: 0`, `overscroll-behavior: contain`. Cabeçalho (título/preço) e botões ficam fixos, apenas descrição/bullets rolam
+- [x] **Modal com scroll interno no mobile** — `.modal-scroll` com `overflow-y: auto`, `min-height: 0`, `overscroll-behavior: contain`
+- [x] **Modal com seletor de tamanho** — `useState(selectedSize)` + botões por tamanho; preço e link COMPRAR AGORA são dinâmicos
 - [x] **Responsividade completa** — breakpoints 980px (tablet), 768px (mobile), 480px (mobile pequeno)
-- [x] **Menu hambúrguer mobile** — drawer animado com links e botão WhatsApp; fecha ao clicar em qualquer link
-- [x] **Carrossel com setas laterais e swipe touch** — setas via flexbox (desktop), swipe 50px threshold (mobile), estado isolado por instância
-- [x] **Múltiplos carrosséis por categoria** — "Mais Vendidos" sempre visível; demais categorias expandem com animação `grid-template-rows`
+- [x] **Menu hambúrguer mobile** — drawer animado com links e botão WhatsApp
+- [x] **Carrossel com setas laterais e swipe touch** — setas via flexbox (desktop), swipe 50px threshold (mobile)
+- [x] **Múltiplos carrosséis por categoria** — "Mais Vendidos" sempre visível; demais expandem com animação
 
 ### Conteúdo real
-- [x] **Hero com textos reais** — supertítulo, headline em 3 linhas, subtítulo e 3 métricas da marca
+- [x] **Hero com textos reais** — supertítulo, headline, subtítulo e 3 métricas da marca
 - [x] **Seção Sobre Nós** — foto real, headline e copy da marca
 - [x] **Footer com dados reais** — CNPJ `23.833.930/0001-21`, email `petluxo.service@gmail.com`, Instagram `@petluxo_produtospremium`
 
@@ -93,8 +101,9 @@
 - [x] **Twitter Card** — `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
 
 ### Documentação
+- [x] **AI_CONTEXT.md** — contexto completo do projeto para IAs na raiz do projeto
 - [x] **docs/README.md** — visão geral, stack, estrutura de pastas, catálogo atual
 - [x] **docs/DECISIONS.md** — decisões técnicas documentadas
-- [x] **docs/DEPLOY.md** — fluxo de deploy na Vercel
+- [x] **docs/DEPLOY.md** — fluxo de deploy na Vercel com domínio customizado
 - [x] **docs/TODO.md** — este arquivo
 
