@@ -9,3 +9,6 @@ dist
 # Ignorar imagens de produtos
 public/images/image-hero.png
 .vercel
+
+# Contexto para IA
+AI_CONTEXT.md
