@@ -1,125 +1,174 @@
+<div align="center">
+
 # PetLuxo
 
-Site institucional de e-commerce de produtos premium para pets, desenvolvido como projeto de portfólio com foco em design sofisticado e experiência do usuário.
+### Plataforma de e-commerce premium para pets — identidade sofisticada, performance moderna.
 
-<!-- Adicione um screenshot aqui após o deploy:
-![PetLuxo Screenshot](./public/images/screenshot.png)
--->
+[![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-6.4.2-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![CSS](https://img.shields.io/badge/CSS-Pure-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
+**[→ Ver em produção](https://petluxostory.com.br)**
+
+</div>
 
 ---
 
-## Tecnologias
+## Preview
 
-- **React 18** — Interface declarativa com hooks
-- **Vite 6** — Bundler e dev server ultrarrápido
-- **CSS puro** — Sem frameworks de UI; design system proprietário com CSS custom properties
-- **Google Fonts** — Cormorant Garamond (serif) + Inter (sans) + JetBrains Mono
+> Screenshots e demo em: **[petluxostory.com.br](https://petluxostory.com.br)**
+
+O PetLuxo é um site institucional de e-commerce construído com foco em identidade visual premium, experiência de compra fluida e performance. A estética remete ao universo de marcas de luxo — tipografia serifada, paleta em tons terrosos (vinho, dourado, caramelo) e layout minimalista com atenção a cada detalhe.
+
+---
+
+## Sobre o Projeto
+
+PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, sofás, acessórios de couro, coleiras e comedouros sofisticados. O objetivo é converter visitantes em compradores através de uma experiência visual diferenciada e fluxo de compra direto via PagBank.
+
+**Destaques:**
+- Site 100% estático — zero backend, zero banco de dados
+- Deploy automático via GitHub + Vercel
+- Performance otimizada: bundle JS ~183KB (57KB gzip), CSS ~30KB (6.7KB gzip)
+- Arquitetura baseada em componentes React com CSS puro e design system próprio
 
 ---
 
 ## Funcionalidades
 
-- **Carrossel de produtos responsivo** — Navegação por setas e dots de paginação; 3 cards/desktop, 2/tablet, 1/mobile; transição suave com CSS `transform`
-- **Filtro por categoria** — Chips de filtro que reiniciam o carrossel automaticamente
-- **Integração com WhatsApp** — Botão flutuante e links diretos nos cards de produto
-- **Modal de produto** — Overlay com detalhes e CTA para contato
-- **Efeitos de scroll** — Animações de reveal com `IntersectionObserver` e parallax no logo
-- **Design system** — Paleta de tons terrosos (vinho, dourado, caramelo, offwhite) via CSS variables
+| Recurso | Descrição |
+|---|---|
+| 🛍️ **Catálogo dinâmico** | 20 produtos em 6 categorias, carregados de um arquivo `products.js` centralizado |
+| 🎠 **Carrosséis por categoria** | Um carrossel por categoria com setas laterais, dots de paginação e swipe touch |
+| 🔍 **Modal interativo** | Quick view com seletor de tamanho, preço dinâmico e link de compra por variação |
+| 💳 **Integração PagBank** | Botão "Comprar Agora" abre link de pagamento direto (`buyLink` / `buyLinks`) |
+| 💬 **Fallback WhatsApp** | Produtos sem link de pagamento redirecionam para WhatsApp com mensagem pré-preenchida |
+| 📱 **Totalmente responsivo** | Layout adaptado para desktop (≥980px), tablet (≤980px) e mobile (≤768px / ≤480px) |
+| ✨ **Animações de scroll** | Reveal de elementos com `IntersectionObserver` e efeito parallax no logo da navbar |
+| 🔎 **SEO básico** | Open Graph completo, Twitter Card, sitemap.xml, robots.txt, Google Analytics |
+| ⚡ **Performance** | Build em ~5s, hot reload instantâneo, DevTweaks excluído do bundle de produção |
 
 ---
 
-## Rodando localmente
+## Tecnologias
 
-```bash
-# 1. Clone o repositório
-git clone https://github.com/seu-usuario/petluxo.git
-cd petluxo
-
-# 2. Instale as dependências
-npm install
-
-# 3. Configure as variáveis de ambiente (opcional)
-cp .env.example .env.local
-# Edite .env.local com seu número de WhatsApp
-
-# 4. Inicie o servidor de desenvolvimento
-npm run dev
-```
-
-Acesse em **http://localhost:5173**
-
-Para acessar pelo celular na mesma rede:
-```bash
-npm run dev -- --host
-# Acesse pelo IP exibido no terminal (ex: http://192.168.x.x:5173)
-```
-
----
-
-## Build de produção
-
-```bash
-npm run build    # Gera a pasta dist/
-npm run preview  # Preview local do build gerado
-```
-
----
-
-## Variáveis de ambiente
-
-| Variável | Descrição | Padrão |
+| Tecnologia | Versão | Função |
 |---|---|---|
-| `VITE_WHATSAPP_PHONE` | Número de WhatsApp com DDD e código do país | `5561994063917` |
+| **React** | 18.3.1 | Interface declarativa com hooks e componentes |
+| **Vite** | 6.4.2 | Bundler ultrarrápido e servidor de desenvolvimento |
+| **JavaScript** | ES2022 | Lógica de negócio, estado e interatividade |
+| **CSS puro** | — | Design system proprietário, sem frameworks de UI |
+| **Google Fonts** | — | Cormorant Garamond · Inter · JetBrains Mono |
+| **Google Analytics** | GA4 | Rastreamento de visitas via gtag.js |
+| **Vercel** | Hobby | Hospedagem e deploy automático via Git |
 
 ---
 
-## Estrutura de pastas
+## Arquitetura
 
 ```
 petluxo/
-├── public/              # Arquivos estáticos públicos
-│   └── images/          # Imagens de produtos e branding
-├── assets/              # Assets importados via Vite
-│   └── hero/            # Imagens da seção hero
+├── index.html               # Shell HTML — meta tags, OG, Analytics
+├── public/
+│   ├── og-image.png         # Capa 1200×630 para redes sociais
+│   ├── robots.txt / sitemap.xml
+│   └── images/products/     # Fotos dos produtos
 ├── src/
 │   ├── app/
-│   │   └── page.jsx     # Componente raiz (App)
+│   │   └── page.jsx         # Componente raiz — orquestra todas as seções
 │   ├── components/
-│   │   ├── layout/      # Navbar e Footer
-│   │   ├── product/     # ProductCard, ProductGrid (carrossel), ProductModal
-│   │   ├── sections/    # Hero, Featured, Products, Story, Differentials, CTA
-│   │   └── ui/          # Button, Container, Section (primitivos de UI)
+│   │   ├── layout/          # Navbar (hambúrguer mobile) + Footer
+│   │   ├── product/         # ProductCard · ProductGrid · ProductModal
+│   │   ├── sections/        # Hero · Featured · Products · Story · CTA · 404
+│   │   └── ui/              # Button · Container · Section (primitivos)
 │   ├── data/
-│   │   └── products.js  # Catálogo de produtos (fonte de verdade)
-│   ├── hooks/
-│   │   └── useScroll.js # IntersectionObserver + parallax
-│   ├── lib/
-│   │   └── whatsapp.js  # Helper para links de WhatsApp
-│   ├── styles/
-│   │   ├── variables.css  # Design tokens (cores, fontes, espaçamentos)
-│   │   └── globals.css    # Estilos globais e componentes
-│   ├── icons.jsx          # Ícones SVG inline
-│   ├── tweaks-panel.jsx   # Painel de tweaks de design (dev)
-│   └── main.jsx           # Entry point do Vite
-├── index.html           # Shell HTML principal
-├── vite.config.js       # Configuração do Vite
-└── .env.example         # Modelo de variáveis de ambiente
+│   │   └── products.js      # ← Fonte de verdade do catálogo
+│   ├── hooks/useScroll.js   # IntersectionObserver + parallax
+│   ├── lib/whatsapp.js      # Gerador de links wa.me
+│   └── styles/
+│       ├── variables.css    # Design tokens (cores, tipografia, espaçamentos)
+│       └── globals.css      # Estilos completos (~1500 linhas)
+└── docs/                    # Documentação técnica detalhada
 ```
 
 ---
 
-## Melhorias futuras
+## Decisões Técnicas
 
-- [ ] Substituir dados mockados por integração com CMS (Sanity, Contentful ou Strapi)
-- [ ] Adicionar página de produto individual com rota própria (React Router)
-- [ ] Implementar carrinho de compras local com `localStorage`
-- [ ] Adicionar página de contato com formulário validado
-- [ ] Deploy na Vercel ou Netlify com preview automático por PR
-- [ ] Testes unitários com Vitest + React Testing Library
-- [ ] Internacionalização (i18n) para suporte a múltiplos idiomas
+**CSS puro sem framework**
+Controle total sobre o design, bundle enxuto e identidade visual 100% proprietária. Toda a estilização vive em `globals.css` com design tokens em `variables.css`.
+
+**Carrossel sem biblioteca externa**
+Implementado com React state + `transform: translateX`. Setas laterais usam flexbox (não `position: absolute`) para evitar clipping em containers com `overflow: hidden`. Suporte a swipe touch com detecção de direção e limiar de 50px.
+
+**Modal mobile sem manipular o body**
+Scroll interno via `min-height: 0` + `overflow-y: auto` + `overscroll-behavior: contain`. Cabeçalho e botões fixos, apenas o conteúdo rola. Evita bugs de scroll em iOS.
+
+**Campo `category` como array**
+Cada produto pode pertencer a múltiplas categorias — os filtros usam `.includes(id)`. Isso permite que um produto apareça em "Mais Vendidos" e "Conforto & Estilo" simultaneamente.
+
+**DevTweaks tree-shaken em produção**
+O painel de ajustes de design é carregado via `React.lazy` condicionado a `import.meta.env.DEV`. O Vite elimina o import via dead-code elimination no build — zero impacto em produção.
 
 ---
 
-## Licença
+## Como Rodar Localmente
 
-MIT
+```bash
+# Clone o repositório
+git clone https://github.com/AnthonnyAlmeida/petluxo.git
+cd petluxo
+
+# Instale as dependências
+npm install
+
+# Inicie o servidor de desenvolvimento
+npm run dev
+# → http://localhost:5173
+
+# Para acessar pelo celular na mesma rede
+npm run dev -- --host
+```
+
+```bash
+# Build de produção
+npm run build
+
+# Preview local do build
+npm run preview
+```
+
+---
+
+## Deploy
+
+O deploy é automático a cada `git push` para a branch `main`:
+
+1. Push para `main` no GitHub
+2. Vercel detecta o push e executa `npm run build`
+3. Arquivos da pasta `dist/` são publicados
+4. Site atualizado em ~1 minuto em **[petluxostory.com.br](https://petluxostory.com.br)**
+
+> O repositório deve permanecer **público** — o Vercel Hobby Plan não faz deploy de repositórios privados.
+
+---
+
+## Melhorias Futuras
+
+- [ ] Páginas individuais de produto com URLs amigáveis
+- [ ] SEO avançado com meta tags dinâmicas por produto
+- [ ] CMS headless para gerenciamento do catálogo sem código
+- [ ] Animações de entrada mais refinadas (Framer Motion ou GSAP)
+- [ ] Painel administrativo para atualização de estoque e preços
+- [ ] Favicon com a logo oficial da marca
+
+---
+
+<div align="center">
+
+Desenvolvido por **[Anthonny Almeida](https://github.com/AnthonnyAlmeida)**
+
+</div>
+
