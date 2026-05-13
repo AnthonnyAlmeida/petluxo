@@ -1,6 +1,7 @@
 /* PetLuxo — Footer */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { wa } from '../../lib/whatsapp.js';
 
 export function Footer() {
@@ -24,6 +25,7 @@ export function Footer() {
             <ul>
               <li><a href="#sobre">Sobre nós</a></li>
               <li><a href="#diferenciais">Diferenciais</a></li>
+              <li><Link to="/politica-de-privacidade">Política de Privacidade</Link></li>
             </ul>
           </div>
           <div>
