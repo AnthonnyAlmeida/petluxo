@@ -14,6 +14,8 @@ import { NotFound } from '../components/sections/NotFound.jsx';
 import { ProductModal } from '../components/product/ProductModal.jsx';
 import PrivacyPage from '../components/pages/PrivacyPage.jsx';
 import ReturnPolicyPage from '../components/pages/ReturnPolicyPage.jsx';
+import ShippingPolicyPage from '../components/pages/ShippingPolicyPage.jsx';
+import TermsPage from '../components/pages/TermsPage.jsx';
 import { useScrollEffects } from '../hooks/useScroll.js';
 
 /* TweaksPanel — carregado apenas em desenvolvimento.
@@ -58,6 +60,8 @@ export default function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
       <Route path="/politica-de-troca-e-devolucao" element={<ReturnPolicyPage />} />
+      <Route path="/politica-de-frete-e-entrega" element={<ShippingPolicyPage />} />
+      <Route path="/termos-de-uso" element={<TermsPage />} />
       <Route path="*" element={
         <>
           <Navbar/>
