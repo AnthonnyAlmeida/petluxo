@@ -10,6 +10,7 @@ import { Products } from '../components/sections/Products.jsx';
 import { Story } from '../components/sections/Story.jsx';
 import { Differentials } from '../components/sections/Differentials.jsx';
 import { CTA } from '../components/sections/CTA.jsx';
+import { FAQ } from '../components/sections/FAQ.jsx';
 import { NotFound } from '../components/sections/NotFound.jsx';
 import { ProductModal } from '../components/product/ProductModal.jsx';
 import PrivacyPage from '../components/pages/PrivacyPage.jsx';
@@ -41,6 +42,7 @@ function HomePage() {
         <Story/>
         <Differentials/>
         <CTA/>
+        <FAQ/>
       </main>
       <Footer/>
       <ProductModal product={quick} onClose={() => setQuick(null)}/>

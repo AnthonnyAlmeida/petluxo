@@ -22,6 +22,7 @@ export function Navbar() {
         <nav className="nav-left">
           <a href="#produtos" className="nav-link">Produtos</a>
           <a href="#sobre" className="nav-link">Sobre</a>
+          <a href="#faq" className="nav-link">FAQ</a>
           <a href="#contato" className="nav-link">Contato</a>
         </nav>
         <a href="/" className="brand-mark">
@@ -49,6 +50,7 @@ export function Navbar() {
         <nav className="nav-drawer-links">
           <a href="#produtos" className="nav-drawer-link" onClick={close}>Produtos</a>
           <a href="#sobre" className="nav-drawer-link" onClick={close}>Sobre</a>
+          <a href="#faq" className="nav-drawer-link" onClick={close}>FAQ</a>
           <a href="#contato" className="nav-drawer-link" onClick={close}>Contato</a>
         </nav>
         <a

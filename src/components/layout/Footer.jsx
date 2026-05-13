@@ -25,6 +25,7 @@ export function Footer() {
             <ul>
               <li><a href="#sobre">Sobre nós</a></li>
               <li><a href="#diferenciais">Diferenciais</a></li>
+              <li><a href="#faq">FAQ</a></li>
               <li><Link to="/politica-de-privacidade">Política de Privacidade</Link></li>
               <li><Link to="/politica-de-troca-e-devolucao">Troca e Devolução</Link></li>
               <li><Link to="/politica-de-frete-e-entrega">Frete e Entrega</Link></li>
