@@ -275,4 +275,31 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81MunByX6',
   },
+  {
+    id: 21,
+    name: 'Cama Executive Bed™ | Couro Soft Premium',
+    shortName: 'Executive Bed™',
+    subtitle: 'Sofisticação e conforto absoluto em couro soft.',
+    description: 'A Executive Bed™ foi criada para pets que merecem conforto absoluto com um toque de sofisticação. Com revestimento em couro ecológico resistente e estrutura acolchoada com fibra siliconada, ela transforma o cantinho do seu pet em parte elegante da decoração da sua casa, unindo design contemporâneo e aconchego premium. Possui zíper completo para fácil remoção e higienização.',
+    bullets: [
+      'Revestimento em couro ecológico resistente de toque macio e visual refinado',
+      'Almofada recheada com fibra siliconada para máximo conforto e maciez',
+      'Zíper completo para fácil remoção e higienização',
+      'Design moderno e minimalista, fácil de harmonizar com qualquer decoração',
+      'Ideal para cães e gatos de médio e grande porte',
+    ],
+    price: 'a partir de R$ 597,00',
+    prices: [
+      { size: 'M', price: 'R$ 597,00' },
+      { size: 'G', price: 'R$ 697,00' },
+    ],
+    originalPrice: null,
+    category: ['couro'],
+    image: '/images/products/executive_bed.jpeg',
+    badge: null,
+    buyLinks: [
+      { size: 'M', link: 'https://pag.ae/81M-Zz4cL' },
+      { size: 'G', link: 'https://pag.ae/81M-QYczq' },
+    ],
+  },
 ];
