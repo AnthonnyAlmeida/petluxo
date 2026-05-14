@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app/page.jsx';
 import './styles/variables.css';
 import './styles/globals.css';
+import './styles/animations.css'
 import { wa } from './lib/whatsapp.js';
 
 // Inicializa link do botão flutuante WhatsApp

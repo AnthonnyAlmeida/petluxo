@@ -1,0 +1,28 @@
+/*
+ * animations.css — KEYFRAMES GLOBAIS
+ * Contém apenas @keyframes nomeados por componente de origem.
+ * NUNCA adicionar classes de estilo aqui.
+ * Importado em main.jsx junto com globals.css.
+ */
+
+/* ---- Hero ---- */
+
+@keyframes heroRise { to { transform: translateY(0); } }
+
+@keyframes heroFade { to { opacity: 1; } }
+
+@keyframes heroFloaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ---- Hero Stage ---- */
+
+@keyframes stageRotate { to { transform: rotate(360deg); } }
+
+/* ---- Scroll Cue ---- */
+
+@keyframes scrollCueLine {
+  0% { left: -60px; }
+  60%, 100% { left: 60px; }
+}

@@ -266,12 +266,11 @@ section { position: relative; overflow-x: hidden; }
 .hero-headline .line span {
   display: inline-block;
   transform: translateY(110%);
-  animation: rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: heroRise 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .hero-headline .line:nth-child(1) span { animation-delay: 0.1s; }
 .hero-headline .line:nth-child(2) span { animation-delay: 0.22s; }
 .hero-headline .line:nth-child(3) span { animation-delay: 0.34s; }
-@keyframes rise { to { transform: translateY(0); } }
 
 .hero-sub {
   margin-top: 22px;
@@ -280,7 +279,7 @@ section { position: relative; overflow-x: hidden; }
   line-height: 1.65;
   color: var(--ink-soft);
   opacity: 0;
-  animation: fade 1s 0.6s forwards;
+  animation: heroFade 1s 0.6s forwards;
 }
 .hero-cta-row {
   margin-top: 28px;
@@ -288,9 +287,8 @@ section { position: relative; overflow-x: hidden; }
   gap: 16px;
   flex-wrap: wrap;
   opacity: 0;
-  animation: fade 1s 0.8s forwards;
+  animation: heroFade 1s 0.8s forwards;
 }
-@keyframes fade { to { opacity: 1; } }
 
 .hero-meta {
   margin-top: 44px;
@@ -299,7 +297,7 @@ section { position: relative; overflow-x: hidden; }
   gap: 24px;
   max-width: 540px;
   opacity: 0;
-  animation: fade 1s 1s forwards;
+  animation: heroFade 1s 1s forwards;
 }
 .hero-meta div { border-left: 1px solid rgba(198,169,107,0.4); padding-left: 16px; }
 .hero-meta .k { font-family: var(--serif); font-size: 24px; line-height: 1; color: var(--ink); }
@@ -325,9 +323,8 @@ section { position: relative; overflow-x: hidden; }
   width: 684px; height: 684px;
   border-color: rgba(176,137,104,0.12);
   border-style: dashed;
-  animation: rotate 80s linear infinite;
+  animation: stageRotate 80s linear infinite;
 }
-@keyframes rotate { to { transform: rotate(360deg); } }
 
 .logo-card {
   position: relative;
@@ -405,19 +402,15 @@ section { position: relative; overflow-x: hidden; }
 .float-card.fc1 {
   top: 40px; left: -10px;
   width: 160px;
-  animation: floaty 7s ease-in-out infinite;
+  animation: heroFloaty 7s ease-in-out infinite;
 }
 .float-card.fc2 {
   bottom: 50px; right: -20px;
   width: 190px;
-  animation: floaty 9s ease-in-out infinite reverse;
+  animation: heroFloaty 9s ease-in-out infinite reverse;
 }
 .float-card .label { color: var(--caramelo); font-size: 9px; }
 .float-card .val { font-family: var(--serif); color: var(--ink); font-size: 18px; letter-spacing: 0.02em; text-transform: none; margin-top: 6px; }
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
 
 .scroll-cue {
   position: absolute;
@@ -444,11 +437,7 @@ section { position: relative; overflow-x: hidden; }
   top: 0; left: -60px;
   width: 60px; height: 1px;
   background: var(--caramelo);
-  animation: scroll-line 2.4s ease-in-out infinite;
-}
-@keyframes scroll-line {
-  0% { left: -60px; }
-  60%, 100% { left: 60px; }
+  animation: scrollCueLine 2.4s ease-in-out infinite;
 }
 
 /* Subtle grain overlay */
