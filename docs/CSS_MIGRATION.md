@@ -112,7 +112,7 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 
 ## Checklist de execução
 
-### Passo 0 — Preparação da base
+### Passo 0 — Preparação da base ✅ Concluído
 - [x] Criar `src/styles/animations.css` com todos os @keyframes renomeados
   - `rise` → `heroRise`
   - `fade` → `heroFade`
@@ -120,13 +120,13 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
   - `floaty` → `heroFloaty`
   - `scroll-line` → `scrollCueLine`
 - [x] Atualizar referências dos keyframes em todos os JSX e globals.css
-- [ ] Adicionar z-index tokens em `variables.css`
-- [ ] Substituir z-index hardcoded no globals.css pelas variáveis
-- [ ] Remover classes órfãs: `.grain`, `.diff-item .icon`, `.modal-info .row`, `.cat-chip`, `.product-grid`
-- [ ] Importar `animations.css` em `main.jsx`
-- [ ] Adicionar seção `## Convenções CSS` no `AI_CONTEXT.md`
-- [ ] ✅ Revisão visual: desktop + mobile + tablet
-- [ ] ✅ Commit: `refactor: passo 0 — animations.css, z-index tokens, remove órfãs`
+- [x] Adicionar z-index tokens em `variables.css`
+- [x] Substituir z-index hardcoded no globals.css pelas variáveis
+- [x] Remover classes órfãs: `.grain` (mantida — usada em index.html), `.diff-item .icon`, `.modal-info .row`, `.cat-chip`, `.product-grid`
+- [x] Importar `animations.css` em `main.jsx`
+- [x] Adicionar seção `## Convenções CSS` no `AI_CONTEXT.md`
+- [x] ✅ Revisão visual: desktop + mobile + tablet
+- [x] ✅ Commits: `refactor: passo 0a` e `refactor: passo 0b`
 
 ---
 
@@ -306,7 +306,7 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 
 | Etapa | Status |
 |---|---|
-| Passo 0 | 🔄 Em andamento |
+| Passo 0 | ✅ Concluído |
 | Fase 1a — TrustBadges, NotFound, Story | ⬜ Pendente |
 | Fase 1b — Featured, CTA, FAQ | ⬜ Pendente |
 | Fase 1c — Footer | ⬜ Pendente |

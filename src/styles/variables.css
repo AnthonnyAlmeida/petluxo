@@ -19,4 +19,12 @@
 
   --max: 1320px;
   --pad: clamp(24px, 4vw, 64px);
+
+  /* ---------- Z-Index ---------- */
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-overlay: 900;
+  --z-modal: 1000;
+  --z-navbar: 100;
+  --z-above-modal: 1100;
 }
