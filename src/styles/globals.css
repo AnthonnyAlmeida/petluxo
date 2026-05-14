@@ -1633,3 +1633,97 @@ section { position: relative; overflow-x: hidden; }
   background: var(--vinho);
   color: var(--offwhite);
 }
+
+/* ---------- TrustBadges ---------- */
+.trust-banner {
+  background: var(--bege-soft);
+  border-top: 1px solid var(--bege);
+  border-bottom: 1px solid var(--bege);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 14px var(--pad);
+  flex-wrap: wrap;
+}
+
+.trust-banner__item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 4px 20px;
+}
+
+.trust-banner__item svg {
+  color: var(--dourado);
+  flex-shrink: 0;
+}
+
+.trust-banner__sep {
+  display: block;
+  width: 1px;
+  height: 22px;
+  background: var(--cinza);
+  flex-shrink: 0;
+}
+
+/* trust-banner mobile: 2×2 */
+@media (max-width: 640px) {
+  .trust-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 12px var(--pad);
+  }
+
+  .trust-banner__sep {
+    display: none;
+  }
+
+  .trust-banner__item {
+    justify-content: center;
+    padding: 8px 8px;
+  }
+}
+
+/* trust-modal */
+.trust-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 0 2px;
+  border-top: 1px solid var(--cinza-soft);
+  margin-top: 12px;
+}
+
+.trust-modal__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.trust-modal__item svg {
+  color: var(--dourado);
+  flex-shrink: 0;
+}
+
+.trust-modal__sep {
+  color: var(--cinza);
+  font-size: 12px;
+  line-height: 1;
+  user-select: none;
+}

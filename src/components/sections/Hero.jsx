@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { Icon } from '../../icons.jsx';
+import { TrustBadges } from '../ui/TrustBadges.jsx';
 import heroImg from '../../../assets/hero/image-hero.png';
 
 export function Hero() {
   return (
-    <section className="hero">
+    <>
+      <section className="hero">
       <div className="wrap hero-grid">
         <div>
           <div className="eyebrow reveal in" style={{marginBottom:36}}>
@@ -62,5 +64,7 @@ export function Hero() {
         <span className="bar"></span>
       </div>
     </section>
+    <TrustBadges variant="banner" />
+    </>
   );
 }

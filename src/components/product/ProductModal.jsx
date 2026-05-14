@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Icon } from '../../icons.jsx';
 import { wa } from '../../lib/whatsapp.js';
+import { TrustBadges } from '../ui/TrustBadges.jsx';
 
 export function ProductModal({ product, onClose }) {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -101,6 +102,7 @@ export function ProductModal({ product, onClose }) {
                 <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
               </a>
             )}
+            <TrustBadges variant="modal" />
           </div>
         </div>
       </div>
