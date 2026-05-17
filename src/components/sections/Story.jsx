@@ -2,13 +2,14 @@
 
 import React from 'react';
 import sobreImg from '../../../assets/sobre_nos/foto_sobre_nos.jpeg';
+import styles from './Story.module.css';
 
 export function Story() {
   return (
-    <section className="story" id="sobre">
-      <div className="wrap story-grid">
+    <section className={styles.story} id="sobre">
+      <div className={['wrap', styles.storyGrid].filter(Boolean).join(' ')}>
         <div className="reveal">
-          <div className="story-art">
+          <div className={styles.storyArt}>
             <img
               src={sobreImg}
               alt="Sobre a PetLuxo"
@@ -17,14 +18,14 @@ export function Story() {
           </div>
         </div>
 
-        <div className="story-text">
+        <div className={styles.storyText}>
           <div className="section-tag reveal">
             <span className="num">03</span><span className="line"></span><span>SOBRE NÓS</span>
           </div>
           <h2 className="serif reveal d1">
             Onde o amor<br/><i className="italic gold-text">encontra o luxo</i><br/>que seu pet merece.
           </h2>
-          <p className="lead reveal d2">
+          <p className={[styles.lead, 'reveal', 'd2'].filter(Boolean).join(' ')}>
             Na PetLuxo, acreditamos que o cuidado com os nossos pets vai muito além do básico. É uma expressão de amor, estilo e atenção aos detalhes.
           </p>
           <p className="reveal d3">

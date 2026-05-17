@@ -146,8 +146,11 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] Build sem erros
 
 #### Story
-- [ ] Criar `src/components/sections/Story.module.css`
-- [ ] Migrar classes do globals.css → module
+- [x] Criar `src/components/sections/Story.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Usar `:global(.reveal)` para `.storyGrid > .reveal::before`
+- [x] Atualizar `Story.jsx`
+- [x] Build sem erros
 - [ ] Usar `:global(.reveal)` para `.story-grid > .reveal::before`
 - [ ] Atualizar `Story.jsx`
 - [ ] Build sem erros
