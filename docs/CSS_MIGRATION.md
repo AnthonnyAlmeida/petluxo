@@ -218,12 +218,12 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [ ] ✅ Commit: `refactor: fase 2b — ProductGrid`
 
 #### Products
-- [ ] Criar `src/components/sections/Products.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Atualizar `Products.jsx`
-- [ ] Build sem erros
-- [ ] ✅ Revisão visual: desktop + mobile
-- [ ] ✅ Commit: `refactor: fase 2c — Products`
+- [x] Criar `src/components/sections/Products.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Atualizar `Products.jsx`
+- [x] Build sem erros
+- [x] ✅ Revisão visual: desktop + mobile
+- [x] ✅ Commit: `refactor: fase 2c — Products`
 
 #### Differentials
 - [ ] Criar `src/components/sections/Differentials.module.css`
@@ -312,7 +312,7 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 | Fase 1d — Páginas de política | ✅ Concluído |
 | Fase 2a — ProductCard | ✅ Concluído |
 | Fase 2b — ProductGrid | ⬜ Pendente |
-| Fase 2c — Products | ⬜ Pendente |
+| Fase 2c — Products | ✅ Concluído |
 | Fase 2d — Differentials | ⬜ Pendente |
 | Fase 3a — ProductModal | ⬜ Pendente |
 | Fase 3b — Navbar | ⬜ Pendente |

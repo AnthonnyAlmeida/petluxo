@@ -1,0 +1,41 @@
+/* ---------- Products — cabeçalho da seção ---------- */
+.productsHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 36px;
+  gap: 40px;
+}
+.productsHead h2 {
+  font-size: clamp(32px, 3.5vw, 52px);
+  line-height: 1;
+}
+
+/* ---------- Products — expansão de categorias ---------- */
+.productsExpand {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.productsExpandOpen {
+  grid-template-rows: 1fr;
+}
+.productsExpandInner {
+  overflow: hidden;
+}
+.productsCategoryBlock {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(176, 137, 104, 0.18);
+}
+
+/* ---------- @media (max-width: 768px) ---------- */
+@media (max-width: 768px) {
+  .productsHead {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    gap: 20px;
+  }
+  .productsHead .right { flex-wrap: wrap; }
+}

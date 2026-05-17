@@ -6,6 +6,7 @@ import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { CATEGORIES, PRODUCTS } from '../../data/products.js';
 import { ProductGrid } from '../product/ProductGrid.jsx';
+import styles from './Products.module.css';
 
 const featuredProducts = PRODUCTS.filter(p => p.category.includes('mais-vendidos'));
 const extraCategories  = CATEGORIES.filter(c => c.id !== 'mais-vendidos');
@@ -24,7 +25,7 @@ export function Products({ onQuick }) {
   return (
     <section className="section-pad" id="produtos" ref={sectionRef}>
       <div className="wrap">
-        <div className="products-head">
+        <div className={styles.productsHead}>
           <div>
             <div className="section-tag reveal">
               <span className="num">02</span><span className="line"></span><span>NOSSOS PRODUTOS</span>
@@ -45,13 +46,13 @@ export function Products({ onQuick }) {
           </div>
         )}
 
-        <div className={`products-expand${expanded ? ' open' : ''}`}>
-          <div className="products-expand-inner">
+        <div className={[styles.productsExpand, expanded && styles.productsExpandOpen].filter(Boolean).join(' ')}>
+          <div className={styles.productsExpandInner}>
             {extraCategories.map(cat => {
               const catProducts = PRODUCTS.filter(p => p.category.includes(cat.id));
               if (!catProducts.length) return null;
               return (
-                <div key={cat.id} className="products-category-block">
+                <div key={cat.id} className={styles.productsCategoryBlock}>
                   <ProductGrid
                     products={catProducts}
                     onQuick={onQuick}

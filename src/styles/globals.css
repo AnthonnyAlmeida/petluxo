@@ -451,19 +451,6 @@ section { position: relative; overflow-x: hidden; }
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-/* ---------- Product grid ---------- */
-.products-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  margin-bottom: 36px;
-  gap: 40px;
-}
-.products-head h2 {
-  font-size: clamp(32px, 3.5vw, 52px);
-  line-height: 1;
-}
-
 /* ---------- Differentials ---------- */
 .diffs {
   background: var(--ink);
@@ -701,24 +688,6 @@ section { position: relative; overflow-x: hidden; }
   font-size: 11px;
 }
 
-/* ---------- Products expand animation ---------- */
-.products-expand {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.products-expand.open {
-  grid-template-rows: 1fr;
-}
-.products-expand-inner {
-  overflow: hidden;
-}
-.products-category-block {
-  margin-top: 64px;
-  padding-top: 48px;
-  border-top: 1px solid rgba(176, 137, 104, 0.18);
-}
-
 /* ---------- Mobile Nav Drawer ---------- */
 .nav-drawer {
   position: absolute;
@@ -781,15 +750,6 @@ section { position: relative; overflow-x: hidden; }
   .hero-meta div { padding-left: 10px; min-width: 0; }
   .hero-meta .k { font-size: 18px; }
   .hero-meta .v { font-size: 8px; letter-spacing: 0.1em; word-break: break-word; overflow-wrap: break-word; }
-
-  /* Products */
-  .products-head {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 40px;
-    gap: 20px;
-  }
-  .products-head .right { flex-wrap: wrap; }
 
   /* Differentials */
   .diff-grid { grid-template-columns: 1fr; }
