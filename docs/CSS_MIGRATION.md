@@ -151,12 +151,11 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] Usar `:global(.reveal)` para `.storyGrid > .reveal::before`
 - [x] Atualizar `Story.jsx`
 - [x] Build sem erros
-- [ ] Usar `:global(.reveal)` para `.story-grid > .reveal::before`
-- [ ] Atualizar `Story.jsx`
-- [ ] Build sem erros
+- [x] ✅ Revisão visual: desktop + mobile + tablet
+- [x] ✅ Commit: `refactor: fase 1a — Story para CSS Modules`
 
-- [ ] ✅ Revisão visual: desktop + mobile + tablet
-- [ ] ✅ Commit: `refactor: fase 1a — TrustBadges, NotFound, Story`
+- [x] ✅ Revisão visual: desktop + mobile + tablet
+- [x] ✅ Commit: `refactor: fase 1a — TrustBadges, NotFound, Story`
 
 #### Featured
 - [ ] Criar `src/components/sections/Featured.module.css`
@@ -310,7 +309,7 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 | Etapa | Status |
 |---|---|
 | Passo 0 | ✅ Concluído |
-| Fase 1a — TrustBadges, NotFound, Story | ⬜ Pendente |
+| Fase 1a — TrustBadges, NotFound, Story | ✅ Concluído |
 | Fase 1b — Featured, CTA, FAQ | ⬜ Pendente |
 | Fase 1c — Footer | ⬜ Pendente |
 | Fase 1d — Páginas de política | ⬜ Pendente |
