@@ -226,13 +226,13 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] ✅ Commit: `refactor: fase 2c — Products`
 
 #### Differentials
-- [ ] Criar `src/components/sections/Differentials.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Usar `:global(.section-tag)` para `.diffs .section-tag`
-- [ ] Atualizar `Differentials.jsx`
-- [ ] Build sem erros
-- [ ] ✅ Revisão visual: desktop + mobile
-- [ ] ✅ Commit: `refactor: fase 2d — Differentials`
+- [x] Criar `src/components/sections/Differentials.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Usar `:global(.section-tag)` para `.diffs .section-tag`
+- [x] Atualizar `Differentials.jsx`
+- [x] Build sem erros
+- [x] ✅ Revisão visual: desktop + mobile
+- [x] ✅ Commit: `refactor: fase 2d — Differentials`
 
 ---
 
@@ -313,7 +313,7 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 | Fase 2a — ProductCard | ✅ Concluído |
 | Fase 2b — ProductGrid | ⬜ Pendente |
 | Fase 2c — Products | ✅ Concluído |
-| Fase 2d — Differentials | ⬜ Pendente |
+| Fase 2d — Differentials | ✅ Concluído |
 | Fase 3a — ProductModal | ⬜ Pendente |
 | Fase 3b — Navbar | ⬜ Pendente |
 | Fase 3c — Hero | ⬜ Pendente |

@@ -1,0 +1,114 @@
+/* PetLuxo — Differentials */
+
+.diffs {
+  background: var(--ink);
+  color: var(--offwhite);
+  position: relative;
+  overflow: hidden;
+}
+
+.diffs::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(900px 500px at 80% 0%, rgba(198,169,107,0.18), transparent 60%);
+  pointer-events: none;
+}
+
+.diffs :global(.section-tag) {
+  color: rgba(248,246,243,0.5);
+}
+
+.diffs h2 {
+  font-size: clamp(44px, 5vw, 80px);
+  line-height: 1;
+  margin-bottom: 80px;
+  max-width: 800px;
+}
+
+.diffGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid rgba(198,169,107,0.25);
+}
+
+.diffItem {
+  padding: 36px 28px 36px 0;
+  border-right: 1px solid rgba(198,169,107,0.18);
+  position: relative;
+  transition: all 0.5s;
+}
+
+.diffItem:last-child {
+  border-right: 0;
+}
+
+.diffItem:hover {
+  background: rgba(198,169,107,0.06);
+}
+
+.diffItem .num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--dourado);
+  margin-bottom: 28px;
+}
+
+.diffItem h3 {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.diffItem p {
+  color: rgba(248,246,243,0.65);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.diffItem .arr {
+  margin-top: 24px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(198,169,107,0.3);
+  border-radius: 50%;
+  color: var(--dourado);
+  transition: all 0.4s;
+}
+
+.diffItem:hover .arr {
+  background: var(--dourado);
+  color: var(--ink);
+  border-color: var(--dourado);
+  transform: translate(4px, -4px);
+}
+
+/* @media (max-width: 980px) — tablet */
+
+@media (max-width: 980px) {
+  .diffGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* @media (max-width: 768px) — mobile */
+
+@media (max-width: 768px) {
+  .diffGrid { grid-template-columns: 1fr; }
+  .diffItem {
+    border-right: 0;
+    border-bottom: 1px solid rgba(198, 169, 107, 0.18);
+    padding: 28px 0;
+  }
+  .diffItem:last-child { border-bottom: 0; }
+}
+
+/* @media (max-width: 480px) — mobile pequeno */
+
+@media (max-width: 480px) {
+  .diffs h2 { margin-bottom: 40px; }
+}

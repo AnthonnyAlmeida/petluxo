@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Icon } from '../../icons.jsx';
+import styles from './Differentials.module.css';
 
 const DIFFS = [
   { num: "01", title: "Qualidade garantida",          body: "Produtos selecionados com atenção à qualidade dos materiais, durabilidade e conforto para o seu animal." },
@@ -12,24 +13,24 @@ const DIFFS = [
 
 export function Differentials() {
   return (
-    <section className="diffs section-pad" id="diferenciais">
+    <section className={[styles.diffs, 'section-pad'].filter(Boolean).join(' ')} id="diferenciais">
       <div className="wrap">
-        <div className="section-tag reveal">
+        <div className={['section-tag', 'reveal'].filter(Boolean).join(' ')}>
           <span className="num" style={{color:"var(--dourado)"}}>04</span>
           <span className="line" style={{background:"var(--dourado)"}}></span>
           <span>POR QUE ESCOLHER A PETLUXO</span>
         </div>
-        <h2 className="serif reveal d1">
+        <h2 className={['serif', 'reveal', 'd1'].filter(Boolean).join(' ')}>
           Quatro motivos.<br/>
           <i className="italic" style={{color:"var(--dourado)"}}>Para comprar agora.</i>
         </h2>
-        <div className="diff-grid">
+        <div className={styles.diffGrid}>
           {DIFFS.map((d, i) => (
-            <div key={d.num} className={`diff-item reveal d${i + 1}`}>
-              <div className="num">{d.num} / 04</div>
+            <div key={d.num} className={[styles.diffItem, 'reveal', `d${i + 1}`].filter(Boolean).join(' ')}>
+              <div className={styles.num}>{d.num} / 04</div>
               <h3 className="serif">{d.title}</h3>
               <p>{d.body}</p>
-              <div className="arr"><Icon.ArrowUp/></div>
+              <div className={styles.arr}><Icon.ArrowUp/></div>
             </div>
           ))}
         </div>
