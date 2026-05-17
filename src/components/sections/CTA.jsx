@@ -3,16 +3,17 @@
 import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { wa } from '../../lib/whatsapp.js';
+import styles from './CTA.module.css';
 
 export function CTA() {
   return (
-    <section className="cta section-pad" id="contato">
-      <div className="cta-orn">
-        <div className="ring r3"></div>
-        <div className="ring r2"></div>
-        <div className="ring r1"></div>
+    <section className={[styles.cta, 'section-pad'].filter(Boolean).join(' ')} id="contato">
+      <div className={styles.ctaOrn}>
+        <div className={[styles.ring, styles.r3].filter(Boolean).join(' ')}></div>
+        <div className={[styles.ring, styles.r2].filter(Boolean).join(' ')}></div>
+        <div className={[styles.ring, styles.r1].filter(Boolean).join(' ')}></div>
       </div>
-      <div className="wrap cta-content">
+      <div className={[styles.ctaContent, 'wrap'].filter(Boolean).join(' ')}>
         <div className="eyebrow reveal" style={{justifyContent:"center", display:"inline-flex"}}>
           <span className="dot"></span>COMPRA SEGURA · ENTREGA EM TODO O BRASIL
         </div>
@@ -23,7 +24,7 @@ export function CTA() {
         <p className="reveal d2">
           Explore nossa coleção e finalize sua compra com segurança. Dúvidas? Estamos no WhatsApp.
         </p>
-        <div className="cta-row reveal d3">
+        <div className={[styles.ctaRow, 'reveal d3'].filter(Boolean).join(' ')}>
           <a className="btn btn-primary" href="#produtos">
             VER PRODUTOS <Icon.ArrowR className="arr"/>
           </a>
@@ -31,10 +32,10 @@ export function CTA() {
             <Icon.Wa className="wa-icon"/> FALAR VIA WHATSAPP
           </a>
         </div>
-        <div className="cta-meta reveal d4">
-          <span><span className="dotg"></span>Resposta rápida</span>
-          <span><span className="dotg"></span>Entrega em todo o Brasil</span>
-          <span><span className="dotg"></span>Pagamento seguro</span>
+        <div className={[styles.ctaMeta, 'reveal d4'].filter(Boolean).join(' ')}>
+          <span><span className={styles.dotg}></span>Resposta rápida</span>
+          <span><span className={styles.dotg}></span>Entrega em todo o Brasil</span>
+          <span><span className={styles.dotg}></span>Pagamento seguro</span>
         </div>
       </div>
     </section>

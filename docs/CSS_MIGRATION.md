@@ -161,11 +161,11 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] Build sem erros
 
 #### CTA
-- [ ] Criar `src/components/sections/CTA.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Usar `:global(.reveal)` onde necessário
-- [ ] Atualizar `CTA.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/sections/CTA.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Usar `:global(.reveal)` onde necessário
+- [x] Atualizar `CTA.jsx`
+- [x] Build sem erros
 
 #### FAQ
 - [ ] Criar `src/components/sections/FAQ.module.css`

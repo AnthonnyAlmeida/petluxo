@@ -618,71 +618,6 @@ section { position: relative; overflow-x: hidden; }
   transform: translate(4px, -4px);
 }
 
-/* ---------- CTA ---------- */
-.cta {
-  position: relative;
-  text-align: center;
-  background:
-    radial-gradient(800px 500px at 50% 100%, rgba(198,169,107,0.18), transparent 60%),
-    var(--offwhite);
-  overflow: hidden;
-}
-.cta-orn {
-  position: absolute;
-  inset: 0;
-  display: grid; place-items: center;
-  pointer-events: none;
-}
-.cta-orn .ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(198,169,107,0.18);
-}
-.cta-orn .ring.r1 { width: 600px; height: 600px; }
-.cta-orn .ring.r2 { width: 800px; height: 800px; border-color: rgba(198,169,107,0.1); }
-.cta-orn .ring.r3 { width: 1000px; height: 1000px; border-color: rgba(198,169,107,0.06); }
-.cta-content { position: relative; z-index: var(--z-base); }
-.cta h2 {
-  font-size: clamp(56px, 7vw, 110px);
-  line-height: 0.96;
-  letter-spacing: -0.02em;
-  margin: 28px auto 32px;
-  max-width: 18ch;
-}
-.cta p {
-  font-size: 17px;
-  color: var(--ink-soft);
-  max-width: 520px;
-  margin: 0 auto 44px;
-  line-height: 1.65;
-}
-.cta-row {
-  display: inline-flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.cta-meta {
-  margin-top: 60px;
-  display: inline-flex;
-  align-items: center;
-  gap: 28px;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.cta-meta span {
-  display: inline-flex; align-items: center; gap: 10px;
-}
-.cta-meta .dotg {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--caramelo);
-  display: inline-block;
-}
-
 /* ---------- Footer ---------- */
 .foot {
   background: var(--offwhite);
@@ -1279,11 +1214,6 @@ section { position: relative; overflow-x: hidden; }
     padding: 28px 0;
   }
   .diff-item:last-child { border-bottom: 0; }
-
-  /* CTA */
-  .cta-row { flex-direction: column; align-items: center; }
-  .cta-row .btn { width: 100%; max-width: 360px; justify-content: center; }
-  .cta-meta { flex-wrap: wrap; justify-content: center; gap: 16px; }
 
   /* Footer */
   .foot-grid { gap: 32px; }
