@@ -3,15 +3,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { wa } from '../../lib/whatsapp.js';
+import styles from './Footer.module.css';
 
 export function Footer() {
   return (
-    <footer className="foot">
+    <footer className={styles.foot}>
       <div className="wrap">
-        <div className="foot-grid">
+        <div className={styles.footGrid}>
           <div>
-            <div className="foot-brand"><i className="italic gold-text">Pet</i>Luxo</div>
-            <p className="foot-tag">Sofisticação e conforto para quem ama seus pets.</p>
+            <div className={styles.footBrand}><i className="italic gold-text">Pet</i>Luxo</div>
+            <p className={styles.footTag}>Sofisticação e conforto para quem ama seus pets.</p>
           </div>
           <div>
             <h4>Produtos</h4>
@@ -45,12 +46,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="foot-social">
+        <div className={styles.footSocial}>
           <a
             href="https://www.instagram.com/petluxostory/"
             target="_blank"
             rel="noopener noreferrer"
-            className="foot-social-link"
+            className={styles.footSocialLink}
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16" aria-hidden="true" style={{color: 'var(--vinho)'}}>
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
@@ -59,7 +60,7 @@ export function Footer() {
             </svg>
             Instagram
           </a>
-          <a className="foot-social-link" aria-label="PagBank Pagamento Seguro">
+          <a className={styles.footSocialLink} aria-label="PagBank Pagamento Seguro">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16" aria-hidden="true">
               <rect x="3" y="10" width="18" height="11" rx="2" ry="2"/>
               <path d="M7 10V7a5 5 0 0 1 10 0v3"/>
@@ -68,7 +69,7 @@ export function Footer() {
           </a>
         </div>
 
-        <div className="foot-bottom">
+        <div className={styles.footBottom}>
           <span>© 2026 PETLUXO · CNPJ 23.833.930/0001-21</span>
         </div>
       </div>

@@ -178,13 +178,13 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] ✅ Commit: `refactor: fase 1b — Featured, CTA, FAQ`
 
 #### Footer
-- [ ] Criar `src/components/layout/Footer.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Atualizar `Footer.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/layout/Footer.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Atualizar `Footer.jsx`
+- [x] Build sem erros
 
-- [ ] ✅ Revisão visual: desktop + mobile + tablet
-- [ ] ✅ Commit: `refactor: fase 1c — Footer`
+- [x] ✅ Revisão visual: desktop + mobile + tablet
+- [x] ✅ Commit: `refactor: fase 1c — Footer`
 
 #### Páginas de política (PrivacyPage, ReturnPolicyPage, ShippingPolicyPage, TermsPage)
 - [ ] Criar module.css para cada página

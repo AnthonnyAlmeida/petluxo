@@ -1,0 +1,91 @@
+/* PetLuxo — Footer Module */
+
+.foot {
+  background: var(--offwhite);
+  border-top: 1px solid rgba(42,37,34,0.08);
+  padding: 60px 0 28px;
+}
+
+.footGrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.foot h4 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.foot ul { list-style: none; display: grid; gap: 12px; }
+.foot ul a { font-size: 14px; color: var(--ink); transition: color 0.3s; }
+.foot ul a:hover { color: var(--caramelo); }
+
+.footBrand { font-family: var(--serif); font-size: 32px; letter-spacing: 0.05em; }
+.footTag { color: var(--ink-soft); font-size: 13px; max-width: 280px; line-height: 1.7; margin-top: 16px; }
+
+.footSocial {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(42,37,34,0.08);
+  margin-bottom: 28px;
+}
+
+.footSocialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color 0.3s;
+}
+.footSocialLink:hover { color: var(--caramelo); }
+
+.footBottom {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.footBottom .links { /* reservado para uso futuro */ }
+
+/* @media (max-width: 980px) — desktop compacto */
+@media (max-width: 980px) {
+  .footGrid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* @media (max-width: 860px) */
+@media (max-width: 860px) {
+  .footGrid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+/* @media (max-width: 768px) — tablet */
+@media (max-width: 768px) {
+  .footGrid { gap: 32px; }
+  .footBottom { flex-direction: column; gap: 16px; text-align: center; }
+  .footBottom .links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+}
+
+/* @media (max-width: 540px) */
+@media (max-width: 540px) {
+  .footGrid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* @media (max-width: 480px) — mobile */
+@media (max-width: 480px) {
+  .footBrand { font-size: 26px; }
+  .footGrid { gap: 24px; }
+}
