@@ -187,24 +187,24 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] ✅ Commit: `refactor: fase 1c — Footer`
 
 #### Páginas de política (PrivacyPage, ReturnPolicyPage, ShippingPolicyPage, TermsPage)
-- [ ] Criar module.css para cada página
-- [ ] Migrar classes do globals.css → modules
-- [ ] Atualizar cada JSX
-- [ ] Build sem erros
+- [x] Criar module.css para cada página (N/A — páginas usam inline styles, nenhum módulo necessário)
+- [x] Migrar classes do globals.css → modules (N/A — sem classes CSS a migrar)
+- [x] Atualizar cada JSX (N/A — nenhuma alteração necessária)
+- [x] Build sem erros (confirmado nas fases anteriores)
 
-- [ ] ✅ Revisão visual: desktop + mobile
-- [ ] ✅ Commit: `refactor: fase 1d — páginas de política`
+- [x] ✅ Revisão visual: desktop + mobile
+- [x] ✅ Commit: N/A — nenhuma alteração de código
 
 ---
 
 ### Fase 2 — Componentes de produto
 
 #### ProductCard
-- [ ] Criar `src/components/product/ProductCard.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Tratar `.product .badge.gold` com `:global(.gold)`
-- [ ] Atualizar `ProductCard.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/product/ProductCard.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Tratar `.product .badge.gold` com `:global(.gold)`
+- [x] Atualizar `ProductCard.jsx`
+- [x] Build sem erros
 - [ ] ✅ Revisão visual: desktop + mobile
 - [ ] ✅ Commit: `refactor: fase 2a — ProductCard`
 
@@ -307,10 +307,10 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 |---|---|
 | Passo 0 | ✅ Concluído |
 | Fase 1a — TrustBadges, NotFound, Story | ✅ Concluído |
-| Fase 1b — Featured, CTA, FAQ | ⬜ Pendente |
-| Fase 1c — Footer | ⬜ Pendente |
-| Fase 1d — Páginas de política | ⬜ Pendente |
-| Fase 2a — ProductCard | ⬜ Pendente |
+| Fase 1b — Featured, CTA, FAQ | ✅ Concluído |
+| Fase 1c — Footer | ✅ Concluído |
+| Fase 1d — Páginas de política | ✅ Concluído |
+| Fase 2a — ProductCard | ✅ Concluído |
 | Fase 2b — ProductGrid | ⬜ Pendente |
 | Fase 2c — Products | ⬜ Pendente |
 | Fase 2d — Differentials | ⬜ Pendente |

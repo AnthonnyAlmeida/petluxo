@@ -2,25 +2,26 @@
 
 import React from 'react';
 import { Icon } from '../../icons.jsx';
+import styles from './ProductCard.module.css';
 
 export function ProductCard({ product, index, onQuick }) {
   return (
-    <article className={`product reveal d${(index % 5) + 1}`} onClick={() => onQuick(product)}>
-      <div className="stage">
-        <button className="qa-btn" aria-label="Visualizar"><Icon.Plus/></button>
-        <img src={product.image} alt={product.name} className="product-img" />
+    <article className={[styles.product, 'reveal', `d${(index % 5) + 1}`].filter(Boolean).join(' ')} onClick={() => onQuick(product)}>
+      <div className={styles.stage}>
+        <button className={styles.qaBtn} aria-label="Visualizar"><Icon.Plus/></button>
+        <img src={product.image} alt={product.name} className={styles.productImg} />
         {product.badge && (
-          <span className="badge">{product.badge}</span>
+          <span className={styles.badge}>{product.badge}</span>
         )}
       </div>
-      <div className="meta">
-        <div className="name">{product.shortName || product.name}</div>
-        <div className="price-col">
+      <div className={styles.meta}>
+        <div className={styles.name}>{product.shortName || product.name}</div>
+        <div className={styles.priceCol}>
           {product.originalPrice && (
-            <span className="price-original">{product.originalPrice}</span>
+            <span className={styles.priceOriginal}>{product.originalPrice}</span>
           )}
-          <div className="price">{product.price}</div>
-          <small className="price-via">
+          <div className={styles.price}>{product.price}</div>
+          <small className={styles.priceVia}>
             {product.buyLink || product.buyLinks ? 'COMPRAR AGORA' : 'VIA WHATSAPP'}
           </small>
         </div>

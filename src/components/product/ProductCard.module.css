@@ -1,0 +1,127 @@
+/* PetLuxo — ProductCard Module */
+
+.product {
+  position: relative;
+  cursor: pointer;
+}
+
+.product .stage {
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--bege-soft) 0%, var(--bege) 100%);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.7) inset;
+}
+
+.product:hover .stage {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px -25px rgba(42,37,34,0.25);
+}
+
+.product .qaBtn {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--offwhite);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: all 0.4s;
+  border: 1px solid rgba(198,169,107,0.3);
+}
+
+.product:hover .qaBtn { opacity: 1; transform: translateY(0); }
+
+.product .meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 4px 0;
+  align-items: flex-start;
+}
+
+.product .meta .name {
+  font-family: var(--serif);
+  font-size: 18px;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+.product .meta .name small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+
+.product .meta .price {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.product .meta .price small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-align: right;
+  margin-top: 4px;
+}
+
+.product .badge {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  background: var(--vinho);
+  color: var(--offwhite);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.product .badge:global(.gold) {
+  background: var(--caramelo);
+}
+
+.productImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product .meta .priceCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.product .meta .priceVia {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.product .meta .priceOriginal {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
