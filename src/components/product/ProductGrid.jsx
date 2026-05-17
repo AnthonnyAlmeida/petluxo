@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ProductCard } from './ProductCard.jsx';
+import styles from './ProductGrid.module.css';
 
 function usePerView() {
   const getPerView = () => {
@@ -79,25 +80,25 @@ export function ProductGrid({ products, onQuick, resetKey, title }) {
   );
 
   return (
-    <div className={`carousel${products.length < perView ? ' carousel--single' : ''}`}>
-      {title && <h3 className="carousel-title">{title}</h3>}
-      <div className="carousel-outer">
+    <div className={[styles.carousel, products.length < perView && styles.carouselSingle].filter(Boolean).join(' ')}>
+      {title && <h3 className={styles.carouselTitle}>{title}</h3>}
+      <div className={styles.carouselOuter}>
         {showControls && (
           <button
-            className="carousel-arrow carousel-arrow-side carousel-arrow-side--prev"
+            className={[styles.carouselArrow, styles.carouselArrowSide].join(' ')}
             onClick={() => setIndex(i => i - 1)}
             disabled={!canPrev}
             aria-label="Anterior"
           >{ArrowLeft}</button>
         )}
         <div
-          className="carousel-viewport"
+          className={styles.carouselViewport}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
           <div
-            className="carousel-track"
+            className={styles.carouselTrack}
             style={{
               width: `${(products.length / perView) * 100}%`,
               transform: `translateX(-${(index * perView / products.length) * 100}%)`,
@@ -106,7 +107,7 @@ export function ProductGrid({ products, onQuick, resetKey, title }) {
             {products.map((p, i) => (
               <div
                 key={p.id}
-                className="carousel-item"
+                className={styles.carouselItem}
                 style={{ width: `${100 / products.length}%` }}
               >
                 <ProductCard product={p} index={i} onQuick={onQuick} />
@@ -116,7 +117,7 @@ export function ProductGrid({ products, onQuick, resetKey, title }) {
         </div>
         {showControls && (
           <button
-            className="carousel-arrow carousel-arrow-side carousel-arrow-side--next"
+            className={[styles.carouselArrow, styles.carouselArrowSide].join(' ')}
             onClick={() => setIndex(i => i + 1)}
             disabled={!canNext}
             aria-label="Próximo"
@@ -124,25 +125,25 @@ export function ProductGrid({ products, onQuick, resetKey, title }) {
         )}
       </div>
       {showControls && (
-        <div className="carousel-controls">
+        <div className={styles.carouselControls}>
           <button
-            className="carousel-arrow"
+            className={styles.carouselArrow}
             onClick={() => setIndex(i => i - 1)}
             disabled={!canPrev}
             aria-label="Anterior"
           >{ArrowLeft}</button>
-          <div className="carousel-dots">
+          <div className={styles.carouselDots}>
             {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i}
-                className={`carousel-dot${i === index ? ' active' : ''}`}
+                className={[styles.carouselDot, i === index && styles.carouselDotActive].filter(Boolean).join(' ')}
                 onClick={() => setIndex(i)}
                 aria-label={`Página ${i + 1}`}
               />
             ))}
           </div>
           <button
-            className="carousel-arrow"
+            className={styles.carouselArrow}
             onClick={() => setIndex(i => i + 1)}
             disabled={!canNext}
             aria-label="Próximo"

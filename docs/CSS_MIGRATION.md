@@ -205,15 +205,15 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] Tratar `.product .badge.gold` com `:global(.gold)`
 - [x] Atualizar `ProductCard.jsx`
 - [x] Build sem erros
-- [ ] ✅ Revisão visual: desktop + mobile
-- [ ] ✅ Commit: `refactor: fase 2a — ProductCard`
+- [x] ✅ Revisão visual: desktop + mobile
+- [x] ✅ Commit: `refactor: fase 2a — ProductCard`
 
 #### ProductGrid
-- [ ] Criar `src/components/product/ProductGrid.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Renomear `.carousel--single` → `carouselSingle`
-- [ ] Atualizar `ProductGrid.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/product/ProductGrid.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Renomear `.carousel--single` → `carouselSingle`
+- [x] Atualizar `ProductGrid.jsx`
+- [x] Build sem erros
 - [ ] ✅ Revisão visual: desktop + mobile (testar scroll do carrossel)
 - [ ] ✅ Commit: `refactor: fase 2b — ProductGrid`
 

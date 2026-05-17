@@ -655,91 +655,6 @@ section { position: relative; overflow-x: hidden; }
   .stage-ring.r2 { width: 336px; height: 336px; }
   .stage-ring.r3 { width: 576px; height: 576px; }
   .logo-card { width: 300px; height: 384px; }
-  /* Carousel single */
-  .carousel--single .carousel-item { width: 50% !important; }
-}
-
-/* ---------- Carousel ---------- */
-.carousel-outer {
-  margin: 0 -12px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.carousel-viewport {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  touch-action: pan-y;
-}
-.carousel-track {
-  display: flex;
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-}
-.carousel-item {
-  flex-shrink: 0;
-  padding: 0 12px;
-  box-sizing: border-box;
-}
-.carousel-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  margin-top: 28px;
-}
-.carousel-arrow {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 1px solid rgba(42, 37, 34, 0.18);
-  background: transparent;
-  display: grid;
-  place-items: center;
-  color: var(--ink);
-  transition: all 0.3s;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.carousel-arrow:hover:not(:disabled) {
-  border-color: var(--caramelo);
-  background: var(--bege);
-  color: var(--caramelo);
-}
-.carousel-arrow:disabled {
-  opacity: 0.25;
-  cursor: default;
-}
-/* Setas laterais — desktop only */
-.carousel-arrow-side {
-  flex-shrink: 0;
-  background: var(--offwhite);
-  box-shadow: 0 4px 16px -4px rgba(42,37,34,0.18);
-}
-.carousel-dots {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.carousel-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(42, 37, 34, 0.2);
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  flex-shrink: 0;
-}
-.carousel-dot.active {
-  background: var(--caramelo);
-  width: 24px;
-  border-radius: 999px;
-}
-.carousel-dot:hover:not(.active) {
-  background: rgba(42, 37, 34, 0.4);
 }
 
 /* ---------- Modal image ---------- */
@@ -786,16 +701,6 @@ section { position: relative; overflow-x: hidden; }
   font-size: 11px;
 }
 
-/* ---------- Carousel category title ---------- */
-.carousel-title {
-  font-family: var(--serif);
-  font-size: clamp(20px, 2vw, 28px);
-  font-weight: 400;
-  line-height: 1.1;
-  margin-bottom: 24px;
-  color: var(--ink);
-}
-
 /* ---------- Products expand animation ---------- */
 .products-expand {
   display: grid;
@@ -812,21 +717,6 @@ section { position: relative; overflow-x: hidden; }
   margin-top: 64px;
   padding-top: 48px;
   border-top: 1px solid rgba(176, 137, 104, 0.18);
-}
-
-/* ---------- Carousel single-item centering ---------- */
-.carousel--single .carousel-outer { margin: 0; }
-.carousel--single .carousel-viewport { overflow: visible; }
-.carousel--single .carousel-track {
-  width: 100% !important;
-  transform: none !important;
-  display: flex;
-  justify-content: center;
-}
-.carousel--single .carousel-item {
-  width: calc(100% / 3) !important;
-  padding: 0 12px;
-  box-sizing: border-box;
 }
 
 /* ---------- Mobile Nav Drawer ---------- */
@@ -931,10 +821,6 @@ section { position: relative; overflow-x: hidden; }
   .modal-close { width: 44px; height: 44px; top: 14px; right: 14px; }
   .modal-info h3 { font-size: 28px; }
 
-  /* Carousel */
-  .carousel-arrow { width: 44px; height: 44px; }
-  .carousel-controls { margin-top: 36px; gap: 16px; }
-  .carousel-arrow-side { display: none; }
 }
 
 /* ---------- Responsive — 480px ---------- */
@@ -963,8 +849,6 @@ section { position: relative; overflow-x: hidden; }
 
   /* Modal — oculta imagem em telas muito pequenas */
   .modal-art { display: none; }
-  /* Carousel single */
-  .carousel--single .carousel-item { width: 100% !important; }
 }
 
 /* ---------- Size selector ---------- */
