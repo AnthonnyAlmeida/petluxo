@@ -1,6 +1,7 @@
 /* PetLuxo — TrustBadges */
 
 import React from 'react';
+import styles from './TrustBadges.module.css';
 
 const LockIcon = ({ size }) => (
   <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
@@ -48,11 +49,11 @@ const BADGES_MODAL = [
 export function TrustBadges({ variant = 'banner' }) {
   if (variant === 'modal') {
     return (
-      <div className="trust-modal">
+      <div className={styles.trustModal}>
         {BADGES_MODAL.map(({ Icon, label }, i) => (
           <React.Fragment key={label}>
-            {i > 0 && <span className="trust-modal__sep" aria-hidden="true">·</span>}
-            <span className="trust-modal__item">
+            {i > 0 && <span className={styles.trustModalSep} aria-hidden="true">·</span>}
+            <span className={styles.trustModalItem}>
               <Icon size={14} />
               <span>{label}</span>
             </span>
@@ -63,11 +64,11 @@ export function TrustBadges({ variant = 'banner' }) {
   }
 
   return (
-    <div className="trust-banner" role="list" aria-label="Garantias de compra">
+    <div className={styles.trustBanner} role="list" aria-label="Garantias de compra">
       {BADGES_BANNER.map(({ Icon, label }, i) => (
         <React.Fragment key={label}>
-          {i > 0 && <span className="trust-banner__sep" aria-hidden="true" />}
-          <div className="trust-banner__item" role="listitem">
+          {i > 0 && <span className={styles.trustBannerSep} aria-hidden="true" />}
+          <div className={styles.trustBannerItem} role="listitem">
             <Icon size={18} />
             <span>{label}</span>
           </div>

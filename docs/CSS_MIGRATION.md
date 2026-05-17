@@ -134,16 +134,16 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 **Regra: máximo 3 componentes por commit**
 
 #### TrustBadges
-- [ ] Criar `src/components/ui/TrustBadges.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Atualizar `TrustBadges.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/ui/TrustBadges.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Atualizar `TrustBadges.jsx`
+- [x] Build sem erros
 
 #### NotFound
-- [ ] Criar `src/components/sections/NotFound.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Atualizar `NotFound.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/sections/NotFound.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Atualizar `NotFound.jsx`
+- [x] Build sem erros
 
 #### Story
 - [ ] Criar `src/components/sections/Story.module.css`
