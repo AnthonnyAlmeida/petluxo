@@ -152,16 +152,13 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] Atualizar `Story.jsx`
 - [x] Build sem erros
 - [x] ✅ Revisão visual: desktop + mobile + tablet
-- [x] ✅ Commit: `refactor: fase 1a — Story para CSS Modules`
-
-- [x] ✅ Revisão visual: desktop + mobile + tablet
 - [x] ✅ Commit: `refactor: fase 1a — TrustBadges, NotFound, Story`
 
 #### Featured
-- [ ] Criar `src/components/sections/Featured.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Atualizar `Featured.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/sections/Featured.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Atualizar `Featured.jsx`
+- [x] Build sem erros
 
 #### CTA
 - [ ] Criar `src/components/sections/CTA.module.css`

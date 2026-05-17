@@ -451,109 +451,6 @@ section { position: relative; overflow-x: hidden; }
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-/* ---------- Featured product ---------- */
-.featured {
-  background: var(--bege);
-  position: relative;
-  overflow: hidden;
-}
-.featured::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(800px 500px at 80% 20%, rgba(255,255,255,0.6), transparent 60%);
-  pointer-events: none;
-}
-.featured-grid {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 90px;
-  align-items: center;
-  position: relative;
-}
-.featured-stage {
-  position: relative;
-  border-radius: 4px;
-  background:
-    linear-gradient(160deg, #F2EADD 0%, #DCCDB6 100%);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.7) inset,
-    0 50px 100px -40px rgba(176,137,104,0.4);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 420px;
-}
-.featured-stage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: var(--z-base);
-  background:
-    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(0,0,0,0.22), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 30% 10%, rgba(0,0,0,0.10), transparent 60%);
-  pointer-events: none;
-}
-.featured-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
-  display: block;
-  z-index: 0;
-}
-.featured-tag {
-  position: absolute;
-  top: 26px; left: 26px;
-  z-index: 2;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--vinho);
-  background: var(--offwhite);
-  padding: 8px 14px;
-  border-radius: 999px;
-  box-shadow: 0 6px 20px -8px rgba(0,0,0,0.15);
-}
-.featured-price {
-  position: absolute;
-  bottom: 26px; right: 26px;
-  z-index: 2;
-  background: var(--offwhite);
-  padding: 14px 20px;
-  border-radius: 6px;
-  box-shadow: 0 14px 30px -12px rgba(0,0,0,0.2);
-}
-.featured-price .small { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); }
-.featured-price .v { font-family: var(--serif); font-size: 28px; color: var(--ink); margin-top: 4px; }
-
-.featured-info h2 {
-  font-size: clamp(44px, 5vw, 72px);
-  line-height: 1;
-  margin: 24px 0 28px;
-}
-.featured-info p {
-  color: var(--ink-soft);
-  font-size: 16px;
-  max-width: 460px;
-  line-height: 1.7;
-}
-.featured-subtitle {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(17px, 2vw, 22px);
-  color: var(--caramelo) !important;
-  margin: -6px 0 28px !important;
-  line-height: 1.3;
-}
-.featured-info > div:last-child {
-  margin-top: 44px;
-}
-
 /* ---------- Product grid ---------- */
 .products-head {
   display: flex;
@@ -1085,7 +982,7 @@ section { position: relative; overflow-x: hidden; }
 
 /* responsive — tablets e mobile */
 @media (max-width: 980px) {
-  .hero-grid, .featured-grid, .foot-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-grid, .foot-grid { grid-template-columns: 1fr; gap: 40px; }
   .diff-grid { grid-template-columns: repeat(2, 1fr); }
   .nav-left, .nav-right { display: none; }
   .nav-inner { display: flex; justify-content: space-between; align-items: center; }
@@ -1365,12 +1262,6 @@ section { position: relative; overflow-x: hidden; }
   .hero-meta .k { font-size: 18px; }
   .hero-meta .v { font-size: 8px; letter-spacing: 0.1em; word-break: break-word; overflow-wrap: break-word; }
 
-  /* Featured */
-  .featured-stage { min-height: 280px; }
-  .featured-price .v { font-size: 20px; }
-  .featured-price { padding: 10px 14px; bottom: 16px; right: 16px; }
-  .featured-info > div:last-child { margin-top: 24px; }
-
   /* Products */
   .products-head {
     flex-direction: column;
@@ -1438,10 +1329,6 @@ section { position: relative; overflow-x: hidden; }
   .hero-meta div { padding-left: 12px; }
   .hero-meta .k { font-size: 20px; }
   .hero-meta .v { font-size: 9px; letter-spacing: 0.12em; }
-
-  /* Featured */
-  .featured-price .v { font-size: 17px; }
-  .featured-price { padding: 8px 12px; }
 
   /* Navbar brand */
   .brand-mark { font-size: 18px; gap: 8px; }
