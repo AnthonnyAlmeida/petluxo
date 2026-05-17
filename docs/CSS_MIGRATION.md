@@ -168,14 +168,14 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] Build sem erros
 
 #### FAQ
-- [ ] Criar `src/components/sections/FAQ.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Renomear estado: `.faq-item.open` → `.faqItem` + `.faqItemOpen`
-- [ ] Atualizar `FAQ.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/sections/FAQ.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Renomear estado: `.faq-item.open` → `.faqItem` + `.faqItemOpen`
+- [x] Atualizar `FAQ.jsx`
+- [x] Build sem erros
 
-- [ ] ✅ Revisão visual: desktop + mobile + tablet
-- [ ] ✅ Commit: `refactor: fase 1b — Featured, CTA, FAQ`
+- [x] ✅ Revisão visual: desktop + mobile + tablet
+- [x] ✅ Commit: `refactor: fase 1b — Featured, CTA, FAQ`
 
 #### Footer
 - [ ] Criar `src/components/layout/Footer.module.css`

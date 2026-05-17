@@ -3,6 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { wa } from '../../lib/whatsapp.js';
+import styles from './FAQ.module.css';
 
 const FAQS = [
   {
@@ -43,7 +44,7 @@ const TROCA_ANSWER = (
   <>
     Sim! Aceitamos trocas em até 7 dias corridos após o recebimento (produto sem uso, embalagem
     original). Em caso de defeito de fabricação, o prazo é de 90 dias. Consulte nossa{' '}
-    <Link to="/politica-de-troca-e-devolucao" className="faq-link">
+    <Link to="/politica-de-troca-e-devolucao" className={styles.faqLink}>
       Política de Troca e Devolução
     </Link>{' '}
     para mais detalhes.
@@ -56,33 +57,33 @@ export function FAQ() {
   const toggle = (i) => setOpen(prev => prev === i ? null : i);
 
   return (
-    <section className="faq section-pad" id="faq">
+    <section className={[styles.faq, 'section-pad'].filter(Boolean).join(' ')} id="faq">
       <div className="wrap">
-        <div className="faq-header reveal">
-          <p className="faq-label">06 — DÚVIDAS FREQUENTES</p>
-          <h2 className="serif faq-title">
+        <div className={[styles.faqHeader, 'reveal'].filter(Boolean).join(' ')}>
+          <p className={styles.faqLabel}>06 — DÚVIDAS FREQUENTES</p>
+          <h2 className={['serif', styles.faqTitle].filter(Boolean).join(' ')}>
             Perguntas Frequentes
           </h2>
-          <p className="faq-subtitle"><i className="italic" style={{color: 'var(--caramelo)'}}>Tire suas dúvidas antes de comprar</i></p>
+          <p className={styles.faqSubtitle}><i className="italic" style={{color: 'var(--caramelo)'}}>Tire suas dúvidas antes de comprar</i></p>
         </div>
 
-        <div className="faq-grid reveal d1">
+        <div className={[styles.faqGrid, 'reveal d1'].filter(Boolean).join(' ')}>
           {FAQS.map((item, i) => (
             <div
               key={i}
-              className={`faq-item${open === i ? ' open' : ''}`}
+              className={[styles.faqItem, open === i && styles.faqItemOpen].filter(Boolean).join(' ')}
               onClick={() => toggle(i)}
               role="button"
               tabIndex={0}
               aria-expanded={open === i}
               onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggle(i)}
             >
-              <div className="faq-question">
+              <div className={styles.faqQuestion}>
                 <span>{item.q}</span>
-                <span className="faq-icon" aria-hidden="true">+</span>
+                <span className={styles.faqIcon} aria-hidden="true">+</span>
               </div>
-              <div className="faq-answer">
-                <p className="faq-answer-text">
+              <div className={styles.faqAnswer}>
+                <p className={styles.faqAnswerText}>
                   {item.a !== null ? item.a : TROCA_ANSWER}
                 </p>
               </div>
@@ -90,19 +91,19 @@ export function FAQ() {
           ))}
         </div>
 
-        <div className="faq-footer reveal d2">
+        <div className={[styles.faqFooter, 'reveal d2'].filter(Boolean).join(' ')}>
           <p>
             Tem outra dúvida? Fale pelo{' '}
             <a
               href={wa('Olá! Tenho uma dúvida sobre os produtos PetLuxo.')}
               target="_blank"
               rel="noopener noreferrer"
-              className="faq-link"
+              className={styles.faqLink}
             >
               WhatsApp
             </a>
             {' '}ou pelo e-mail{' '}
-            <a href="mailto:petluxo.service@gmail.com" className="faq-link">
+            <a href="mailto:petluxo.service@gmail.com" className={styles.faqLink}>
               petluxo.service@gmail.com
             </a>
           </p>
