@@ -14,7 +14,7 @@ export function Featured() {
           <span className={styles.featuredTag}>DESTAQUE</span>
           <img
             className={styles.featuredImg}
-            src="/images/products/sofa-ortopedico.jpeg"
+            src="/images/products/sofa-ortopedico.webp"
             alt="Sofá Ortopédico Lounge PetLuxo™"
           />
           <div className={styles.featuredPrice}>

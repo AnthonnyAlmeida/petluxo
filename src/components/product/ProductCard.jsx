@@ -9,7 +9,7 @@ export function ProductCard({ product, index, onQuick }) {
     <article className={[styles.product, 'reveal', `d${(index % 5) + 1}`].filter(Boolean).join(' ')} onClick={() => onQuick(product)}>
       <div className={styles.stage}>
         <button className={styles.qaBtn} aria-label="Visualizar"><Icon.Plus/></button>
-        <img src={product.image} alt={product.name} className={styles.productImg} />
+        <img src={product.image} alt={product.name} className={styles.productImg} loading="lazy" />
         {product.badge && (
           <span className={styles.badge}>{product.badge}</span>
         )}

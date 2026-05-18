@@ -1,7 +1,7 @@
 /* PetLuxo — Story */
 
 import React from 'react';
-import sobreImg from '../../../assets/sobre_nos/foto_sobre_nos.jpeg';
+import sobreImg from '../../../assets/sobre_nos/foto_sobre_nos.webp';
 import styles from './Story.module.css';
 
 export function Story() {

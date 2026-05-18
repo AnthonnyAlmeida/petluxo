@@ -3,7 +3,7 @@
 import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { TrustBadges } from '../ui/TrustBadges.jsx';
-import heroImg from '../../../assets/hero/image-hero.png';
+import heroImg from '../../../assets/hero/image-hero.webp';
 import '../../styles/buttons.css';
 import styles from './Hero.module.css';
 

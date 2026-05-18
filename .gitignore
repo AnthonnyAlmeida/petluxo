@@ -6,8 +6,8 @@ dist
 .DS_Store
 *.log
 
-# Ignorar imagens de produtos
-public/images/image-hero.png
+# Ignorar imagens grandes
+assets/hero/image-hero.webp
 .vercel
 
 # Contexto para IA
