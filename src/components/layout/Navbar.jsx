@@ -54,15 +54,6 @@ export function Navbar() {
           <a href="#faq" className={styles.navDrawerLink} onClick={close}>FAQ</a>
           <a href="#contato" className={styles.navDrawerLink} onClick={close}>Contato</a>
         </nav>
-        <a
-          className={['btn', 'btn-primary', styles.navDrawerCta].filter(Boolean).join(' ')}
-          href={wa("Olá! Vim do site PetLuxo e gostaria de mais informações.")}
-          target="_blank"
-          rel="noopener"
-          onClick={close}
-        >
-          <Icon.Wa className="wa-icon"/> Falar no WhatsApp
-        </a>
       </div>
     </header>
   );
