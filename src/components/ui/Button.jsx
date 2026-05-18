@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import '../../styles/buttons.css';
 
 export function Button({ variant = "primary", href, children, ...props }) {
   const cls = `btn btn-${variant}`;

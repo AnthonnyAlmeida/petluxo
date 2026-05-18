@@ -6,6 +6,7 @@ import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { CATEGORIES, PRODUCTS } from '../../data/products.js';
 import { ProductGrid } from '../product/ProductGrid.jsx';
+import '../../styles/buttons.css';
 import styles from './Products.module.css';
 
 const featuredProducts = PRODUCTS.filter(p => p.category.includes('mais-vendidos'));

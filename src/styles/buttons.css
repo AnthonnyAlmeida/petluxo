@@ -1,0 +1,71 @@
+/*
+ * buttons.css — GLOBAL CONTROLADO
+ * Contém APENAS: .btn e variantes, .wa-icon
+ * NUNCA adicionar: cards, inputs, títulos, layouts
+ * Evolução futura: Button.jsx component quando variantes > 6
+ */
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary {
+  background: var(--vinho);
+  color: var(--offwhite);
+  box-shadow: 0 10px 30px -12px rgba(107, 30, 43, 0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px -12px rgba(107, 30, 43, 0.55), inset 0 1px 0 rgba(255,255,255,0.12);
+  background: var(--vinho-soft);
+}
+.btn-primary .arr { transition: transform 0.4s; }
+.btn-primary:hover .arr { transform: translateX(4px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(42, 37, 34, 0.18);
+}
+.btn-ghost:hover {
+  border-color: var(--caramelo);
+  background: rgba(232, 222, 210, 0.5);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--vinho);
+  border: 1.5px solid var(--vinho);
+}
+.btn-outline:hover {
+  background: rgba(107, 30, 43, 0.06);
+}
+.btn-full {
+  width: 100%;
+  justify-content: center;
+}
+.btn-gold {
+  background: linear-gradient(135deg, #D4BC85 0%, #C6A96B 50%, #B08968 100%);
+  color: #fff;
+  box-shadow: 0 10px 26px -10px rgba(176,137,104,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.btn-gold:hover { transform: translateY(-2px); }
+
+.wa-icon {
+  width: 16px; height: 16px;
+  display: inline-block;
+}
+
+/* @media (max-width: 480px) — mobile */
+@media (max-width: 480px) {
+  .btn { padding: 14px 22px; font-size: 12px; }
+}

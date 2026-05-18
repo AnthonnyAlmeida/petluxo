@@ -1,6 +1,7 @@
 /* PetLuxo — Página 404 */
 
 import React from 'react';
+import '../../styles/buttons.css';
 import styles from './NotFound.module.css';
 
 export function NotFound() {

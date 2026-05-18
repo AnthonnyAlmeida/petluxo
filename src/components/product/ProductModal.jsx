@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Icon } from '../../icons.jsx';
 import { wa } from '../../lib/whatsapp.js';
 import { TrustBadges } from '../ui/TrustBadges.jsx';
+import '../../styles/buttons.css';
 import styles from './ProductModal.module.css';
 
 export function ProductModal({ product, onClose }) {

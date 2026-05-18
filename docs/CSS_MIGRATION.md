@@ -293,14 +293,14 @@ Exemplo correto:
 
 ### Passo Final — Limpeza
 
-- [ ] Criar `src/styles/buttons.css` com cabeçalho de global controlado
-- [ ] Extrair `.btn` e variantes do globals.css → `buttons.css`
-- [ ] Importar `buttons.css` nos 7 componentes que usam botões
-- [ ] Limpar globals.css — deve conter apenas reset, utilitárias, tipografia, `.reveal`
-- [ ] Verificar que globals.css ficou abaixo de 200 linhas
-- [ ] Atualizar `AI_CONTEXT.md` com seção `## Arquitetura CSS` final
-- [ ] ✅ Revisão visual completa: todos os componentes, desktop + mobile
-- [ ] ✅ Commit: `refactor: passo final — buttons.css, limpeza globals.css`
+- [x] Criar `src/styles/buttons.css` com cabeçalho de global controlado
+- [x] Extrair `.btn` e variantes do globals.css → `buttons.css`
+- [x] Importar `buttons.css` nos 8 componentes que usam botões (Featured, CTA, ProductModal, Hero, NotFound, Navbar, Products, Button)
+- [x] Limpar globals.css — contém apenas reset, utilitárias, tipografia, `.reveal`
+- [x] Verificar que globals.css ficou abaixo de 200 linhas — **150 linhas**
+- [x] Atualizar `AI_CONTEXT.md` com seção `## Arquitetura CSS` final
+- [x] ✅ Revisão visual completa: todos os componentes, desktop + mobile
+- [x] ✅ Commit: `refactor: passo final — buttons.css, limpeza globals.css`
 
 ---
 
@@ -325,13 +325,13 @@ Exemplo correto:
 | Fase 1c — Footer | ✅ Concluído |
 | Fase 1d — Páginas de política | ✅ Concluído |
 | Fase 2a — ProductCard | ✅ Concluído |
-| Fase 2b — ProductGrid | ⬜ Pendente |
+| Fase 2b — ProductGrid | ✅ Concluído |
 | Fase 2c — Products | ✅ Concluído |
 | Fase 2d — Differentials | ✅ Concluído |
 | Fase 3a — ProductModal | ✅ Concluído |
-| Fase 3b — Navbar | 🟡 Migrado, aguardando revisão visual |
-| Fase 3c — Hero | 🟡 Migrado, aguardando revisão visual |
-| Passo Final | ⬜ Pendente |
+| Fase 3b — Navbar | ✅ Concluído |
+| Fase 3c — Hero | ✅ Concluído |
+| Passo Final | ✅ Concluído |
 
 ---
 

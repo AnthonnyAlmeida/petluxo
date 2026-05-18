@@ -3,6 +3,7 @@
 import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { PRODUCTS } from '../../data/products.js';
+import '../../styles/buttons.css';
 import styles from './Featured.module.css';
 
 export function Featured() {
