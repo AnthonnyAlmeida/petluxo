@@ -1,0 +1,206 @@
+/* PetLuxo — ProductModal.module.css */
+
+/* Quick view modal */
+.modal {
+  position: fixed; inset: 0; z-index: var(--z-modal);
+  background: rgba(42,37,34,0.5);
+  backdrop-filter: blur(8px);
+  display: grid; place-items: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s;
+  padding: 40px;
+}
+.modalShow { opacity: 1; pointer-events: auto; }
+.modalCard {
+  background: var(--offwhite);
+  border-radius: 6px;
+  max-width: 880px;
+  width: 100%;
+  max-height: 90vh;
+  height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  transform: translateY(20px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 50px 100px -30px rgba(0,0,0,0.4);
+}
+.modalShow .modalCard { transform: translateY(0); }
+.modalArt {
+  background: linear-gradient(160deg, #EFE7DC, #D6C4AB);
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  align-self: stretch;
+}
+.modalInfo {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modalInfoHeader { flex-shrink: 0; }
+.modalScroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  padding-right: 6px;
+  margin-bottom: 24px;
+}
+.modalInfoFooter { flex-shrink: 0; }
+.modalBtnStack { display: flex; flex-direction: column; gap: 12px; }
+.modalClose {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--offwhite);
+  display: grid; place-items: center;
+  font-size: 18px;
+  border: 1px solid rgba(0,0,0,0.08);
+  z-index: 2;
+}
+.modalInfo h3 { font-family: var(--serif); font-size: clamp(1.25rem, 2.8vw, 2rem); line-height: 1.2; margin-bottom: 14px; }
+.modalInfo :global(.price) { font-family: var(--serif); font-size: 30px; color: var(--vinho); margin-bottom: 20px; }
+.modalInfo p { color: var(--ink-soft); font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
+
+/* ---------- Modal image ---------- */
+.modalImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(0.9);
+}
+
+/* ---------- Modal original price ---------- */
+.modalPriceOriginal {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+
+/* ---------- Modal bullets ---------- */
+.modalBullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.modalBullets li {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  padding-left: 18px;
+  position: relative;
+}
+.modalBullets li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--caramelo);
+  font-size: 11px;
+}
+
+/* ---------- Size selector ---------- */
+.sizeSelector {
+  margin-bottom: 16px;
+}
+.sizeSelectorLabel {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 8px;
+}
+.sizeSelectorBtns {
+  display: flex;
+  gap: 8px;
+}
+.sizeBtn {
+  padding: 6px 16px;
+  border: 1px solid var(--vinho);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--vinho);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sizeBtnActive {
+  background: var(--vinho);
+  color: var(--offwhite);
+}
+
+/* ---------- WhatsApp Link (Secondary Action) ---------- */
+.modalWaLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: color 0.3s;
+  width: 100%;
+}
+
+.modalWaLink:hover {
+  color: var(--vinho);
+}
+
+.modalWaLink svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
+}
+
+/* ---------- Media Queries ---------- */
+
+/* @media (max-width: 980px) — tablet */
+@media (max-width: 980px) {
+  .modalCard { grid-template-columns: 1fr; }
+}
+
+/* @media (max-width: 768px) — tablet pequeno / mobile grande */
+@media (max-width: 768px) {
+  .modal { padding: 16px; }
+  .modalCard {
+    grid-template-columns: 1fr;
+    max-height: 90vh;
+    height: 90vh;
+    overflow: hidden;
+  }
+  .modalArt { max-height: 220px; flex-shrink: 0; }
+  .modalInfo {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+  }
+  .modalScroll { flex: 1; min-height: 0; overflow-y: auto; }
+  .modalClose { width: 44px; height: 44px; top: 14px; right: 14px; }
+  .modalInfo h3 { font-size: 28px; }
+}
+
+/* @media (max-width: 480px) — mobile */
+@media (max-width: 480px) {
+  /* Oculta imagem em telas muito pequenas */
+  .modalArt { display: none; }
+}

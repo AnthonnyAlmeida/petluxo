@@ -465,72 +465,6 @@ section { position: relative; overflow-x: hidden; }
 .reveal.d4 { transition-delay: 0.32s; }
 .reveal.d5 { transition-delay: 0.40s; }
 
-/* Quick view modal */
-.modal {
-  position: fixed; inset: 0; z-index: var(--z-modal);
-  background: rgba(42,37,34,0.5);
-  backdrop-filter: blur(8px);
-  display: grid; place-items: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.4s;
-  padding: 40px;
-}
-.modal.show { opacity: 1; pointer-events: auto; }
-.modal-card {
-  background: var(--offwhite);
-  border-radius: 6px;
-  max-width: 880px;
-  width: 100%;
-  max-height: 90vh;
-  height: 90vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  overflow: hidden;
-  transform: translateY(20px);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 50px 100px -30px rgba(0,0,0,0.4);
-}
-.modal.show .modal-card { transform: translateY(0); }
-.modal-art {
-  background: linear-gradient(160deg, #EFE7DC, #D6C4AB);
-  position: relative;
-  height: 100%;
-  overflow: hidden;
-  align-self: stretch;
-}
-.modal-info {
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.modal-info-header { flex-shrink: 0; }
-.modal-scroll {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  scroll-behavior: smooth;
-  padding-right: 6px;
-  margin-bottom: 24px;
-}
-.modal-info-footer { flex-shrink: 0; }
-.modal-btn-stack { display: flex; flex-direction: column; gap: 12px; }
-.modal-close {
-  position: absolute;
-  top: 20px; right: 20px;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: var(--offwhite);
-  display: grid; place-items: center;
-  font-size: 18px;
-  border: 1px solid rgba(0,0,0,0.08);
-  z-index: 2;
-}
-.modal-info h3 { font-family: var(--serif); font-size: 38px; line-height: 1.05; margin-bottom: 14px; }
-.modal-info .price { font-family: var(--serif); font-size: 30px; color: var(--vinho); margin-bottom: 20px; }
-.modal-info p { color: var(--ink-soft); font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
-
 /* ---------- Hamburger base (oculto por padrão, ativado no breakpoint) ---------- */
 .nav-burger {
   display: none;
@@ -564,57 +498,12 @@ section { position: relative; overflow-x: hidden; }
   .nav-left, .nav-right { display: none; }
   .nav-inner { display: flex; justify-content: space-between; align-items: center; }
   .nav-burger { display: flex; }
-  .modal-card { grid-template-columns: 1fr; }
   /* Hero stage reduzido em tablet */
   .hero-stage { height: 500px; }
   .stage-ring.r1 { width: 432px; height: 432px; }
   .stage-ring.r2 { width: 336px; height: 336px; }
   .stage-ring.r3 { width: 576px; height: 576px; }
   .logo-card { width: 300px; height: 384px; }
-}
-
-/* ---------- Modal image ---------- */
-.modal-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(0.9);
-}
-
-/* ---------- Modal original price ---------- */
-.modal-price-original {
-  font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
-  text-decoration: line-through;
-  margin-bottom: 4px;
-}
-
-/* ---------- Modal bullets ---------- */
-.modal-bullets {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.modal-bullets li {
-  font-size: 13px;
-  color: var(--ink-soft);
-  line-height: 1.5;
-  padding-left: 18px;
-  position: relative;
-}
-.modal-bullets li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  color: var(--caramelo);
-  font-size: 11px;
 }
 
 /* ---------- Mobile Nav Drawer ---------- */
@@ -680,27 +569,6 @@ section { position: relative; overflow-x: hidden; }
   .hero-meta .k { font-size: 18px; }
   .hero-meta .v { font-size: 8px; letter-spacing: 0.1em; word-break: break-word; overflow-wrap: break-word; }
 
-  /* Modal */
-  .modal { padding: 16px; }
-  .modal-card {
-    grid-template-columns: 1fr;
-    max-height: 90vh;
-    height: 90vh;
-    overflow: hidden;
-  }
-  .modal-art { max-height: 220px; flex-shrink: 0; }
-  .modal-info {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
-  }
-  .modal-scroll { flex: 1; min-height: 0; overflow-y: auto; }
-  .modal-close { width: 44px; height: 44px; top: 14px; right: 14px; }
-  .modal-info h3 { font-size: 28px; }
-
 }
 
 /* ---------- Responsive — 480px ---------- */
@@ -726,38 +594,6 @@ section { position: relative; overflow-x: hidden; }
   /* Buttons */
   .btn { padding: 14px 22px; font-size: 12px; }
 
-  /* Modal — oculta imagem em telas muito pequenas */
-  .modal-art { display: none; }
 }
 
-/* ---------- Size selector ---------- */
-.size-selector {
-  margin-bottom: 16px;
-}
-.size-selector__label {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  display: block;
-  margin-bottom: 8px;
-}
-.size-selector__btns {
-  display: flex;
-  gap: 8px;
-}
-.size-btn {
-  padding: 6px 16px;
-  border: 1px solid var(--vinho);
-  border-radius: 4px;
-  background: transparent;
-  color: var(--vinho);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.size-btn.--active {
-  background: var(--vinho);
-  color: var(--offwhite);
-}
 

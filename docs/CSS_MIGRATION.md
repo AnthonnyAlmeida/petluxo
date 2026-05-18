@@ -241,11 +241,11 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 #### 3a — ProductModal
 > ⚠️ Tirar prints ANTES de começar: desktop, mobile, landscape, com e sem size selector
 
-- [ ] Criar `src/components/product/ProductModal.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Renomear `.size-btn.--active` → `sizeBtnActive`
-- [ ] Atualizar `ProductModal.jsx`
-- [ ] Build sem erros
+- [x] Criar `src/components/product/ProductModal.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Renomear `.size-btn.--active` → `sizeBtnActive`
+- [x] Atualizar `ProductModal.jsx`
+- [x] Build sem erros
 - [ ] ✅ Checklist completo do modal:
   - [ ] Abre e fecha corretamente
   - [ ] Scroll interno funciona
