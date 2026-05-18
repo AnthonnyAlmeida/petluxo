@@ -8,7 +8,7 @@
 [![Vite](https://img.shields.io/badge/Vite-6.4.2-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![CSS](https://img.shields.io/badge/CSS-Pure-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![CSS Modules](https://img.shields.io/badge/CSS-Modules-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
 **[→ Ver em produção](https://petluxostory.com.br)**
 
@@ -40,7 +40,7 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 
 | Recurso | Descrição |
 |---|---|
-| 🛍️ **Catálogo dinâmico** | 20 produtos em 6 categorias, carregados de um arquivo `products.js` centralizado |
+| 🛍️ **Catálogo dinâmico** | 21 produtos em 6 categorias, carregados de um arquivo `products.js` centralizado |
 | 🎠 **Carrosséis por categoria** | Um carrossel por categoria com setas laterais, dots de paginação e swipe touch |
 | 🔍 **Modal interativo** | Quick view com seletor de tamanho, preço dinâmico e link de compra por variação |
 | 💳 **Integração PagBank** | Botão "Comprar Agora" abre link de pagamento direto (`buyLink` / `buyLinks`) |
@@ -59,7 +59,7 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 | **React** | 18.3.1 | Interface declarativa com hooks e componentes |
 | **Vite** | 6.4.2 | Bundler ultrarrápido e servidor de desenvolvimento |
 | **JavaScript** | ES2022 | Lógica de negócio, estado e interatividade |
-| **CSS puro** | — | Design system proprietário, sem frameworks de UI |
+| **CSS Modules** | — | Design system proprietário, sem frameworks de UI; estilos scoped por componente |
 | **Google Fonts** | — | Cormorant Garamond · Inter · JetBrains Mono |
 | **Google Analytics** | GA4 | Rastreamento de visitas via gtag.js |
 | **Vercel** | Hobby | Hospedagem e deploy automático via Git |
@@ -81,15 +81,17 @@ petluxo/
 │   ├── components/
 │   │   ├── layout/          # Navbar (hambúrguer mobile) + Footer
 │   │   ├── product/         # ProductCard · ProductGrid · ProductModal
-│   │   ├── sections/        # Hero · Featured · Products · Story · CTA · 404
-│   │   └── ui/              # Button · Container · Section (primitivos)
+│   │   ├── sections/        # Hero · Featured · Products · Story · Differentials · CTA · FAQ · NotFound
+│   │   └── ui/              # Button · Container · Section · TrustBadges
 │   ├── data/
 │   │   └── products.js      # ← Fonte de verdade do catálogo
 │   ├── hooks/useScroll.js   # IntersectionObserver + parallax
 │   ├── lib/whatsapp.js      # Gerador de links wa.me
 │   └── styles/
 │       ├── variables.css    # Design tokens (cores, tipografia, espaçamentos)
-│       └── globals.css      # Estilos completos (~1500 linhas)
+│       ├── globals.css      # Reset, utilitárias globais, tipografia (~150 linhas)
+│       ├── animations.css   # @keyframes globais (heroRise, heroFade, heroFloaty…)
+│       └── buttons.css      # Estilos globais de botões (.btn e variantes)
 └── docs/                    # Documentação técnica detalhada
 ```
 
@@ -97,8 +99,8 @@ petluxo/
 
 ## Decisões Técnicas
 
-**CSS puro sem framework**
-Controle total sobre o design, bundle enxuto e identidade visual 100% proprietária. Toda a estilização vive em `globals.css` com design tokens em `variables.css`.
+**CSS Modules sem framework**
+Controle total sobre o design, bundle enxuto e identidade visual 100% proprietária. Todos os 14 componentes têm `.module.css` próprio com estilos scoped. Estilos globais divididos em: `variables.css` (tokens), `globals.css` (~150 linhas de reset/utilitárias), `animations.css` (@keyframes) e `buttons.css` (`.btn` e variantes, importado explicitamente por cada componente que usa botões).
 
 **Carrossel sem biblioteca externa**
 Implementado com React state + `transform: translateX`. Setas laterais usam flexbox (não `position: absolute`) para evitar clipping em containers com `overflow: hidden`. Suporte a swipe touch com detecção de direção e limiar de 50px.
