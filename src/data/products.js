@@ -306,4 +306,14 @@ export const PRODUCTS = [
       { size: 'G', link: 'https://pag.ae/81M-QYczq' },
     ],
   },
+  {
+    id: 22,
+    name: 'Bowl Cerâmica Spoiled | Design Minimalista Premium',
+    shortName: 'Bowl Cerâmica Spoiled',
+    price: 'R$ 167,00',
+    category: ['hora-refeicao'],
+    image: '/images/products/bowl_ceramica.webp',
+    badge: null,
+    buyLink: 'https://pag.ae/81NMeTc16',
+  },
 ];
