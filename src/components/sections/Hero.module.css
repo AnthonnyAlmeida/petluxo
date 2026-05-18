@@ -1,0 +1,277 @@
+/* PetLuxo — Hero.module.css */
+
+/* Keyframes locais — CSS Modules não resolve keyframes externos automaticamente */
+@keyframes heroRise { to { transform: translateY(0); } }
+@keyframes heroFade { to { opacity: 1; } }
+@keyframes heroFloaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes stageRotate { to { transform: rotate(360deg); } }
+@keyframes scrollCueLine {
+  0% { left: -60px; }
+  60%, 100% { left: 60px; }
+}
+
+.hero {
+  min-height: 100svh;
+  padding-top: 96px;
+  padding-bottom: 56px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  max-width: 100vw;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
+}
+
+.heroHeadline {
+  font-size: clamp(46px, 4.6vw, 72px);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+}
+
+.heroHeadline .line { display: block; overflow: hidden; }
+
+.heroHeadline .line span {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: heroRise 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.heroHeadline .line:nth-child(1) span { animation-delay: 0.1s; }
+.heroHeadline .line:nth-child(2) span { animation-delay: 0.22s; }
+.heroHeadline .line:nth-child(3) span { animation-delay: 0.34s; }
+
+.heroSub {
+  margin-top: 22px;
+  max-width: 460px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  opacity: 0;
+  animation: heroFade 1s 0.6s forwards;
+}
+
+.heroCtaRow {
+  margin-top: 28px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: heroFade 1s 0.8s forwards;
+}
+
+.heroMeta {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 540px;
+  opacity: 0;
+  animation: heroFade 1s 1s forwards;
+}
+
+.heroMeta div { border-left: 1px solid rgba(198,169,107,0.4); padding-left: 16px; }
+.heroMeta .k { font-family: var(--serif); font-size: 24px; line-height: 1; color: var(--ink); }
+.heroMeta .v { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); margin-top: 8px; }
+
+/* Hero stage — layered logo composition */
+.heroStage {
+  position: relative;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stageRing {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(198,169,107,0.3);
+  pointer-events: none;
+}
+
+.stageRing.r1 { width: 540px; height: 540px; }
+.stageRing.r2 { width: 420px; height: 420px; border-color: rgba(198,169,107,0.18); }
+.stageRing.r3 {
+  width: 684px; height: 684px;
+  border-color: rgba(176,137,104,0.12);
+  border-style: dashed;
+  animation: stageRotate 80s linear infinite;
+}
+
+.logoCard {
+  position: relative;
+  width: 360px;
+  height: 468px;
+  border-radius: 8px;
+  background: linear-gradient(160deg, #FBF8F3 0%, #F0E7D9 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.9) inset,
+    0 -1px 0 rgba(176,137,104,0.08) inset,
+    0 30px 60px -20px rgba(107, 30, 43, 0.18),
+    0 50px 100px -30px rgba(176,137,104, 0.3);
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logoCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.5) 45%, transparent 60%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.logoCard img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  mix-blend-mode: multiply;
+}
+
+.logoCard .frame {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(198,169,107,0.35);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.logoCard .cornerTag {
+  position: absolute;
+  bottom: 22px; left: 26px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  z-index: 2;
+}
+
+.logoCard .cornerTag b { display: block; color: var(--ink); font-weight: 500; font-family: var(--serif); font-size: 16px; letter-spacing: 0.04em; margin-top: 4px; }
+
+.logoCard .est {
+  position: absolute;
+  top: 22px; right: 26px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--caramelo);
+  z-index: 2;
+}
+
+.floatCard {
+  position: absolute;
+  border-radius: 6px;
+  background: var(--offwhite);
+  box-shadow: 0 20px 50px -20px rgba(42, 37, 34, 0.2), 0 1px 0 rgba(255,255,255,0.9) inset;
+  border: 1px solid rgba(198,169,107,0.18);
+  padding: 18px 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  backdrop-filter: blur(20px);
+}
+
+.floatCard.fc1 {
+  top: 40px; left: -10px;
+  width: 160px;
+  animation: heroFloaty 7s ease-in-out infinite;
+}
+
+.floatCard.fc2 {
+  bottom: 50px; right: -20px;
+  width: 190px;
+  animation: heroFloaty 9s ease-in-out infinite reverse;
+}
+
+.floatCard .label { color: var(--caramelo); font-size: 9px; }
+.floatCard .val { font-family: var(--serif); color: var(--ink); font-size: 18px; letter-spacing: 0.02em; text-transform: none; margin-top: 6px; }
+
+.scrollCue {
+  position: absolute;
+  bottom: 36px;
+  left: var(--pad);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.scrollCue .bar {
+  width: 60px; height: 1px;
+  background: var(--ink-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollCue .bar::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -60px;
+  width: 60px; height: 1px;
+  background: var(--caramelo);
+  animation: scrollCueLine 2.4s ease-in-out infinite;
+}
+
+/* ---- Media queries ---- */
+
+@media (max-width: 980px) {
+  .heroGrid { grid-template-columns: 1fr; gap: 40px; }
+  .heroStage { height: 500px; }
+  .stageRing.r1 { width: 432px; height: 432px; }
+  .stageRing.r2 { width: 336px; height: 336px; }
+  .stageRing.r3 { width: 576px; height: 576px; }
+  .logoCard { width: 300px; height: 384px; }
+}
+
+@media (max-width: 768px) {
+  .hero { padding-top: 96px; overflow-x: hidden; box-sizing: border-box; max-width: 100vw; }
+  .heroGrid { max-width: 100%; }
+  .heroGrid > * { min-width: 0; }
+  .heroHeadline { font-size: clamp(32px, 5.5vw, 46px); overflow: hidden; }
+  .heroHeadline .line span { max-width: 100%; word-break: break-word; overflow-wrap: break-word; }
+  .heroSub { max-width: 100%; }
+  .heroStage { height: 370px; }
+  .stageRing { display: none; }
+  .floatCard { display: none; }
+  .logoCard { width: 240px; height: 307px; }
+  .heroCtaRow { flex-direction: column; align-items: stretch; gap: 12px; }
+  .heroCtaRow :global(.btn) { justify-content: center; width: 100%; box-sizing: border-box; }
+  .heroMeta { gap: 8px 12px; max-width: 100%; margin-top: 48px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .heroMeta div { padding-left: 10px; min-width: 0; }
+  .heroMeta .k { font-size: 18px; }
+  .heroMeta .v { font-size: 8px; letter-spacing: 0.1em; word-break: break-word; overflow-wrap: break-word; }
+}
+
+@media (max-width: 480px) {
+  .heroStage { height: 288px; }
+  .logoCard { width: 192px; height: 247px; }
+  .heroHeadline { font-size: 28px; }
+  .heroSub { max-width: 100%; font-size: 14px; }
+  .heroCtaRow :global(.btn) { width: 100%; box-sizing: border-box; }
+  .heroMeta { grid-template-columns: 1fr; gap: 12px; }
+  .heroMeta div { padding-left: 12px; }
+  .heroMeta .k { font-size: 20px; }
+  .heroMeta .v { font-size: 9px; letter-spacing: 0.12em; }
+}

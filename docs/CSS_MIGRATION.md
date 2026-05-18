@@ -108,6 +108,20 @@ Durante a migração, NUNCA corrigir comportamento inesperado com:
 
 Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 
+### @keyframes em CSS Modules
+CSS Modules no Vite processa nomes de keyframes como identificadores locais. Keyframes definidos em arquivos globais separados (como `animations.css`) **não são resolvidos automaticamente** dentro de um `.module.css`.
+
+**Regra:** Se um componente usa `animation:` em seu módulo, declare os `@keyframes` necessários diretamente no próprio `.module.css`.
+
+O arquivo `animations.css` continua válido para uso em contexto global (ex: classes utilitárias no `globals.css`), mas não deve ser referenciado por nome dentro de módulos.
+
+Exemplo correto:
+```css
+/* Hero.module.css */
+@keyframes heroFade { to { opacity: 1; } }
+.heroSub { animation: heroFade 1s forwards; }
+```
+
 ---
 
 ## Checklist de execução
@@ -214,8 +228,8 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] Renomear `.carousel--single` → `carouselSingle`
 - [x] Atualizar `ProductGrid.jsx`
 - [x] Build sem erros
-- [ ] ✅ Revisão visual: desktop + mobile (testar scroll do carrossel)
-- [ ] ✅ Commit: `refactor: fase 2b — ProductGrid`
+- [x] ✅ Revisão visual: desktop + mobile (testar scroll do carrossel)
+- [x] ✅ Commit: `refactor: fase 2b — ProductGrid`
 
 #### Products
 - [x] Criar `src/components/sections/Products.module.css`
@@ -267,13 +281,13 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] ✅ Commit: `refactor: fase 3b — Navbar`
 
 #### 3c — Hero
-- [ ] Criar `src/components/sections/Hero.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Referenciar keyframes de `animations.css`
-- [ ] Atualizar `Hero.jsx`
-- [ ] Build sem erros
-- [ ] ✅ Revisão visual: desktop + mobile + tablet (testar animações de entrada)
-- [ ] ✅ Commit: `refactor: fase 3c — Hero`
+- [x] Criar `src/components/sections/Hero.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Referenciar keyframes de `animations.css`
+- [x] Atualizar `Hero.jsx`
+- [x] Build sem erros
+- [x] ✅ Revisão visual: desktop + mobile + tablet (testar animações de entrada)
+- [x] ✅ Commit: `refactor: fase 3c — Hero`
 
 ---
 
@@ -316,7 +330,7 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 | Fase 2d — Differentials | ✅ Concluído |
 | Fase 3a — ProductModal | ✅ Concluído |
 | Fase 3b — Navbar | 🟡 Migrado, aguardando revisão visual |
-| Fase 3c — Hero | ⬜ Pendente |
+| Fase 3c — Hero | 🟡 Migrado, aguardando revisão visual |
 | Passo Final | ⬜ Pendente |
 
 ---
