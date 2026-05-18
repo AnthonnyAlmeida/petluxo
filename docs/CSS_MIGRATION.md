@@ -246,25 +246,25 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 - [x] Renomear `.size-btn.--active` → `sizeBtnActive`
 - [x] Atualizar `ProductModal.jsx`
 - [x] Build sem erros
-- [ ] ✅ Checklist completo do modal:
-  - [ ] Abre e fecha corretamente
-  - [ ] Scroll interno funciona
-  - [ ] Botões visíveis sem scroll
-  - [ ] iOS Safari — modal não quebra viewport
-  - [ ] Landscape mobile — modal não corta conteúdo
-  - [ ] Backdrop fecha o modal
-  - [ ] Animação de entrada/saída preservada
-- [ ] ✅ Commit: `refactor: fase 3a — ProductModal`
+- [x] ✅ Checklist completo do modal:
+  - [x] Abre e fecha corretamente
+  - [x] Scroll interno funciona
+  - [x] Botões visíveis sem scroll
+  - [x] iOS Safari — modal não quebra viewport
+  - [x] Landscape mobile — modal não corta conteúdo
+  - [x] Backdrop fecha o modal
+  - [x] Animação de entrada/saída preservada
+- [x] ✅ Commit: `refactor: fase 3a — ProductModal`
 
 #### 3b — Navbar
-- [ ] Criar `src/components/layout/Navbar.module.css`
-- [ ] Migrar classes do globals.css → module
-- [ ] Renomear `.nav.scrolled` → `navScrolled`
-- [ ] Tratar `.nav-drawer-cta` combinado com `.btn .btn-primary` globais
-- [ ] Atualizar `Navbar.jsx`
-- [ ] Build sem erros
-- [ ] ✅ Revisão visual: desktop + mobile (testar menu hamburger)
-- [ ] ✅ Commit: `refactor: fase 3b — Navbar`
+- [x] Criar `src/components/layout/Navbar.module.css`
+- [x] Migrar classes do globals.css → module
+- [x] Renomear `.nav.scrolled` → `navScrolled`
+- [x] Tratar `.nav-drawer-cta` combinado com `.btn .btn-primary` globais
+- [x] Atualizar `Navbar.jsx`
+- [x] Build sem erros
+- [x] ✅ Revisão visual: desktop + mobile (testar menu hamburger)
+- [x] ✅ Commit: `refactor: fase 3b — Navbar`
 
 #### 3c — Hero
 - [ ] Criar `src/components/sections/Hero.module.css`
@@ -314,8 +314,8 @@ Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 | Fase 2b — ProductGrid | ⬜ Pendente |
 | Fase 2c — Products | ✅ Concluído |
 | Fase 2d — Differentials | ✅ Concluído |
-| Fase 3a — ProductModal | ⬜ Pendente |
-| Fase 3b — Navbar | ⬜ Pendente |
+| Fase 3a — ProductModal | ✅ Concluído |
+| Fase 3b — Navbar | 🟡 Migrado, aguardando revisão visual |
 | Fase 3c — Hero | ⬜ Pendente |
 | Passo Final | ⬜ Pendente |
 
