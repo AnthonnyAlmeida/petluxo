@@ -305,13 +305,13 @@ Exemplo correto:
 ---
 
 ## Checklist visual padrão (usar após cada fase)
-- [ ] Desktop Chrome 1280px
-- [ ] Mobile Chrome 375px
-- [ ] Tablet 768px
-- [ ] Overflow horizontal: ativar temporariamente `* { outline: 1px solid red }` no globals
-- [ ] Hover states no desktop
-- [ ] Touch targets no mobile
-- [ ] Focus states (navegação por teclado)
+- [x] Desktop Chrome 1280px
+- [x] Mobile Chrome 375px
+- [x] Tablet 768px
+- [x] Overflow horizontal: ativar temporariamente `* { outline: 1px solid red }` no globals
+- [x] Hover states no desktop
+- [x] Touch targets no mobile
+- [x] Focus states (navegação por teclado)
 
 ---
 
