@@ -4,12 +4,16 @@
  */
 
 export const CATEGORIES = [
-  { id: 'mais-vendidos',      label: 'Mais Vendidos'       },
-  { id: 'conforto',           label: 'Conforto & Estilo'   },
-  { id: 'couro',              label: 'Essenciais em Couro' },
-  { id: 'colecao-casa',       label: 'Coleção Casa'      },
-  { id: 'brinquedos',         label: 'Brinquedos'          },
-  { id: 'colecao-passeio',    label: 'Coleção Passeio'   },
+  { id: 'mais-vendidos',      label: 'Mais Vendidos'         },
+  { id: 'couro',              label: 'Essenciais em Couro'   },
+  { id: 'conforto',           label: 'Conforto & Estilo'     },
+  { id: 'hora-refeicao',      label: 'Hora da Refeição'    },
+  { id: 'colecao-passeio',    label: 'Coleção Passeio'     },
+  { id: 'viagem-mobilidade',  label: 'Viagem & Mobilidade'   },
+  { id: 'sono-refugio',       label: 'Sono & Refúgio'      },
+  { id: 'brinquedos',         label: 'Brinquedos & Estilo'   },
+  { id: 'colecao-casa',       label: 'Coleção Casa'        },
+  { id: 'colecao-signature',  label: 'Coleção Signature'   },
 ];
 
 export const PRODUCTS = [
@@ -32,7 +36,7 @@ export const PRODUCTS = [
     bullets: ['Design moderno, leve e funcional', 'Hidratação segura em qualquer lugar', 'Ideal para passeios e viagens', 'Fácil de usar e transportar', 'Material resistente e de qualidade'],
     price: 'R$ 189,90',
     originalPrice: 'R$ 219,90',
-    category: ['colecao-casa'],
+    category: ['viagem-mobilidade'],
     image: '/images/products/garrafa.webp',
     badge: null,
     buyLink: 'https://pag.ae/81J8xDn2N',
@@ -44,7 +48,7 @@ export const PRODUCTS = [
     bullets: ['Design exclusivo PetLuxo', 'Estrutura elevada e confortável', 'Tigelas removíveis em cerâmica', 'Madeira natural com acabamento sofisticado', 'Ideal para cães e gatos de pequeno e médio porte', 'Elegância que faz parte da decoração'],
     price: 'R$ 249,90',
     originalPrice: null,
-    category: ['colecao-casa', 'conforto'],
+    category: ['hora-refeicao'],
     image: '/images/products/comedouro_elevado.webp',
     badge: null,
     buyLink: 'https://pag.ae/81LGWC7X4',
@@ -84,7 +88,7 @@ export const PRODUCTS = [
       { size: '1800ml', price: 'R$ 389,90' },
     ],
     originalPrice: null,
-    category: ['mais-vendidos', 'colecao-casa'],
+    category: ['mais-vendidos', 'hora-refeicao'],
     image: '/images/products/comedouro_maison.webp',
     badge: 'MAIS VENDIDOS',
     buyLinks: [
@@ -209,7 +213,7 @@ export const PRODUCTS = [
       { size: 'Tam. G', price: 'R$ 459,90' },
     ],
     originalPrice: null,
-    category: ['conforto'],
+    category: ['sono-refugio'],
     image: '/images/products/cama_petluxo.webp',
     badge: null,
     buyLinks: [
