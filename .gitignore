@@ -6,8 +6,6 @@ dist
 .DS_Store
 *.log
 
-# Ignorar imagens grandes
-assets/hero/image-hero.webp
 .vercel
 
 # Contexto para IA
