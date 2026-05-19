@@ -50,7 +50,16 @@ export function Products({ onQuick }) {
         <div className={[styles.productsExpand, expanded && styles.productsExpandOpen].filter(Boolean).join(' ')}>
           <div className={styles.productsExpandInner}>
             {extraCategories.map(cat => {
-              const catProducts = PRODUCTS.filter(p => p.category.includes(cat.id));
+              const catProducts = PRODUCTS
+                .filter(p => p.category.includes(cat.id))
+                .sort((a, b) => {
+                  const aHasOrder = a.order != null;
+                  const bHasOrder = b.order != null;
+                  if (aHasOrder && bHasOrder) return a.order - b.order;
+                  if (aHasOrder) return -1;
+                  if (bHasOrder) return 1;
+                  return 0;
+                });
               if (!catProducts.length) return null;
               return (
                 <div key={cat.id} className={styles.productsCategoryBlock}>
