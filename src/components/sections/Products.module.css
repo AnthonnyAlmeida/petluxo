@@ -22,6 +22,9 @@
 }
 .productsExpandInner {
   overflow: hidden;
+  /* padding lateral > margin negativa do .carouselOuter (12px) para que as
+     setas laterais fiquem dentro da padding box e não sejam cortadas */
+  padding: 0 16px;
 }
 .productsCategoryBlock {
   margin-top: 64px;
