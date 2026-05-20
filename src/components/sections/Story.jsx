@@ -1,7 +1,7 @@
 /* PetLuxo — Story */
 
 import React from 'react';
-import sobreImg from '../../../assets/sobre_nos/foto_sobre_nos.webp';
+import sobreImg from '../../../assets/sobre_nos/sobre_nos.webp';
 import styles from './Story.module.css';
 
 export function Story() {
@@ -22,17 +22,23 @@ export function Story() {
           <div className="section-tag reveal">
             <span className="num">03</span><span className="line"></span><span>SOBRE NÓS</span>
           </div>
+          <p className={[styles.manifesto, 'reveal'].filter(Boolean).join(' ')}>
+            Nascida da paixão por pets. Construída com propósito.
+          </p>
           <h2 className="serif reveal d1">
             Onde o amor<br/><i className="italic gold-text">encontra o luxo</i><br/>que seu pet merece.
           </h2>
           <p className={[styles.lead, 'reveal', 'd2'].filter(Boolean).join(' ')}>
-            Na PetLuxo, acreditamos que o cuidado com os nossos pets vai muito além do básico. É uma expressão de amor, estilo e atenção aos detalhes.
+            A PetLuxo nasceu de um lugar genuíno — o amor pelos animais que fazem parte da nossa família e a vontade de oferecer a eles o melhor que existe.
           </p>
           <p className="reveal d3">
-            Somos uma curadoria apaixonada por selecionar produtos exclusivos, sofisticados e funcionais, pensados para proporcionar conforto, bem-estar e elegância aos pets que fazem parte da família.
+            Somos uma curadoria criteriosa de produtos sofisticados, funcionais e esteticamente refinados, pensados para tutores que enxergam seus pets como membros da família e não abrem mão de qualidade, design e exclusividade.
           </p>
           <p className="reveal d3">
-            Cada item da nossa coleção é escolhido com um olhar criterioso, unindo design refinado, qualidade superior e aquele toque especial que transforma o dia a dia em uma experiência única.
+            Cada peça da nossa coleção é escolhida com atenção aos detalhes: materiais nobres, acabamento impecável e aquele toque especial que transforma o dia a dia em uma experiência única.
+          </p>
+          <p className={[styles.assinatura, 'reveal', 'd4'].filter(Boolean).join(' ')}>
+            Com carinho — Equipe PetLuxo
           </p>
         </div>
       </div>

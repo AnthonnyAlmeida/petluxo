@@ -2,15 +2,15 @@
 
 .story {
   background: var(--offwhite);
-  padding-top: clamp(60px, 8vh, 100px);
-  padding-bottom: clamp(60px, 8vh, 100px);
+  padding-top: clamp(40px, 5vh, 70px);
+  padding-bottom: clamp(40px, 5vh, 70px);
   position: relative;
 }
 
 .storyGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  gap: 40px;
   align-items: center;
   position: relative;
 }
@@ -58,14 +58,14 @@
 }
 
 .storyText h2 {
-  font-size: clamp(36px, 4vw, 64px);
+  font-size: clamp(28px, 3vw, 48px);
   line-height: 0.98;
   margin: 20px 0 28px;
 }
 
 .storyText .lead {
   font-family: var(--serif);
-  font-size: 20px;
+  font-size: 17px;
   font-style: italic;
   font-weight: 400;
   color: var(--ink);
@@ -75,10 +75,27 @@
 
 .storyText p {
   color: var(--ink-soft);
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1.7;
   max-width: 480px;
   margin-bottom: 14px;
+}
+
+.manifesto {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--caramelo);
+  margin-bottom: 16px;
+}
+
+.assinatura {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-top: 28px;
 }
 
 /* @media (max-width: 980px) — tablet */
