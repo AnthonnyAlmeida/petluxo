@@ -180,7 +180,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 ## 3. Catálogo Completo de Produtos
 
-**24 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **26**.
+**25 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **27**.
 
 > ⚠️ **Status das categorias:** 9 categorias definidas em ordem. Todas com produtos ativos.
 
@@ -206,6 +206,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 | 22 | Bowl Cerâmica Spoiled | R$ 167,00 | a-mesa | pag.ae/81NMeTc16 | — | null | bowl_ceramica.webp | 3 |
 | 24 | Fonte Automática Elegance | R$ 547,00 | a-mesa | pag.ae/81NQzRaB6 | — | null | fonte_automatica.webp | 1 |
 | 25 | Mesa Gourmet Nordic™ | R$ 397,00 | a-mesa | pag.ae/81P7aH2YR | — | null | mesa_nordic.webp | 5 |
+| 26 | Roma Walk Set | R$ 1.090,00 | colecao-passeio | pag.ae/81P8FJPxM | — | null | roma_walk.webp | — |
 
 **Detalhes dos buyLinks (produtos com seletor de tamanho):**
 
