@@ -44,11 +44,6 @@ export function Hero() {
           <div className={styles.logoCard} id="logoCard">
             <img src={heroImg} alt="PetLuxo"/>
             <div className={styles.frame}></div>
-            <div className={styles.est}>PETLUXO · BR</div>
-            <div className={styles.cornerTag}>
-              Produtos Premium
-              <b>PetLuxo &mdash; Para o seu pet</b>
-            </div>
           </div>
           <div className={[styles.floatCard, styles.fc1].join(' ')}>
             <div className={styles.label}>QUALIDADE</div>
