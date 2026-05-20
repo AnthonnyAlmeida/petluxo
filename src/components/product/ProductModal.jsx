@@ -32,7 +32,7 @@ export function ProductModal({ product, onClose }) {
         </div>
         <div className={styles.modalInfo}>
           <div className={styles.modalInfoHeader}>
-            <h3 className="serif">{product.name}</h3>
+            <h3 className="serif">{product.shortName || product.name}</h3>
             {product.originalPrice && (
               <div className={styles.modalPriceOriginal}>{product.originalPrice}</div>
             )}

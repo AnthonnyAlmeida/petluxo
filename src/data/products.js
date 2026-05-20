@@ -13,13 +13,13 @@ export const CATEGORIES = [
   { id: 'sono-refugio',       label: 'Sono & Refúgio'      },
   { id: 'brinquedos',         label: 'Brinquedos & Estilo'   },
   { id: 'colecao-casa',       label: 'Coleção Casa'        },
-  { id: 'colecao-signature',  label: 'Coleção Signature'   },
 ];
 
 export const PRODUCTS = [
   {
     id: 1,
     name: 'Brinquedo Interativo de Pelúcia',
+    shortName: 'Brinquedo Interativo',
     description: 'Diversão, conforto e estímulo em um só produto. O Brinquedo Interativo de Pelúcia foi desenvolvido para proporcionar momentos de entretenimento e bem-estar ao seu pet, estimulando o instinto natural de brincar enquanto reduz o estresse e o tédio do dia a dia. Com textura macia e design encantador, é perfeito para pets que adoram morder, carregar e se divertir com segurança. Ideal para transformar a rotina do seu pet em momentos mais leves, ativos e felizes.',
     bullets: ['Pelúcia macia e segura para pets', 'Estimula o instinto natural de brincar', 'Reduz estresse e tédio do dia a dia', 'Design encantador e divertido', 'Ideal para morder, carregar e brincar'],
     price: 'R$ 149,90',
@@ -32,6 +32,7 @@ export const PRODUCTS = [
   {
     id: 3,
     name: 'Garrafa Portátil Premium para Pets',
+    shortName: 'Garrafa Portátil Premium',
     description: 'Praticidade e elegância em todos os momentos com o seu pet. A Garrafa Portátil Premium foi desenvolvida para garantir hidratação segura durante passeios, viagens e rotinas ao ar livre, com design moderno, leve e funcional. Ideal para tutores que valorizam cuidado, estilo e bem-estar em cada detalhe.',
     bullets: ['Design moderno, leve e funcional', 'Hidratação segura em qualquer lugar', 'Ideal para passeios e viagens', 'Fácil de usar e transportar', 'Material resistente e de qualidade'],
     price: 'R$ 189,90',
@@ -44,6 +45,7 @@ export const PRODUCTS = [
   {
     id: 4,
     name: 'Comedouro Elevado Premium',
+    shortName: 'Comedouro Elevado',
     description: 'Transforme a rotina do seu pet em um momento de puro conforto e elegância. O Comedouro Elevado PetLuxo Essence Duo combina design sofisticado, acabamento minimalista e funcionalidade premium para compor ambientes modernos e luxuosos. Produzido em madeira natural com estrutura elevada, proporciona uma postura mais confortável durante a alimentação, ajudando no bem-estar do seu pet enquanto adiciona um toque refinado à decoração da casa. As tigelas em cerâmica trazem praticidade na limpeza e um visual clean que harmoniza perfeitamente com interiores contemporâneos.',
     bullets: ['Design exclusivo PetLuxo', 'Estrutura elevada e confortável', 'Tigelas removíveis em cerâmica', 'Madeira natural com acabamento sofisticado', 'Ideal para cães e gatos de pequeno e médio porte', 'Elegância que faz parte da decoração'],
     price: 'R$ 249,90',
@@ -102,6 +104,7 @@ export const PRODUCTS = [
   {
     id: 6,
     name: 'Refúgio PetLuxo Cozy',
+    shortName: 'Refúgio Cozy',
     description: 'Um espaço pensado para o descanso e a tranquilidade do seu pet. Com design acolhedor e acabamento em tons neutros, o Refúgio PetLuxo Cozy cria um ambiente confortável e harmonioso dentro da sua casa, unindo estética e bem-estar em cada detalhe. Ideal para pets que fazem parte da família e merecem um cantinho só deles.',
     bullets: ['Design acolhedor em tons neutros', 'Harmoniza com qualquer ambiente', 'Estrutura confortável e segura', 'Ideal para cães e gatos', 'Um cantinho exclusivo para o seu pet'],
     price: 'R$ 297,00',
@@ -128,6 +131,7 @@ export const PRODUCTS = [
   {
     id: 12,
     name: 'Sofá PetLuxo Essence',
+    shortName: 'Sofá Essence',
     description: 'O Sofá PetLuxo Essence foi pensado para pets que vivem como parte da família, com conforto, elegância e presença. Mais do que um lugar para descansar, é um espaço que acompanha o estilo da sua casa. Porque quem você ama merece mais do que o básico.',
     bullets: ['Design sofisticado que combina com sua decoração', 'Estrutura confortável para o descanso do pet', 'Material premium resistente e fácil de limpar', 'Ideal para pets de pequeno e médio porte', 'Elegância e conforto em um só móvel'],
     price: 'R$ 497,00',
@@ -140,6 +144,7 @@ export const PRODUCTS = [
   {
     id: 8,
     name: 'Bolsa Transporte PetLuxo',
+    shortName: 'Bolsa Transporte',
     description: 'Para quem entende que seu pet merece o mesmo nível de conforto e elegância que você. A Bolsa Transporte PetLuxo foi criada para unir design sofisticado, materiais premium e máximo conforto. Seu interior acolchoado proporciona segurança durante o transporte, enquanto o acabamento em couro e os detalhes refinados elevam o estilo em qualquer ocasião. Mais do que uma bolsa, um verdadeiro acessório de luxo para o seu pet.',
     bullets: ['Acabamento em couro sofisticado', 'Interior confortável e aconchegante', 'Estrutura firme e segura', 'Design elegante e exclusivo', 'Ideal para passeios e viagens'],
     price: 'R$ 797,00',
@@ -152,6 +157,7 @@ export const PRODUCTS = [
   {
     id: 9,
     name: 'Kit Milano Camelo',
+    shortName: 'Kit Milano',
     description: 'Para quem não abre mão de elegância em cada detalhe. O Kit Milano Camelo foi criado para transformar os passeios com seu pet em uma experiência sofisticada e impecável. Produzido em couro legítimo, o conjunto une design atemporal, conforto e resistência em peças que se destacam pela qualidade e acabamento premium. Mais do que acessórios, um verdadeiro símbolo de estilo para você e seu pet.',
     bullets: ['Couro legítimo premium', 'Coleira ajustável e confortável', 'Guia resistente e sofisticada', 'Porta saquinho elegante incluso', 'Ferragens metálicas de alta qualidade', 'Design refinado e atemporal'],
     price: 'R$ 847,00',
@@ -164,6 +170,7 @@ export const PRODUCTS = [
   {
     id: 10,
     name: 'Porta Saquinhos em Couro',
+    shortName: 'Porta Saquinhos',
     description: 'Transforme até os pequenos detalhes em uma experiência sofisticada. O Porta Saquinhos em Couro Legítimo foi desenvolvido para quem valoriza praticidade sem abrir mão do estilo. Com acabamento refinado e design minimalista, acompanha você e seu pet com discrição e elegância em todos os passeios. Ideal para manter tudo organizado com charme — porque o luxo está nos detalhes.',
     bullets: ['Couro legítimo premium', 'Design minimalista e sofisticado', 'Mosquetão metálico resistente', 'Compacto e funcional', 'Perfeito para passeios elegantes'],
     price: 'R$ 227,00',
@@ -270,7 +277,7 @@ export const PRODUCTS = [
   {
     id: 19,
     name: 'Arranhador Bola de Sisal Maison',
-    shortName: 'Arranhador Sisal Maison',
+    shortName: 'Arranhador Sisal',
     subtitle: 'Diversão e sofisticação para o seu gato com estilo.',
     description: 'O Arranhador Bola de Sisal Maison foi desenvolvido para unir diversão, conforto e sofisticação em um único acessório. Com design minimalista e acabamento em madeira natural, ele transforma o momento de brincadeira do seu gato em parte da decoração do ambiente. A bola revestida em sisal natural estimula os instintos felinos de forma saudável, ajudando a reduzir o estresse e protegendo móveis contra arranhões. Ideal para quem busca um ambiente elegante sem abrir mão do bem-estar do pet.',
     bullets: ['Sisal natural resistente', 'Estrutura firme em madeira', 'Estimula o instinto felino', 'Reduz o estresse e o tédio', 'Decoração sofisticada para ambientes modernos'],
