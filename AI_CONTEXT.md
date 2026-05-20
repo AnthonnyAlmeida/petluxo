@@ -151,9 +151,22 @@ Componente reutilizável de selos de confiança. Props:
 **`Products.jsx`**
 Renderiza múltiplos `ProductGrid`, um por categoria. "Mais Vendidos" fica sempre visível. Demais categorias ficam ocultas atrás de botão "Ver mais produtos" que expande com animação `grid-template-rows: 0fr → 1fr`.
 
+**Busca e filtro por categoria:**
+- Barra de busca com `Icon.Search`, input `var(--bege-soft)`, placeholder itálico, botão X para limpar
+- Pills de categoria: "Todos" + uma pill por categoria com produtos; pill ativa tem fundo `var(--vinho)`
+- `isFiltering = query.trim() !== '' || activeCategory !== null`
+- Quando `isFiltering`: substitui carrosséis por grid flat (3 col / 2 tablet / 1 mobile) com animação de entrada
+- Quando sem resultados: mensagem em serif + link WhatsApp via `wa()`
+- Busca filtra por `name`, `shortName`, `label` da categoria e `tags` do produto
+- Campo combinado de busca: `[p.name, p.shortName, catLabel, ...(p.tags || [])].join(' ').toLowerCase()`
+- Cada **palavra** do termo de busca deve aparecer no campo combinado (busca AND por palavras)
+- Filtro de categoria e busca de texto funcionam em conjunto
+- Quando não filtrando: layout original de carrosséis inalterado
+- **⚠️ Detalhe crítico:** `Products.jsx` mantém um `useEffect` local que re-cria o `IntersectionObserver` para `.reveal:not(.in)` dentro da seção toda vez que `isFiltering`, `filteredProducts` ou `expanded` mudam. Isso é necessário porque o `useScrollEffects` global roda apenas uma vez no mount — elementos `.reveal` montados/remontados pelo React não seriam observados e permaneceriam invisíveis.
+
 ### Sistema de carrosséis por categoria
 
-`CATEGORIES` em `products.js` define a ordem e os labels das categorias. `Products.jsx` mapeia cada categoria, filtra `PRODUCTS.filter(p => p.category.includes(cat.id))` e ordena os resultados: produtos com campo `order` definido aparecem primeiro (ordem crescente), os demais mantêm a ordem original do array. O resultado é passado para `ProductGrid`. O campo `category` de cada produto é um **array**, permitindo que um produto apareça em múltiplas categorias.
+`CATEGORIES` em `products.js` define a ordem e os labels das categorias. `Products.jsx` mapeia cada categoria, filtra `PRODUCTS.filter(p => p.category.includes(cat.id))` e ordena os resultados: produtos com campo `order` definido aparecem primeiro (ordem crescente), os demais mantêm a ordem original do array. O resultado é passado para `ProductGrid`. O campo `category` de cada produto é um **array**, permitindo que um produto apareça em múltiplas categorias. O campo `tags` (array de strings) existe na maioria dos produtos e é usado como campo de busca adicional.
 
 ### Como o modal com seletor de tamanho funciona
 

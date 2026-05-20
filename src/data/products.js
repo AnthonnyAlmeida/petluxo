@@ -28,6 +28,7 @@ export const PRODUCTS = [
     image: '/images/products/brinquedo_interativo.webp',
     badge: 'MAIS VENDIDOS',
     buyLink: 'https://pag.ae/81K6Dbu-q',
+    tags: ['pelúcia', 'rena', 'natal', 'boneco', 'diversão', 'enriquecimento'],
   },
   {
     id: 3,
@@ -41,6 +42,7 @@ export const PRODUCTS = [
     image: '/images/products/garrafa.webp',
     badge: null,
     buyLink: 'https://pag.ae/81J8xDn2N',
+    tags: ['água', 'passeio', 'hidratação', 'squeeze'],
   },
   {
     id: 4,
@@ -55,6 +57,7 @@ export const PRODUCTS = [
     image: '/images/products/comedouro_elevado.webp',
     badge: null,
     buyLink: 'https://pag.ae/81LGWC7X4',
+    tags: ['tigela', 'pote', 'ração', 'alimentação', 'comida'],
   },
   {
     id: 20,
@@ -69,6 +72,7 @@ export const PRODUCTS = [
     image: '/images/products/cama_suspensa_rattan.webp',
     badge: 'MAIS VENDIDOS',
     buyLink: 'https://pag.ae/81MurBvHN',
+    tags: ['cama', 'suspensa', 'rattan', 'descanso'],
   },
   {
     id: 16,
@@ -100,6 +104,7 @@ export const PRODUCTS = [
       { size: '1200ml', link: 'https://pag.ae/81LHgsgcP' },
       { size: '1800ml', link: 'https://pag.ae/81LHi4Ret' },
     ],
+    tags: ['tigela', 'pote', 'cerâmica', 'ração', 'alimentação'],
   },
   {
     id: 6,
@@ -113,6 +118,7 @@ export const PRODUCTS = [
     image: '/images/products/cozy.webp',
     badge: 'MAIS VENDIDOS',
     buyLink: 'https://pag.ae/81J8cPYS6',
+    tags: ['toca', 'casinha', 'ninho', 'abrigo', 'esconderijo', 'cama'],
   },
   {
     id: 18,
@@ -127,6 +133,7 @@ export const PRODUCTS = [
     image: '/images/products/cama_suspensa_elysee.webp',
     badge: null,
     buyLink: 'https://pag.ae/81MuixsTN',
+    tags: ['cama', 'suspensa', 'rattan', 'descanso'],
   },
   {
     id: 12,
@@ -140,6 +147,7 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/81J1KU12M',
     image: '/images/products/produtodestaquepetluxo.webp',
     badge: null,
+    tags: ['sofá', 'cama', 'descanso', 'conforto'],
   },
   {
     id: 8,
@@ -153,6 +161,7 @@ export const PRODUCTS = [
     image: '/images/products/bolsa_transporte.webp',
     badge: 'MAIS VENDIDOS',
     buyLink: 'https://pag.ae/81K3S7Am5',
+    tags: ['mochila', 'bolsa', 'carregar', 'viagem', 'passeio'],
   },
   {
     id: 9,
@@ -166,6 +175,7 @@ export const PRODUCTS = [
     image: '/images/products/kit_milano.webp',
     badge: null,
     buyLink: 'https://pag.ae/81K3Zv1ga',
+    tags: ['coleira', 'guia', 'conjunto', 'couro'],
   },
   {
     id: 10,
@@ -179,6 +189,7 @@ export const PRODUCTS = [
     image: '/images/products/porta_saquinho.webp',
     badge: null,
     buyLink: 'https://pag.ae/81K3Kjy9v',
+    tags: ['higiene', 'passeio', 'limpeza', 'saquinho'],
   },
   {
     id: 13,
@@ -200,6 +211,7 @@ export const PRODUCTS = [
     image: '/images/products/sofa-ortopedico.webp',
     badge: null,
     buyLink: 'https://pag.ae/81LH1xxX4',
+    tags: ['sofá', 'cama', 'ortopédico', 'descanso'],
   },
   {
     id: 14,
@@ -230,6 +242,7 @@ export const PRODUCTS = [
       { size: 'Tam. M', link: 'https://pag.ae/81LHw9Qb8' },
       { size: 'Tam. G', link: 'https://pag.ae/81LHxFzTK' },
     ],
+    tags: ['cama', 'ninho', 'conforto', 'descanso', 'pelúcia'],
   },
   {
     id: 15,
@@ -251,6 +264,7 @@ export const PRODUCTS = [
     image: '/images/products/coleira_petluxo.webp',
     badge: null,
     buyLink: 'https://pag.ae/81LHbyHKp',
+    tags: ['coleira', 'couro', 'passeio'],
   },
   {
     id: 17,
@@ -273,6 +287,7 @@ export const PRODUCTS = [
     image: '/images/products/bolsa_voyage.webp',
     badge: null,
     buyLink: 'https://pag.ae/81LHebDYP',
+    tags: ['mochila', 'bolsa', 'viagem', 'transporte'],
   },
   {
     id: 19,
@@ -287,6 +302,7 @@ export const PRODUCTS = [
     image: '/images/products/arranhador_bola.webp',
     badge: null,
     buyLink: 'https://pag.ae/81MunByX6',
+    tags: ['arranhar', 'gato', 'brinquedo', 'sisal'],
   },
   {
     id: 21,
@@ -314,6 +330,7 @@ export const PRODUCTS = [
       { size: 'M', link: 'https://pag.ae/81M-Zz4cL' },
       { size: 'G', link: 'https://pag.ae/81M-QYczq' },
     ],
+    tags: ['cama', 'couro', 'sofá', 'descanso'],
   },
   {
     id: 22,
@@ -336,6 +353,7 @@ export const PRODUCTS = [
     image: '/images/products/bowl_ceramica.webp',
     badge: null,
     buyLink: 'https://pag.ae/81NMeTc16',
+    tags: ['tigela', 'pote', 'cerâmica', 'alimentação'],
   },
   {
     id: 24,
@@ -358,6 +376,7 @@ export const PRODUCTS = [
     image: '/images/products/fonte_automatica.webp',
     badge: null,
     buyLink: 'https://pag.ae/81NQzRaB6',
+    tags: ['água', 'bebedouro', 'fonte', 'hidratação'],
   },
   {
     id: 25,
@@ -380,5 +399,6 @@ export const PRODUCTS = [
     image: '/images/products/mesa_nordic.webp',
     badge: null,
     buyLink: 'https://pag.ae/81P7aH2YR',
+    tags: ['comedouro', 'slow feeder', 'tigela', 'madeira'],
   },
 ];
