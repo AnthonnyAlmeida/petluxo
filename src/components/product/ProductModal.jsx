@@ -76,7 +76,20 @@ export function ProductModal({ product, onClose }) {
             )}
           </div>
           <div className={[styles.modalInfoFooter, styles.modalBtnStack].join(' ')}>
-            {product.buyLinks ? (
+            {product.badge === 'ESGOTADO' ? (
+              <>
+                <button
+                  className="btn btn-primary btn-full"
+                  disabled
+                  style={{ opacity: 0.5, cursor: 'not-allowed' }}
+                >
+                  ESGOTADO
+                </button>
+                <a className={styles.modalWaLink} href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener noreferrer">
+                  <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
+                </a>
+              </>
+            ) : product.buyLinks ? (
               <>
                 <a
                   className="btn btn-primary btn-full"

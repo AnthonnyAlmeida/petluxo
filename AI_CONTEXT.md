@@ -133,10 +133,12 @@ Card exibido no carrossel. Mostra: imagem, badge (se houver), `shortName` (ou `n
 Carrossel com navegação por setas e swipe touch. Hook interno `usePerView` detecta breakpoints: 3 cards (desktop ≥980px), 2 (tablet ≤980px), 1 (mobile ≤768px). Recebe props `products`, `title`, `resetKey`. Setas laterais via flexbox (não position:absolute, evita clipping em containers overflow:hidden).
 
 **`ProductModal.jsx`**
-Modal de detalhes aberto ao clicar em qualquer card. Exibe `shortName` (ou `name` se não houver), preço, seletor de tamanho (quando `buyLinks` existe), descrição e bullets. Footer do modal tem 3 estados:
-1. Produto com `buyLinks` → botão "COMPRAR AGORA" (link do tamanho selecionado) + botão WhatsApp
-2. Produto com `buyLink` → botão "COMPRAR AGORA" + botão WhatsApp
-3. Produto sem link → apenas botão WhatsApp
+Modal de detalhes aberto ao clicar em qualquer card. Exibe `shortName` (ou `name` se não houver), preço, seletor de tamanho (quando `buyLinks` existe), descrição e bullets. Footer do modal verifica o status do produto:
+- Se `product.badge === 'ESGOTADO'` → botão desabilitado "ESGOTADO" (opacidade 50%, cursor not-allowed, sem link) + botão WhatsApp
+- Caso contrário, tem 3 estados normais:
+  1. Produto com `buyLinks` → botão "COMPRAR AGORA" (link do tamanho selecionado) + botão WhatsApp
+  2. Produto com `buyLink` → botão "COMPRAR AGORA" + botão WhatsApp
+  3. Produto sem link → apenas botão WhatsApp
 
 Abaixo dos botões exibe `<TrustBadges variant="modal" />` (3 selos: Compra Segura, Troca em 7 dias, Entrega Rastreada).
 
@@ -186,7 +188,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 | ID | Nome (shortName) | Preço | Categorias | buyLink | buyLinks | Badge | Imagem | order |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Brinquedo Interativo de Pelúcia | R$ 149,90 | mais-vendidos, brinquedos | pag.ae/81K6Dbu-q | — | MAIS VENDIDOS | brinquedo_interativo.webp | — |
+| 1 | Brinquedo Interativo de Pelúcia | R$ 149,90 | brinquedos | pag.ae/81K6Dbu-q | — | ESGOTADO | brinquedo_interativo.webp | — |
 | 3 | Garrafa Portátil Premium para Pets | R$ 189,90 | viagem-mobilidade | pag.ae/81J8xDn2N | — | null | garrafa.webp | — |
 | 4 | Comedouro Elevado Premium | R$ 249,90 | a-mesa | pag.ae/81LGWC7X4 | — | null | comedouro_elevado.webp | 4 |
 | 6 | Refúgio PetLuxo Cozy | R$ 297,00 | mais-vendidos, conforto | pag.ae/81J8cPYS6 | — | MAIS VENDIDOS | cozy.webp | — |
