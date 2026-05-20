@@ -31,8 +31,8 @@ const FAQS = [
     a: 'Sim. Trabalhamos para apresentar imagens fiéis aos produtos, garantindo que o que você vê é o que você recebe.',
   },
   {
-    q: 'Como escolher o tamanho ideal?',
-    a: 'Produtos com tamanhos disponíveis têm as opções descritas na página. Em dúvida, nossa equipe te ajuda pelo WhatsApp.',
+    q: 'Como sei qual tamanho de cama escolher para o meu pet?',
+    a: 'Recomendamos medir o comprimento do seu pet de focinho a cauda e adicionar cerca de 20cm para garantir conforto total. Nossos produtos com variação de tamanho indicam as medidas de cada opção. Em caso de dúvida, fale com a gente pelo WhatsApp — adoramos ajudar!',
   },
   {
     q: 'A compra é segura?',

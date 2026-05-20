@@ -453,6 +453,12 @@ Permite que um produto apareça em múltiplas categorias (ex: `["mais-vendidos",
 
 ## 9. Pendências Conhecidas
 
+### Limpeza de documentação (completada em 20/05/2026)
+✅ Removidos comentários "TROCAR DOMÍNIO" de 3 arquivos:
+- `index.html` — comentário removido (domínio já configurado como `petluxostory.com.br`)
+- `public/sitemap.xml` — comentário removido
+- `public/robots.txt` — comentário removido
+
 ### Produtos sem buyLink (exibem "VIA WHATSAPP" no card)
 Nenhum produto atualmente sem link de pagamento — todos os 20 produtos têm `buyLink` ou `buyLinks`.
 
@@ -496,3 +502,15 @@ Em 20/05/2026 foram reduzidos tamanhos e espaçamentos para desktop evitar scrol
 - `.storyText p` font-size: `15px` → `13px`
 
 Mudanças aplicadas apenas no base (desktop). Media queries `@media (max-width: 980px)` preservadas intactas — mobile/tablet sem alterações.
+
+---
+
+## 11. Melhorias de Conteúdo (20/05/2026)
+
+### Diferencial #04 — Atualizado
+**Antes:** "Produtos para toda rotina" / "Coleiras, camas, acessórios, higiene e mais. Tudo que o seu pet precisa no dia a dia."  
+**Depois:** "Curadoria premium" / "Cada produto é selecionado com um olhar criterioso: design refinado, materiais nobres e aquele toque especial que transforma o dia a dia em uma experiência única."
+
+### FAQ — Pergunta #7 Atualizada
+**Antes:** "Como escolher o tamanho ideal?" / "Produtos com tamanhos disponíveis têm as opções descritas na página. Em dúvida, nossa equipe te ajuda pelo WhatsApp."  
+**Depois:** "Como sei qual tamanho de cama escolher para o meu pet?" / "Recomendamos medir o comprimento do seu pet de focinho a cauda e adicionar cerca de 20cm para garantir conforto total. Nossos produtos com variação de tamanho indicam as medidas de cada opção. Em caso de dúvida, fale com a gente pelo WhatsApp — adoramos ajudar!"

@@ -8,7 +8,7 @@ const DIFFS = [
   { num: "01", title: "Qualidade garantida",          body: "Produtos selecionados com atenção à qualidade dos materiais, durabilidade e conforto para o seu animal." },
   { num: "02", title: "Atendimento via WhatsApp",      body: "Tire suas dúvidas e acompanhe seu pedido pelo WhatsApp. Atendimento direto, rápido e personalizado." },
   { num: "03", title: "Entrega em todo o Brasil",      body: "Enviamos para qualquer cidade do Brasil com embalagem cuidadosa e rastreamento garantido." },
-  { num: "04", title: "Produtos para toda rotina",     body: "Coleiras, camas, acessórios, higiene e mais. Tudo que o seu pet precisa no dia a dia." },
+  { num: "04", title: "Curadoria premium",     body: "Cada produto é selecionado com um olhar criterioso: design refinado, materiais nobres e aquele toque especial que transforma o dia a dia em uma experiência única." },
 ];
 
 export function Differentials() {
