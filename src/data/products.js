@@ -423,20 +423,4 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/81P8FJPxM',
     tags: ['passeio', 'coleira', 'guia', 'conjunto', 'kit', 'couro', 'trançado', 'off white', 'branco', 'acessórios'],
   },
-  {
-    id: 100,
-    name: 'Ursinho Interativo Premium Kong Brasil Edition',
-    shortName: 'Ursinho Interativo Kong',
-    subtitle: 'O brinquedo que une diversão, aconchego e personalidade.',
-    description: 'Ursinho de pelúcia macio com design inspirado no Brasil. Ideal para cães que amam carregar, morder e dormir abraçados. Combina diversão, conforto emocional e enriquecimento ambiental. Qualidade KONG, marca premium mundialmente reconhecida.',
-    bullets: ['Pelúcia macia com detalhes reforçados'],
-    price: 'R$ 229,00',
-    originalPrice: null,
-    category: ['brinquedos'],
-    order: 100,
-    image: '/images/products/ursinho-interativo-premium-kong-brasil-edition.webp',
-    badge: null,
-    buyLink: 'https://pag.ae/81Pa5nMYM',
-    tags: ['ursinho', 'pelúcia', 'kong', 'brinquedo', 'interativo', 'macio', 'brasil'],
-  }
 ];
