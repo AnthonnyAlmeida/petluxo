@@ -470,5 +470,21 @@ export const PRODUCTS = [
       { size: 'Tam. G (até 20kg)', link: 'https://pag.ae/81Phm65YM' },
     ],
     tags: ['cabana', 'teepee', 'personalizado', 'toca', 'casinha', 'bordado', 'artesanal'],
+  },
+  {
+    id: 100,
+    name: 'teste',
+    shortName: 'teste',
+    subtitle: 'teste',
+    description: 'teste',
+    bullets: ['teste'],
+    prices: [{ size: 'P', price: 'R$ 120,00' }, { size: 'M', price: 'R$ 140,00' }, { size: 'G', price: 'R$ 180,00' }],
+    originalPrice: null,
+    category: ['brinquedos'],
+    order: 100,
+    image: '/images/products/teste.webp',
+    badge: null,
+    buyLinks: [{ size: 'P', link: '' }, { size: 'M', link: '' }, { size: 'G', link: '' }],
+    tags: ['teste'],
   }
 ];
