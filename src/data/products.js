@@ -438,5 +438,37 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81Pa5nMYM',
     tags: ['ursinho', 'pelúcia', 'kong', 'brinquedo', 'interativo', 'macio', 'brasil'],
+  },
+  {
+    id: 28,
+    name: 'Cabana Teepee Luxo Personalizada',
+    shortName: 'Cabana Teepee Luxo',
+    subtitle: 'Um refúgio exclusivo para o pet que faz parte da família.',
+    description: 'Transforme o cantinho do seu pet em um espaço de conforto, aconchego e sofisticação com a Cabana Teepee Luxo Personalizada da PetLuxo. Criada para pets que fazem parte da família, essa peça exclusiva une design elegante, acabamento premium e produção artesanal em uma cabana encantadora que também compõe a decoração da casa. Cada detalhe é pensado para proporcionar conforto e exclusividade ao seu melhor amigo.',
+    bullets: [
+      'Personalização com o nome do pet bordado',
+      'Produção artesanal sob encomenda',
+      'Almofada interna ultra confortável incluída',
+      'Travesseirinho decorativo incluído',
+      'Estrutura resistente e elegante',
+      'Acabamento com pompom na portinha (opcional, sem custo adicional)',
+      'Acompanha almofada interna e 1 travesseirinho simples combinando',
+    ],
+    price: 'a partir de R$ 1.190,00',
+    prices: [
+      { size: 'Tam. P (até 5kg)',  price: 'R$ 1.190,00' },
+      { size: 'Tam. M (até 12kg)', price: 'R$ 1.390,00' },
+      { size: 'Tam. G (até 20kg)', price: 'R$ 1.590,00' },
+    ],
+    originalPrice: null,
+    category: ['sono-refugio'],
+    image: '/images/products/cabana_teepee.webp',
+    badge: null,
+    buyLinks: [
+      { size: 'Tam. P (até 5kg)',  link: 'https://pag.ae/81Phf6B9r' },
+      { size: 'Tam. M (até 12kg)', link: 'https://pag.ae/81Phkp8ba' },
+      { size: 'Tam. G (até 20kg)', link: 'https://pag.ae/81Phm65YM' },
+    ],
+    tags: ['cabana', 'teepee', 'personalizado', 'toca', 'casinha', 'bordado', 'artesanal'],
   }
 ];

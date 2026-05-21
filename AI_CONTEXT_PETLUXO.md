@@ -182,7 +182,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 ## 3. Catálogo Completo de Produtos
 
-**25 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **27**.
+**26 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **29**.
 
 > ⚠️ **Status das categorias:** 9 categorias definidas em ordem. Todas com produtos ativos.
 
@@ -209,6 +209,8 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 | 24 | Fonte Automática Elegance | R$ 547,00 | a-mesa | pag.ae/81NQzRaB6 | — | null | fonte_automatica.webp | 1 |
 | 25 | Mesa Gourmet Nordic™ | R$ 397,00 | a-mesa | pag.ae/81P7aH2YR | — | null | mesa_nordic.webp | 5 |
 | 26 | Roma Walk Set | R$ 1.090,00 | colecao-passeio | pag.ae/81P8FJPxM | — | null | roma_walk.webp | — |
+| 27 | Ursinho Interativo Kong | R$ 229,00 | brinquedos, mais-vendidos | pag.ae/81Pa5nMYM | — | null | ursinho-interativo-premium-kong-brasil-edition.webp | 6 |
+| 28 | Cabana Teepee Luxo | a partir de R$ 1.190,00 | sono-refugio | — | Tam. P/M/G (3 links) | null | cabana_teepee.webp | — |
 
 **Detalhes dos buyLinks (produtos com seletor de tamanho):**
 
@@ -226,6 +228,11 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 - Tam. M → R$ 597,00 → pag.ae/81M-Zz4cL
 - Tam. G → R$ 697,00 → pag.ae/81M-QYczq
 
+*id 28 — Cabana Teepee Luxo Personalizada:*
+- Tam. P (até 5kg) → R$ 1.190,00 → pag.ae/81Phf6B9r
+- Tam. M (até 12kg) → R$ 1.390,00 → pag.ae/81Phkp8ba
+- Tam. G (até 20kg) → R$ 1.590,00 → pag.ae/81Phm65YM
+
 **Categorias disponíveis (conforme `CATEGORIES` em `products.js`):**
 
 | ID | Label exibido no site | Status | Ordem no site |
@@ -236,7 +243,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 | `a-mesa` | À Mesa | ✅ Com 5 produtos (id 24, 16, 22, 4, 25) — ordenados por `order` | 4º |
 | `colecao-passeio` | Coleção Passeio | ✅ Com produtos | 5º |
 | `viagem-mobilidade` | Viagem & Mobilidade | ✅ Com 1 produto (id 3) | 6º |
-| `sono-refugio` | Sono & Refúgio | ✅ Com 1 produto (id 14) | 7º |
+| `sono-refugio` | Sono & Refúgio | ✅ Com 2 produtos (id 14, 28) | 7º |
 | `brinquedos` | Brinquedos & Estilo | ✅ Com produtos | 8º |
 | `colecao-casa` | Coleção Casa | ✅ Com produtos | 9º |
 
@@ -251,7 +258,7 @@ id 6 → id 18 → id 12 → id 20
 
 | Campo | Tipo | Descrição |
 |---|---|---|
-| `id` | number | Próximo disponível após 25 é **26** |
+| `id` | number | Próximo disponível após 28 é **29** |
 | `name` | string | Nome completo (usável para SEO e fallback) |
 | `shortName` | string | Nome curto (exibido no carrossel e no modal) — obrigatório |
 | `subtitle` | string | Frase curta de impacto (exibida no modal) |
@@ -276,7 +283,7 @@ id 6 → id 18 → id 12 → id 20
 - `assets/hero/image-hero.webp` — imagem hero principal (quality 85, ~158KB; antigo PNG: 2.1MB). ✅ Incluída no repositório (removida do `.gitignore` em 18/05/2026)
 - `assets/logo.webp` — logo marca importado em Navbar.module.css (quality 85, ~35KB; antigo JPEG: 36KB). Referência em background-image CSS
 - `assets/sobre_nos/sobre_nos.webp` — foto da seção Sobre Nós (76KB; convertida de PNG em 20/05/2026). Importado como módulo ES em Story.jsx
-- `public/images/products/*.webp` — 18 imagens de produto, todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Todas commitadas no git
+- `public/images/products/*.webp` — 19 imagens de produto, todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Cabana Teepee convertida de JPEG para WebP em 21/05/2026. Todas commitadas no git
 - `public/og-image.png` — compartilhada em redes sociais (formato original PNG; não convertida pois é meta tag social)
 - `public/images/brand/` — logo e assets de marca
 
