@@ -438,5 +438,21 @@ export const PRODUCTS = [
     badge: null,
     buyLink: null,
     tags: ['teste'],
+  },
+  {
+    id: 100,
+    name: 'teste',
+    shortName: 'teste',
+    subtitle: 'teste',
+    description: 'teste',
+    bullets: ['teste'],
+    price: 'teste',
+    originalPrice: null,
+    category: ['brinquedos'],
+    order: 100,
+    image: '/images/products/teste.webp',
+    badge: null,
+    buyLink: null,
+    tags: ['teste'],
   }
 ];
