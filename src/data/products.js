@@ -423,20 +423,4 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/81P8FJPxM',
     tags: ['passeio', 'coleira', 'guia', 'conjunto', 'kit', 'couro', 'trançado', 'off white', 'branco', 'acessórios'],
   },
-  {
-    id: 100,
-    name: 'test',
-    shortName: 'test',
-    subtitle: 'test',
-    description: 'test',
-    bullets: ['test', 'test'],
-    price: 'test',
-    originalPrice: null,
-    category: ['brinquedos'],
-    order: 100,
-    image: '/images/products/test.webp',
-    badge: null,
-    buyLink: 'test',
-    tags: ['test'],
-  }
 ];
