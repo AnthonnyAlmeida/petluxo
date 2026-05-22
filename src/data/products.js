@@ -434,7 +434,7 @@ export const PRODUCTS = [
     bullets: ['Pelúcia macia com detalhes reforçados', 'Design encantador inspirado no clima brasileiro', 'Ideal para enriquecimento ambiental e conforto emocional', 'Perfeito para cães pequenos e médios', 'Qualidade KONG premium mundialmente reconhecida'],
     price: 'R$ 229,00',
     originalPrice: null,
-    category: ['brinquedos', 'mais-vendidos'],
+    category: ['brinquedos'],
     order: 6,
     image: '/images/products/ursinho-interativo-premium-kong-brasil-edition.webp',
     badge: null,
