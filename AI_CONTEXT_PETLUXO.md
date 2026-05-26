@@ -95,7 +95,7 @@ petluxo/
 │   └── styles/
 │       ├── variables.css    # Design tokens: cores, fontes, espaçamentos, z-index (--z-base/--z-navbar/--z-modal/--z-overlay/--z-above-modal)
 │       ├── animations.css   # @keyframes globais (extraídos do globals.css): heroRise, heroFade, heroFloaty, stageRotate, scrollCueLine
-│       └── globals.css      # Todos os estilos (~1690 linhas), sem framework; não contém @keyframes; z-index todos tokenizados; classes órfãs removidas
+│       └── globals.css      # Todos os estilos, sem framework; não contém @keyframes; z-index todos tokenizados; classes órfãs removidas
 └── docs/                    # Documentação do projeto
     ├── README.md
     ├── DECISIONS.md
@@ -182,7 +182,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 ## 3. Catálogo Completo de Produtos
 
-**26 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **29**.
+**23 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **29**.
 
 > ⚠️ **Status das categorias:** 9 categorias definidas em ordem. Todas com produtos ativos.
 
@@ -245,7 +245,6 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 | `viagem-mobilidade` | Viagem & Mobilidade | ✅ Com 1 produto (id 3) | 6º |
 | `sono-refugio` | Sono & Refúgio | ✅ Com 2 produtos (id 14, 28) | 7º |
 | `brinquedos` | Brinquedos & Estilo | ✅ Com produtos | 8º |
-| `colecao-casa` | Coleção Casa | ✅ Com produtos | 9º |
 
 **Ordem dos produtos por categoria conforto** (reflete a ordem no array `PRODUCTS`):
 id 6 → id 18 → id 12 → id 20
@@ -283,7 +282,8 @@ id 6 → id 18 → id 12 → id 20
 - `assets/hero/image-hero.webp` — imagem hero principal (quality 85, ~158KB; antigo PNG: 2.1MB). ✅ Incluída no repositório (removida do `.gitignore` em 18/05/2026)
 - `assets/logo.webp` — logo marca importado em Navbar.module.css (quality 85, ~35KB; antigo JPEG: 36KB). Referência em background-image CSS
 - `assets/sobre_nos/sobre_nos.webp` — foto da seção Sobre Nós (76KB; convertida de PNG em 20/05/2026). Importado como módulo ES em Story.jsx
-- `public/images/products/*.webp` — 19 imagens de produto, todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Cabana Teepee convertida de JPEG para WebP em 21/05/2026. Todas commitadas no git
+- `assets/sobre_nos/foto_sobre_nos.webp` — asset de reserva no mesmo diretório; não referenciado em nenhum componente atualmente
+- `public/images/products/*.webp` — 23 imagens de produto, todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Cabana Teepee convertida de JPEG para WebP em 21/05/2026. Todas commitadas no git
 - `public/og-image.png` — compartilhada em redes sociais (formato original PNG; não convertida pois é meta tag social)
 - `public/images/brand/` — logo e assets de marca
 
@@ -483,7 +483,7 @@ Permite que um produto apareça em múltiplas categorias (ex: `["mais-vendidos",
 - `public/robots.txt` — comentário removido
 
 ### Produtos sem buyLink (exibem "VIA WHATSAPP" no card)
-Nenhum produto atualmente sem link de pagamento — todos os 20 produtos têm `buyLink` ou `buyLinks`.
+Nenhum produto atualmente sem link de pagamento — todos os 23 produtos têm `buyLink` ou `buyLinks`.
 
 ### Favicon
 ✅ **Favicon.ico gerado em 20/05/2026** a partir de `assets/logo.webp` (48×48px, 7.5KB) via ImageMagick. Referência em `index.html` atualizada de `favicon.svg` para `favicon.ico` (type="image/x-icon"). O `favicon.svg` foi mantido no repositório para compatibilidade, mas não é mais referenciado.

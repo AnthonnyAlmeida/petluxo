@@ -12,7 +12,6 @@ export const CATEGORIES = [
   { id: 'viagem-mobilidade',  label: 'Viagem & Mobilidade'   },
   { id: 'sono-refugio',       label: 'Sono & Refúgio'      },
   { id: 'brinquedos',         label: 'Brinquedos & Estilo'   },
-  { id: 'colecao-casa',       label: 'Coleção Casa'        },
 ];
 
 export const PRODUCTS = [
