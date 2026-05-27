@@ -182,7 +182,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 ## 3. Catálogo Completo de Produtos
 
-**24 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **30**.
+**25 produtos em 10 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **31**.
 
 > ⚠️ **Status das categorias:** 9 categorias definidas em ordem. Todas com produtos ativos.
 
@@ -211,6 +211,8 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 | 26 | Roma Walk Set | R$ 1.090,00 | colecao-passeio | pag.ae/81P8FJPxM | — | null | roma_walk.webp | — |
 | 27 | Ursinho Interativo Kong | R$ 229,00 | brinquedos, mais-vendidos | pag.ae/81Pa5nMYM | — | null | ursinho-interativo-premium-kong-brasil-edition.webp | 6 |
 | 28 | Cabana Teepee Luxo | a partir de R$ 1.190,00 | sono-refugio | — | Tam. P/M/G (3 links) | null | cabana_teepee.webp | — |
+| 29 | Tapete Elegance | R$ 97,00 | a-mesa | pag.ae/81Q6FKrYN | — | null | tapete_elegance.webp | — |
+| 30 | Cesto Organizador Cozy | R$ 247,00 | colecao-cozy-luxo | pag.ae/81Qf8S5Ks | — | null | cesto_organizador.webp | — |
 
 **Detalhes dos buyLinks (produtos com seletor de tamanho):**
 
@@ -245,6 +247,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 | `viagem-mobilidade` | Viagem & Mobilidade | ✅ Com 1 produto (id 3) | 6º |
 | `sono-refugio` | Sono & Refúgio | ✅ Com 2 produtos (id 14, 28) | 7º |
 | `brinquedos` | Brinquedos & Estilo | ✅ Com produtos | 8º |
+| `colecao-cozy-luxo` | Coleção Cozy Luxo | ✅ Com produtos | 9º |
 
 **Ordem dos produtos por categoria conforto** (reflete a ordem no array `PRODUCTS`):
 id 6 → id 18 → id 12 → id 20
@@ -283,7 +286,7 @@ id 6 → id 18 → id 12 → id 20
 - `assets/logo.webp` — logo marca importado em Navbar.module.css (quality 85, ~35KB; antigo JPEG: 36KB). Referência em background-image CSS
 - `assets/sobre_nos/sobre_nos.webp` — foto da seção Sobre Nós (76KB; convertida de PNG em 20/05/2026). Importado como módulo ES em Story.jsx
 - `assets/sobre_nos/foto_sobre_nos.webp` — asset de reserva no mesmo diretório; não referenciado em nenhum componente atualmente
-- `public/images/products/*.webp` — 24 imagens de produto, todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Cabana Teepee convertida de JPEG para WebP em 21/05/2026. Tapete Elegance convertida de JPEG para WebP em 26/05/2026. Todas commitadas no git
+- `public/images/products/*.webp` — 25 imagens de produto, todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Cabana Teepee convertida de JPEG para WebP em 21/05/2026. Tapete Elegance convertida de JPEG para WebP em 26/05/2026. Cesto Organizador convertida de JPEG para WebP em 27/05/2026. Todas commitadas no git
 - `public/og-image.png` — compartilhada em redes sociais (formato original PNG; não convertida pois é meta tag social)
 - `public/images/brand/` — logo e assets de marca
 
@@ -483,7 +486,7 @@ Permite que um produto apareça em múltiplas categorias (ex: `["mais-vendidos",
 - `public/robots.txt` — comentário removido
 
 ### Produtos sem buyLink (exibem "VIA WHATSAPP" no card)
-Nenhum produto atualmente sem link de pagamento — todos os 24 produtos têm `buyLink` ou `buyLinks`.
+Nenhum produto atualmente sem link de pagamento — todos os 25 produtos têm `buyLink` ou `buyLinks`.
 
 ### Favicon
 ✅ **Favicon.ico gerado em 20/05/2026** a partir de `assets/logo.webp` (48×48px, 7.5KB) via ImageMagick. Referência em `index.html` atualizada de `favicon.svg` para `favicon.ico` (type="image/x-icon"). O `favicon.svg` foi mantido no repositório para compatibilidade, mas não é mais referenciado.

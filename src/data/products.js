@@ -12,6 +12,7 @@ export const CATEGORIES = [
   { id: 'viagem-mobilidade',  label: 'Viagem & Mobilidade'   },
   { id: 'sono-refugio',       label: 'Sono & Refúgio'      },
   { id: 'brinquedos',         label: 'Brinquedos & Estilo'   },
+  { id: 'colecao-cozy-luxo',  label: 'Coleção Cozy Luxo'   },
 ];
 
 export const PRODUCTS = [
@@ -492,5 +493,26 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81Q6FKrYN',
     tags: ['tapete', 'personalizado', 'alimentação', 'impermeável', 'antiderrapante', 'minimalista', 'gato', 'cachorro'],
+  },
+  {
+    id: 30,
+    name: 'Cesto Organizador Personalizado para Pets — Coleção Cozy Luxo',
+    shortName: 'Cesto Organizador Cozy',
+    subtitle: 'Organização com charme, exclusividade e muito estilo.',
+    description: 'Transforme a organização do seu pet em parte da decoração da casa. O Cesto Personalizado PetLuxo une charme, funcionalidade e exclusividade em uma peça pensada para lares sofisticados. Com design minimalista e acabamento delicado, adiciona um toque acolhedor e elegante ao ambiente — mantendo tudo organizado com muito estilo.',
+    bullets: [
+      'Personalização exclusiva com o nome do seu pet',
+      'Ideal para brinquedos, mantinhas, acessórios e roupinhas',
+      'Estrutura leve e espaçosa',
+      'Design minimalista e acabamento delicado',
+      'Perfeito para salas, quartos e cantinhos pet',
+    ],
+    price: 'R$ 247,00',
+    originalPrice: null,
+    category: ['colecao-cozy-luxo'],
+    image: '/images/products/cesto_organizador.webp',
+    badge: null,
+    buyLink: 'https://pag.ae/81Qf8S5Ks',
+    tags: ['cesto', 'organizador', 'personalizado', 'cozy', 'decoração', 'brinquedos', 'acessórios', 'aesthetic'],
   },
 ];
