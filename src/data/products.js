@@ -13,7 +13,7 @@ export const CATEGORIES = [
   { id: 'sono-refugio', label: 'Sono & Refúgio' },
   { id: 'brinquedos', label: 'Brinquedos & Estilo' },
   { id: 'colecao-cozy-luxo', label: 'Coleção Cozy Luxo' },
-  { id: 'teste', label: 'teste' },
+  { id: 'teste', label: 'testeee' },
 ];
 
 export const PRODUCTS = [
