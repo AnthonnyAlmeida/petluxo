@@ -12,7 +12,9 @@ import { wa } from '../../lib/whatsapp.js';
 import '../../styles/buttons.css';
 import styles from './Products.module.css';
 
-const featuredProducts = PRODUCTS.filter(p => p.category.includes('mais-vendidos'));
+const featuredProducts = PRODUCTS
+  .filter(p => p.category.includes('mais-vendidos'))
+  .sort((a, b) => (b.categoryOrder?.['mais-vendidos'] ?? 0) - (a.categoryOrder?.['mais-vendidos'] ?? 0));
 const extraCategories  = CATEGORIES.filter(c => c.id !== 'mais-vendidos');
 
 // Categorias que têm pelo menos um produto (para pills de filtro)
@@ -48,12 +50,9 @@ export function Products({ onQuick }) {
         return true;
       })
       .sort((a, b) => {
-        const aHasOrder = a.order != null;
-        const bHasOrder = b.order != null;
-        if (aHasOrder && bHasOrder) return a.order - b.order;
-        if (aHasOrder) return -1;
-        if (bHasOrder) return 1;
-        return 0;
+        const maxA = Math.max(...Object.values(a.categoryOrder ?? {}), 0);
+        const maxB = Math.max(...Object.values(b.categoryOrder ?? {}), 0);
+        return maxB - maxA;
       });
   }, [query, activeCategory]);
 
@@ -196,14 +195,7 @@ export function Products({ onQuick }) {
                 {extraCategories.map(cat => {
                   const catProducts = PRODUCTS
                     .filter(p => p.category.includes(cat.id))
-                    .sort((a, b) => {
-                      const aHasOrder = a.order != null;
-                      const bHasOrder = b.order != null;
-                      if (aHasOrder && bHasOrder) return a.order - b.order;
-                      if (aHasOrder) return -1;
-                      if (bHasOrder) return 1;
-                      return 0;
-                    });
+                    .sort((a, b) => (b.categoryOrder?.[cat.id] ?? 0) - (a.categoryOrder?.[cat.id] ?? 0));
                   if (!catProducts.length) return null;
                   return (
                     <div key={cat.id} className={styles.productsCategoryBlock}>

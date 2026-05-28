@@ -168,7 +168,13 @@ Renderiza múltiplos `ProductGrid`, um por categoria. "Mais Vendidos" fica sempr
 
 ### Sistema de carrosséis por categoria
 
-`CATEGORIES` em `products.js` define a ordem e os labels das categorias. `Products.jsx` mapeia cada categoria, filtra `PRODUCTS.filter(p => p.category.includes(cat.id))` e ordena os resultados: produtos com campo `order` definido aparecem primeiro (ordem crescente), os demais mantêm a ordem original do array. O resultado é passado para `ProductGrid`. O campo `category` de cada produto é um **array**, permitindo que um produto apareça em múltiplas categorias. O campo `tags` (array de strings) existe na maioria dos produtos e é usado como campo de busca adicional.
+`CATEGORIES` em `products.js` define a ordem e os labels das categorias. `Products.jsx` mapeia cada categoria, filtra `PRODUCTS.filter(p => p.category.includes(cat.id))` e ordena os resultados por `categoryOrder[cat.id]` decrescente (maior valor = exibido primeiro). O resultado é passado para `ProductGrid`. O campo `category` de cada produto é um **array**, permitindo que um produto apareça em múltiplas categorias. O campo `tags` (array de strings) existe na maioria dos produtos e é usado como campo de busca adicional.
+
+**Campos de ordenação:**
+- `categoryOrder` — objeto onde cada chave é um `category.id` e o valor é a posição do produto naquela categoria (múltiplos de 100, maior = primeiro). Usado por `Products.jsx` para todas as três lógicas de ordenação (carrossel mais-vendidos, carrosséis de categorias expandidas, grid de busca/filtro).
+- `order` — número global mantido por compatibilidade. Não é mais usado pela lógica de exibição.
+
+**Lógica de ordenação no modo busca/filtro:** como o filtro não tem categoria específica ativa, usa `Math.max(...Object.values(categoryOrder))` do produto como critério de ordenação decrescente.
 
 ### Como o modal com seletor de tamanho funciona
 
@@ -182,37 +188,40 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 ## 3. Catálogo Completo de Produtos
 
-**25 produtos em 10 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **31**.
+**28 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **34**.
 
 > ⚠️ **Status das categorias:** 9 categorias definidas em ordem. Todas com produtos ativos.
 
-| ID | Nome (shortName) | Preço | Categorias | buyLink | buyLinks | Badge | Imagem | order |
+| ID | Nome (shortName) | Preço | Categorias | buyLink | buyLinks | Badge | Imagem | categoryOrder |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Brinquedo Interativo de Pelúcia | R$ 149,90 | brinquedos | pag.ae/81K6Dbu-q | — | ESGOTADO | brinquedo_interativo.webp | — |
-| 3 | Garrafa Portátil Premium para Pets | R$ 189,90 | viagem-mobilidade | pag.ae/81J8xDn2N | — | null | garrafa.webp | — |
-| 4 | Comedouro Elevado Premium | R$ 249,90 | a-mesa | pag.ae/81LGWC7X4 | — | null | comedouro_elevado.webp | 4 |
-| 6 | Refúgio PetLuxo Cozy | R$ 297,00 | mais-vendidos, conforto | pag.ae/81J8cPYS6 | — | MAIS VENDIDOS | cozy.webp | — |
-| 8 | Bolsa Transporte PetLuxo | R$ 797,00 | mais-vendidos, couro | pag.ae/81K3S7Am5 | — | MAIS VENDIDOS | bolsa_transporte.webp | — |
-| 9 | Kit Milano Camelo | R$ 847,00 | couro | pag.ae/81K3Zv1ga | — | null | kit_milano.webp | — |
-| 10 | Porta Saquinhos em Couro | R$ 227,00 | couro | pag.ae/81K3Kjy9v | — | null | porta_saquinho.webp | — |
-| 12 | Sofá PetLuxo Essence | R$ 497,00 | conforto | pag.ae/81J1KU12M | — | null | produtodestaquepetluxo.webp | — |
-| 13 | Sofá Lounge PetLuxo™ | R$ 349,90 | conforto | pag.ae/81LH1xxX4 | — | null | sofa-ortopedico.webp | — |
-| 14 | Cama CloudNest™ | a partir de R$ 329,90 | sono-refugio | — | P/M/G (3 links) | null | cama_petluxo.webp | — |
-| 15 | Coleira Atena™ | R$ 197,90 | couro | pag.ae/81LHbyHKp | — | null | coleira_petluxo.webp | — |
-| 16 | Comedouro Maison Élevé | a partir de R$ 289,90 | mais-vendidos, a-mesa | — | 800ml/1200ml/1800ml (3 links) | MAIS VENDIDOS | comedouro_maison.webp | 2 |
-| 17 | Bolsa Voyage Signature | R$ 429,00 | colecao-passeio | pag.ae/81LHebDYP | — | null | bolsa_voyage.webp | — |
-| 18 | Cama Suspensa Élysée | R$ 397,90 | conforto | pag.ae/81MuixsTN | — | null | cama_suspensa_elysee.webp | — |
-| 19 | Arranhador Sisal Maison | R$ 197,90 | brinquedos | pag.ae/81MunByX6 | — | null | arranhador_bola.webp | — |
-| 20 | Cama Suspensa Aura | R$ 389,00 | mais-vendidos, conforto | pag.ae/81MurBvHN | — | MAIS VENDIDOS | cama_suspensa_rattan.webp | — |
-| 21 | Executive Bed™ | a partir de R$ 597,00 | couro | — | M/G (2 links) | null | executive_bed.webp | — |
-| 22 | Bowl Cerâmica Spoiled | R$ 167,00 | a-mesa | pag.ae/81NMeTc16 | — | null | bowl_ceramica.webp | 3 |
-| 24 | Fonte Automática Elegance | R$ 547,00 | a-mesa | pag.ae/81NQzRaB6 | — | null | fonte_automatica.webp | 1 |
-| 25 | Mesa Gourmet Nordic™ | R$ 397,00 | a-mesa | pag.ae/81P7aH2YR | — | null | mesa_nordic.webp | 5 |
-| 26 | Roma Walk Set | R$ 1.090,00 | colecao-passeio | pag.ae/81P8FJPxM | — | null | roma_walk.webp | — |
-| 27 | Ursinho Interativo Kong | R$ 229,00 | brinquedos, mais-vendidos | pag.ae/81Pa5nMYM | — | null | ursinho-interativo-premium-kong-brasil-edition.webp | 6 |
-| 28 | Cabana Teepee Luxo | a partir de R$ 1.190,00 | sono-refugio | — | Tam. P/M/G (3 links) | null | cabana_teepee.webp | — |
-| 29 | Tapete Elegance | R$ 97,00 | a-mesa | pag.ae/81Q6FKrYN | — | null | tapete_elegance.webp | — |
-| 30 | Cesto Organizador Cozy | R$ 247,00 | colecao-cozy-luxo | pag.ae/81Qf8S5Ks | — | null | cesto_organizador.webp | — |
+| 1 | Brinquedo Interativo | R$ 149,90 | brinquedos | pag.ae/81K6Dbu-q | — | ESGOTADO | brinquedo_interativo.webp | brinquedos:100 |
+| 3 | Garrafa Portátil Premium | R$ 189,90 | viagem-mobilidade | pag.ae/81J8xDn2N | — | null | garrafa.webp | viagem-mobilidade:100 |
+| 4 | Comedouro Elevado | R$ 249,90 | a-mesa | pag.ae/81LGWC7X4 | — | null | comedouro_elevado.webp | a-mesa:100 |
+| 6 | Refúgio Cozy | R$ 297,00 | mais-vendidos, conforto | pag.ae/81J8cPYS6 | — | MAIS VENDIDOS | cozy.webp | mais-vendidos:200, conforto:400 |
+| 8 | Bolsa Transporte | R$ 797,00 | mais-vendidos, couro | pag.ae/81K3S7Am5 | — | MAIS VENDIDOS | bolsa_transporte.webp | mais-vendidos:100, couro:100 |
+| 9 | Kit Milano | R$ 847,00 | couro | pag.ae/81K3Zv1ga | — | null | kit_milano.webp | couro:400 |
+| 10 | Porta Saquinhos | R$ 227,00 | couro | pag.ae/81K3Kjy9v | — | null | porta_saquinho.webp | couro:500 |
+| 12 | Sofá Essence | R$ 497,00 | conforto | pag.ae/81J1KU12M | — | null | produtodestaquepetluxo.webp | conforto:200 |
+| 13 | Sofá Lounge PetLuxo™ | R$ 349,90 | conforto | pag.ae/81LH1xxX4 | — | null | sofa-ortopedico.webp | conforto:300 |
+| 14 | Cama CloudNest™ | a partir de R$ 329,90 | sono-refugio | — | P/M/G (3 links) | null | cama_petluxo.webp | sono-refugio:100 |
+| 15 | Coleira Atena™ | R$ 197,90 | couro | pag.ae/81LHbyHKp | — | null | coleira_petluxo.webp | couro:200 |
+| 16 | Comedouro Maison Élevé | a partir de R$ 289,90 | mais-vendidos, a-mesa | — | 800ml/1200ml/1800ml (3 links) | MAIS VENDIDOS | comedouro_maison.webp | mais-vendidos:300, a-mesa:600 |
+| 17 | Bolsa Voyage Signature | R$ 429,00 | colecao-passeio | pag.ae/81LHebDYP | — | null | bolsa_voyage.webp | colecao-passeio:100 |
+| 18 | Cama Suspensa Élysée | R$ 397,90 | conforto | pag.ae/81MuixsTN | — | null | cama_suspensa_elysee.webp | conforto:100 |
+| 19 | Arranhador Sisal | R$ 197,90 | brinquedos | pag.ae/81MunByX6 | — | null | arranhador_bola.webp | brinquedos:200 |
+| 20 | Cama Suspensa Aura | R$ 389,00 | mais-vendidos, conforto | pag.ae/81MurBvHN | — | MAIS VENDIDOS | cama_suspensa_rattan.webp | mais-vendidos:400, conforto:500 |
+| 21 | Executive Bed™ | a partir de R$ 597,00 | couro | — | M/G (2 links) | null | executive_bed.webp | couro:300 |
+| 22 | Bowl Cerâmica Spoiled | R$ 167,00 | a-mesa | pag.ae/81NMeTc16 | — | null | bowl_ceramica.webp | a-mesa:200 |
+| 24 | Fonte Automática Elegance | R$ 547,00 | a-mesa | pag.ae/81NQzRaB6 | — | null | fonte_automatica.webp | a-mesa:300 |
+| 25 | Mesa Gourmet Nordic™ | R$ 397,00 | a-mesa | pag.ae/81P7aH2YR | — | null | mesa_nordic.webp | a-mesa:400 |
+| 26 | Roma Walk Set | R$ 1.090,00 | colecao-passeio | pag.ae/81P8FJPxM | — | null | roma_walk.webp | colecao-passeio:200 |
+| 27 | Ursinho Interativo Kong | R$ 229,00 | brinquedos | pag.ae/81Pa5nMYM | — | null | ursinho-interativo-premium-kong-brasil-edition.webp | brinquedos:300 |
+| 28 | Cabana Teepee Luxo | a partir de R$ 1.190,00 | sono-refugio | — | Tam. P/M/G (3 links) | null | cabana_teepee.webp | sono-refugio:200 |
+| 29 | Tapete Elegance | R$ 97,00 | a-mesa | pag.ae/81Q6FKrYN | — | null | tapete_elegance.webp | a-mesa:500 |
+| 30 | Cesto Organizador Cozy | R$ 247,00 | colecao-cozy-luxo | pag.ae/81Qf8S5Ks | — | null | cesto_organizador.webp | colecao-cozy-luxo:100 |
+| 31 | Estação de Passeio PetLuxo™ | R$ 497,00 | colecao-cozy-luxo | pag.ae/81QtMgE9m | — | null | estacao-de-passeio-petluxo-em-madeira-premium.webp | colecao-cozy-luxo:200 |
+| 32 | Quadro Pet Personalizado | R$ 297,00 | colecao-cozy-luxo | pag.ae/81QuxvZm1 | — | null | quadro-pet-personalizado-minimalista-petluxo.webp | colecao-cozy-luxo:300 |
+| 33 | Reservatório Hermético Cozy | R$ 297,00 | colecao-cozy-luxo | pag.ae/81QDtorTN | — | PREMIUM | reservatorio-hermetico-cozy-para-racao-pet.webp | colecao-cozy-luxo:400 |
 
 **Detalhes dos buyLinks (produtos com seletor de tamanho):**
 
@@ -242,15 +251,22 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 | `mais-vendidos` | Mais Vendidos | ✅ Com produtos | 1º (sempre visível) |
 | `couro` | Essenciais em Couro | ✅ Com produtos | 2º |
 | `conforto` | Conforto & Estilo | ✅ Com produtos | 3º |
-| `a-mesa` | À Mesa | ✅ Com 5 produtos (id 24, 16, 22, 4, 25) — ordenados por `order` | 4º |
+| `a-mesa` | À Mesa | ✅ Com 6 produtos | 4º |
 | `colecao-passeio` | Coleção Passeio | ✅ Com produtos | 5º |
 | `viagem-mobilidade` | Viagem & Mobilidade | ✅ Com 1 produto (id 3) | 6º |
 | `sono-refugio` | Sono & Refúgio | ✅ Com 2 produtos (id 14, 28) | 7º |
 | `brinquedos` | Brinquedos & Estilo | ✅ Com produtos | 8º |
-| `colecao-cozy-luxo` | Coleção Cozy Luxo | ✅ Com produtos | 9º |
+| `colecao-cozy-luxo` | Coleção Cozy Luxo | ✅ Com 4 produtos (id 30, 31, 32, 33) | 9º |
 
-**Ordem dos produtos por categoria conforto** (reflete a ordem no array `PRODUCTS`):
-id 6 → id 18 → id 12 → id 20
+**Ordem de exibição por categoria** (categoryOrder decrescente = primeiro → último):
+- mais-vendidos: id20 → id16 → id6 → id8
+- couro: id10 → id9 → id21 → id15 → id8
+- conforto: id20 → id6 → id13 → id12 → id18
+- a-mesa: id16 → id29 → id25 → id24 → id22 → id4
+- colecao-passeio: id26 → id17
+- sono-refugio: id28 → id14
+- brinquedos: id27 → id19 → id1
+- colecao-cozy-luxo: id33 → id32 → id31 → id30
 
 ---
 
