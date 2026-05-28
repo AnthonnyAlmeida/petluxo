@@ -530,5 +530,21 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81QtMgE9m ',
     tags: ['estacao passeio', 'organizador pet', 'madeira premium', 'design minimalista', 'acessorios passeio', 'decoracao pet', 'estilo escandinavo'],
+  },
+  {
+    id: 32,
+    name: 'Quadro Pet Personalizado Minimalista PetLuxo',
+    shortName: 'Quadro Pet Personalizado',
+    subtitle: 'Eternize momentos especiais com elegância minimalista',
+    description: 'O Quadro Personalizado PetLuxo™ transforma o amor pelo seu pet em uma peça de decoração sofisticada e contemporânea. Com design minimalista inspirado na estética escandinava, este quadro adiciona um toque acolhedor e elegante a qualquer ambiente. Personalizado com a foto e nome do seu animal de estimação, representa uma lembrança afetiva e atemporal que celebra os momentos mais especiais. Ideal para salas, quartos e cantinhos cozy, é o presente perfeito para verdadeiros amantes de pets e design.',
+    bullets: ['Personalização com foto e nome do seu pet', 'Design minimalista inspirado em estética escandinava', 'Acabamento sofisticado e contemporâneo', 'Perfeito para salas, quartos e espaços cozy', 'Lembrança afetiva e decorativa premium'],
+    price: 'R$ 297,00',
+    originalPrice: null,
+    category: ['colecao-cozy-luxo'],
+    order: 8,
+    image: '/images/products/quadro-pet-personalizado-minimalista-petluxo.webp',
+    badge: null,
+    buyLink: 'https://pag.ae/81QuxvZm1',
+    tags: ['quadro personalizado', 'decoracao pet', 'minimalista', 'presente premium', 'design escandinavo', 'home decor'],
   }
 ];
