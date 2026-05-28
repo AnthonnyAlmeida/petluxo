@@ -515,4 +515,20 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/81Qf8S5Ks',
     tags: ['cesto', 'organizador', 'personalizado', 'cozy', 'decoração', 'brinquedos', 'acessórios', 'aesthetic'],
   },
+  {
+    id: 31,
+    name: 'Estação de Passeio PetLuxo™ em Madeira Premium',
+    shortName: 'Estação de Passeio PetLuxo™',
+    subtitle: 'Organização sofisticada para acessórios de passeio do seu pet',
+    description: 'A Estação de Passeio PetLuxo™ transforma o cantinho do seu pet em um espaço sofisticado e acolhedor. Confeccionada em madeira com acabamento moderno e design minimalista, mantém coleiras, guias, roupinhas e acessórios sempre organizados com elegância. Seu visual clean combina perfeitamente com ambientes contemporâneos, trazendo um toque decorativo refinado para halls, corredores e espaços pet.',
+    bullets: ['Design minimalista premium em madeira de alta qualidade', 'Ganchos resistentes com acabamento fosco sofisticado', 'Perfeita para organizar coleiras, guias e acessórios de passeio', 'Inspirada no estilo escandinavo e aesthetic contemporâneo', 'Decoração funcional que complementa ambientes sofisticados'],
+    price: 'R$ 497,00',
+    originalPrice: null,
+    category: ['colecao-cozy-luxo'],
+    order: 7,
+    image: '/images/products/estacao-de-passeio-petluxo-em-madeira-premium.webp',
+    badge: null,
+    buyLink: 'https://pag.ae/81QtMgE9m ',
+    tags: ['estacao passeio', 'organizador pet', 'madeira premium', 'design minimalista', 'acessorios passeio', 'decoracao pet', 'estilo escandinavo'],
+  }
 ];
