@@ -531,4 +531,20 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/81QuxvZm1',
     tags: ['quadro personalizado', 'decoracao pet', 'minimalista', 'presente premium', 'design escandinavo', 'home decor'],
   },
+  {
+    id: 33,
+    name: 'Reservatório Hermético Cozy para Ração Pet',
+    shortName: 'Reservatório Hermético Cozy',
+    subtitle: 'Vedação premium que preserva frescor e elegância',
+    description: 'O Reservatório Hermético Cozy foi desenvolvido para armazenar ração com praticidade e sofisticação, mantendo o ambiente clean e harmonioso. Seu design minimalista combina perfeitamente com cozinhas e cantinhos pet modernos, enquanto a vedação hermética premium preserva a qualidade dos alimentos por muito mais tempo, protegendo contra umidade e odores indesejados.',
+    bullets: ['Vedação hermética premium para máxima conservação', 'Design minimalista que harmoniza com ambientes modernos', 'Proteção eficaz contra umidade e odores', 'Organização funcional com estética sofisticada', 'Ideal para cozinhas e espaços cozy'],
+    price: 'R$ 297,00',
+    originalPrice: null,
+    category: ['colecao-cozy-luxo'],
+    order: 47,
+    image: '/images/products/reservatorio-hermetico-cozy-para-racao-pet.webp',
+    badge: 'PREMIUM',
+    buyLink: 'https://pag.ae/81QDtorTN',
+    tags: ['racao', 'armazenamento', 'hermetico', 'organizacao', 'design', 'pet', 'premium'],
+  }
 ];
