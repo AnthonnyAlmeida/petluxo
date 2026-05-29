@@ -11,8 +11,8 @@ export const CATEGORIES = [
   { id: 'colecao-passeio', label: 'Coleção Passeio' },
   { id: 'viagem-mobilidade', label: 'Viagem & Mobilidade' },
   { id: 'sono-refugio', label: 'Sono & Refúgio' },
-  { id: 'colecao-cozy-luxo', label: 'Coleção Cozy Luxo' },
   { id: 'brinquedos', label: 'Brinquedos & Estilo' },
+  { id: 'colecao-cozy-luxo', label: 'Coleção Cozy Luxo' },
 ];
 
 export const PRODUCTS = [
