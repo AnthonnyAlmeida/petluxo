@@ -519,5 +519,22 @@ export const PRODUCTS = [
     badge: 'PREMIUM',
     buyLink: 'https://pag.ae/81QDtorTN',
     tags: ['racao', 'armazenamento', 'hermetico', 'organizacao', 'design', 'pet', 'premium'],
+  },
+  {
+    id: 34,
+    name: 'Bolsa Térmica Signature Matelassê',
+    shortName: 'Bolsa Térmica Matelassê',
+    subtitle: 'Elegância e funcionalidade em cada passeio com seu pet',
+    description: 'A Bolsa Térmica Signature Matelassê foi criada para acompanhar momentos especiais ao lado do seu pet com sofisticação e funcionalidade. Com acabamento acolchoado premium, design minimalista e amplo espaço interno, ela é perfeita para transportar petiscos, acessórios e itens de higiene. Seu visual clean e atemporal transforma a organização do passeio em uma experiência elegante e sofisticada.',
+    bullets: ['Design matelassê minimalista e atemporal', 'Interior térmico funcional para manter a temperatura', 'Espaço amplo e bem organizado', 'Alça confortável para transporte seguro', 'Ideal para viagens, passeios e day use', 'Acabamento acolchoado em material premium'],
+    price: 'R$ 349,00',
+    originalPrice: null,
+    category: ['colecao-passeio'],
+    order: 48,
+    categoryOrder: {"colecao-passeio":500},
+    image: '/images/products/bolsa-termica-signature-matelasse.webp',
+    badge: 'NOVO',
+    buyLink: null,
+    tags: ['bolsa termica', 'passeio', 'pet', 'viagem', 'premium', 'matelasse', 'sofisticado'],
   }
 ];
