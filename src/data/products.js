@@ -9,10 +9,10 @@ export const CATEGORIES = [
   { id: 'conforto', label: 'Conforto & Estilo' },
   { id: 'a-mesa', label: 'À Mesa' },
   { id: 'colecao-passeio', label: 'Coleção Passeio' },
-  { id: 'viagem-mobilidade', label: 'Viagem & Mobilidade' },
-  { id: 'sono-refugio', label: 'Sono & Refúgio' },
-  { id: 'brinquedos', label: 'Brinquedos & Estilo' },
   { id: 'colecao-cozy-luxo', label: 'Coleção Cozy Luxo' },
+  { id: 'brinquedos', label: 'Brinquedos & Estilo' },
+  { id: 'sono-refugio', label: 'Sono & Refúgio' },
+  { id: 'viagem-mobilidade', label: 'Viagem & Mobilidade' },
 ];
 
 export const PRODUCTS = [
