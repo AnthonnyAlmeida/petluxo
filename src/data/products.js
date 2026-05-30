@@ -536,5 +536,22 @@ export const PRODUCTS = [
     badge: 'NOVO',
     buyLink: 'https://pag.ae/81QSpn4pr',
     tags: ['bolsa termica', 'passeio', 'pet', 'viagem', 'premium', 'matelasse', 'sofisticado'],
+  },
+  {
+    id: 35,
+    name: 'Manta Serenity™ PetLuxo Premium',
+    shortName: 'Manta Serenity™',
+    subtitle: 'Conforto sofisticado para momentos de descanso e aconchego',
+    description: 'A Manta Serenity™ foi criada para transformar os momentos de descanso do seu pet em uma experiência ainda mais acolhedora e elegante. Com toque ultra macio e acabamento sofisticado, ela complementa perfeitamente ambientes refinados. Seu design minimalista e textura premium trazem conforto visual e sensorial, sendo ideal para camas, sofás, viagens e dias frios aconchegantes.',
+    bullets: ['Toque ultra macio e confortável para máximo aconchego', 'Design minimalista e atemporal que combina com qualquer ambiente', 'Perfeita para todas as estações do ano', 'Acabamento premium e sofisticado', 'Ideal para camas, sofás e viagens'],
+    price: 'R$ 259,00',
+    originalPrice: null,
+    category: ['sono-refugio'],
+    order: 49,
+    categoryOrder: {"sono-refugio":300},
+    image: '/images/products/manta-serenity-petluxo-premium.webp',
+    badge: null,
+    buyLink: 'https://pag.ae/81QSF8Xw6',
+    tags: ['manta premium', 'conforto', 'sono', 'refugio', 'pet sofisticado', 'aconchego', 'viagem'],
   }
 ];
