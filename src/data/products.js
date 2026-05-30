@@ -534,7 +534,7 @@ export const PRODUCTS = [
     categoryOrder: {"colecao-passeio":500},
     image: '/images/products/bolsa-termica-signature-matelasse.webp',
     badge: 'NOVO',
-    buyLink: null,
+    buyLink: 'https://pag.ae/81QSpn4pr',
     tags: ['bolsa termica', 'passeio', 'pet', 'viagem', 'premium', 'matelasse', 'sofisticado'],
   }
 ];
