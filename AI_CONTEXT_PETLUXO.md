@@ -155,7 +155,7 @@ Renderiza múltiplos `ProductGrid`, um por categoria. "Mais Vendidos" fica sempr
 
 **Busca e filtro por categoria:**
 - Barra de busca com `Icon.Search`, input `var(--bege-soft)`, placeholder itálico, botão X para limpar
-- Pills de categoria: "Todos" + uma pill por categoria com produtos; pill ativa tem fundo `var(--vinho)`
+- Pills de categoria: "Todos" + uma pill por categoria visível com produtos; pill ativa tem fundo `var(--vinho)`
 - `isFiltering = query.trim() !== '' || activeCategory !== null`
 - Quando `isFiltering`: substitui carrosséis por grid flat (3 col / 2 tablet / 1 mobile) com animação de entrada
 - Quando sem resultados: mensagem em serif + link WhatsApp via `wa()`
@@ -168,7 +168,7 @@ Renderiza múltiplos `ProductGrid`, um por categoria. "Mais Vendidos" fica sempr
 
 ### Sistema de carrosséis por categoria
 
-`CATEGORIES` em `products.js` define a ordem e os labels das categorias. `Products.jsx` mapeia cada categoria, filtra `PRODUCTS.filter(p => p.category.includes(cat.id))` e ordena os resultados por `categoryOrder[cat.id]` decrescente (maior valor = exibido primeiro). O resultado é passado para `ProductGrid`. O campo `category` de cada produto é um **array**, permitindo que um produto apareça em múltiplas categorias. O campo `tags` (array de strings) existe na maioria dos produtos e é usado como campo de busca adicional.
+`CATEGORIES` em `products.js` define a ordem, os labels e a visibilidade das categorias. Cada entrada tem `{ id, label, visible }` — quando `visible: false`, a categoria é ocultada de carrosséis e pills sem precisar remover produtos. `Products.jsx` mapeia cada categoria visível, filtra `PRODUCTS.filter(p => p.category.includes(cat.id))` e ordena os resultados por `categoryOrder[cat.id]` decrescente (maior valor = exibido primeiro). O resultado é passado para `ProductGrid`. O campo `category` de cada produto é um **array**, permitindo que um produto apareça em múltiplas categorias. O campo `tags` (array de strings) existe na maioria dos produtos e é usado como campo de busca adicional.
 
 **Campos de ordenação:**
 - `categoryOrder` — objeto onde cada chave é um `category.id` e o valor é a posição do produto naquela categoria (múltiplos de 100, maior = primeiro). Usado por `Products.jsx` para todas as três lógicas de ordenação (carrossel mais-vendidos, carrosséis de categorias expandidas, grid de busca/filtro).
@@ -246,17 +246,19 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 **Categorias disponíveis (conforme `CATEGORIES` em `products.js`):**
 
-| ID | Label exibido no site | Status | Ordem no site |
-|---|---|---|---|
-| `mais-vendidos` | Mais Vendidos | ✅ Com produtos | 1º (sempre visível) |
-| `couro` | Essenciais em Couro | ✅ Com produtos | 2º |
-| `conforto` | Conforto & Estilo | ✅ Com produtos | 3º |
-| `a-mesa` | À Mesa | ✅ Com 6 produtos | 4º |
-| `colecao-passeio` | Coleção Passeio | ✅ Com produtos | 5º |
-| `viagem-mobilidade` | Viagem & Mobilidade | ✅ Com 1 produto (id 3) | 6º |
-| `sono-refugio` | Sono & Refúgio | ✅ Com 2 produtos (id 14, 28) | 7º |
-| `brinquedos` | Brinquedos & Estilo | ✅ Com produtos | 8º |
-| `colecao-cozy-luxo` | Coleção Cozy Luxo | ✅ Com 4 produtos (id 30, 31, 32, 33) | 9º |
+| ID | Label exibido no site | visible | Status | Ordem no site |
+|---|---|---|---|---|
+| `mais-vendidos` | Mais Vendidos | true | ✅ Com produtos | 1º (sempre visível) |
+| `couro` | Essenciais em Couro | true | ✅ Com produtos | 2º |
+| `conforto` | Conforto & Estilo | true | ✅ Com produtos | 3º |
+| `a-mesa` | À Mesa | true | ✅ Com 6 produtos | 4º |
+| `colecao-cozy-luxo` | Coleção Cozy Luxo | true | ✅ Com 4 produtos (id 30, 31, 32, 33) | 5º |
+| `brinquedos` | Brinquedos & Estilo | true | ✅ Com produtos | 6º |
+| `colecao-passeio` | Coleção Passeio | true | ✅ Com produtos | 7º |
+| `sono-refugio` | Sono & Refúgio | true | ✅ Com 2 produtos (id 14, 28) | 8º |
+| `viagem-mobilidade` | Viagem & Mobilidade | true | ✅ Com 1 produto (id 3) | 9º |
+
+> Para ocultar uma categoria do site sem remover produtos, setar `visible: false`. O filtro usa `!== false` — categorias sem o campo também ficam visíveis.
 
 **Ordem de exibição por categoria** (categoryOrder decrescente = primeiro → último):
 - mais-vendidos: id20 → id16 → id6 → id8

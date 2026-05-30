@@ -15,11 +15,11 @@ import styles from './Products.module.css';
 const featuredProducts = PRODUCTS
   .filter(p => p.category.includes('mais-vendidos'))
   .sort((a, b) => (b.categoryOrder?.['mais-vendidos'] ?? 0) - (a.categoryOrder?.['mais-vendidos'] ?? 0));
-const extraCategories  = CATEGORIES.filter(c => c.id !== 'mais-vendidos');
+const extraCategories  = CATEGORIES.filter(c => c.id !== 'mais-vendidos' && c.visible !== false);
 
 // Categorias que têm pelo menos um produto (para pills de filtro)
 const categoriesWithProducts = CATEGORIES.filter(cat =>
-  PRODUCTS.some(p => p.category.includes(cat.id))
+  cat.visible !== false && PRODUCTS.some(p => p.category.includes(cat.id))
 );
 
 export function Products({ onQuick }) {

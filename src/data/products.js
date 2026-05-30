@@ -4,15 +4,15 @@
  */
 
 export const CATEGORIES = [
-  { id: 'mais-vendidos', label: 'Mais Vendidos' },
-  { id: 'couro', label: 'Essenciais em Couro' },
-  { id: 'conforto', label: 'Conforto & Estilo' },
-  { id: 'a-mesa', label: 'À Mesa' },
-  { id: 'colecao-cozy-luxo', label: 'Coleção Cozy Luxo' },
-  { id: 'brinquedos', label: 'Brinquedos & Estilo' },
-  { id: 'colecao-passeio', label: 'Coleção Passeio' },
-  { id: 'sono-refugio', label: 'Sono & Refúgio' },
-  { id: 'viagem-mobilidade', label: 'Viagem & Mobilidade' },
+  { id: 'mais-vendidos', label: 'Mais Vendidos', visible: true },
+  { id: 'couro', label: 'Essenciais em Couro', visible: true },
+  { id: 'conforto', label: 'Conforto & Estilo', visible: true },
+  { id: 'a-mesa', label: 'À Mesa', visible: true },
+  { id: 'colecao-cozy-luxo', label: 'Coleção Cozy Luxo', visible: true },
+  { id: 'brinquedos', label: 'Brinquedos & Estilo', visible: true },
+  { id: 'colecao-passeio', label: 'Coleção Passeio', visible: true },
+  { id: 'sono-refugio', label: 'Sono & Refúgio', visible: true },
+  { id: 'viagem-mobilidade', label: 'Viagem & Mobilidade', visible: true },
 ];
 
 export const PRODUCTS = [
