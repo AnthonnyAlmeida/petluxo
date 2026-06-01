@@ -12,7 +12,7 @@ export const CATEGORIES = [
   { id: 'brinquedos', label: 'Brinquedos & Estilo', visible: true },
   { id: 'colecao-passeio', label: 'Coleção Passeio', visible: true },
   { id: 'sono-refugio', label: 'Sono & Refúgio', visible: true },
-  { id: 'viagem-mobilidade', label: 'Viagem & Mobilidade', visible: false },
+  { id: 'viagem-mobilidade', label: 'Viagem & Mobilidade', visible: true },
 ];
 
 export const PRODUCTS = [
