@@ -553,5 +553,22 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81QSF8Xw6',
     tags: ['manta premium', 'conforto', 'sono', 'refugio', 'pet sofisticado', 'aconchego', 'viagem'],
+  },
+  {
+    id: 36,
+    name: 'Comedouro Nômade Premium™ Dobrável e Portátil',
+    shortName: 'Comedouro Nômade Premium',
+    subtitle: 'Elegância e praticidade em movimento para seu pet',
+    description: 'O Comedouro Nômade Premium™ representa a fusão perfeita entre funcionalidade e sofisticação para tutores exigentes. Dobrável e compacto, acompanha viagens, passeios e aventuras com discreto refinamento. Seu design funcional oferece praticidade sem comprometer a estética premium, ideal para água ou alimentação em qualquer situação.',
+    bullets: ['Dobrável e compacto para máxima portabilidade', 'Design sofisticado e funcional', 'Adequado para água e alimentação', 'Ideal para viagens, passeios e rotina diária', 'Acabamento refinado e elegante'],
+    price: 'R$ 119,00',
+    originalPrice: null,
+    category: ['viagem-mobilidade'],
+    order: 50,
+    categoryOrder: {"viagem-mobilidade":200},
+    image: '/images/products/comedouro-nomade-premium-dobravel-e-portatil.webp',
+    badge: 'PREMIUM',
+    buyLink: 'https://pag.ae/81Rpy249r',
+    tags: ['comedouro', 'portatil', 'dobravel', 'viagem', 'pet premium', 'nômade'],
   }
 ];
