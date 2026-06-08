@@ -570,5 +570,22 @@ export const PRODUCTS = [
     badge: 'PREMIUM',
     buyLink: 'https://pag.ae/81Rpy249r',
     tags: ['comedouro', 'portatil', 'dobravel', 'viagem', 'pet premium', 'nômade'],
+  },
+  {
+    id: 37,
+    name: 'Espreguiçadeira Felina Portátil e Arranhador Sisal',
+    shortName: 'Espreguiçadeira Madeira Dobrável',
+    subtitle: 'Cama, arranhador e companheiro portátil em madeira sustentável',
+    description: 'Peça versátil que combina funcionalidade e elegância para o seu felino. Estrutura em madeira natural sustentável com sisal genuíno trançado oferece proteção para seus móveis enquanto proporciona conforto e entretenimento. Design dobrável permite levar seu gato aonde quer que vá, sem comprometer a sofisticação da sua decoração.',
+    bullets: ['Madeira natural sustentável com acabamento premium', 'Sisal genuíno antiarranhões de alta durabilidade', '4 níveis de ajuste de altura personalizáveis', 'Estrutura dobrável e portátil para mobilidade', 'Funciona como cama, arranhador e móvel de viagem'],
+    price: 'R$ 219,00',
+    originalPrice: null,
+    category: ['viagem-mobilidade', 'conforto', 'sono-refugio'],
+    order: 51,
+    categoryOrder: {"viagem-mobilidade":300,"conforto":1600,"sono-refugio":400},
+    image: '/images/products/espreguicadeira-felina-portatil-e-arranhador-sisal.webp',
+    badge: 'EXCLUSIVO',
+    buyLink: 'https://pag.ae/81SERKLKu',
+    tags: ['arranhador', 'madeira natural', 'dobravel', 'sisal', 'sustentavel', 'gatos', 'design'],
   }
 ];
