@@ -575,7 +575,7 @@ export const PRODUCTS = [
     id: 37,
     name: 'Arranhador Felino Sisal Ajustável 4 Níveis Portátil',
     shortName: 'Arranhador Sisal 4 Níveis',
-    subtitle: 'Descanso com design. Proteção elegante para seus móveis.',
+    subtitle: 'Design que descansa e protege. Estrutura em madeira natural com sisal trançado que serve de cama, arranhador e companheiro de viagem — dobrável para ir onde o seu gato for. Descanso com design. Proteção elegante para seus móveis.',
     description: 'Arranhador sofisticado em madeira natural sustentável com superfície de sisal trançado genuíno, oferecendo conforto premium e proteção completa para seus móveis e tapetes. Estrutura ajustável em 4 níveis de altura com design funcional que se adapta ao espaço e à decoração de seu lar. Dobrável e portátil, ideal para felinos que apreciam qualidade e estilo.',
     bullets: ['Madeira natural sustentável com acabamento refinado', 'Sisal genuíno trançado com propriedades antiarranhões', 'Ajustável em 4 níveis de altura conforme necessidade', 'Design 2 em 1: arranhador, cama e sofá', 'Estrutura dobrável e portátil para mobilidade', 'Protege móveis e tapetes com elegância'],
     price: 'R$ 219,00',
