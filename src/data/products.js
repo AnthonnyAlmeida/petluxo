@@ -213,7 +213,7 @@ export const PRODUCTS = [
     categoryOrder: {"conforto":1300,"sono-refugio":800},
     image: '/images/products/sofa-ortopedico.webp',
     badge: null,
-    buyLink: 'https://pag.ae/81LH1xxX4',
+    buyLink: 'https://pag.ae/81VR7uoS1',
     tags: ['sofá', 'cama', 'ortopédico', 'descanso'],
   },
   {
