@@ -206,7 +206,7 @@ export const PRODUCTS = [
     subtitle: 'Conforto sofisticado para pets que merecem o extraordinário.',
     description: 'Transforme os momentos de descanso do seu pet em uma verdadeira experiência de conforto premium. O Sofá Ortopédico Lounge PetLuxo™ foi desenvolvido para unir elegância, aconchego e funcionalidade em um design moderno e sofisticado que harmoniza perfeitamente com ambientes refinados. Seu acabamento premium em tons neutros transmite exclusividade e sofisticação, enquanto a estrutura ortopédica proporciona suporte confortável para o descanso diário do seu melhor amigo.',
     bullets: ['Design moderno estilo sofá boutique', 'Base confortável com suporte ortopédico', 'Material premium resistente e sofisticado', 'Fácil de limpar', 'Base antiderrapante', 'Perfeita para ambientes elegantes e minimalistas'],
-    price: 'R$ 349,90',
+    price: 'R$ 469,00',
     originalPrice: null,
     category: ['conforto', 'sono-refugio'],
     order: 12,
