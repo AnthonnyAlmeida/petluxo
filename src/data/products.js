@@ -399,6 +399,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81P8FJPxM',
     tags: ['passeio', 'coleira', 'guia', 'conjunto', 'kit', 'couro', 'trançado', 'off white', 'branco', 'acessórios'],
+    supplierLink: 'https://www.zampe.com.br/kit-roma-off-white',
   },
   {
     id: 27,
