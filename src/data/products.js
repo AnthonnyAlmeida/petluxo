@@ -169,6 +169,7 @@ export const PRODUCTS = [
     badge: 'MAIS VENDIDOS',
     buyLink: 'https://pag.ae/81K3S7Am5',
     tags: ['mochila', 'bolsa', 'carregar', 'viagem', 'passeio'],
+    supplierLink: 'https://www.coutrebolsas.com.br/bolsa-de-transporte-pet-luxo-glamour-toffee',
   },
   {
     id: 9,
