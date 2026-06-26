@@ -200,6 +200,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81K3Kjy9v',
     tags: ['higiene', 'passeio', 'limpeza', 'saquinho'],
+    supplierLink: 'https://ameacessoriospet.com.br/produtos/poop-bag-de-couro-porta-saquinhos-higienicos/',
   },
   {
     id: 13,
