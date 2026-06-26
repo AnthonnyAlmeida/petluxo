@@ -215,7 +215,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81VR7uoS1',
     tags: ['sofá', 'cama', 'ortopédico', 'descanso'],
-    featured: true,
+    featured: false,
   },
   {
     id: 14,
@@ -592,6 +592,7 @@ export const PRODUCTS = [
     category: ['viagem-mobilidade', 'sono-refugio'],
     order: 51,
     categoryOrder: {"viagem-mobilidade":300,"sono-refugio":700},
+    featured: true,
     image: '/images/products/espreguicadeira-felina-portatil-e-arranhador-sisal.webp',
     badge: 'EXCLUSIVO',
     buyLink: 'https://pag.ae/81SERKLKu',
