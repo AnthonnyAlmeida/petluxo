@@ -184,6 +184,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81K3Zv1ga',
     tags: ['coleira', 'guia', 'conjunto', 'couro'],
+    supplierLink: 'https://www.zampe.com.br/kit-milano-camelo',
   },
   {
     id: 10,
