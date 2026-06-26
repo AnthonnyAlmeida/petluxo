@@ -64,6 +64,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81LGWC7X4',
     tags: ['tigela', 'pote', 'ração', 'alimentação', 'comida'],
+    supplierLink: 'Comedouro elevado segunda linha com pequenas manchas na madeira P para cachorro e gato porte mini e P Descobri produtos incríveis no SHEIN.com, venha conferir! https://api-shein.shein.com/h5/sharejump/appjump?link=RqJA5dSdJfb_8&localcountry=BR&shc=2_RqJA5dSdJfb&url_from=GM74796417825',
   },
   {
     id: 20,
