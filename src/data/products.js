@@ -43,11 +43,12 @@ export const PRODUCTS = [
     originalPrice: 'R$ 219,90',
     category: ['viagem-mobilidade'],
     order: 2,
-    categoryOrder: { 'viagem-mobilidade': 100 },
+    categoryOrder: {"viagem-mobilidade":100},
     image: '/images/products/garrafa.webp',
     badge: null,
     buyLink: 'https://pag.ae/81J8xDn2N',
     tags: ['água', 'passeio', 'hidratação', 'squeeze'],
+    supplierLink: 'Olha o que eu achei na Wish! https://dl.wish.com/BXrR9',
   },
   {
     id: 4,
