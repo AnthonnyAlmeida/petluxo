@@ -134,6 +134,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81MuixsTN',
     tags: ['cama', 'suspensa', 'rattan', 'descanso'],
+    supplierLink: '1 Peça Rede Grande Artesanal para Gatos, Fácil de Montar, Cama de Cesto Tricotada à Mão para Gatos, Cama de Balanço para Gatos, Cama de Dormir para Gatos, Cama Confortável para Animais de Estimação Interna, Decoração Doméstica Estilosa, Rede com Suporte, Adequada para Gatos, Cachorros e Outros Pequenos Descobri produtos incríveis no SHEIN.com, venha conferir! https://api-shein.shein.com/h5/sharejump/appjump?link=RqJZQiNbXgR_8&localcountry=BR&shc=2_RqJZQiNbXgR&url_from=GM74796417825',
   },
   {
     id: 12,
