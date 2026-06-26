@@ -515,6 +515,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81QuxvZm1',
     tags: ['quadro personalizado', 'decoracao pet', 'minimalista', 'presente premium', 'design escandinavo', 'home decor'],
+    supplierLink: 'https://gittdecor.com.br/produtos/quadro-pet-art-minimalista/',
   },
   {
     id: 33,
