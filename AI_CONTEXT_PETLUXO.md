@@ -1,6 +1,6 @@
 # AI_CONTEXT.md — PetLuxo
 
-> Este arquivo existe para que uma IA (Claude ou outra) possa entender o projeto completamente ao iniciar uma nova conversa, sem precisar de contexto anterior.
+> Este arquivo existe para que uma IA (Claude ou outra) possa entender o projeto completamente ao iniciar uma nova conversa, sem precisar de contexto anterior. Reflete o estado atual do código — não contém histórico de mudanças.
 
 ---
 
@@ -42,27 +42,27 @@ petluxo/
 ├── package.json             # React 18 + Vite + react-router-dom
 ├── AI_CONTEXT_PETLUXO.md    # Este arquivo
 ├── public/                  # Copiados diretamente para dist/
-│   ├── favicon.ico          # Logo convertida (48×48px, gerada em 20/05/2026)
-│   ├── favicon.svg          # Placeholder SVG (mantido para compatibilidade)
+│   ├── favicon.ico          # Logo convertida (48×48px)
+│   ├── favicon.svg          # Placeholder SVG (mantido para compatibilidade, não referenciado)
 │   ├── robots.txt
 │   ├── sitemap.xml
 │   ├── 404.html             # Redirect SPA via sessionStorage
 │   ├── og-image.png         # 1200×630px para redes sociais
 │   └── images/
 │       ├── brand/           # Vazia (apenas .gitkeep) — nenhum asset de marca atualmente
-│       └── products/        # Fotos dos produtos (33 arquivos, todas no git)
-├── assets/                  # Assets importados pelo Vite (logo, hero)
+│       └── products/        # Fotos dos produtos (todas em WebP, todas no git)
+├── assets/                  # Assets importados pelo Vite (logo, hero, sobre nós)
 ├── src/
 │   ├── main.jsx             # Entry point — monta React no #app
 │   ├── icons.jsx            # Ícones SVG inline (sem biblioteca)
 │   ├── tweaks-panel.jsx     # Painel de ajustes (apenas dev)
 │   ├── app/
-│   │   ├── page.jsx         # Componente raiz App — renderiza todas as seções
+│   │   ├── page.jsx         # Componente raiz App — renderiza todas as seções e as rotas
 │   │   └── DevTweaks.jsx    # Carregado via React.lazy apenas em DEV
 │   ├── components/
 │   │   ├── layout/
 │   │   │   ├── Navbar.jsx   # Navbar com menu hambúrguer mobile; links: Produtos, Sobre, FAQ (#faq), Contato
-│   │   │   └── Footer.jsx   # 5 colunas: Logo + tagline \"Sofisticação e conforto...\", Produtos (Ver todos), Sobre (Sobre nós/Diferenciais/FAQ), Políticas (4 links internos), Contato (WhatsApp/e-mail); seção de redes sociais com Instagram @petluxostory (ícone vinho, esquerda) e PagBank (direita, ícone cadeado); rodapé com CNPJ
+│   │   │   └── Footer.jsx   # 5 colunas: Logo + tagline, Produtos (Ver todos), Sobre (Sobre nós/Diferenciais/FAQ), Políticas (4 links internos), Contato (WhatsApp/e-mail); seção de redes sociais com Instagram @petluxostory e PagBank; rodapé com CNPJ
 │   │   ├── product/
 │   │   │   ├── ProductCard.jsx   # Card no carrossel: imagem, badge, nome, preço, CTA
 │   │   │   ├── ProductGrid.jsx   # Carrossel com setas laterais e swipe touch
@@ -73,10 +73,10 @@ petluxo/
 │   │   │   ├── ShippingPolicyPage.jsx # /politica-de-frete-e-entrega
 │   │   │   └── TermsPage.jsx          # /termos-de-uso
 │   │   ├── sections/
-│   │   │   ├── Hero.jsx          # Seção hero com headline, métricas e stage com anéis + logo card (sem textos sobrepostos)
-│   │   │   ├── Featured.jsx      # Produto destaque dinâmico — busca `PRODUCTS.find(p => p.featured === true)`; some da seção se nenhum produto tiver `featured: true`
-│   │   │   ├── Products.jsx      # Múltiplos carrosséis por categoria
-│   │   │   ├── Story.jsx         # Seção Sobre Nós — 5 parágrafos: manifesto (mono, dourado), h2, lead, 2 blocos descritivos, assinatura itálica
+│   │   │   ├── Hero.jsx          # Seção hero com headline, métricas e stage com anéis + logo card
+│   │   │   ├── Featured.jsx      # Produto destaque dinâmico — busca `PRODUCTS.find(p => p.featured === true && p.visible !== false)`; some da seção se nenhum produto elegível
+│   │   │   ├── Products.jsx      # Múltiplos carrosséis por categoria + busca/filtro
+│   │   │   ├── Story.jsx         # Seção Sobre Nós
 │   │   │   ├── Differentials.jsx # Diferenciais da marca
 │   │   │   ├── CTA.jsx           # Chamada para ação final
 │   │   │   ├── FAQ.jsx           # Perguntas frequentes (grid 2 col, accordion), entre CTA e Footer
@@ -93,9 +93,9 @@ petluxo/
 │   ├── lib/
 │   │   └── whatsapp.js      # Gera links wa.me com mensagem pré-preenchida
 │   └── styles/
-│       ├── variables.css    # Design tokens: cores, fontes, espaçamentos, z-index (--z-base/--z-navbar/--z-modal/--z-overlay/--z-above-modal)
-│       ├── animations.css   # @keyframes globais (extraídos do globals.css): heroRise, heroFade, heroFloaty, stageRotate, scrollCueLine
-│       └── globals.css      # Todos os estilos, sem framework; não contém @keyframes; z-index todos tokenizados; classes órfãs removidas
+│       ├── variables.css    # Design tokens: cores, fontes, espaçamentos, z-index
+│       ├── animations.css   # @keyframes globais
+│       └── globals.css      # Reset, utilitárias, tipografia base
 └── docs/                    # Documentação do projeto
     ├── README.md
     ├── DECISIONS.md
@@ -103,8 +103,6 @@ petluxo/
     ├── TODO.md
     └── CSS_MIGRATION.md      # Checklist e convenções da migração para CSS Modules
 ```
-
-> **Imagens:** todas incluídas no git, incluindo `assets/hero/image-hero.webp` (arquivo hero convertido de PNG para WebP quality 85 em 18/05/2026, reduzindo de 2.1MB para 158KB). Removido do .gitignore em 18/05/2026 para permitir deploy no Vercel.
 
 ### Rotas disponíveis
 
@@ -127,10 +125,10 @@ Ao adicionar novas páginas: criar em `src/components/pages/`, importar em `src/
 Card exibido no carrossel. Mostra: imagem, badge (se houver), `shortName` (ou `name`), preço original (se houver), preço, e CTA dinâmico:
 - `"COMPRAR AGORA"` se o produto tem `buyLink` ou `buyLinks`
 - `"VIA WHATSAPP"` se o produto não tem link de pagamento
-- **Otimização:** imagem com `loading="lazy"` para lazy loading (reduz tempo de carregamento inicial)
+- Imagem com `loading="lazy"`
 
 **`ProductGrid.jsx`**
-Carrossel com navegação por setas e swipe touch. Hook interno `usePerView` detecta breakpoints via `window.innerWidth`: 1 card (`< 640px`), 2 cards (`< 1024px`), 3 cards (`≥ 1024px`). Recebe props `products`, `title`, `resetKey`. Setas laterais via flexbox (não position:absolute, evita clipping em containers overflow:hidden).
+Carrossel com navegação por setas e swipe touch. Hook interno `usePerView` detecta breakpoints via `window.innerWidth`: 1 card (`< 640px`), 2 cards (`< 1024px`), 3 cards (`≥ 1024px`). Recebe props `products`, `title`, `resetKey`. Setas laterais via flexbox (não `position:absolute`, evita clipping em containers `overflow:hidden`).
 
 **`ProductModal.jsx`**
 Modal de detalhes aberto ao clicar em qualquer card. Exibe `shortName` (ou `name` se não houver), preço, seletor de tamanho (quando `buyLinks` existe), descrição e bullets. Footer do modal verifica o status do produto:
@@ -143,10 +141,10 @@ Modal de detalhes aberto ao clicar em qualquer card. Exibe `shortName` (ou `name
 Abaixo dos botões exibe `<TrustBadges variant="modal" />` (3 selos: Compra Segura, Troca em 7 dias, Entrega Rastreada).
 
 **`Hero.jsx`**
-Seção hero com headline animada, métricas (Qualidade, Entrega, Compra) e stage com logo card em destaque. A imagem hero (`image-hero.webp`, quality 85) é importada como módulo ES e exibida no card central (sem textos sobrepostos). Stage composto por 3 anéis decorativos concêntricos, floatCards laterais com labels. Após o fechamento da `<section>` renderiza `<TrustBadges variant="banner" />` — faixa com 4 selos de confiança (Compra Segura, Troca em 7 dias, Entrega Rastreada, Atendimento Humanizado). Mobile em grid 2×2.
+Seção hero com headline animada, métricas (Qualidade, Entrega, Compra) e stage com logo card em destaque. A imagem hero (`image-hero.webp`) é importada como módulo ES e exibida no card central. Stage composto por 3 anéis decorativos concêntricos, floatCards laterais com labels. Após o fechamento da `<section>` renderiza `<TrustBadges variant="banner" />` — faixa com 4 selos de confiança. Mobile em grid 2×2.
 
 **`Featured.jsx`**
-Seção de produto em destaque, 100% dinâmica. Busca `PRODUCTS.find(p => p.featured === true)` — se nenhum produto tiver o campo, retorna `null` e a seção desaparece do site. Renderiza `product.name` (com `PetLuxo™` automaticamente destacado em itálico dourado via `renderName()`, se a substring existir no nome), `product.image`, `product.subtitle`, `product.description` e o link de compra (`product.buyLink` ou, na ausência, o primeiro item de `product.buyLinks`). Preço: se o produto tiver `prices` (múltiplos tamanhos), exibe o menor valor (comparação numérica via `parsePriceValue()`) com o rótulo "A PARTIR DE"; caso contrário exibe `product.price` direto, sem rótulo. Não exibe `product.bullets` — o layout atual não tem espaço reservado para eles. Apenas **um** produto deve ter `featured: true` por vez (campo ausente equivale a `false`); hoje é o id 13.
+Seção de produto em destaque, 100% dinâmica. Busca `PRODUCTS.find(p => p.featured === true && p.visible !== false)` — se nenhum produto elegível for encontrado, retorna `null` e a seção desaparece do site. Renderiza `product.name` (com `PetLuxo™` automaticamente destacado em itálico dourado via `renderName()`, se a substring existir no nome), `product.image`, `product.subtitle`, `product.description` e o link de compra (`product.buyLink` ou, na ausência, o primeiro item de `product.buyLinks`). Preço: se o produto tiver `prices` (múltiplos tamanhos), exibe o menor valor (comparação numérica via `parsePriceValue()`) com o rótulo "A PARTIR DE"; caso contrário exibe `product.price` direto, sem rótulo. Não exibe `product.bullets`. Apenas **um** produto deve ter `featured: true` por vez (campo ausente equivale a `false`); hoje é o id 8 (Bolsa Transporte PetLuxo).
 
 **`TrustBadges.jsx`** (`src/components/ui/`)
 Componente reutilizável de selos de confiança. Props:
@@ -156,13 +154,15 @@ Componente reutilizável de selos de confiança. Props:
 **`Products.jsx`**
 Renderiza múltiplos `ProductGrid`, um por categoria. "Mais Vendidos" fica sempre visível. Demais categorias ficam ocultas atrás de botão "Ver mais produtos" que expande com animação `grid-template-rows: 0fr → 1fr`.
 
+Todos os filtros de produtos por categoria nesse componente — carrossel "Mais Vendidos", carrosséis de categorias expandidas, lista de pills com produtos e grid de busca/filtro — excluem produtos com `visible: false` (`p.visible !== false`), além de respeitar `category.visible !== false` nas categorias. Produtos ocultos nunca aparecem em nenhum carrossel, pill ou resultado de busca.
+
 **Busca e filtro por categoria:**
 - Barra de busca com `Icon.Search`, input `var(--bege-soft)`, placeholder itálico, botão X para limpar
-- Pills de categoria: "Todos" + uma pill por categoria visível com produtos; pill ativa tem fundo `var(--vinho)`
+- Pills de categoria: "Todos" + uma pill por categoria visível com pelo menos um produto visível
 - `isFiltering = query.trim() !== '' || activeCategory !== null`
 - Quando `isFiltering`: substitui carrosséis por grid flat (3 col / 2 tablet / 1 mobile) com animação de entrada
 - Quando sem resultados: mensagem em serif + link WhatsApp via `wa()`
-- Busca filtra por `name`, `shortName`, `label` da categoria e `tags` do produto
+- Busca filtra por `name`, `shortName`, `label` da categoria e `tags` do produto, excluindo sempre produtos com `visible: false`
 - Campo combinado de busca: `[p.name, p.shortName, catLabel, ...(p.tags || [])].join(' ').toLowerCase()`
 - Cada **palavra** do termo de busca deve aparecer no campo combinado (busca AND por palavras)
 - Filtro de categoria e busca de texto funcionam em conjunto
@@ -171,7 +171,10 @@ Renderiza múltiplos `ProductGrid`, um por categoria. "Mais Vendidos" fica sempr
 
 ### Sistema de carrosséis por categoria
 
-`CATEGORIES` em `products.js` define a ordem, os labels e a visibilidade das categorias. Cada entrada tem `{ id, label, visible }` — quando `visible: false`, a categoria é ocultada de carrosséis e pills sem precisar remover produtos. `Products.jsx` mapeia cada categoria visível, filtra `PRODUCTS.filter(p => p.category.includes(cat.id))` e ordena os resultados por `categoryOrder[cat.id]` decrescente (maior valor = exibido primeiro). O resultado é passado para `ProductGrid`. O campo `category` de cada produto é um **array**, permitindo que um produto apareça em múltiplas categorias. O campo `tags` (array de strings) existe na maioria dos produtos e é usado como campo de busca adicional.
+`CATEGORIES` em `products.js` define a ordem, os labels e a visibilidade das categorias. Cada entrada tem `{ id, label, visible }` — quando `visible: false`, a categoria é ocultada de carrosséis e pills sem precisar remover produtos. `Products.jsx` mapeia cada categoria visível, filtra `PRODUCTS.filter(p => p.category.includes(cat.id) && p.visible !== false)` e ordena os resultados por `categoryOrder[cat.id]` decrescente (maior valor = exibido primeiro). O resultado é passado para `ProductGrid`. O campo `category` de cada produto é um **array**, permitindo que um produto apareça em múltiplas categorias. O campo `tags` (array de strings) existe na maioria dos produtos e é usado como campo de busca adicional.
+
+**Campo `visible` (por produto):**
+Campo opcional, booleano, em cada item de `PRODUCTS`. Campo ausente equivale a `true` (o filtro sempre usa `!== false`). Quando `visible: false`, o produto é removido de todos os carrosséis, das pills de categoria, da busca/filtro e também não pode ser o produto em destaque de `Featured.jsx`. Útil para ocultar um produto temporariamente (ex: fora de estoque por tempo indeterminado) sem apagar seus dados do catálogo. Nenhum produto atualmente tem esse campo definido — todos os 32 produtos ficam visíveis por padrão.
 
 **Campos de ordenação:**
 - `categoryOrder` — objeto onde cada chave é um `category.id` e o valor é a posição do produto naquela categoria (múltiplos de 100, maior = primeiro). Usado por `Products.jsx` para todas as três lógicas de ordenação (carrossel mais-vendidos, carrosséis de categorias expandidas, grid de busca/filtro).
@@ -192,8 +195,6 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 ## 3. Catálogo Completo de Produtos
 
 **32 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **38**.
-
-> ⚠️ **Status das categorias:** 9 categorias definidas em ordem. Todas com produtos ativos.
 
 | ID | Nome (shortName) | Preço | Categorias | buyLink | buyLinks | Badge | Imagem | categoryOrder |
 |---|---|---|---|---|---|---|---|---|
@@ -232,7 +233,11 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 > Badges em uso no catálogo: `ESGOTADO`, `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, ou `null`.
 >
-> Produto em destaque (campo `featured: true`, ver Seção 4): id 13 — Sofá Lounge PetLuxo™.
+> Produto em destaque (campo `featured: true`, ver Seção 4): id 8 — Bolsa Transporte PetLuxo.
+>
+> Todos os 32 produtos têm `buyLink` ou `buyLinks` (nenhum depende exclusivamente do fallback "VIA WHATSAPP").
+>
+> Nenhum produto tem atualmente `visible: false` — todos ficam visíveis por padrão (ver campo `visible` na Seção 2).
 
 **Detalhes dos buyLinks (produtos com seletor de tamanho):**
 
@@ -249,7 +254,6 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 *id 21 — Cama Executive Bed™:*
 - Tam. M → R$ 597,00 → pag.ae/81M-Zz4cL
 - Tam. G → R$ 697,00 → pag.ae/81M-QYczq
-> ⚠️ Estes campos (`prices`/`buyLinks`) haviam sido removidos do código em algum momento, deixando o produto sem nenhum link de compra (fallback "VIA WHATSAPP"). Restaurados em 26/06/2026.
 
 *id 28 — Cabana Teepee Luxo Personalizada:*
 - Tam. P (até 5kg) → R$ 1.190,00 → pag.ae/81Phf6B9r
@@ -258,19 +262,19 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 **Categorias disponíveis (conforme `CATEGORIES` em `products.js`):**
 
-| ID | Label exibido no site | visible | Status | Ordem no site |
+| ID | Label exibido no site | visible | Produtos | Ordem no site |
 |---|---|---|---|---|
-| `mais-vendidos` | Mais Vendidos | true | ✅ Com 4 produtos | 1º (sempre visível) |
-| `couro` | Essenciais em Couro | true | ✅ Com 5 produtos | 2º |
-| `conforto` | Conforto & Estilo | true | ✅ Com 5 produtos | 3º |
-| `a-mesa` | À Mesa | true | ✅ Com 6 produtos | 4º |
-| `colecao-cozy-luxo` | Coleção Cozy Luxo | true | ✅ Com 4 produtos (id 30, 31, 32, 33) | 5º |
-| `brinquedos` | Brinquedos & Estilo | true | ✅ Com 3 produtos | 6º |
-| `colecao-passeio` | Coleção Passeio | true | ✅ Com 3 produtos (id 17, 26, 34) | 7º |
-| `sono-refugio` | Sono & Refúgio | true | ✅ Com 10 produtos | 8º |
-| `viagem-mobilidade` | Viagem & Mobilidade | true | ✅ Com 3 produtos (id 3, 36, 37) | 9º |
+| `mais-vendidos` | Mais Vendidos | true | 4 | 1º (sempre visível) |
+| `couro` | Essenciais em Couro | true | 5 | 2º |
+| `conforto` | Conforto & Estilo | true | 5 | 3º |
+| `a-mesa` | À Mesa | true | 6 | 4º |
+| `colecao-cozy-luxo` | Coleção Cozy Luxo | true | 4 | 5º |
+| `brinquedos` | Brinquedos & Estilo | true | 3 | 6º |
+| `colecao-passeio` | Coleção Passeio | true | 3 | 7º |
+| `sono-refugio` | Sono & Refúgio | true | 10 | 8º |
+| `viagem-mobilidade` | Viagem & Mobilidade | true | 3 | 9º |
 
-> Para ocultar uma categoria do site sem remover produtos, setar `visible: false`. O filtro usa `!== false` — categorias sem o campo também ficam visíveis.
+> Para ocultar uma categoria do site sem remover produtos, setar `visible: false` em `CATEGORIES`. O filtro usa `!== false` — categorias sem o campo também ficam visíveis. Para ocultar um produto individual independentemente da categoria, setar `visible: false` no próprio produto em `PRODUCTS`.
 >
 > Muitos produtos pertencem a `sono-refugio` além da categoria principal (ex: `conforto`) — é a categoria com mais produtos do catálogo.
 
@@ -310,39 +314,35 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 - `buyLinks: [{ size, link }]` — array de tamanhos e links PagBank
 - Nesse caso, omitir `buyLink` (usar apenas `buyLinks`)
 
+**Campos opcionais:**
+- `featured: boolean` — ver Seção 2 (produto em destaque)
+- `visible: boolean` — ver Seção 2 (oculta o produto de carrosséis, pills e busca; ausente equivale a `true`)
+- `tags: string[]` — campo de busca adicional
+- `supplierLink: string` — link interno/administrativo do fornecedor, não exibido no site
+
 ### Campo `featured` (produto em destaque)
 
-Campo opcional, booleano. `featured: true` marca o produto exibido na seção `Featured.jsx` (ver Seção 2, componentes principais). Campo ausente equivale a `false`. Apenas **um** produto deve ter `featured: true` por vez — se mais de um tiver, `.find()` usa o primeiro encontrado no array; se nenhum tiver, a seção desaparece do site. Atualmente: id 13 (Sofá Lounge PetLuxo™).
+Campo opcional, booleano. `featured: true` marca o produto exibido na seção `Featured.jsx` (ver Seção 2, componentes principais). Campo ausente equivale a `false`. Apenas **um** produto deve ter `featured: true` por vez — se mais de um tiver, `.find()` usa o primeiro encontrado no array; se nenhum tiver (ou o único marcado estiver com `visible: false`), a seção desaparece do site. Atualmente: id 8 (Bolsa Transporte PetLuxo).
 
 ### Imagens do projeto
 
-**Status: 100% WebP ✓** Todas as imagens do projeto foram convertidas para WebP em 18/05/2026.
+Todas as imagens do projeto estão em formato WebP.
 
 **Formatos e localização:**
-- `assets/hero/image-hero.webp` — imagem hero principal (quality 85, ~158KB; antigo PNG: 2.1MB). ✅ Incluída no repositório (removida do `.gitignore` em 18/05/2026)
-- `assets/logo.webp` — logo marca importado em Navbar.module.css (quality 85, ~35KB; antigo JPEG: 36KB). Referência em background-image CSS
-- `assets/sobre_nos/sobre_nos.webp` — foto da seção Sobre Nós (76KB; convertida de PNG em 20/05/2026). Importado como módulo ES em Story.jsx
+- `assets/hero/image-hero.webp` — imagem hero principal, importada como módulo ES em `Hero.jsx`
+- `assets/logo.webp` — logo da marca, referenciado via `background-image` em `Navbar.module.css`
+- `assets/sobre_nos/sobre_nos.webp` — foto da seção Sobre Nós, importada como módulo ES em `Story.jsx`
 - `assets/sobre_nos/foto_sobre_nos.webp` — asset de reserva no mesmo diretório; não referenciado em nenhum componente atualmente
-- `public/images/products/*.webp` — 33 arquivos na pasta (32 produtos ativos referenciam uma imagem cada; 1 arquivo órfão não referenciado em nenhum componente: `arranhador-felino-sisal-ajustavel-4-niveis-portatil.webp`), todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Cabana Teepee convertida de JPEG para WebP em 21/05/2026. Tapete Elegance convertida de JPEG para WebP em 26/05/2026. Cesto Organizador convertida de JPEG para WebP em 27/05/2026. Todas commitadas no git
-- `public/og-image.png` — compartilhada em redes sociais (formato original PNG; não convertida pois é meta tag social)
-- `public/images/brand/` — logo e assets de marca
+- `public/images/products/*.webp` — uma imagem por produto ativo, mais um arquivo órfão não referenciado em nenhum componente (`arranhador-felino-sisal-ajustavel-4-niveis-portatil.webp`)
+- `public/og-image.png` — compartilhada em redes sociais (formato PNG; meta tag social, não convertida)
+- `public/images/brand/` — reservado para assets de marca (vazio, apenas `.gitkeep`)
 
 **Referências no código:**
 - Hero.jsx: `import heroImg from '../../../assets/hero/image-hero.webp'`
 - Navbar.module.css: `background-image: url("../../../assets/logo.webp")`
 - Story.jsx: `import sobreImg from '../../../assets/sobre_nos/sobre_nos.webp'`
 - ProductCard.jsx e ProductModal.jsx: carregam via `src/data/products.js` (campo `image` com caminho `/images/products/*.webp`)
-- Featured.jsx: carrega `product.image` dinamicamente, do produto com `featured: true` (hoje `/images/products/sofa-ortopedico.webp`, id 13)
-
-**Resumo de economia de espaço:**
-| Imagem | Anterior | WebP | Redução |
-|---|---|---|---|
-| image-hero | 2.1 MB (PNG) | 158 KB | 92% |
-| logo | 36 KB (JPEG) | 35 KB | 3% |
-| sobre_nos | ~PNG | 76 KB (WebP, 20/05/2026) | — |
-| mesa_nordic | 120 KB (JPEG) | 31 KB (WebP, 20/05/2026) | 74% |
-| 17 produtos | ~90 KB cada | ~70 KB cada | 22% avg |
-| **Total** | ~3.7 MB | ~1.5 MB | **59%** |
+- Featured.jsx: carrega `product.image` dinamicamente, do produto elegível com `featured: true`
 
 ### Padrão de commits
 
@@ -391,13 +391,14 @@ O Vercel Hobby Plan não faz deploy de repositórios privados. O repositório `g
 
 ---
 
-## Convenções CSS
+## 6. Convenções CSS
 
 ### Arquitetura
-- `globals.css` — reset, utilitárias, tipografia, layout, sistema `.reveal`
-- `animations.css` — apenas @keyframes, nomeados por componente de origem
-- `buttons.css` (Passo Final) — global controlado, apenas `.btn` e variantes
-- `[Componente].module.css` — estilos scoped por componente
+- `globals.css` — reset, utilitárias, tipografia, layout, sistema `.reveal`. Não contém `@keyframes` nem z-index hardcoded.
+- `animations.css` — apenas `@keyframes`, nomeados por componente de origem. ⚠️ Keyframes aqui não são resolvidos dentro de `.module.css` (CSS Modules no Vite processa keyframes como identificadores locais) — declarar keyframes localmente em cada módulo que precisar.
+- `variables.css` — design tokens: cores, fontes, espaçamentos, z-index (`--z-base`, `--z-navbar`, `--z-modal`, `--z-overlay`, `--z-above-modal`)
+- `buttons.css` — global controlado para `.btn` e variantes (`.btn-primary`, `.btn-ghost`, `.btn-outline`, `.btn-full`, `.btn-gold`, `.wa-icon`). Importado explicitamente pelos componentes que usam botões: Featured, CTA, ProductModal, Hero, NotFound, Navbar, Products, Button.
+- `[Componente].module.css` — estilos scoped por componente; todos os componentes da árvore já usam CSS Modules (migração 100% concluída — ver [docs/CSS_MIGRATION.md](docs/CSS_MIGRATION.md))
 
 ### Nomenclatura (CSS Modules)
 - Base: camelCase — `heroGrid`, `modalCard`, `footerBrand`
@@ -411,59 +412,20 @@ O Vercel Hobby Plan não faz deploy de repositórios privados. O repositório `g
 - Media queries sempre no final: base → tablet (768px) → mobile (480px)
 - Nunca depender de ordem de classes no JSX
 
-### :global()
-Permitido apenas para: `.reveal`, utilitárias globais (`.serif`, `.italic`, `.gold`, `.wrap`, `.section-tag`), third-party  
-Proibido para qualquer coisa que deveria ser scoped
+### `:global()`
+Permitido apenas para: `.reveal`, utilitárias globais (`.serif`, `.italic`, `.gold`, `.wrap`, `.section-tag`), third-party.
+Proibido para qualquer coisa que deveria ser scoped.
 
 ### Mistura de classes no JSX
-✅ `className={[styles.hero, 'reveal'].filter(Boolean).join(' ')}`  
+✅ `className={[styles.hero, 'reveal'].filter(Boolean).join(' ')}`
 ❌ `className={\`${styles.hero} reveal\`}`
 
 ### Z-Index
-Sempre via variáveis — nunca hardcoded:  
+Sempre via variáveis — nunca hardcoded:
 `--z-navbar: 100 | --z-modal: 1000 | --z-overlay: 900 | --z-above-modal: 1100`
 
 ### Regra anti-gambiarra
-Durante migração: nunca corrigir com `margin-top: -13px`, `calc(100% + 2px)` ou `overflow-x: hidden` sem causa raiz clara
-
----
-
-## 6. Arquitetura CSS
-
-### Estrutura atual
-- `src/styles/globals.css` — reset, utilitárias globais (`.wrap`, `.serif`, `.italic`, `.gold`, `.reveal`), tipografia base. **150 linhas.** Não contém @keyframes, z-index hardcoded nem estilos de botões.
-- `src/styles/animations.css` — @keyframes globais: `heroRise`, `heroFade`, `heroFloaty`, `stageRotate`, `scrollCueLine`. ⚠️ **Nota:** Keyframes em `animations.css` não são resolvidos dentro de `.module.css` (CSS Modules no Vite processa keyframes como identificadores locais) — declare keyframes localmente em cada módulo que precisar.
-- `src/styles/variables.css` — design tokens: cores, fontes, espaçamentos, z-index (`--z-base`, `--z-navbar`, `--z-modal`, `--z-overlay`, `--z-above-modal`)
-- `src/styles/buttons.css` — global controlado para `.btn` e variantes (`.btn-primary`, `.btn-ghost`, `.btn-outline`, `.btn-full`, `.btn-gold`, `.wa-icon`). Importado explicitamente pelos 8 componentes que usam botões: Featured, CTA, ProductModal, Hero, NotFound, Navbar, Products, Button.
-
-### CSS Modules — status da migração
-Componentes já migrados para `.module.css` próprio:
-- `TrustBadges.module.css` — selos de confiança (variant: banner | modal)
-- `NotFound.module.css` — página 404
-- `Story.module.css` — seção Sobre Nós (classes: `storyGrid`, `storyArt`, `storyText`, `lead`, `manifesto`, `assinatura`)
-- `Featured.module.css` — produto em destaque
-- `CTA.module.css` — chamada para ação
-- `FAQ.module.css` — perguntas frequentes (accordion com estado `faqItemOpen`)
-- `Footer.module.css` — rodapé com 5 colunas
-- `ProductCard.module.css` — card de produto no carrossel
-- `ProductGrid.module.css` — carrossel com setas e dots
-- `Products.module.css` — múltiplos carrosséis por categoria (expansão com `productsExpandOpen`)
-- `Differentials.module.css` — diferenciais da marca (usa `:global(.section-tag)` para cor da tag)
-- `ProductModal.module.css` — modal de detalhes (estado `modalShow`, seletor de tamanho com `sizeBtnActive`)
-- `Navbar.module.css` — navbar fixa com scroll state (`navScrolled`), menu hambúrguer (`navBurgerOpen`) e drawer mobile (`navDrawerOpen`)
-- `Hero.module.css` — seção hero com headline animada, stage com anéis e logo card; keyframes declarados localmente no próprio módulo
-
-Componentes ainda no globals.css (pendentes):
-- (nenhum — migração 100% concluída)
-
-> Consulte [docs/CSS_MIGRATION.md](docs/CSS_MIGRATION.md) para convenções, checklist completo e detalhes de cada migração.
-
-### Padrões obrigatórios nos módulos
-- camelCase: `heroGrid`, `modalCard`, `footerBrand`
-- Estado como classe própria: `navScrolled`, `faqItemOpen`, `sizeBtnActive`
-- Mistura com globais no JSX: `[styles.hero, 'reveal'].filter(Boolean).join(' ')`
-- `:global()` apenas para: `.reveal`, utilitárias globais, third-party
-- Media queries sempre no final: base → tablet (768px) → mobile (480px)
+Nunca corrigir bugs visuais com `margin-top: -13px`, `calc(100% + 2px)` ou `overflow-x: hidden` sem causa raiz clara.
 
 ---
 
@@ -486,14 +448,28 @@ O texto abaixo do preço muda conforme a presença de link de pagamento:
 - `product.buyLink || product.buyLinks` → `"COMPRAR AGORA"`
 - Nenhum dos dois → `"VIA WHATSAPP"`
 
-### Narrativa do site: WhatsApp → compra direta
-A narrativa original direcionava todos os produtos para WhatsApp. Com a integração PagBank, produtos com `buyLink`/`buyLinks` exibem "COMPRAR AGORA" no card e no modal, com WhatsApp como canal secundário de consulta.
-
 ### Campo `category` é array
 Permite que um produto apareça em múltiplas categorias (ex: `["mais-vendidos", "conforto"]`). Os filtros usam `.includes(id)`.
 
+### Campo `visible` por produto vs. por categoria
+São dois mecanismos independentes de ocultação: `CATEGORIES[].visible` oculta a categoria inteira (carrossel some, pill some); `PRODUCTS[].visible` oculta um produto específico de tudo (carrosséis, pills com contagem, busca/filtro, seção `Featured`) sem precisar removê-lo do catálogo. Ambos usam a convenção `!== false` — campo ausente é tratado como visível.
+
 ### DevTweaks excluído do bundle de produção
 `import.meta.env.DEV` é uma constante `false` no build — o Vite elimina o bloco via dead-code elimination. O painel de ajustes nunca vai para produção.
+
+### Products — expansão de categorias (Products.module.css)
+O `.productsExpandInner` usa `overflow: hidden` + `padding: 0 16px`. Esses dois valores são interdependentes e **não devem ser alterados de forma isolada**:
+- **`overflow: hidden`** — necessário para o truque `grid-template-rows: 0fr → 1fr`. Sem ele, o item de grid usa seu `min-height` intrínseco e o colapso para 0 não funciona, quebrando o botão "Ver menos".
+- **`padding: 0 16px`** — compensa o `margin: 0 -12px` do `.carouselOuter` (que estende as setas 12px além do content box). Com 16px de padding, as setas ficam dentro da *padding box* (16px - 12px = 4px de folga), visíveis, sem serem cortadas pelo `overflow: hidden`.
+
+Se o padding for removido, as setas laterais dos carrosséis nas categorias expandidas serão cortadas. Se o `overflow: hidden` for trocado por `overflow-x: visible`, o botão "Ver menos" para de fechar.
+
+### CTA — ponto de interrogação em itálico (CTA.module.css)
+O `?` em "começar a comprar?" usa `<i className="italic gold-text">` — Cormorant Garamond itálico com `background-clip: text`. Dois mecanismos podem cortá-lo:
+1. **Overflow da section** — `.cta { overflow: hidden }` (necessário para os anéis decorativos de até 1000px) corta glifos que alcançam a borda. Resolvido com `padding-right: 0.3em` em `.cta h2`.
+2. **Gradient coverage** — `background-clip: text` pinta o gradiente apenas dentro do bounding box do `<i>`, que termina no *advance width* do glifo. O overhang óptico do `?` itálico fica fora desse box → transparente → aparece cortado. Resolvido com `padding-right: 0.2em` em `.cta h2 i`.
+
+**Não remover** `overflow: hidden` do `.cta` — os anéis ornamentais `.ctaOrn .ring` (até r3 com 1000px) causariam scroll horizontal sem ele.
 
 ---
 
@@ -516,67 +492,13 @@ Permite que um produto apareça em múltiplas categorias (ex: `["mais-vendidos",
 
 ## 9. Pendências Conhecidas
 
-### Limpeza de documentação (completada em 20/05/2026)
-✅ Removidos comentários "TROCAR DOMÍNIO" de 3 arquivos:
-- `index.html` — comentário removido (domínio já configurado como `petluxostory.com.br`)
-- `public/sitemap.xml` — comentário removido
-- `public/robots.txt` — comentário removido
-
-### Produtos sem buyLink (exibem "VIA WHATSAPP" no card)
-Nenhum produto atualmente sem link de pagamento — todos os 32 produtos têm `buyLink` ou `buyLinks`. (O id 21 — Executive Bed™ — havia perdido seus `buyLinks` de tamanho M/G; restaurado em 26/06/2026, ver Seção 3.)
-
-### Catálogo desatualizado em relação ao código (corrigido em 26/06/2026)
-Uma auditoria encontrou o documento referenciando 28 produtos (máximo id 28) enquanto o código já tinha 32 produtos (até id 37), com preço/buyLink do id 13 trocados e categoria `sono-refugio` ausente em 6 produtos. Catálogo, contagens por categoria e ordens de exibição foram realinhados com `src/data/products.js`. Ao adicionar/editar produtos no futuro, atualizar esta seção no mesmo commit para evitar nova divergência.
-
-### Favicon
-✅ **Favicon.ico gerado em 20/05/2026** a partir de `assets/logo.webp` (48×48px, 7.5KB) via ImageMagick. Referência em `index.html` atualizada de `favicon.svg` para `favicon.ico` (type="image/x-icon"). O `favicon.svg` foi mantido no repositório para compatibilidade, mas não é mais referenciado.
-
-### og:image
-A imagem `public/og-image.png` foi atualizada recentemente. Para limpar o cache do LinkedIn e forçar re-scrape, usar:
-- LinkedIn Post Inspector: https://www.linkedin.com/post-inspector/
-- Facebook Sharing Debugger: https://developers.facebook.com/tools/debug/
-
 ### Sitemap
 `public/sitemap.xml` é manual. Quando o site crescer com mais rotas, considerar geração automática.
 
----
+### og:image
+Ao atualizar `public/og-image.png`, lembrar de limpar o cache dos scrapers de redes sociais para forçar re-scrape:
+- LinkedIn Post Inspector: https://www.linkedin.com/post-inspector/
+- Facebook Sharing Debugger: https://developers.facebook.com/tools/debug/
 
-## 10. Notas de Implementação CSS
-
-### Products — expansão de categorias (Products.module.css)
-O `.productsExpandInner` usa `overflow: hidden` + `padding: 0 16px`. Esses dois valores são interdependentes e **não devem ser alterados de forma isolada**:
-
-- **`overflow: hidden`** — necessário para o truque `grid-template-rows: 0fr → 1fr`. Sem ele (ou com qualquer eixo como `overflow: visible`), o item de grid usa seu `min-height` intrínseco e o colapso para 0 não funciona, quebrando o botão "Ver menos".
-- **`padding: 0 16px`** — compensa o `margin: 0 -12px` do `.carouselOuter` (que estende as setas 12px além do content box). Com 16px de padding, as setas ficam dentro da *padding box* (16px - 12px = 4px de folga), visíveis, sem serem cortadas pelo `overflow: hidden`.
-
-Se o padding for removido, as setas laterais dos carrosséis nas categorias expandidas serão cortadas. Se o `overflow: hidden` for trocado por `overflow-x: visible`, o botão "Ver menos" para de fechar.
-
-### CTA — ponto de interrogação em itálico (CTA.module.css)
-O `?` em "começar a comprar?" usa `<i className="italic gold-text">` — Cormorant Garamond itálico com `background-clip: text`. Dois mecanismos podem cortá-lo:
-
-1. **Overflow da section** — `.cta { overflow: hidden }` (necessário para os anéis decorativos de até 1000px) corta glifos que alcançam a borda. Corrigido com `padding-right: 0.3em` em `.cta h2`.
-2. **Gradient coverage** — `background-clip: text` pinta o gradiente apenas dentro do bounding box do `<i>`, que termina no *advance width* do glifo. O overhang óptico do `?` itálico fica fora desse box → transparente → aparece cortado. Corrigido com `padding-right: 0.2em` em `.cta h2 i`.
-
-**Não remover** `overflow: hidden` do `.cta` — os anéis ornamentais `.ctaOrn .ring` (até r3 com 1000px) causariam scroll horizontal sem ele.
-
-### Story — otimização de espaçamento para desktop (Story.module.css)
-Em 20/05/2026 foram reduzidos tamanhos e espaçamentos para desktop evitar scroll excessivo da seção:
-- `.story` padding-top/bottom: `clamp(60px, 8vh, 100px)` → `clamp(40px, 5vh, 70px)`
-- `.storyGrid` gap: `64px` → `40px`
-- `.storyText h2` font-size: `clamp(36px, 4vw, 64px)` → `clamp(28px, 3vw, 48px)`
-- `.storyText .lead` font-size: `20px` → `17px`
-- `.storyText p` font-size: `15px` → `13px`
-
-Mudanças aplicadas apenas no base (desktop). Media queries `@media (max-width: 980px)` preservadas intactas — mobile/tablet sem alterações.
-
----
-
-## 11. Melhorias de Conteúdo (20/05/2026)
-
-### Diferencial #04 — Atualizado
-**Antes:** "Produtos para toda rotina" / "Coleiras, camas, acessórios, higiene e mais. Tudo que o seu pet precisa no dia a dia."  
-**Depois:** "Curadoria premium" / "Cada produto é selecionado com um olhar criterioso: design refinado, materiais nobres e aquele toque especial que transforma o dia a dia em uma experiência única."
-
-### FAQ — Pergunta #7 Atualizada
-**Antes:** "Como escolher o tamanho ideal?" / "Produtos com tamanhos disponíveis têm as opções descritas na página. Em dúvida, nossa equipe te ajuda pelo WhatsApp."  
-**Depois:** "Como sei qual tamanho de cama escolher para o meu pet?" / "Recomendamos medir o comprimento do seu pet de focinho a cauda e adicionar cerca de 20cm para garantir conforto total. Nossos produtos com variação de tamanho indicam as medidas de cada opção. Em caso de dúvida, fale com a gente pelo WhatsApp — adoramos ajudar!"
+### Arquivo de imagem órfão
+`public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil.webp` não é referenciado por nenhum produto em `products.js`. Avaliar remoção ou associação a um produto futuro.

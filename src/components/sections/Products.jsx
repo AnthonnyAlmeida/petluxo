@@ -13,13 +13,13 @@ import '../../styles/buttons.css';
 import styles from './Products.module.css';
 
 const featuredProducts = PRODUCTS
-  .filter(p => p.category.includes('mais-vendidos'))
+  .filter(p => p.category.includes('mais-vendidos') && p.visible !== false)
   .sort((a, b) => (b.categoryOrder?.['mais-vendidos'] ?? 0) - (a.categoryOrder?.['mais-vendidos'] ?? 0));
 const extraCategories  = CATEGORIES.filter(c => c.id !== 'mais-vendidos' && c.visible !== false);
 
 // Categorias que têm pelo menos um produto (para pills de filtro)
 const categoriesWithProducts = CATEGORIES.filter(cat =>
-  cat.visible !== false && PRODUCTS.some(p => p.category.includes(cat.id))
+  cat.visible !== false && PRODUCTS.some(p => p.category.includes(cat.id) && p.visible !== false)
 );
 
 export function Products({ onQuick }) {
@@ -35,6 +35,8 @@ export function Products({ onQuick }) {
     const q = query.trim().toLowerCase();
     return PRODUCTS
       .filter(p => {
+        // Produtos ocultos nunca aparecem na busca/filtro
+        if (p.visible === false) return false;
         // Filtro de categoria
         if (activeCategory && !p.category.includes(activeCategory)) return false;
         // Filtro de busca por nome, label da categoria e tags
@@ -194,7 +196,7 @@ export function Products({ onQuick }) {
               <div className={styles.productsExpandInner}>
                 {extraCategories.map(cat => {
                   const catProducts = PRODUCTS
-                    .filter(p => p.category.includes(cat.id))
+                    .filter(p => p.category.includes(cat.id) && p.visible !== false)
                     .sort((a, b) => (b.categoryOrder?.[cat.id] ?? 0) - (a.categoryOrder?.[cat.id] ?? 0));
                   if (!catProducts.length) return null;
                   return (

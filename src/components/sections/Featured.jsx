@@ -24,7 +24,7 @@ function renderName(name) {
 }
 
 export function Featured() {
-  const product = PRODUCTS.find(p => p.featured === true);
+  const product = PRODUCTS.find(p => p.featured === true && p.visible !== false);
   if (!product) return null;
 
   const lowestPrice = product.prices
