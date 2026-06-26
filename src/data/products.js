@@ -215,6 +215,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81VR7uoS1',
     tags: ['sofá', 'cama', 'ortopédico', 'descanso'],
+    featured: true,
   },
   {
     id: 14,

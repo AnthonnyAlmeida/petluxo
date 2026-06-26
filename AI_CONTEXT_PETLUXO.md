@@ -74,7 +74,7 @@ petluxo/
 │   │   │   └── TermsPage.jsx          # /termos-de-uso
 │   │   ├── sections/
 │   │   │   ├── Hero.jsx          # Seção hero com headline, métricas e stage com anéis + logo card (sem textos sobrepostos)
-│   │   │   ├── Featured.jsx      # Produto destaque (id 13)
+│   │   │   ├── Featured.jsx      # Produto destaque dinâmico — busca `PRODUCTS.find(p => p.featured === true)`; some da seção se nenhum produto tiver `featured: true`
 │   │   │   ├── Products.jsx      # Múltiplos carrosséis por categoria
 │   │   │   ├── Story.jsx         # Seção Sobre Nós — 5 parágrafos: manifesto (mono, dourado), h2, lead, 2 blocos descritivos, assinatura itálica
 │   │   │   ├── Differentials.jsx # Diferenciais da marca
@@ -144,6 +144,9 @@ Abaixo dos botões exibe `<TrustBadges variant="modal" />` (3 selos: Compra Segu
 
 **`Hero.jsx`**
 Seção hero com headline animada, métricas (Qualidade, Entrega, Compra) e stage com logo card em destaque. A imagem hero (`image-hero.webp`, quality 85) é importada como módulo ES e exibida no card central (sem textos sobrepostos). Stage composto por 3 anéis decorativos concêntricos, floatCards laterais com labels. Após o fechamento da `<section>` renderiza `<TrustBadges variant="banner" />` — faixa com 4 selos de confiança (Compra Segura, Troca em 7 dias, Entrega Rastreada, Atendimento Humanizado). Mobile em grid 2×2.
+
+**`Featured.jsx`**
+Seção de produto em destaque, 100% dinâmica. Busca `PRODUCTS.find(p => p.featured === true)` — se nenhum produto tiver o campo, retorna `null` e a seção desaparece do site. Renderiza `product.name` (com `PetLuxo™` automaticamente destacado em itálico dourado via `renderName()`, se a substring existir no nome), `product.image`, `product.subtitle`, `product.description` e o link de compra (`product.buyLink` ou, na ausência, o primeiro item de `product.buyLinks`). Preço: se o produto tiver `prices` (múltiplos tamanhos), exibe o menor valor (comparação numérica via `parsePriceValue()`) com o rótulo "A PARTIR DE"; caso contrário exibe `product.price` direto, sem rótulo. Não exibe `product.bullets` — o layout atual não tem espaço reservado para eles. Apenas **um** produto deve ter `featured: true` por vez (campo ausente equivale a `false`); hoje é o id 13.
 
 **`TrustBadges.jsx`** (`src/components/ui/`)
 Componente reutilizável de selos de confiança. Props:
@@ -228,6 +231,8 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 | 37 | Espreguiçadeira Madeira Dobrável | R$ 219,00 | viagem-mobilidade, sono-refugio | pag.ae/81SERKLKu | — | EXCLUSIVO | espreguicadeira-felina-portatil-e-arranhador-sisal.webp | viagem-mobilidade:300, sono-refugio:700 |
 
 > Badges em uso no catálogo: `ESGOTADO`, `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, ou `null`.
+>
+> Produto em destaque (campo `featured: true`, ver Seção 4): id 13 — Sofá Lounge PetLuxo™.
 
 **Detalhes dos buyLinks (produtos com seletor de tamanho):**
 
@@ -305,6 +310,10 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 - `buyLinks: [{ size, link }]` — array de tamanhos e links PagBank
 - Nesse caso, omitir `buyLink` (usar apenas `buyLinks`)
 
+### Campo `featured` (produto em destaque)
+
+Campo opcional, booleano. `featured: true` marca o produto exibido na seção `Featured.jsx` (ver Seção 2, componentes principais). Campo ausente equivale a `false`. Apenas **um** produto deve ter `featured: true` por vez — se mais de um tiver, `.find()` usa o primeiro encontrado no array; se nenhum tiver, a seção desaparece do site. Atualmente: id 13 (Sofá Lounge PetLuxo™).
+
 ### Imagens do projeto
 
 **Status: 100% WebP ✓** Todas as imagens do projeto foram convertidas para WebP em 18/05/2026.
@@ -323,7 +332,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 - Navbar.module.css: `background-image: url("../../../assets/logo.webp")`
 - Story.jsx: `import sobreImg from '../../../assets/sobre_nos/sobre_nos.webp'`
 - ProductCard.jsx e ProductModal.jsx: carregam via `src/data/products.js` (campo `image` com caminho `/images/products/*.webp`)
-- Featured.jsx: carrega imagem destaque via caminho `/images/products/sofa-ortopedico.webp`
+- Featured.jsx: carrega `product.image` dinamicamente, do produto com `featured: true` (hoje `/images/products/sofa-ortopedico.webp`, id 13)
 
 **Resumo de economia de espaço:**
 | Imagem | Anterior | WebP | Redução |

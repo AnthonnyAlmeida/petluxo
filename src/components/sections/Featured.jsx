@@ -6,7 +6,32 @@ import { PRODUCTS } from '../../data/products.js';
 import '../../styles/buttons.css';
 import styles from './Featured.module.css';
 
+function parsePriceValue(str) {
+  return parseFloat(str.replace(/[^\d,]/g, '').replace(',', '.'));
+}
+
+function renderName(name) {
+  const trademark = 'PetLuxo™';
+  const idx = name.indexOf(trademark);
+  if (idx === -1) return name;
+  const before = name.slice(0, idx);
+  const after = name.slice(idx + trademark.length);
+  return (
+    <>
+      {before}<i className="italic gold-text">{trademark}</i>{after}
+    </>
+  );
+}
+
 export function Featured() {
+  const product = PRODUCTS.find(p => p.featured === true);
+  if (!product) return null;
+
+  const lowestPrice = product.prices
+    ? product.prices.reduce((min, p) => parsePriceValue(p.price) < parsePriceValue(min.price) ? p : min).price
+    : product.price;
+  const buyHref = product.buyLink || product.buyLinks?.[0]?.link;
+
   return (
     <section className={[styles.featured, 'section-pad'].filter(Boolean).join(' ')}>
       <div className={['wrap', styles.featuredGrid].filter(Boolean).join(' ')}>
@@ -14,12 +39,12 @@ export function Featured() {
           <span className={styles.featuredTag}>DESTAQUE</span>
           <img
             className={styles.featuredImg}
-            src="/images/products/sofa-ortopedico.webp"
-            alt="Sofá Ortopédico Lounge PetLuxo™"
+            src={product.image}
+            alt={product.name}
           />
           <div className={styles.featuredPrice}>
-            <div className="small">A PARTIR DE</div>
-            <div className="v">R$ 349,90</div>
+            {product.prices && <div className="small">A PARTIR DE</div>}
+            <div className="v">{lowestPrice}</div>
           </div>
         </div>
         <div className={styles.featuredInfo}>
@@ -27,14 +52,14 @@ export function Featured() {
             <span className="num">01</span><span className="line"></span><span>PRODUTO EM DESTAQUE</span>
           </div>
           <h2 className="serif reveal d2">
-            Sofá Ortopédico Lounge <i className="italic gold-text">PetLuxo™</i>
+            {renderName(product.name)}
           </h2>
-          <p className={[styles.featuredSubtitle, 'reveal', 'd3'].filter(Boolean).join(' ')}>Conforto sofisticado para pets que merecem o extraordinário.</p>
+          <p className={[styles.featuredSubtitle, 'reveal', 'd3'].filter(Boolean).join(' ')}>{product.subtitle}</p>
           <p className="reveal d4">
-            Transforme os momentos de descanso do seu pet em uma verdadeira experiência de conforto premium. Design moderno, estrutura ortopédica e acabamento sofisticado para ambientes refinados.
+            {product.description}
           </p>
           <div className="reveal d5" style={{display:"flex", gap:14, flexWrap:"wrap"}}>
-            <a className="btn btn-primary" href={PRODUCTS.find(p => p.id === 13)?.buyLink} target="_blank" rel="noopener">
+            <a className="btn btn-primary" href={buyHref} target="_blank" rel="noopener">
               COMPRAR AGORA <Icon.ArrowR className="arr"/>
             </a>
             <a className="btn btn-ghost" href="#produtos">VER TODOS OS PRODUTOS</a>
