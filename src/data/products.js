@@ -152,6 +152,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81J1KU12M',
     tags: ['sofá', 'cama', 'descanso', 'conforto'],
+    supplierLink: 'Caminha Sofa Poltrona Pet Mais Travesseirinho Ideal Para Caes e Gatos de Pequeno a Medio Porte Em Veludo Descobri produtos incríveis no SHEIN.com, venha conferir! https://api-shein.shein.com/h5/sharejump/appjump?link=RqJAzeN655N_8&localcountry=BR&shc=2_RqJAzeN655N&url_from=GM74796417825',
   },
   {
     id: 8,
