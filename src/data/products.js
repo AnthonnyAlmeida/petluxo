@@ -585,6 +585,7 @@ export const PRODUCTS = [
     badge: 'PREMIUM',
     buyLink: 'https://pag.ae/81Rpy249r',
     tags: ['comedouro', 'portatil', 'dobravel', 'viagem', 'pet premium', 'nômade'],
+    supplierLink: 'Aproveite mais essa promoção no SuperApp Magalu - Comedouro dobrável https://m.magazineluiza.com.br/comedouro-dobravel-mr-toni/p/fj1c8d55hd/pe/ptbb/?partner_id=64853&utm_source=pdp_desk&utm_medium=share&seller_id=specialvetclinicaveterinaria',
   },
   {
     id: 37,
