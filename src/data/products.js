@@ -599,5 +599,6 @@ export const PRODUCTS = [
     badge: 'EXCLUSIVO',
     buyLink: 'https://pag.ae/81SERKLKu',
     tags: ['arranhador', 'madeira natural', 'dobravel', 'sisal', 'sustentavel', 'gatos', 'design'],
+    supplierLink: 'teste.com',
   }
 ];
