@@ -497,6 +497,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81QtMgE9m ',
     tags: ['estacao passeio', 'organizador pet', 'madeira premium', 'design minimalista', 'acessorios passeio', 'decoracao pet', 'estilo escandinavo'],
+    supplierLink: 'https://www.entonadecor.com.br/prateleira-gancho-catumbao',
   },
   {
     id: 32,
