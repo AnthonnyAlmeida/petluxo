@@ -291,6 +291,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81LHebDYP',
     tags: ['mochila', 'bolsa', 'viagem', 'transporte'],
+    supplierLink: 'Aproveite mais essa promoção no SuperApp Magalu - Comedouro dobrável https://m.magazineluiza.com.br/comedouro-dobravel-mr-toni/p/fj1c8d55hd/pe/ptbb/?partner_id=64853&utm_source=pdp_desk&utm_medium=share&seller_id=specialvetclinicaveterinaria',
   },
   {
     id: 19,
