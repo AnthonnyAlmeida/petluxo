@@ -40,7 +40,7 @@ petluxo/
 ├── index.html               # Shell HTML com todas as meta tags (OG, Twitter, GA)
 ├── vite.config.js           # Configuração mínima do Vite
 ├── package.json             # React 18 + Vite + react-router-dom
-├── AI_CONTEXT.md            # Este arquivo
+├── AI_CONTEXT_PETLUXO.md    # Este arquivo
 ├── public/                  # Copiados diretamente para dist/
 │   ├── favicon.ico          # Logo convertida (48×48px, gerada em 20/05/2026)
 │   ├── favicon.svg          # Placeholder SVG (mantido para compatibilidade)
@@ -49,8 +49,8 @@ petluxo/
 │   ├── 404.html             # Redirect SPA via sessionStorage
 │   ├── og-image.png         # 1200×630px para redes sociais
 │   └── images/
-│       ├── brand/           # Logo e assets de marca
-│       └── products/        # Fotos dos produtos (todas no git)
+│       ├── brand/           # Vazia (apenas .gitkeep) — nenhum asset de marca atualmente
+│       └── products/        # Fotos dos produtos (33 arquivos, todas no git)
 ├── assets/                  # Assets importados pelo Vite (logo, hero)
 ├── src/
 │   ├── main.jsx             # Entry point — monta React no #app
@@ -130,7 +130,7 @@ Card exibido no carrossel. Mostra: imagem, badge (se houver), `shortName` (ou `n
 - **Otimização:** imagem com `loading="lazy"` para lazy loading (reduz tempo de carregamento inicial)
 
 **`ProductGrid.jsx`**
-Carrossel com navegação por setas e swipe touch. Hook interno `usePerView` detecta breakpoints: 3 cards (desktop ≥980px), 2 (tablet ≤980px), 1 (mobile ≤768px). Recebe props `products`, `title`, `resetKey`. Setas laterais via flexbox (não position:absolute, evita clipping em containers overflow:hidden).
+Carrossel com navegação por setas e swipe touch. Hook interno `usePerView` detecta breakpoints via `window.innerWidth`: 1 card (`< 640px`), 2 cards (`< 1024px`), 3 cards (`≥ 1024px`). Recebe props `products`, `title`, `resetKey`. Setas laterais via flexbox (não position:absolute, evita clipping em containers overflow:hidden).
 
 **`ProductModal.jsx`**
 Modal de detalhes aberto ao clicar em qualquer card. Exibe `shortName` (ou `name` se não houver), preço, seletor de tamanho (quando `buyLinks` existe), descrição e bullets. Footer do modal verifica o status do produto:
@@ -188,7 +188,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 ## 3. Catálogo Completo de Produtos
 
-**28 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **34**.
+**32 produtos em 9 categorias.** IDs não são contíguos (alguns foram removidos). Próximo ID disponível: **38**.
 
 > ⚠️ **Status das categorias:** 9 categorias definidas em ordem. Todas com produtos ativos.
 
@@ -196,32 +196,38 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 |---|---|---|---|---|---|---|---|---|
 | 1 | Brinquedo Interativo | R$ 149,90 | brinquedos | pag.ae/81K6Dbu-q | — | ESGOTADO | brinquedo_interativo.webp | brinquedos:100 |
 | 3 | Garrafa Portátil Premium | R$ 189,90 | viagem-mobilidade | pag.ae/81J8xDn2N | — | null | garrafa.webp | viagem-mobilidade:100 |
-| 4 | Comedouro Elevado | R$ 249,90 | a-mesa | pag.ae/81LGWC7X4 | — | null | comedouro_elevado.webp | a-mesa:100 |
-| 6 | Refúgio Cozy | R$ 297,00 | mais-vendidos, conforto | pag.ae/81J8cPYS6 | — | MAIS VENDIDOS | cozy.webp | mais-vendidos:200, conforto:400 |
-| 8 | Bolsa Transporte | R$ 797,00 | mais-vendidos, couro | pag.ae/81K3S7Am5 | — | MAIS VENDIDOS | bolsa_transporte.webp | mais-vendidos:100, couro:100 |
-| 9 | Kit Milano | R$ 847,00 | couro | pag.ae/81K3Zv1ga | — | null | kit_milano.webp | couro:400 |
-| 10 | Porta Saquinhos | R$ 227,00 | couro | pag.ae/81K3Kjy9v | — | null | porta_saquinho.webp | couro:500 |
-| 12 | Sofá Essence | R$ 497,00 | conforto | pag.ae/81J1KU12M | — | null | produtodestaquepetluxo.webp | conforto:200 |
-| 13 | Sofá Lounge PetLuxo™ | R$ 349,90 | conforto | pag.ae/81LH1xxX4 | — | null | sofa-ortopedico.webp | conforto:300 |
+| 4 | Comedouro Elevado | R$ 249,90 | a-mesa | pag.ae/81LGWC7X4 | — | null | comedouro_elevado.webp | a-mesa:700 |
+| 6 | Refúgio Cozy | R$ 297,00 | mais-vendidos, conforto, sono-refugio | pag.ae/81J8cPYS6 | — | MAIS VENDIDOS | cozy.webp | mais-vendidos:1500, conforto:1500, sono-refugio:600 |
+| 8 | Bolsa Transporte | R$ 797,00 | mais-vendidos, couro | pag.ae/81K3S7Am5 | — | MAIS VENDIDOS | bolsa_transporte.webp | mais-vendidos:1600, couro:1500 |
+| 9 | Kit Milano | R$ 847,00 | couro | pag.ae/81K3Zv1ga | — | null | kit_milano.webp | couro:1400 |
+| 10 | Porta Saquinhos | R$ 227,00 | couro | pag.ae/81K3Kjy9v | — | null | porta_saquinho.webp | couro:1200 |
+| 12 | Sofá Essence | R$ 497,00 | conforto, sono-refugio | pag.ae/81J1KU12M | — | null | produtodestaquepetluxo.webp | conforto:1200, sono-refugio:900 |
+| 13 | Sofá Lounge PetLuxo™ | R$ 469,00 | conforto, sono-refugio | pag.ae/81VR7uoS1 | — | null | sofa-ortopedico.webp | conforto:1300, sono-refugio:800 |
 | 14 | Cama CloudNest™ | a partir de R$ 329,90 | sono-refugio | — | P/M/G (3 links) | null | cama_petluxo.webp | sono-refugio:100 |
-| 15 | Coleira Atena™ | R$ 197,90 | couro | pag.ae/81LHbyHKp | — | null | coleira_petluxo.webp | couro:200 |
-| 16 | Comedouro Maison Élevé | a partir de R$ 289,90 | mais-vendidos, a-mesa | — | 800ml/1200ml/1800ml (3 links) | MAIS VENDIDOS | comedouro_maison.webp | mais-vendidos:300, a-mesa:600 |
-| 17 | Bolsa Voyage Signature | R$ 429,00 | colecao-passeio | pag.ae/81LHebDYP | — | null | bolsa_voyage.webp | colecao-passeio:100 |
-| 18 | Cama Suspensa Élysée | R$ 397,90 | conforto | pag.ae/81MuixsTN | — | null | cama_suspensa_elysee.webp | conforto:100 |
+| 15 | Coleira Atena™ | R$ 197,90 | couro | pag.ae/81LHbyHKp | — | null | coleira_petluxo.webp | couro:1300 |
+| 16 | Comedouro Maison Élevé | a partir de R$ 289,90 | mais-vendidos, a-mesa | — | 800ml/1200ml/1800ml (3 links) | MAIS VENDIDOS | comedouro_maison.webp | mais-vendidos:1400, a-mesa:1200 |
+| 17 | Bolsa Voyage Signature | R$ 429,00 | colecao-passeio | pag.ae/81LHebDYP | — | null | bolsa_voyage.webp | colecao-passeio:400 |
+| 18 | Cama Suspensa Élysée | R$ 397,90 | conforto, sono-refugio | pag.ae/81MuixsTN | — | null | cama_suspensa_elysee.webp | conforto:1100, sono-refugio:1000 |
 | 19 | Arranhador Sisal | R$ 197,90 | brinquedos | pag.ae/81MunByX6 | — | null | arranhador_bola.webp | brinquedos:200 |
-| 20 | Cama Suspensa Aura | R$ 389,00 | mais-vendidos, conforto | pag.ae/81MurBvHN | — | MAIS VENDIDOS | cama_suspensa_rattan.webp | mais-vendidos:400, conforto:500 |
-| 21 | Executive Bed™ | a partir de R$ 597,00 | couro | — | M/G (2 links) | null | executive_bed.webp | couro:300 |
-| 22 | Bowl Cerâmica Spoiled | R$ 167,00 | a-mesa | pag.ae/81NMeTc16 | — | null | bowl_ceramica.webp | a-mesa:200 |
-| 24 | Fonte Automática Elegance | R$ 547,00 | a-mesa | pag.ae/81NQzRaB6 | — | null | fonte_automatica.webp | a-mesa:300 |
-| 25 | Mesa Gourmet Nordic™ | R$ 397,00 | a-mesa | pag.ae/81P7aH2YR | — | null | mesa_nordic.webp | a-mesa:400 |
-| 26 | Roma Walk Set | R$ 1.090,00 | colecao-passeio | pag.ae/81P8FJPxM | — | null | roma_walk.webp | colecao-passeio:200 |
+| 20 | Cama Suspensa Aura | R$ 389,00 | mais-vendidos, conforto, sono-refugio | pag.ae/81MurBvHN | — | MAIS VENDIDOS | cama_suspensa_rattan.webp | mais-vendidos:1300, conforto:1400, sono-refugio:400 |
+| 21 | Executive Bed™ | a partir de R$ 597,00 | couro, sono-refugio | — | M/G (2 links) | null | executive_bed.webp | couro:1100, sono-refugio:500 |
+| 22 | Bowl Cerâmica Spoiled | R$ 167,00 | a-mesa | pag.ae/81NMeTc16 | — | null | bowl_ceramica.webp | a-mesa:1000 |
+| 24 | Fonte Automática Elegance | R$ 547,00 | a-mesa | pag.ae/81NQzRaB6 | — | null | fonte_automatica.webp | a-mesa:1100 |
+| 25 | Mesa Gourmet Nordic™ | R$ 397,00 | a-mesa | pag.ae/81P7aH2YR | — | null | mesa_nordic.webp | a-mesa:900 |
+| 26 | Roma Walk Set | R$ 1.090,00 | colecao-passeio | pag.ae/81P8FJPxM | — | null | roma_walk.webp | colecao-passeio:300 |
 | 27 | Ursinho Interativo Kong | R$ 229,00 | brinquedos | pag.ae/81Pa5nMYM | — | null | ursinho-interativo-premium-kong-brasil-edition.webp | brinquedos:300 |
 | 28 | Cabana Teepee Luxo | a partir de R$ 1.190,00 | sono-refugio | — | Tam. P/M/G (3 links) | null | cabana_teepee.webp | sono-refugio:200 |
-| 29 | Tapete Elegance | R$ 97,00 | a-mesa | pag.ae/81Q6FKrYN | — | null | tapete_elegance.webp | a-mesa:500 |
-| 30 | Cesto Organizador Cozy | R$ 247,00 | colecao-cozy-luxo | pag.ae/81Qf8S5Ks | — | null | cesto_organizador.webp | colecao-cozy-luxo:100 |
-| 31 | Estação de Passeio PetLuxo™ | R$ 497,00 | colecao-cozy-luxo | pag.ae/81QtMgE9m | — | null | estacao-de-passeio-petluxo-em-madeira-premium.webp | colecao-cozy-luxo:200 |
-| 32 | Quadro Pet Personalizado | R$ 297,00 | colecao-cozy-luxo | pag.ae/81QuxvZm1 | — | null | quadro-pet-personalizado-minimalista-petluxo.webp | colecao-cozy-luxo:300 |
-| 33 | Reservatório Hermético Cozy | R$ 297,00 | colecao-cozy-luxo | pag.ae/81QDtorTN | — | PREMIUM | reservatorio-hermetico-cozy-para-racao-pet.webp | colecao-cozy-luxo:400 |
+| 29 | Tapete Elegance | R$ 97,00 | a-mesa | pag.ae/81Q6FKrYN | — | null | tapete_elegance.webp | a-mesa:800 |
+| 30 | Cesto Organizador Cozy | R$ 247,00 | colecao-cozy-luxo | pag.ae/81Qf8S5Ks | — | null | cesto_organizador.webp | colecao-cozy-luxo:600 |
+| 31 | Estação de Passeio PetLuxo™ | R$ 497,00 | colecao-cozy-luxo | pag.ae/81QtMgE9m | — | null | estacao-de-passeio-petluxo-em-madeira-premium.webp | colecao-cozy-luxo:700 |
+| 32 | Quadro Pet Personalizado | R$ 297,00 | colecao-cozy-luxo | pag.ae/81QuxvZm1 | — | null | quadro-pet-personalizado-minimalista-petluxo.webp | colecao-cozy-luxo:800 |
+| 33 | Reservatório Hermético Cozy | R$ 297,00 | colecao-cozy-luxo | pag.ae/81QDtorTN | — | PREMIUM | reservatorio-hermetico-cozy-para-racao-pet.webp | colecao-cozy-luxo:500 |
+| 34 | Bolsa Térmica Matelassê | R$ 349,00 | colecao-passeio | pag.ae/81QSpn4pr | — | NOVO | bolsa-termica-signature-matelasse.webp | colecao-passeio:500 |
+| 35 | Manta Serenity™ | R$ 259,00 | sono-refugio | pag.ae/81QSF8Xw6 | — | null | manta-serenity-petluxo-premium.webp | sono-refugio:300 |
+| 36 | Comedouro Nômade Premium | R$ 119,00 | viagem-mobilidade | pag.ae/81Rpy249r | — | PREMIUM | comedouro-nomade-premium-dobravel-e-portatil.webp | viagem-mobilidade:200 |
+| 37 | Espreguiçadeira Madeira Dobrável | R$ 219,00 | viagem-mobilidade, sono-refugio | pag.ae/81SERKLKu | — | EXCLUSIVO | espreguicadeira-felina-portatil-e-arranhador-sisal.webp | viagem-mobilidade:300, sono-refugio:700 |
+
+> Badges em uso no catálogo: `ESGOTADO`, `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, ou `null`.
 
 **Detalhes dos buyLinks (produtos com seletor de tamanho):**
 
@@ -238,6 +244,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 *id 21 — Cama Executive Bed™:*
 - Tam. M → R$ 597,00 → pag.ae/81M-Zz4cL
 - Tam. G → R$ 697,00 → pag.ae/81M-QYczq
+> ⚠️ Estes campos (`prices`/`buyLinks`) haviam sido removidos do código em algum momento, deixando o produto sem nenhum link de compra (fallback "VIA WHATSAPP"). Restaurados em 26/06/2026.
 
 *id 28 — Cabana Teepee Luxo Personalizada:*
 - Tam. P (até 5kg) → R$ 1.190,00 → pag.ae/81Phf6B9r
@@ -248,27 +255,30 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 | ID | Label exibido no site | visible | Status | Ordem no site |
 |---|---|---|---|---|
-| `mais-vendidos` | Mais Vendidos | true | ✅ Com produtos | 1º (sempre visível) |
-| `couro` | Essenciais em Couro | true | ✅ Com produtos | 2º |
-| `conforto` | Conforto & Estilo | true | ✅ Com produtos | 3º |
+| `mais-vendidos` | Mais Vendidos | true | ✅ Com 4 produtos | 1º (sempre visível) |
+| `couro` | Essenciais em Couro | true | ✅ Com 5 produtos | 2º |
+| `conforto` | Conforto & Estilo | true | ✅ Com 5 produtos | 3º |
 | `a-mesa` | À Mesa | true | ✅ Com 6 produtos | 4º |
 | `colecao-cozy-luxo` | Coleção Cozy Luxo | true | ✅ Com 4 produtos (id 30, 31, 32, 33) | 5º |
-| `brinquedos` | Brinquedos & Estilo | true | ✅ Com produtos | 6º |
-| `colecao-passeio` | Coleção Passeio | true | ✅ Com produtos | 7º |
-| `sono-refugio` | Sono & Refúgio | true | ✅ Com 2 produtos (id 14, 28) | 8º |
-| `viagem-mobilidade` | Viagem & Mobilidade | true | ✅ Com 1 produto (id 3) | 9º |
+| `brinquedos` | Brinquedos & Estilo | true | ✅ Com 3 produtos | 6º |
+| `colecao-passeio` | Coleção Passeio | true | ✅ Com 3 produtos (id 17, 26, 34) | 7º |
+| `sono-refugio` | Sono & Refúgio | true | ✅ Com 10 produtos | 8º |
+| `viagem-mobilidade` | Viagem & Mobilidade | true | ✅ Com 3 produtos (id 3, 36, 37) | 9º |
 
 > Para ocultar uma categoria do site sem remover produtos, setar `visible: false`. O filtro usa `!== false` — categorias sem o campo também ficam visíveis.
+>
+> Muitos produtos pertencem a `sono-refugio` além da categoria principal (ex: `conforto`) — é a categoria com mais produtos do catálogo.
 
 **Ordem de exibição por categoria** (categoryOrder decrescente = primeiro → último):
-- mais-vendidos: id20 → id16 → id6 → id8
-- couro: id10 → id9 → id21 → id15 → id8
-- conforto: id20 → id6 → id13 → id12 → id18
-- a-mesa: id16 → id29 → id25 → id24 → id22 → id4
-- colecao-passeio: id26 → id17
-- sono-refugio: id28 → id14
+- mais-vendidos: id8 → id6 → id16 → id20
+- couro: id8 → id9 → id15 → id10 → id21
+- conforto: id6 → id20 → id13 → id12 → id18
+- a-mesa: id16 → id24 → id22 → id25 → id29 → id4
+- colecao-passeio: id34 → id17 → id26
+- sono-refugio: id18 → id12 → id13 → id37 → id6 → id21 → id20 → id35 → id28 → id14
 - brinquedos: id27 → id19 → id1
-- colecao-cozy-luxo: id33 → id32 → id31 → id30
+- colecao-cozy-luxo: id32 → id31 → id30 → id33
+- viagem-mobilidade: id37 → id36 → id3
 
 ---
 
@@ -278,7 +288,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 
 | Campo | Tipo | Descrição |
 |---|---|---|
-| `id` | number | Próximo disponível após 28 é **29** |
+| `id` | number | Próximo disponível é **38** |
 | `name` | string | Nome completo (usável para SEO e fallback) |
 | `shortName` | string | Nome curto (exibido no carrossel e no modal) — obrigatório |
 | `subtitle` | string | Frase curta de impacto (exibida no modal) |
@@ -304,7 +314,7 @@ No modal (`ProductModal.jsx`), um `useState(selectedSize)` controla qual tamanho
 - `assets/logo.webp` — logo marca importado em Navbar.module.css (quality 85, ~35KB; antigo JPEG: 36KB). Referência em background-image CSS
 - `assets/sobre_nos/sobre_nos.webp` — foto da seção Sobre Nós (76KB; convertida de PNG em 20/05/2026). Importado como módulo ES em Story.jsx
 - `assets/sobre_nos/foto_sobre_nos.webp` — asset de reserva no mesmo diretório; não referenciado em nenhum componente atualmente
-- `public/images/products/*.webp` — 25 imagens de produto, todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Cabana Teepee convertida de JPEG para WebP em 21/05/2026. Tapete Elegance convertida de JPEG para WebP em 26/05/2026. Cesto Organizador convertida de JPEG para WebP em 27/05/2026. Todas commitadas no git
+- `public/images/products/*.webp` — 33 arquivos na pasta (32 produtos ativos referenciam uma imagem cada; 1 arquivo órfão não referenciado em nenhum componente: `arranhador-felino-sisal-ajustavel-4-niveis-portatil.webp`), todas em WebP quality 82; convertidas em 18/05/2026 e posteriores. Mesa Nordic convertida de JPEG em 20/05/2026 (redução de 120KB para 31KB). Cabana Teepee convertida de JPEG para WebP em 21/05/2026. Tapete Elegance convertida de JPEG para WebP em 26/05/2026. Cesto Organizador convertida de JPEG para WebP em 27/05/2026. Todas commitadas no git
 - `public/og-image.png` — compartilhada em redes sociais (formato original PNG; não convertida pois é meta tag social)
 - `public/images/brand/` — logo e assets de marca
 
@@ -504,7 +514,10 @@ Permite que um produto apareça em múltiplas categorias (ex: `["mais-vendidos",
 - `public/robots.txt` — comentário removido
 
 ### Produtos sem buyLink (exibem "VIA WHATSAPP" no card)
-Nenhum produto atualmente sem link de pagamento — todos os 25 produtos têm `buyLink` ou `buyLinks`.
+Nenhum produto atualmente sem link de pagamento — todos os 32 produtos têm `buyLink` ou `buyLinks`. (O id 21 — Executive Bed™ — havia perdido seus `buyLinks` de tamanho M/G; restaurado em 26/06/2026, ver Seção 3.)
+
+### Catálogo desatualizado em relação ao código (corrigido em 26/06/2026)
+Uma auditoria encontrou o documento referenciando 28 produtos (máximo id 28) enquanto o código já tinha 32 produtos (até id 37), com preço/buyLink do id 13 trocados e categoria `sono-refugio` ausente em 6 produtos. Catálogo, contagens por categoria e ordens de exibição foram realinhados com `src/data/products.js`. Ao adicionar/editar produtos no futuro, atualizar esta seção no mesmo commit para evitar nova divergência.
 
 ### Favicon
 ✅ **Favicon.ico gerado em 20/05/2026** a partir de `assets/logo.webp` (48×48px, 7.5KB) via ImageMagick. Referência em `index.html` atualizada de `favicon.svg` para `favicon.ico` (type="image/x-icon"). O `favicon.svg` foi mantido no repositório para compatibilidade, mas não é mais referenciado.
