@@ -412,11 +412,12 @@ export const PRODUCTS = [
     originalPrice: null,
     category: ['brinquedos'],
     order: 22,
-    categoryOrder: { 'brinquedos': 300 },
+    categoryOrder: {"brinquedos":300},
     image: '/images/products/ursinho-interativo-premium-kong-brasil-edition.webp',
     badge: null,
     buyLink: 'https://pag.ae/81Pa5nMYM',
     tags: ['ursinho', 'pelúcia', 'kong', 'brinquedo', 'interativo', 'macio', 'brasil'],
+    visible: false,
   },
   {
     id: 28,
