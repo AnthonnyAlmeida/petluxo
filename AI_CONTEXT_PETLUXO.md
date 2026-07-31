@@ -88,7 +88,7 @@ Array de objetos de produto. Campos:
 | `tags` | string[] | Usado na busca textual |
 | `supplierLink` | string (opcional) | Link/nota interna do fornecedor (não é exibido na UI) |
 | `visible` | boolean (opcional) | Quando `false`, o produto some do site (grids, carrosséis, busca) mesmo com dados completos |
-| `featured` | boolean (opcional) | Presente em alguns registros mas não consumido por nenhum componente atual |
+| `featured` | boolean (opcional) | Quando `true`, marca o produto exibido na seção `Featured` ("Produto em Destaque"). Deve haver no máximo um produto com `featured: true` visível por vez — a seção usa o primeiro encontrado |
 
 Não há build step, CMS ou banco por trás deste arquivo — edições são feitas diretamente no código-fonte (inclusive por um painel administrativo externo ao repositório, que também commita direto neste arquivo).
 
@@ -97,6 +97,9 @@ Não há build step, CMS ou banco por trás deste arquivo — edições são fei
 Ordem: `Navbar` → `Hero` → `Featured` → `Products` → `Story` → `Differentials` → `CTA` → `FAQ` → `Footer`, mais `ProductModal` (quick view global) e, em desenvolvimento, `DevTweaks`.
 
 Rotas adicionais (fora da home): `/politica-de-privacidade`, `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega`, `/termos-de-uso`, e um catch-all `*` que renderiza `NotFound` dentro do layout padrão (Navbar + Footer).
+
+### `Featured` (`src/components/sections/Featured.jsx`)
+Seção "Produto em Destaque", logo após a Hero. Busca em `PRODUCTS` o primeiro produto com `featured === true && visible !== false` e renderiza imagem, nome (com `PetLuxo™` estilizado em itálico/dourado quando presente no nome), subtítulo, descrição completa e botão "COMPRAR AGORA" (`buyLink` ou o primeiro item de `buyLinks`). Se o produto tiver `prices`, mostra o menor valor precedido de "A PARTIR DE". Se nenhum produto tiver `featured: true`, a seção não renderiza nada.
 
 ### `Products` (`src/components/sections/Products.jsx`)
 Seção central do catálogo. Dois modos de exibição:
@@ -123,9 +126,9 @@ Em todos os casos com link de compra, também é oferecido um link secundário p
 
 ## WhatsApp (`src/lib/whatsapp.js`)
 
-Número lido de `import.meta.env.VITE_WHATSAPP_PHONE`, com fallback hardcoded `5561994063917`. `wa(texto)` monta a URL `wa.me` com a mensagem pré-codificada; usado no botão flutuante (FAB, inicializado em `main.jsx` a partir do elemento `#waFab`), na Navbar, no Footer e nos fallbacks de compra.
+Número lido de `import.meta.env.VITE_WHATSAPP_PHONE`, com fallback hardcoded `5561994063917` caso a variável não esteja definida. `wa(texto)` monta a URL `wa.me` com a mensagem pré-codificada; usado no botão flutuante (FAB, inicializado em `main.jsx` a partir do elemento `#waFab`), na Navbar, no Footer e nos fallbacks de compra.
 
-> Nota: o `.env.local` atual define `NEXT_PUBLIC_WHATSAPP_PHONE`, que não é lido pelo Vite (que só expõe variáveis prefixadas com `VITE_`) — na prática, o número usado hoje é sempre o fallback hardcoded.
+`.env.local` e `.env.example` definem `VITE_WHATSAPP_PHONE` (prefixo correto para o Vite expor a variável via `import.meta.env`).
 
 ## Estilos
 
