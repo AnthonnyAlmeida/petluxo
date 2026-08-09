@@ -13,6 +13,7 @@ import { CTA } from '../components/sections/CTA.jsx';
 import { FAQ } from '../components/sections/FAQ.jsx';
 import { NotFound } from '../components/sections/NotFound.jsx';
 import { ProductModal } from '../components/product/ProductModal.jsx';
+import ProductPage from '../components/pages/ProductPage.jsx';
 import PrivacyPage from '../components/pages/PrivacyPage.jsx';
 import ReturnPolicyPage from '../components/pages/ReturnPolicyPage.jsx';
 import ShippingPolicyPage from '../components/pages/ShippingPolicyPage.jsx';
@@ -60,6 +61,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/produto/:id" element={<ProductPage />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
       <Route path="/politica-de-troca-e-devolucao" element={<ReturnPolicyPage />} />
       <Route path="/politica-de-frete-e-entrega" element={<ShippingPolicyPage />} />

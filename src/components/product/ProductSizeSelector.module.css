@@ -1,0 +1,32 @@
+/* PetLuxo — ProductSizeSelector.module.css */
+
+.sizeSelector {
+  margin-bottom: 16px;
+}
+.sizeSelectorLabel {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 8px;
+}
+.sizeSelectorBtns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sizeBtn {
+  padding: 6px 16px;
+  border: 1px solid var(--vinho);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--vinho);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sizeBtnActive {
+  background: var(--vinho);
+  color: var(--offwhite);
+}

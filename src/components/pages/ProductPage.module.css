@@ -1,0 +1,226 @@
+/* PetLuxo — ProductPage.module.css */
+
+.page {
+  padding: clamp(48px, 8vw, 96px) 0 clamp(80px, 12vh, 120px);
+}
+
+.backLink {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-bottom: 32px;
+  transition: color 0.3s;
+}
+.backLink:hover {
+  color: var(--vinho);
+}
+
+/* ---------- Layout principal: galeria + info ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 64px);
+  margin-bottom: clamp(56px, 8vh, 96px);
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Selo "Por que escolher a PetLuxo?" ---------- */
+.brandSealBlock {
+  margin-bottom: clamp(40px, 6vh, 64px);
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mainImageWrap {
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #EFE7DC, #D6C4AB);
+  aspect-ratio: 1 / 1;
+}
+.mainImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumbs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.thumb {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--bege);
+}
+
+.info h1.name {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.subtitle {
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+.priceOriginal {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+.price {
+  font-size: 30px;
+  color: var(--vinho);
+  margin-bottom: 20px;
+}
+.description {
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 24px;
+}
+.bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.bullets li {
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  padding-left: 18px;
+  position: relative;
+}
+.bullets li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--caramelo);
+  font-size: 11px;
+}
+
+.buyStack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+}
+
+/* ---------- Seções de conteúdo expandido ---------- */
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vh, 64px);
+  padding-top: clamp(40px, 6vh, 64px);
+  border-top: 1px solid var(--bege);
+}
+.section h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.section p {
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.specsList {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 10px 24px;
+  margin: 0;
+}
+.specsList dt {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.specsList dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+.sizeTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.sizeTable th,
+.sizeTable td {
+  padding: 10px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--bege);
+  white-space: nowrap;
+}
+.sizeTable th {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.plainList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.plainList li {
+  font-size: 14px;
+  color: var(--ink-soft);
+  padding-left: 18px;
+  position: relative;
+}
+.plainList li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--caramelo);
+  font-size: 11px;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.faqItem h3 {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.faqItem p {
+  margin: 0;
+}

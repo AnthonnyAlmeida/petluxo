@@ -110,63 +110,23 @@
   font-size: 11px;
 }
 
-/* ---------- Size selector ---------- */
-.sizeSelector {
-  margin-bottom: 16px;
-}
-.sizeSelectorLabel {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  display: block;
-  margin-bottom: 8px;
-}
-.sizeSelectorBtns {
-  display: flex;
-  gap: 8px;
-}
-.sizeBtn {
-  padding: 6px 16px;
-  border: 1px solid var(--vinho);
-  border-radius: 4px;
-  background: transparent;
-  color: var(--vinho);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.sizeBtnActive {
-  background: var(--vinho);
-  color: var(--offwhite);
-}
-
-/* ---------- WhatsApp Link (Secondary Action) ---------- */
-.modalWaLink {
-  display: flex;
+/* ---------- Ver ficha completa (link condicional) ---------- */
+.fullDetailsLink {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 6px;
   font-size: 12px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  background: none;
-  border: none;
-  padding: 8px 0;
-  cursor: pointer;
-  transition: color 0.3s;
-  width: 100%;
-}
-
-.modalWaLink:hover {
   color: var(--vinho);
+  text-decoration: none;
+  border-bottom: 1px solid var(--dourado);
+  padding-bottom: 2px;
+  margin-bottom: 8px;
+  transition: color 0.3s;
 }
-
-.modalWaLink svg {
-  width: 14px;
-  height: 14px;
-  opacity: 0.6;
+.fullDetailsLink:hover {
+  color: var(--dourado);
 }
 
 /* ---------- Media Queries ---------- */

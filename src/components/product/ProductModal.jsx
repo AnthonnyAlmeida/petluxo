@@ -1,27 +1,20 @@
 /* PetLuxo — ProductModal (Quick View) */
 
-import React, { useState, useEffect } from 'react';
-import { Icon } from '../../icons.jsx';
-import { wa } from '../../lib/whatsapp.js';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { TrustBadges } from '../ui/TrustBadges.jsx';
-import '../../styles/buttons.css';
+import { PRODUCT_DETAILS } from '../../data/productDetails.js';
+import { useProductBuy } from '../../hooks/useProductBuy.js';
+import { ProductSizeSelector } from './ProductSizeSelector.jsx';
+import { ProductBuyButton } from './ProductBuyButton.jsx';
 import styles from './ProductModal.module.css';
 
 export function ProductModal({ product, onClose }) {
-  const [selectedSize, setSelectedSize] = useState(null);
-
-  useEffect(() => {
-    if (product?.buyLinks?.length) {
-      setSelectedSize(product.buyLinks[0].size);
-    } else {
-      setSelectedSize(null);
-    }
-  }, [product]);
+  const { selectedSize, setSelectedSize, activeBuyLink, activePrice } = useProductBuy(product);
 
   if (!product) return null;
 
-  const activeBuyLink = product.buyLinks?.find((bl) => bl.size === selectedSize);
-  const activePrice = product.prices?.find((p) => p.size === selectedSize);
+  const hasFullDetails = Boolean(PRODUCT_DETAILS[product.id]);
 
   return (
     <div className={[styles.modal, product && styles.modalShow].filter(Boolean).join(' ')} onClick={onClose}>
@@ -51,20 +44,7 @@ export function ProductModal({ product, onClose }) {
               <div className="price serif">{product.price}</div>
             )}
             {product.buyLinks && (
-              <div className={styles.sizeSelector}>
-                <span className={styles.sizeSelectorLabel}>Selecione o tamanho:</span>
-                <div className={styles.sizeSelectorBtns}>
-                  {product.buyLinks.map((bl) => (
-                    <button
-                      key={bl.size}
-                      className={[styles.sizeBtn, selectedSize === bl.size && styles.sizeBtnActive].filter(Boolean).join(' ')}
-                      onClick={() => setSelectedSize(bl.size)}
-                    >
-                      {bl.size}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <ProductSizeSelector buyLinks={product.buyLinks} selectedSize={selectedSize} onSelect={setSelectedSize} />
             )}
           </div>
           <div className={styles.modalScroll}>
@@ -74,49 +54,14 @@ export function ProductModal({ product, onClose }) {
                 {product.bullets.map((b, i) => <li key={i}>{b}</li>)}
               </ul>
             )}
+            {hasFullDetails && (
+              <Link to={`/produto/${product.id}`} className={styles.fullDetailsLink} onClick={onClose}>
+                Ver ficha completa →
+              </Link>
+            )}
           </div>
           <div className={[styles.modalInfoFooter, styles.modalBtnStack].join(' ')}>
-            {product.badge === 'ESGOTADO' ? (
-              <>
-                <button
-                  className="btn btn-primary btn-full"
-                  disabled
-                  style={{ opacity: 0.5, cursor: 'not-allowed' }}
-                >
-                  ESGOTADO
-                </button>
-                <a className={styles.modalWaLink} href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener noreferrer">
-                  <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
-                </a>
-              </>
-            ) : product.buyLinks ? (
-              <>
-                <a
-                  className="btn btn-primary btn-full"
-                  href={activeBuyLink?.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  COMPRAR AGORA
-                </a>
-                <a className={styles.modalWaLink} href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener noreferrer">
-                  <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
-                </a>
-              </>
-            ) : product.buyLink ? (
-              <>
-                <a className="btn btn-primary btn-full" href={product.buyLink} target="_blank" rel="noopener noreferrer">
-                  COMPRAR AGORA
-                </a>
-                <a className={styles.modalWaLink} href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener noreferrer">
-                  <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
-                </a>
-              </>
-            ) : (
-              <a className="btn btn-primary btn-full" href={wa(`Olá! Gostaria de mais informações sobre "${product.name}".`)} target="_blank" rel="noopener noreferrer">
-                <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
-              </a>
-            )}
+            <ProductBuyButton product={product} activeBuyLink={activeBuyLink} />
             <TrustBadges variant="modal" />
           </div>
         </div>

@@ -1,0 +1,51 @@
+/* PetLuxo — BrandSeal.module.css
+ * Bloco de confiança compacto e denso — não é uma seção editorial (ver
+ * Differentials.module.css para o contraste de escala).
+ */
+
+.seal {
+  background: var(--bege-soft);
+  border: 1px solid var(--bege);
+  border-radius: 6px;
+  padding: clamp(20px, 3vw, 28px);
+}
+
+.title {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--vinho);
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 24px;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.emoji {
+  font-size: 16px;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

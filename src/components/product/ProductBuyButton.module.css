@@ -1,0 +1,28 @@
+/* PetLuxo — ProductBuyButton.module.css */
+
+.waLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: color 0.3s;
+  width: 100%;
+}
+
+.waLink:hover {
+  color: var(--vinho);
+}
+
+.waLink svg {
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
+}

@@ -28,7 +28,7 @@ petluxo/
 │   ├── 404.html                # Redireciona para index.html preservando o path (suporte a SPA na Vercel)
 │   └── images/
 │       ├── brand/
-│       └── products/            # Fotos dos produtos (.webp)
+│       └── products/            # Uma pasta por produto (slug kebab-case) — ver seção própria abaixo
 ├── src/
 │   ├── main.jsx                 # Entry point: monta <App/>, inicializa link do FAB do WhatsApp, restaura path do 404.html
 │   ├── app/
@@ -36,14 +36,19 @@ petluxo/
 │   │   └── DevTweaks.jsx        # Painel de ajustes visuais, carregado só em dev (ver seção própria abaixo)
 │   ├── components/
 │   │   ├── layout/              # Navbar (com drawer mobile) e Footer
-│   │   ├── product/              # ProductCard, ProductGrid (carrossel), ProductModal (quick view)
+│   │   ├── product/              # ProductCard, ProductGrid (carrossel), ProductModal (quick view),
+│   │   │                         # ProductSizeSelector, ProductBuyButton (compartilhados entre modal e ProductPage)
 │   │   ├── sections/              # Hero, Featured, Products, Story, Differentials, CTA, FAQ, NotFound
-│   │   ├── pages/                # PrivacyPage, ReturnPolicyPage, ShippingPolicyPage, TermsPage (rotas de política)
-│   │   └── ui/                  # Button, Container, Section, TrustBadges
+│   │   ├── pages/                # PrivacyPage, ReturnPolicyPage, ShippingPolicyPage, TermsPage (rotas de política),
+│   │   │                         # ProductPage (ficha completa de produto, rota /produto/:id)
+│   │   └── ui/                  # Button, Container, Section, TrustBadges,
+│   │                             # BrandSeal (selo global "Por que escolher a PetLuxo?")
 │   ├── data/
-│   │   └── products.js          # Fonte de verdade do catálogo (CATEGORIES + PRODUCTS)
+│   │   ├── products.js          # Fonte de verdade do catálogo (CATEGORIES + PRODUCTS)
+│   │   └── productDetails.js    # Conteúdo expandido de produtos (ficha completa), opcional, indexado por id — ver seção própria abaixo
 │   ├── hooks/
-│   │   └── useScroll.js         # useScrollEffects: scroll-reveal via IntersectionObserver + paralaxe do logo na Hero
+│   │   ├── useScroll.js         # useScrollEffects: scroll-reveal via IntersectionObserver + paralaxe do logo na Hero
+│   │   └── useProductBuy.js     # Estado de tamanho selecionado + link/preço ativos, compartilhado entre ProductModal e ProductPage
 │   ├── lib/
 │   │   └── whatsapp.js          # Geração de links wa.me
 │   ├── icons.jsx                 # Conjunto de ícones SVG inline usados nos componentes
@@ -53,7 +58,7 @@ petluxo/
 │       ├── globals.css          # Reset + utilitárias globais
 │       ├── animations.css       # @keyframes globais
 │       └── buttons.css          # Estilos de `.btn` e variantes, importado por quem usa botões
-└── docs/                        # CSS_MIGRATION.md, DECISIONS.md, DEPLOY.md, README.md, TODO.md
+└── docs/                        # CSS_MIGRATION.md, DECISIONS.md, DEPLOY.md, PRODUCT_EXPANSION.md, README.md, TODO.md
 ```
 
 ## Catálogo de produtos (`src/data/products.js`)
@@ -81,7 +86,7 @@ Array de objetos de produto. Campos:
 | `category` | string[] | Um produto pode pertencer a múltiplas categorias simultaneamente |
 | `order` | number | Não usado atualmente na ordenação de exibição (a ordenação real é por `categoryOrder`) |
 | `categoryOrder` | `{ [categoryId]: number }` | Peso de ordenação **por categoria** — cada categoria em que o produto aparece tem seu próprio peso; maior valor aparece primeiro nos carrosséis/grid daquela categoria |
-| `image` | string | Caminho em `/public/images/products/` |
+| `image` | string | `/images/products/<slug-do-produto>/principal.webp` — todos os 32 produtos seguem essa convenção de pasta própria (ver seção "Convenção de pastas de imagem" abaixo) |
 | `badge` | string \| null | Selo exibido no card (ex.: `"MAIS VENDIDOS"`, `"NOVO"`, `"PREMIUM"`, `"EXCLUSIVO"`, ou `"ESGOTADO"` — este último desabilita a compra e mostra apenas o link de WhatsApp) |
 | `buyLink` | string (opcional) | Link único de pagamento PagBank |
 | `buyLinks` | `{size, link}[]` (opcional) | Alternativa a `buyLink` quando o produto tem variações — o modal exibe seletor de tamanho |
@@ -92,11 +97,33 @@ Array de objetos de produto. Campos:
 
 Não há build step, CMS ou banco por trás deste arquivo — edições são feitas diretamente no código-fonte (inclusive por um painel administrativo externo ao repositório, que também commita direto neste arquivo).
 
+## Expansão de conteúdo de produtos (`src/data/productDetails.js`)
+
+Ficha completa de produto, com conteúdo opcional além do que já existe em `products.js`: galeria de fotos adicionais, especificações técnicas estruturadas, tabela de medidas por tamanho, texto de "como escolher o tamanho", "o que acompanha", cuidados/conservação, nota de viagem aérea, garantia e FAQ por produto. Decisão de arquitetura completa e plano de fases em [`docs/PRODUCT_EXPANSION.md`](docs/PRODUCT_EXPANSION.md).
+
+- **`PRODUCT_DETAILS`**: objeto indexado por `id` de produto, definido em `src/data/productDetails.js` — arquivo **separado** de `products.js` de propósito, para isolar completamente do painel admin externo (que só escreve em `products.js`). Ainda vazio (`PRODUCT_DETAILS = {}`, nenhum produto populado); os dados reais entram um produto por vez nas próximas fases.
+- Todo campo dentro de uma entrada é opcional (`gallery`, `specs`, `sizeChart`, `howToChooseSize`, `whatsIncluded`, `careInstructions`, `airTravelNote`, `warranty`, `faq`). Produto sem entrada em `PRODUCT_DETAILS` continua funcionando exatamente como hoje, sem nenhuma seção nova aparecendo.
+- **`ProductPage`** (`src/components/pages/ProductPage.jsx`, rota `/produto/:id`): busca o produto em `PRODUCTS` pelo `id` da URL; se não existir ou tiver `visible === false`, renderiza `NotFound`. Exibe os dados que já existem em `products.js` (imagem, nome, subtitle, description, bullets, preço), o selo `BrandSeal` (ver abaixo) e, condicionalmente, cada seção de `PRODUCT_DETAILS[product.id]` — só a que tiver dados.
+- O `ProductModal` (quick view) ganhou um link condicional "Ver ficha completa", que só aparece quando `PRODUCT_DETAILS[product.id]` existe, apontando para `/produto/:id`. O modal em si não mudou de comportamento.
+- A lógica de 3 estados do botão de compra (ESGOTADO / `buyLinks` com seletor de tamanho / `buyLink` único / fallback WhatsApp) e o estado de tamanho selecionado foram extraídos para componentes/hook compartilhados entre `ProductModal` e `ProductPage`, em vez de duplicados: `useProductBuy` (`src/hooks/useProductBuy.js`), `ProductBuyButton` e `ProductSizeSelector` (`src/components/product/`).
+
+### `BrandSeal` — selo "Por que escolher a PetLuxo?" (`src/components/ui/BrandSeal.jsx`)
+
+Componente estático e global, sem props de produto (mesmo padrão de `TrustBadges.jsx`): renderiza sempre os mesmos 6 diferenciais fixos (curadoria premium, envio para todo o Brasil, compra segura, atendimento personalizado, conforto do pet, qualidade/elegância), cada um com emoji + texto curto. Usado dentro de `ProductPage`, entre o bloco principal do produto (imagem/preço/descrição/bullets) e as seções de conteúdo expandido — aparece em toda ficha de produto, independente de o produto ter ou não entrada em `PRODUCT_DETAILS`.
+
+**Distinto de `Differentials.jsx`** (seção da home, também com título "POR QUE ESCOLHER A PETLUXO", mas com 4 itens em formato de seção editorial completa, com números, título grande e call-to-action). `BrandSeal` é um bloco compacto e denso (card com grid 2 colunas, tipografia pequena), pensado para reforçar confiança dentro da ficha de produto sem competir visualmente com o conteúdo. Os dois componentes não compartilham código nem conteúdo e `Differentials.jsx` não foi alterado.
+
+### Convenção de pastas de imagem por produto (`public/images/products/`)
+
+**Todos os 32 produtos** têm sua própria pasta dentro de `public/images/products/`, nomeada com o slug do nome do produto — kebab-case, minúsculo, sem acento, sem espaço (ex.: `bolsa-transporte-petluxo`, `cama-petluxo-cloudnest`). Dentro da pasta: `principal.webp` é sempre a imagem de capa (a referenciada em `product.image`, usada no card, no modal e como imagem principal da `ProductPage`); fotos adicionais entram numeradas sequencialmente (`2.webp`, `3.webp`, ...) conforme forem chegando, para uso futuro em `PRODUCT_DETAILS[id].gallery`. Hoje a maioria das pastas só tem `principal.webp` — a galeria em si ainda não foi populada para nenhum produto.
+
+A ideia original era migrar produto por produto, só quando ganhasse galeria própria; essa decisão foi revertida em favor de deixar a convenção consistente em todo o catálogo desde já — os 32 produtos foram migrados de uma vez, preservando o histórico do arquivo via `git mv`. Produtos novos que entrarem no catálogo devem seguir a mesma convenção desde o cadastro. Detalhes e o risco aceito (nome da pasta pode ficar desatualizado se o produto for renomeado — inofensivo, é só identificador de arquivo) estão documentados em [`docs/PRODUCT_EXPANSION.md`](docs/PRODUCT_EXPANSION.md).
+
 ## Seções da home (`src/app/page.jsx`)
 
 Ordem: `Navbar` → `Hero` → `Featured` → `Products` → `Story` → `Differentials` → `CTA` → `FAQ` → `Footer`, mais `ProductModal` (quick view global) e, em desenvolvimento, `DevTweaks`.
 
-Rotas adicionais (fora da home): `/politica-de-privacidade`, `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega`, `/termos-de-uso`, e um catch-all `*` que renderiza `NotFound` dentro do layout padrão (Navbar + Footer).
+Rotas adicionais (fora da home): `/produto/:id` (ficha completa de produto, ver seção acima), `/politica-de-privacidade`, `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega`, `/termos-de-uso`, e um catch-all `*` que renderiza `NotFound` dentro do layout padrão (Navbar + Footer).
 
 ### `Featured` (`src/components/sections/Featured.jsx`)
 Seção "Produto em Destaque", logo após a Hero. Busca em `PRODUCTS` o primeiro produto com `featured === true && visible !== false` e renderiza imagem, nome (com `PetLuxo™` estilizado em itálico/dourado quando presente no nome), subtítulo, descrição completa e botão "COMPRAR AGORA" (`buyLink` ou o primeiro item de `buyLinks`). Se o produto tiver `prices`, mostra o menor valor precedido de "A PARTIR DE". Se nenhum produto tiver `featured: true`, a seção não renderiza nada.
@@ -116,13 +143,13 @@ Carrossel próprio (sem biblioteca externa), com paginação por `perView` respo
 Card clicável que abre o `ProductModal` (quick view) via callback `onQuick`. Mostra imagem, badge, nome, preço (com preço original riscado quando houver) e rótulo "COMPRAR AGORA" ou "VIA WHATSAPP" conforme o produto tenha `buyLink`/`buyLinks` ou não.
 
 ### `ProductModal` (quick view)
-Modal com imagem, descrição, bullets e botão de ação. Regras de exibição do botão principal:
+Modal com imagem, descrição, bullets e botão de ação. Regras de exibição do botão principal (via `ProductBuyButton`, compartilhado com `ProductPage` — ver seção "Expansão de conteúdo de produtos"):
 1. `badge === 'ESGOTADO'` → botão de compra desabilitado + link "CONSULTAR VIA WHATSAPP"
-2. Produto com `buyLinks` → seletor de tamanho + botão "COMPRAR AGORA" apontando para o link do tamanho selecionado
+2. Produto com `buyLinks` → seletor de tamanho (`ProductSizeSelector`) + botão "COMPRAR AGORA" apontando para o link do tamanho selecionado
 3. Produto com `buyLink` único → botão "COMPRAR AGORA" direto
 4. Nenhum link de compra → botão único "CONSULTAR VIA WHATSAPP"
 
-Em todos os casos com link de compra, também é oferecido um link secundário para WhatsApp.
+Em todos os casos com link de compra, também é oferecido um link secundário para WhatsApp. Quando o produto tem ficha completa (`PRODUCT_DETAILS[product.id]` existe), um link "Ver ficha completa" leva para `/produto/:id`.
 
 ## WhatsApp (`src/lib/whatsapp.js`)
 
@@ -140,7 +167,7 @@ Sem framework de UI. Cada componente com necessidade de estilo próprio tem um `
 
 ## SEO / Analytics
 
-`index.html` define meta tags completas (description, Open Graph, Twitter Card), `theme-color`, favicon e Google Analytics (GA4 via `gtag.js`, measurement ID `G-KKMV5VHR48`). `public/robots.txt` e `public/sitemap.xml` complementam o SEO básico. `public/404.html` guarda o pathname em `sessionStorage` e redireciona para `/`; `main.jsx` restaura esse pathname com `history.replaceState`, permitindo deep links funcionarem em uma SPA hospedada como site estático na Vercel.
+`index.html` define meta tags completas (description, Open Graph, Twitter Card), `theme-color`, favicon e Google Analytics (GA4 via `gtag.js`, measurement ID `G-KKMV5VHR48`). `public/robots.txt` e `public/sitemap.xml` complementam o SEO básico. `public/404.html` guarda o pathname em `sessionStorage` e redireciona para `/`; `main.jsx` restaura esse pathname com `history.replaceState`, permitindo deep links funcionarem em uma SPA hospedada como site estático na Vercel. Meta tags são únicas e globais (não há gerenciamento de `<head>` por rota) — `/produto/:id` herda as mesmas meta tags da home; ver limitações em `docs/PRODUCT_EXPANSION.md`.
 
 ## Deploy
 
