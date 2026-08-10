@@ -595,6 +595,6 @@ export const PRODUCTS = [
     badge: 'EXCLUSIVO',
     buyLink: 'https://pag.ae/81SERKLKu',
     tags: ['arranhador', 'madeira natural', 'dobravel', 'sisal', 'sustentavel', 'gatos', 'design'],
-    supplierLink: 'https://share.google/VY0GPq2T0dj4L65jS',
+    supplierLink: 'https://www.mercadolivre.com.br/arranhador-p-gato-cadeira-portatil-3-niveis-de-altura-marrom-claro/p/MLB74318925?pdp_filters=item_id%3AMLB4801522905&matt_tool=38524122#origin=share&sid=share&wid=MLB4801522905&action=copy',
   }
 ];
