@@ -15,6 +15,12 @@
 
 export const PRODUCT_DETAILS = {
   8: {
+    gallery: [
+      '/images/products/bolsa-transporte-petluxo/principal.webp',
+      '/images/products/bolsa-transporte-petluxo/bolsa-transporte-petluxo-2.webp',
+      '/images/products/bolsa-transporte-petluxo/bolsa-transporte-petluxo-3.webp',
+      '/images/products/bolsa-transporte-petluxo/bolsa-transporte-petluxo-4.webp',
+    ],
     specs: {
       materialExterno: 'Couro sintético premium de alta qualidade',
       forracaoInterna: 'Material impermeável, resistente e de fácil higienização',

@@ -95,7 +95,7 @@ Todo produto tem sua própria pasta dentro de `public/images/products/`, nomeada
 Dentro da pasta:
 
 - `principal.webp` — imagem de capa, a mesma referenciada em `product.image` (usada no card, no modal e como imagem principal da `ProductPage`)
-- `2.webp`, `3.webp`, ... — fotos adicionais, numeradas sequencialmente, referenciadas futuramente em `PRODUCT_DETAILS[id].gallery`
+- `<slug-da-pasta>-2.webp`, `<slug-da-pasta>-3.webp`, ... — fotos adicionais, com o slug da pasta como prefixo seguido de número sequencial (ex.: `bolsa-transporte-petluxo-2.webp`, `bolsa-transporte-petluxo-3.webp`), referenciadas em `PRODUCT_DETAILS[id].gallery`. Numeração começa em `2` (o `1` conceitual é o próprio `principal.webp`), ordenada pela ordem cronológica em que as fotos foram tiradas/recebidas. Substitui a convenção anterior de numeração simples sem prefixo (`2.webp`, `3.webp`), abandonada por ficar ambígua fora do contexto da pasta (ex.: ao arrastar o arquivo para fora, ou em qualquer listagem que misture arquivos de produtos diferentes).
 
 **Migração completa, não mais gradual.** A ideia original era migrar produto por produto, só quando cada um ganhasse galeria própria (decisão registrada na primeira versão deste documento). Essa decisão foi revertida: os **32 produtos do catálogo** foram migrados de uma vez para a pasta própria, para manter o padrão consistente em todo o site desde já, independentemente de já terem ou não fotos adicionais — a maioria ainda tem só `principal.webp` na pasta, aguardando galeria. Produtos novos que entrarem no catálogo devem seguir a mesma convenção desde o cadastro.
 

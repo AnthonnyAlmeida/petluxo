@@ -14,6 +14,7 @@ import { PRODUCT_DETAILS } from '../../data/productDetails.js';
 import { useProductBuy } from '../../hooks/useProductBuy.js';
 import { ProductSizeSelector } from '../product/ProductSizeSelector.jsx';
 import { ProductBuyButton } from '../product/ProductBuyButton.jsx';
+import { ProductGallery } from '../product/ProductGallery.jsx';
 import styles from './ProductPage.module.css';
 
 const SPEC_LABELS = {
@@ -60,18 +61,10 @@ function ProductPageContent({ product }) {
         <Link to="/" className={styles.backLink}>← Voltar para a loja</Link>
 
         <div className={styles.layout}>
-          <div className={styles.gallery}>
-            <div className={styles.mainImageWrap}>
-              <img src={product.image} alt={product.name} className={styles.mainImage} />
-            </div>
-            {details?.gallery?.length > 0 && (
-              <div className={styles.thumbs}>
-                {details.gallery.map((src, i) => (
-                  <img key={i} src={src} alt={`${product.name} — foto ${i + 2}`} className={styles.thumb} loading="lazy" />
-                ))}
-              </div>
-            )}
-          </div>
+          <ProductGallery
+            images={details?.gallery?.length > 0 ? details.gallery : [product.image]}
+            alt={product.name}
+          />
 
           <div className={styles.info}>
             <h1 className={['serif', styles.name].join(' ')}>{product.name}</h1>
