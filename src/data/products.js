@@ -595,6 +595,6 @@ export const PRODUCTS = [
     badge: 'EXCLUSIVO',
     buyLink: 'https://pag.ae/81SERKLKu',
     tags: ['arranhador', 'madeira natural', 'dobravel', 'sisal', 'sustentavel', 'gatos', 'design'],
-    supplierLink: 'Arranhador para Gato 2 em 1 Cama e Sofá Cadeira Portátil com 3 Níveis de Altura Ajustável Arranhador de Sisal para Entretenimento e Descanso de Pet Felino Descobri produtos incríveis no SHEIN.com, venha conferir! https://api-shein.shein.com/h5/sharejump/appjump?link=RqJZAyLVMt3_8&localcountry=BR&shc=2_RqJZAyLVMt3&url_from=GM74796417825',
+    supplierLink: 'https://share.google/VY0GPq2T0dj4L65jS',
   }
 ];
