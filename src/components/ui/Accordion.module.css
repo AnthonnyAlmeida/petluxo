@@ -1,0 +1,66 @@
+/* PetLuxo — Accordion.module.css */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  border-bottom: 1px solid var(--bege);
+}
+.item:first-child {
+  border-top: 1px solid var(--bege);
+}
+
+.heading {
+  margin: 0;
+}
+
+.trigger {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 22px 2px;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  color: var(--ink);
+  transition: color 0.25s;
+}
+.trigger:hover,
+.trigger:focus-visible {
+  color: var(--vinho);
+}
+.trigger:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--caramelo);
+  transition: transform 0.3s ease;
+}
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.panelInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.panelContent {
+  padding: 0 2px 22px;
+}

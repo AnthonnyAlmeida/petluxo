@@ -3,10 +3,12 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Navbar } from '../layout/Navbar.jsx';
+import { MinimalNavbar } from '../layout/MinimalNavbar.jsx';
 import { Footer } from '../layout/Footer.jsx';
 import { NotFound } from '../sections/NotFound.jsx';
 import { TrustBadges } from '../ui/TrustBadges.jsx';
 import { BrandSeal } from '../ui/BrandSeal.jsx';
+import { Accordion, AccordionItem } from '../ui/Accordion.jsx';
 import { PRODUCTS } from '../../data/products.js';
 import { PRODUCT_DETAILS } from '../../data/productDetails.js';
 import { useProductBuy } from '../../hooks/useProductBuy.js';
@@ -41,7 +43,7 @@ export default function ProductPage() {
 
   return (
     <>
-      <Navbar/>
+      <MinimalNavbar/>
       <ProductPageContent product={product} />
       <Footer/>
     </>
@@ -116,100 +118,94 @@ function ProductPageContent({ product }) {
 
         {details && (
           <div className={styles.details}>
-            {details.specs && Object.keys(details.specs).length > 0 && (
-              <section className={styles.section}>
-                <h2 className="serif">Especificações técnicas</h2>
-                <dl className={styles.specsList}>
-                  {Object.entries(details.specs).map(([key, value]) => (
-                    <React.Fragment key={key}>
-                      <dt>{SPEC_LABELS[key] || key}</dt>
-                      <dd>{value}</dd>
-                    </React.Fragment>
-                  ))}
-                </dl>
-              </section>
-            )}
+            <Accordion>
+              {details.specs && Object.keys(details.specs).length > 0 && (
+                <AccordionItem title="Especificações técnicas">
+                  <dl className={styles.specsList}>
+                    {Object.entries(details.specs).map(([key, value]) => (
+                      <React.Fragment key={key}>
+                        <dt>{SPEC_LABELS[key] || key}</dt>
+                        <dd>{value}</dd>
+                      </React.Fragment>
+                    ))}
+                  </dl>
+                </AccordionItem>
+              )}
 
-            {details.sizeChart?.length > 0 && (
-              <section className={styles.section}>
-                <h2 className="serif">Tabela de medidas</h2>
-                <div className={styles.tableWrap}>
-                  <table className={styles.sizeTable}>
-                    <thead>
-                      <tr>
-                        <th>Tamanho</th>
-                        <th>Altura</th>
-                        <th>Comprimento</th>
-                        <th>Largura</th>
-                        <th>Peso indicado</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {details.sizeChart.map((row, i) => (
-                        <tr key={i}>
-                          <td>{row.size}</td>
-                          <td>{row.height}</td>
-                          <td>{row.length}</td>
-                          <td>{row.width}</td>
-                          <td>{row.weight}</td>
+              {details.sizeChart?.length > 0 && (
+                <AccordionItem title="Tabela de medidas">
+                  <div className={styles.tableWrap}>
+                    <table className={styles.sizeTable}>
+                      <thead>
+                        <tr>
+                          <th>Tamanho</th>
+                          <th>Altura</th>
+                          <th>Comprimento</th>
+                          <th>Largura</th>
+                          <th>Peso indicado</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </section>
-            )}
+                      </thead>
+                      <tbody>
+                        {details.sizeChart.map((row, i) => (
+                          <tr key={i}>
+                            <td>{row.size}</td>
+                            <td>{row.height}</td>
+                            <td>{row.length}</td>
+                            <td>{row.width}</td>
+                            <td>{row.weight}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </AccordionItem>
+              )}
 
-            {details.howToChooseSize && (
-              <section className={styles.section}>
-                <h2 className="serif">Como escolher o tamanho ideal</h2>
-                <p>{details.howToChooseSize}</p>
-              </section>
-            )}
+              {details.howToChooseSize && (
+                <AccordionItem title="Como escolher o tamanho ideal">
+                  <p className={styles.sectionText}>{details.howToChooseSize}</p>
+                </AccordionItem>
+              )}
 
-            {details.whatsIncluded?.length > 0 && (
-              <section className={styles.section}>
-                <h2 className="serif">O que acompanha</h2>
-                <ul className={styles.plainList}>
-                  {details.whatsIncluded.map((item, i) => <li key={i}>{item}</li>)}
-                </ul>
-              </section>
-            )}
+              {details.whatsIncluded?.length > 0 && (
+                <AccordionItem title="O que acompanha">
+                  <ul className={styles.plainList}>
+                    {details.whatsIncluded.map((item, i) => <li key={i}>{item}</li>)}
+                  </ul>
+                </AccordionItem>
+              )}
 
-            {details.careInstructions && (
-              <section className={styles.section}>
-                <h2 className="serif">Limpeza e conservação</h2>
-                <p>{details.careInstructions}</p>
-              </section>
-            )}
+              {details.careInstructions && (
+                <AccordionItem title="Limpeza e conservação">
+                  <p className={styles.sectionText}>{details.careInstructions}</p>
+                </AccordionItem>
+              )}
 
-            {details.airTravelNote && (
-              <section className={styles.section}>
-                <h2 className="serif">Uso em viagens aéreas</h2>
-                <p>{details.airTravelNote}</p>
-              </section>
-            )}
+              {details.airTravelNote && (
+                <AccordionItem title="Uso em viagens aéreas">
+                  <p className={styles.sectionText}>{details.airTravelNote}</p>
+                </AccordionItem>
+              )}
 
-            {details.warranty && (
-              <section className={styles.section}>
-                <h2 className="serif">Garantia</h2>
-                <p>{details.warranty}</p>
-              </section>
-            )}
+              {details.warranty && (
+                <AccordionItem title="Garantia">
+                  <p className={styles.sectionText}>{details.warranty}</p>
+                </AccordionItem>
+              )}
 
-            {details.faq?.length > 0 && (
-              <section className={styles.section}>
-                <h2 className="serif">Perguntas frequentes</h2>
-                <div className={styles.faqList}>
-                  {details.faq.map((item, i) => (
-                    <div key={i} className={styles.faqItem}>
-                      <h3>{item.question}</h3>
-                      <p>{item.answer}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
+              {details.faq?.length > 0 && (
+                <AccordionItem title="Perguntas frequentes">
+                  <div className={styles.faqList}>
+                    {details.faq.map((item, i) => (
+                      <div key={i} className={styles.faqItem}>
+                        <h4>{item.question}</h4>
+                        <p>{item.answer}</p>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionItem>
+              )}
+            </Accordion>
           </div>
         )}
       </div>

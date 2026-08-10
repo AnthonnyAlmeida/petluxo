@@ -1,7 +1,10 @@
 /* PetLuxo — ProductPage.module.css */
 
+/* padding-top fixo (não em vw): o MinimalNavbar tem no máximo ~74px de altura
+ * real (padding 18px + brandMark ~38px), e um clamp baseado em vw encolhia
+ * abaixo disso em telas estreitas, sobrepondo o backLink no mobile. */
 .page {
-  padding: clamp(48px, 8vw, 96px) 0 clamp(80px, 12vh, 120px);
+  padding: 96px 0 clamp(80px, 12vh, 120px);
 }
 
 .backLink {
@@ -126,23 +129,16 @@
   max-width: 420px;
 }
 
-/* ---------- Seções de conteúdo expandido ---------- */
+/* ---------- Seções de conteúdo expandido (acordeão) ---------- */
 .details {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(40px, 6vh, 64px);
   padding-top: clamp(40px, 6vh, 64px);
   border-top: 1px solid var(--bege);
 }
-.section h2 {
-  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
-  color: var(--ink);
-  margin-bottom: 16px;
-}
-.section p {
+.sectionText {
   color: var(--ink-soft);
   font-size: 15px;
   line-height: 1.75;
+  margin: 0;
 }
 
 .specsList {
@@ -214,7 +210,7 @@
   flex-direction: column;
   gap: 20px;
 }
-.faqItem h3 {
+.faqItem h4 {
   font-family: var(--sans);
   font-size: 15px;
   font-weight: 600;

@@ -13,4 +13,40 @@
  * Schema e decisão de arquitetura completos em docs/PRODUCT_EXPANSION.md.
  */
 
-export const PRODUCT_DETAILS = {};
+export const PRODUCT_DETAILS = {
+  8: {
+    specs: {
+      materialExterno: 'Couro sintético premium de alta qualidade',
+      forracaoInterna: 'Material impermeável, resistente e de fácil higienização',
+      estrutura: 'Base rígida removível para maior estabilidade e conforto',
+      ventilacao: 'Laterais em tela respirável que proporcionam excelente circulação de ar',
+      seguranca: 'Guia interna para prender à coleira, oferecendo mais segurança durante o transporte',
+      tipoAlcas: 'Alça de mão e alça transversal removível e ajustável',
+      fechamento: 'Zíper reforçado de alta durabilidade',
+      indicacaoUso: 'Cães e gatos de pequeno porte',
+    },
+    sizeChart: [
+      { size: 'P', height: '27 cm', length: '40 cm', width: '20 cm', weight: 'Indicado para pets de até 5 kg' },
+      { size: 'M', height: '27 cm', length: '40 cm', width: '25 cm', weight: 'Indicado para pets entre 5 e 6 kg' },
+      { size: 'G', height: 'Consulte disponibilidade', length: 'Consulte disponibilidade', width: 'Consulte disponibilidade', weight: 'Assim que confirmarmos as medidas com o fornecedor, substituímos por uma ficha completa' },
+    ],
+    howToChooseSize: 'Mais importante do que o peso do pet são suas medidas. Recomendamos medir: altura sentado; comprimento do focinho até a base da cauda. Seu pet deve conseguir permanecer confortável dentro da bolsa durante todo o transporte. Sempre confira as medidas antes da compra.',
+    whatsIncluded: [
+      'Bolsa Transporte PetLuxo',
+      'Base removível reforçada',
+      'Tapete interno macio',
+      'Alça transversal regulável',
+    ],
+    careInstructions: 'Limpe utilizando pano macio levemente umedecido e detergente neutro. Não utilize álcool, solventes ou produtos abrasivos. Armazene em local seco e protegido da luz solar direta. As tonalidades podem sofrer pequenas variações conforme o lote de fabricação ou a configuração da tela do dispositivo.',
+    airTravelNote: 'Este modelo pode ser utilizado em viagens aéreas, porém recomendamos consultar previamente a companhia aérea, pois cada empresa possui regras específicas para dimensões e transporte de animais.',
+    warranty: 'Garantia contra defeitos de fabricação.',
+    faq: [
+      { question: 'A bolsa acompanha alça transversal?', answer: 'Sim. Todos os modelos acompanham alça transversal ajustável e removível.' },
+      { question: 'O fundo é removível?', answer: 'Sim. A base é reforçada e removível para facilitar a limpeza.' },
+      { question: 'Possui trava de segurança?', answer: 'Sim. Conta com guia interna para prender à coleira durante o transporte.' },
+      { question: 'Posso transportar gatos?', answer: 'Sim. A bolsa é indicada para cães e gatos de pequeno porte.' },
+      { question: 'É confortável para viagens?', answer: 'Sim. O interior acolchoado, a ventilação lateral e a base estruturada proporcionam maior conforto ao pet.' },
+      { question: 'Posso personalizar com o nome do meu pet?', answer: 'Consulte a disponibilidade deste serviço para o modelo escolhido.' },
+    ],
+  },
+};

@@ -36,6 +36,11 @@ export const Icon = {
       <path d="M5 12h14"/>
     </svg>
   ),
+  Chevron: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16" {...p}>
+      <path d="m6 9 6 6 6-6"/>
+    </svg>
+  ),
   Box: (p) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" {...p}>
       <path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="M3 8l9 5 9-5M12 13v8"/>
