@@ -576,7 +576,7 @@ export const PRODUCTS = [
     badge: 'PREMIUM',
     buyLink: 'https://pag.ae/81Rpy249r',
     tags: ['comedouro', 'portatil', 'dobravel', 'viagem', 'pet premium', 'nômade'],
-    supplierLink: 'Aproveite mais essa promoção no SuperApp Magalu - Comedouro dobrável https://m.magazineluiza.com.br/comedouro-dobravel-mr-toni/p/fj1c8d55hd/pe/ptbb/?partner_id=64853&utm_source=pdp_desk&utm_medium=share&seller_id=specialvetclinicaveterinaria',
+    supplierLink: 'https://m.magazineluiza.com.br/comedouro-dobravel-mr-toni/p/fj1c8d55hd/pe/ptbb/?partner_id=64853&utm_source=pdp_desk&utm_medium=share&seller_id=specialvetclinicaveterinaria',
   },
   {
     id: 37,
@@ -595,6 +595,6 @@ export const PRODUCTS = [
     badge: 'EXCLUSIVO',
     buyLink: 'https://pag.ae/81SERKLKu',
     tags: ['arranhador', 'madeira natural', 'dobravel', 'sisal', 'sustentavel', 'gatos', 'design'],
-    supplierLink: 'Arranhador para Gato 2 em 1 Cama e Sofá Cadeira Portátil com 3 Níveis de Altura Ajustável Arranhador de Sisal para Entretenimento e Descanso de Pet Felino Descobri produtos incríveis no SHEIN.com, venha conferir! https://api-shein.shein.com/h5/sharejump/appjump?link=RqJZAyLVMt3_8&localcountry=BR&shc=2_RqJZAyLVMt3&url_from=GM74796417825',
+    supplierLink: 'https://www.mercadolivre.com.br/arranhador-p-gato-cadeira-portatil-3-niveis-de-altura-marrom-claro/p/MLB74318925?pdp_filters=item_id%3AMLB4801522905&matt_tool=38524122#origin=share&sid=share&wid=MLB4801522905&action=copy',
   }
 ];
