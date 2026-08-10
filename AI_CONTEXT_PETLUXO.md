@@ -76,7 +76,7 @@ Array de objetos de produto. Campos:
 | Campo | Tipo | Observação |
 |---|---|---|
 | `id` | number | Único |
-| `name` / `shortName` | string | `shortName` é usado no card/modal quando presente |
+| `name` / `shortName` | string | `shortName` é usado no card/modal quando presente, e também é a base do slug da pasta de imagem (ver seção "Convenção de pastas de imagem" abaixo) |
 | `subtitle` | string \| null | Subtítulo opcional exibido no modal |
 | `description` | string | Texto longo do quick view |
 | `bullets` | string[] | Lista de destaques no modal |
@@ -86,7 +86,7 @@ Array de objetos de produto. Campos:
 | `category` | string[] | Um produto pode pertencer a múltiplas categorias simultaneamente |
 | `order` | number | Não usado atualmente na ordenação de exibição (a ordenação real é por `categoryOrder`) |
 | `categoryOrder` | `{ [categoryId]: number }` | Peso de ordenação **por categoria** — cada categoria em que o produto aparece tem seu próprio peso; maior valor aparece primeiro nos carrosséis/grid daquela categoria |
-| `image` | string | `/images/products/<slug-do-produto>/principal.webp` — todos os 32 produtos seguem essa convenção de pasta própria (ver seção "Convenção de pastas de imagem" abaixo) |
+| `image` | string | `/images/products/<slug-da-pasta>/principal.webp` — todos os 32 produtos seguem essa convenção de pasta própria (ver seção "Convenção de pastas de imagem" abaixo) |
 | `badge` | string \| null | Selo exibido no card (ex.: `"MAIS VENDIDOS"`, `"NOVO"`, `"PREMIUM"`, `"EXCLUSIVO"`, ou `"ESGOTADO"` — este último desabilita a compra e mostra apenas o link de WhatsApp) |
 | `buyLink` | string (opcional) | Link único de pagamento PagBank |
 | `buyLinks` | `{size, link}[]` (opcional) | Alternativa a `buyLink` quando o produto tem variações — o modal exibe seletor de tamanho |
@@ -137,9 +137,12 @@ Componente estático e global, sem props de produto (mesmo padrão de `TrustBadg
 
 ### Convenção de pastas de imagem por produto (`public/images/products/`)
 
-**Todos os 32 produtos** têm sua própria pasta dentro de `public/images/products/`, nomeada com o slug do nome do produto — kebab-case, minúsculo, sem acento, sem espaço (ex.: `bolsa-transporte-petluxo`, `cama-petluxo-cloudnest`). Dentro da pasta: `principal.webp` é sempre a imagem de capa (a referenciada em `product.image`, usada no card, no modal e como imagem principal da `ProductPage`); fotos adicionais entram numeradas sequencialmente (`2.webp`, `3.webp`, ...) conforme forem chegando, para uso futuro em `PRODUCT_DETAILS[id].gallery`. Hoje a maioria das pastas só tem `principal.webp` — a galeria em si ainda não foi populada para nenhum produto, incluindo a Bolsa Transporte PetLuxo (piloto da Fase 3).
+**Todos os 32 produtos** têm sua própria pasta dentro de `public/images/products/`, nomeada com um slug — kebab-case, minúsculo, sem acento, sem espaço, sem símbolos de marca registrada (™, ®) nem separadores decorativos (`|`, `—`). Dentro da pasta: `principal.webp` é sempre a imagem de capa (a referenciada em `product.image`, usada no card, no modal e como imagem principal da `ProductPage`); fotos adicionais entram numeradas sequencialmente (`2.webp`, `3.webp`, ...) conforme forem chegando, para uso futuro em `PRODUCT_DETAILS[id].gallery`. Hoje a maioria das pastas só tem `principal.webp` — a galeria em si ainda não foi populada para nenhum produto, incluindo a Bolsa Transporte PetLuxo (piloto da Fase 3).
 
-A ideia original era migrar produto por produto, só quando ganhasse galeria própria; essa decisão foi revertida em favor de deixar a convenção consistente em todo o catálogo desde já — os 32 produtos foram migrados de uma vez, preservando o histórico do arquivo via `git mv`. Produtos novos que entrarem no catálogo devem seguir a mesma convenção desde o cadastro. Detalhes e o risco aceito (nome da pasta pode ficar desatualizado se o produto for renomeado — inofensivo, é só identificador de arquivo) estão documentados em [`docs/PRODUCT_EXPANSION.md`](docs/PRODUCT_EXPANSION.md).
+- **Base do slug: `shortName`, não `name`.** O `name` de um produto costuma incluir subtítulo/qualificador de marketing (ex.: `"Comedouro Maison Élevé™ | Cerâmica Premium com Suporte Elevado"`), o que gerava pastas com nomes muito longos quando o slug era derivado dele. Desde 2026-08-09, o slug da pasta é gerado a partir do `shortName` do produto (ex.: `"Comedouro Maison Élevé"` → `comedouro-maison-eleve`), que é mais curto e estável por natureza — o mesmo campo já usado como nome de exibição no card/modal. Em **2026-08-09**, os 15 produtos cuja pasta passava de ~40 caracteres foram renomeados retroativamente para seguir essa convenção (ex.: `bolsa-voyage-signature-transporte-luxury-para-pets` → `bolsa-voyage-signature`; `cesto-organizador-personalizado-para-pets-colecao-cozy-luxo` → `cesto-organizador-cozy`), preservando histórico do arquivo via `git mv`. Produtos cujo slug baseado em `name` já era razoavelmente curto não foram tocados nessa passada — por isso o catálogo hoje tem uma mistura de pastas com slug de `name` (as que já eram curtas) e de `shortName` (as que eram longas); não há problema nisso, é só identificador de arquivo.
+- **Ao cadastrar um produto novo:** gerar o slug da pasta a partir do `shortName` (não do `name`) desde o início, para não repetir o problema. Antes de criar a pasta, checar se o slug gerado colide com algum já existente em `public/images/products/` — se colidir, ajustar manualmente um dos dois (ex.: acrescentar uma palavra distintiva) para manter unicidade.
+- A ideia original era migrar produto por produto, só quando ganhasse galeria própria; essa decisão foi revertida em favor de deixar a convenção consistente em todo o catálogo desde já — os 32 produtos foram migrados de uma vez, preservando o histórico do arquivo via `git mv`. Detalhes e o risco aceito (nome da pasta pode ficar desatualizado se o produto for renomeado — inofensivo, é só identificador de arquivo) estão documentados em [`docs/PRODUCT_EXPANSION.md`](docs/PRODUCT_EXPANSION.md).
+- **Nota:** existe um arquivo solto `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil.webp`, diretamente na raiz de `products/` (fora de qualquer pasta) e não referenciado por nenhum produto em `products.js` — resíduo anterior à migração para pastas por produto, sem risco (não é servido nem linkado), mas candidato a limpeza futura.
 
 ## Seções da home (`src/app/page.jsx`)
 
