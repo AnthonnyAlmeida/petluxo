@@ -56,6 +56,15 @@ export const PRODUCT_DETAILS = {
     ],
   },
   37: {
+    gallery: [
+      '/images/products/espreguicadeira-madeira-dobravel/principal.webp',
+      '/images/products/espreguicadeira-madeira-dobravel/espreguicadeira-madeira-dobravel-2.webp',
+      '/images/products/espreguicadeira-madeira-dobravel/espreguicadeira-madeira-dobravel-3.webp',
+      '/images/products/espreguicadeira-madeira-dobravel/espreguicadeira-madeira-dobravel-4.webp',
+      '/images/products/espreguicadeira-madeira-dobravel/espreguicadeira-madeira-dobravel-5.webp',
+      '/images/products/espreguicadeira-madeira-dobravel/espreguicadeira-madeira-dobravel-6.webp',
+      '/images/products/espreguicadeira-madeira-dobravel/espreguicadeira-madeira-dobravel-7.webp',
+    ],
     specs: {
       estrutura: 'Madeira',
       superficieArranhador: 'Sisal',
