@@ -55,4 +55,15 @@ export const PRODUCT_DETAILS = {
       { question: 'Posso personalizar com o nome do meu pet?', answer: 'Consulte a disponibilidade deste serviço para o modelo escolhido.' },
     ],
   },
+  37: {
+    specs: {
+      estrutura: 'Madeira',
+      superficieArranhador: 'Sisal',
+      capacidade: 'Até 5 kg',
+      montagem: 'Simples, sem necessidade de ferramentas',
+      ajusteAltura: '3 níveis de altura ajustáveis',
+      dimensoes: '60 × 35 × 40 cm',
+      peso: '1 kg',
+    },
+  },
 };

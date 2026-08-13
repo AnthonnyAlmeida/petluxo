@@ -26,6 +26,12 @@ const SPEC_LABELS = {
   tipoAlcas: 'Tipo de alças',
   fechamento: 'Fechamento',
   indicacaoUso: 'Indicação de uso',
+  superficieArranhador: 'Superfície do arranhador',
+  capacidade: 'Capacidade',
+  montagem: 'Montagem',
+  ajusteAltura: 'Ajuste de altura',
+  dimensoes: 'Dimensões',
+  peso: 'Peso',
 };
 
 export default function ProductPage() {

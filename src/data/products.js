@@ -580,11 +580,11 @@ export const PRODUCTS = [
   },
   {
     id: 37,
-    name: 'Espreguiçadeira Felina Portátil e Arranhador Sisal',
-    shortName: 'Espreguiçadeira Madeira Dobrável',
-    subtitle: 'Cama, arranhador e companheiro portátil em madeira sustentável',
-    description: 'Peça versátil que combina funcionalidade e elegância para o seu felino. Estrutura em madeira natural sustentável com sisal genuíno trançado oferece proteção para seus móveis enquanto proporciona conforto e entretenimento. Design dobrável permite levar seu gato aonde quer que vá, sem comprometer a sofisticação da sua decoração.',
-    bullets: ['Madeira natural sustentável com acabamento premium', 'Sisal genuíno antiarranhões de alta durabilidade', '4 níveis de ajuste de altura personalizáveis', 'Estrutura dobrável e portátil para mobilidade', 'Funciona como cama, arranhador e móvel de viagem'],
+    name: 'Chaise Féline',
+    shortName: 'Chaise Féline',
+    subtitle: 'Cadeira de descanso & arranhador para gatos',
+    description: 'Um espaço só dele para descansar, observar e cuidar das unhas. A Chaise Féline combina design elegante, conforto e funcionalidade em uma única peça. Com 3 níveis de ajuste, estrutura em madeira e superfície em sisal, ela acompanha diferentes posições de descanso enquanto proporciona uma área adequada para o comportamento natural de arranhar.',
+    bullets: ['3 níveis de altura ajustáveis', 'Estrutura em madeira', 'Superfície em sisal', 'Capacidade de até 5 kg', 'Montagem simples, sem necessidade de ferramentas', 'Design compacto e sofisticado'],
     price: 'R$ 219,00',
     originalPrice: null,
     category: ['viagem-mobilidade', 'sono-refugio'],
@@ -594,7 +594,7 @@ export const PRODUCTS = [
     image: '/images/products/espreguicadeira-madeira-dobravel/principal.webp',
     badge: 'EXCLUSIVO',
     buyLink: 'https://pag.ae/81SERKLKu',
-    tags: ['arranhador', 'madeira natural', 'dobravel', 'sisal', 'sustentavel', 'gatos', 'design'],
+    tags: ['arranhador', 'madeira natural', 'dobravel', 'sisal', 'sustentavel', 'gatos', 'design', 'espreguicadeira', 'arranhador felino'],
     supplierLink: 'https://www.mercadolivre.com.br/arranhador-p-gato-cadeira-portatil-3-niveis-de-altura-marrom-claro/p/MLB74318925?pdp_filters=item_id%3AMLB4801522905&matt_tool=38524122#origin=share&sid=share&wid=MLB4801522905&action=copy',
   }
 ];

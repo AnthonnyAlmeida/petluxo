@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { ScrollToTop } from './ScrollToTop.jsx';
 import { Navbar } from '../components/layout/Navbar.jsx';
 import { Footer } from '../components/layout/Footer.jsx';
 import { Hero } from '../components/sections/Hero.jsx';
@@ -59,6 +60,8 @@ function HomePage() {
 
 export default function App() {
   return (
+    <>
+    <ScrollToTop/>
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/produto/:id" element={<ProductPage />} />
@@ -74,6 +77,7 @@ export default function App() {
         </>
       } />
     </Routes>
+    </>
   );
 }
 

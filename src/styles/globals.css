@@ -9,6 +9,11 @@ html, body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
+  /* Evita que o navegador reajuste o scroll sozinho (scroll anchoring)
+   * quando imagens carregando fora da viewport mudam a altura do layout —
+   * em uma SPA com troca de rota via client-side routing, essa "correção"
+   * automática do navegador só atrapalha o reset de scroll do ScrollToTop. */
+  overflow-anchor: none;
 }
 
 body {
