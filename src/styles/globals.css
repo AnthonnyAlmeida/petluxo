@@ -14,6 +14,17 @@ html, body {
    * em uma SPA com troca de rota via client-side routing, essa "correção"
    * automática do navegador só atrapalha o reset de scroll do ScrollToTop. */
   overflow-anchor: none;
+  /* Bloqueia pinch-zoom/double-tap-zoom do navegador no site inteiro,
+   * mantendo a rolagem normal (pan-x pan-y) — evita o layout "descentralizar"
+   * com zoom acidental do usuário em touch. Granular por elemento: o
+   * ProductLightbox (visualizador em tela cheia) declara seu próprio
+   * touch-action:none no container do YARL, que sempre vence por interseção
+   * com este valor (o mais restritivo prevalece), permitindo pinch-zoom
+   * normalmente só dentro dele. Ressalva de acessibilidade: reduz a
+   * capacidade de zoom por pinch fora do lightbox para quem depende disso
+   * por baixa visão — não afeta o zoom de acessibilidade em nível de SO
+   * (ex.: "Zoom" do iOS via 3 dedos), que é independente do touch-action. */
+  touch-action: pan-x pan-y;
 }
 
 body {

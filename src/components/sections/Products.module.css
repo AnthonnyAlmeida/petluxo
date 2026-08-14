@@ -77,9 +77,19 @@
   background: transparent;
   border: none;
   outline: none;
-  padding: 12px 0;
+  /* font-size >= 16px é o limiar que o iOS Safari usa para decidir se dá
+   * zoom automático da página ao focar um campo de texto — abaixo disso
+   * (era 13px) o navegador amplia a viewport sozinho ao tocar aqui, uma das
+   * causas do zoom "grudado" fora do ProductLightbox. padding e line-height
+   * foram ajustados junto para manter a altura da barra de busca quase
+   * idêntica à anterior (13px/padding 12px ≈ 39px de altura total; 16px com
+   * este padding e line-height fica em ~39px também) — o texto em si fica
+   * um pouco maior, mas o contêiner visual não muda de tamanho.
+   */
+  padding: 10px 0;
+  line-height: 1.2;
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 16px;
   color: var(--ink);
   font-style: italic;
 }

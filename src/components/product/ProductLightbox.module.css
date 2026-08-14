@@ -1,0 +1,19 @@
+/* PetLuxo — ProductLightbox.module.css
+ * Sobrescreve as custom properties do YARL (prefixo --yarl__*) com os
+ * tokens de design do projeto. A classe é aplicada via prop `className`
+ * do <Lightbox>, que a documentação do pacote define como "CSS class of
+ * the lightbox root element" — funciona normalmente com CSS Modules
+ * porque a variável é declarada no próprio elemento raiz do portal,
+ * não depende de herança pela árvore do React.
+ */
+
+.theme {
+  --yarl__portal_zindex: var(--z-above-modal); /* 1100 — acima do --z-modal (1000) do ProductModal */
+  --yarl__color_backdrop: var(--ink); /* opaco (alpha 1) de propósito — ver nota abaixo */
+  --yarl__color_button: var(--offwhite);
+  --yarl__color_button_active: var(--dourado);
+  --yarl__color_button_disabled: rgba(248, 246, 243, 0.35);
+  --yarl__icon_size: 26px;
+  --yarl__toolbar_padding: 12px;
+  --yarl__navigation_button_padding: 20px 14px;
+}

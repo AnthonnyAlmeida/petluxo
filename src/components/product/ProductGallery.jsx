@@ -4,6 +4,8 @@ import React from 'react';
 import { Icon } from '../../icons.jsx';
 import styles from './ProductGallery.module.css';
 
+const ProductLightbox = React.lazy(() => import('./ProductLightbox.jsx'));
+
 function useIsMobile(breakpoint = 640) {
   const getIsMobile = () => typeof window !== 'undefined' && window.innerWidth < breakpoint;
   const [isMobile, setIsMobile] = React.useState(getIsMobile);
@@ -13,6 +15,27 @@ function useIsMobile(breakpoint = 640) {
     return () => window.removeEventListener('resize', update);
   }, []);
   return isMobile;
+}
+
+// Sinal moderno para "o input primário é touch" — independente do
+// breakpoint de largura acima (que só decide layout: miniaturas vs
+// carrossel). Um tablet/notebook touch em paisagem pode ter isMobile=false
+// e isTouch=true; uma janela desktop estreitada com mouse pode ter
+// isMobile=true e isTouch=false.
+function usePointerCoarse() {
+  const getIsCoarse = () => typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+  const [isCoarse, setIsCoarse] = React.useState(getIsCoarse);
+  React.useEffect(() => {
+    const mql = window.matchMedia('(pointer: coarse)');
+    const update = () => setIsCoarse(mql.matches);
+    if (mql.addEventListener) mql.addEventListener('change', update);
+    else mql.addListener(update);
+    return () => {
+      if (mql.removeEventListener) mql.removeEventListener('change', update);
+      else mql.removeListener(update);
+    };
+  }, []);
+  return isCoarse;
 }
 
 const ArrowLeft = (p) => (
@@ -30,7 +53,10 @@ export function ProductGallery({ images, alt }) {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [zoomEnabled, setZoomEnabled] = React.useState(false);
   const [zoomPos, setZoomPos] = React.useState({ x: 50, y: 50 });
+  const [lightboxOpen, setLightboxOpen] = React.useState(false);
+  const [lightboxIndex, setLightboxIndex] = React.useState(0);
   const isMobile = useIsMobile();
+  const isTouch = usePointerCoarse();
 
   const touchStartX = React.useRef(null);
   const touchStartY = React.useRef(null);
@@ -45,6 +71,20 @@ export function ProductGallery({ images, alt }) {
 
   function goNext() {
     setActiveIndex((i) => Math.min(i + 1, images.length - 1));
+  }
+
+  function openLightbox(i) {
+    setLightboxIndex(i);
+    setLightboxOpen(true);
+  }
+
+  function closeLightbox() {
+    setLightboxOpen(false);
+  }
+
+  function handleLightboxIndexChange(i) {
+    setLightboxIndex(i);
+    setActiveIndex(i);
   }
 
   function onImageMouseMove(e) {
@@ -75,131 +115,172 @@ export function ProductGallery({ images, alt }) {
   function onTouchEnd(e) {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+
     if (dragging.current && Math.abs(dx) > 50) {
       if (dx < 0) goNext();
       if (dx > 0) goPrev();
+    } else if (isTouch && !dragging.current && Math.abs(dx) < 10 && Math.abs(dy) < 10) {
+      // Deslocamento desprezível em ambos os eixos = toque real, não swipe
+      // nem scroll vertical da página com o dedo sobre a imagem.
+      openLightbox(activeIndex);
     }
+
     touchStartX.current = null;
     touchStartY.current = null;
     dragging.current = false;
   }
 
+  const LightboxPortal = isTouch && (
+    <React.Suspense fallback={null}>
+      <ProductLightbox
+        open={lightboxOpen}
+        close={closeLightbox}
+        images={images}
+        index={lightboxIndex}
+        alt={alt}
+        onIndexChange={handleLightboxIndexChange}
+      />
+    </React.Suspense>
+  );
+
+  let content;
+
   if (images.length <= 1) {
-    return (
+    content = (
       <div className={styles.gallery}>
-        <div className={styles.mainImageWrap}>
+        <div
+          className={styles.mainImageWrap}
+          onClick={isTouch ? () => openLightbox(0) : undefined}
+          role={isTouch ? 'button' : undefined}
+          tabIndex={isTouch ? 0 : undefined}
+          aria-label={isTouch ? 'Ampliar foto' : undefined}
+        >
           <img src={images[0]} alt={alt} className={styles.mainImage} />
         </div>
       </div>
     );
-  }
-
-  const NavArrows = (
-    <>
-      <button
-        type="button"
-        className={[styles.navArrow, styles.navArrowLeft].join(' ')}
-        onClick={goPrev}
-        disabled={!canPrev}
-        aria-label="Foto anterior"
-      >
-        <ArrowLeft />
-      </button>
-      <button
-        type="button"
-        className={[styles.navArrow, styles.navArrowRight].join(' ')}
-        onClick={goNext}
-        disabled={!canNext}
-        aria-label="Próxima foto"
-      >
-        <ArrowRight />
-      </button>
-    </>
-  );
-
-  if (isMobile) {
-    return (
-      <div className={styles.gallery}>
-        <div className={styles.stage}>
-          <div
-            className={styles.mobileViewport}
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-          >
-            <div
-              className={styles.mobileTrack}
-              style={{
-                width: `${images.length * 100}%`,
-                transform: `translateX(-${(activeIndex / images.length) * 100}%)`,
-              }}
-            >
-              {images.map((src, i) => (
-                <div key={src} className={styles.mobileSlide} style={{ width: `${100 / images.length}%` }}>
-                  <img src={src} alt={`${alt} — foto ${i + 1}`} className={styles.mainImage} loading={i === 0 ? undefined : 'lazy'} />
-                </div>
-              ))}
-            </div>
-          </div>
-          {NavArrows}
-        </div>
-        <div className={styles.dots}>
-          {images.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              className={[styles.dot, i === activeIndex && styles.dotActive].filter(Boolean).join(' ')}
-              onClick={() => setActiveIndex(i)}
-              aria-label={`Ver foto ${i + 1}`}
-              aria-current={i === activeIndex ? 'true' : undefined}
-            />
-          ))}
-        </div>
-      </div>
+  } else {
+    const NavArrows = (
+      <>
+        <button
+          type="button"
+          className={[styles.navArrow, styles.navArrowLeft].join(' ')}
+          onClick={goPrev}
+          disabled={!canPrev}
+          aria-label="Foto anterior"
+        >
+          <ArrowLeft />
+        </button>
+        <button
+          type="button"
+          className={[styles.navArrow, styles.navArrowRight].join(' ')}
+          onClick={goNext}
+          disabled={!canNext}
+          aria-label="Próxima foto"
+        >
+          <ArrowRight />
+        </button>
+      </>
     );
+
+    if (isMobile) {
+      content = (
+        <div className={styles.gallery}>
+          <div className={styles.stage}>
+            <div
+              className={styles.mobileViewport}
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+            >
+              <div
+                className={styles.mobileTrack}
+                style={{
+                  width: `${images.length * 100}%`,
+                  transform: `translateX(-${(activeIndex / images.length) * 100}%)`,
+                }}
+              >
+                {images.map((src, i) => (
+                  <div key={src} className={styles.mobileSlide} style={{ width: `${100 / images.length}%` }}>
+                    <img src={src} alt={`${alt} — foto ${i + 1}`} className={styles.mainImage} loading={i === 0 ? undefined : 'lazy'} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            {NavArrows}
+          </div>
+          <div className={styles.dots}>
+            {images.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                className={[styles.dot, i === activeIndex && styles.dotActive].filter(Boolean).join(' ')}
+                onClick={() => setActiveIndex(i)}
+                aria-label={`Ver foto ${i + 1}`}
+                aria-current={i === activeIndex ? 'true' : undefined}
+              />
+            ))}
+          </div>
+        </div>
+      );
+    } else {
+      content = (
+        <div className={[styles.gallery, styles.galleryWithThumbs].join(' ')}>
+          <div className={styles.thumbs}>
+            {images.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                className={[styles.thumb, i === activeIndex && styles.thumbActive].filter(Boolean).join(' ')}
+                onClick={() => setActiveIndex(i)}
+                aria-label={`Ver foto ${i + 1}`}
+                aria-current={i === activeIndex ? 'true' : undefined}
+              >
+                <img src={src} alt="" loading="lazy" />
+              </button>
+            ))}
+          </div>
+          <div className={styles.stage}>
+            <div
+              className={[styles.mainImageWrap, zoomEnabled && styles.mainImageWrapZoomActive].filter(Boolean).join(' ')}
+              onMouseMove={onImageMouseMove}
+              onClick={isTouch ? () => openLightbox(activeIndex) : undefined}
+              role={isTouch ? 'button' : undefined}
+              tabIndex={isTouch ? 0 : undefined}
+              aria-label={isTouch ? 'Ampliar foto' : undefined}
+            >
+              <img src={images[activeIndex]} alt={`${alt} — foto ${activeIndex + 1}`} className={styles.mainImage} />
+              <div
+                className={styles.zoomOverlay}
+                style={{
+                  backgroundImage: `url(${images[activeIndex]})`,
+                  backgroundPosition: `${zoomPos.x}% ${zoomPos.y}%`,
+                }}
+              />
+              {!isTouch && (
+                <button
+                  type="button"
+                  className={[styles.zoomBadge, zoomEnabled && styles.zoomBadgeActive].filter(Boolean).join(' ')}
+                  onClick={() => setZoomEnabled((z) => !z)}
+                  aria-pressed={zoomEnabled}
+                  aria-label={zoomEnabled ? 'Desativar zoom da imagem' : 'Ativar zoom da imagem'}
+                >
+                  <Icon.Search width="14" height="14" />
+                </button>
+              )}
+            </div>
+            {NavArrows}
+          </div>
+        </div>
+      );
+    }
   }
 
   return (
-    <div className={[styles.gallery, styles.galleryWithThumbs].join(' ')}>
-      <div className={styles.thumbs}>
-        {images.map((src, i) => (
-          <button
-            key={src}
-            type="button"
-            className={[styles.thumb, i === activeIndex && styles.thumbActive].filter(Boolean).join(' ')}
-            onClick={() => setActiveIndex(i)}
-            aria-label={`Ver foto ${i + 1}`}
-            aria-current={i === activeIndex ? 'true' : undefined}
-          >
-            <img src={src} alt="" loading="lazy" />
-          </button>
-        ))}
-      </div>
-      <div className={styles.stage}>
-        <div
-          className={[styles.mainImageWrap, zoomEnabled && styles.mainImageWrapZoomActive].filter(Boolean).join(' ')}
-          onMouseMove={onImageMouseMove}
-        >
-          <img src={images[activeIndex]} alt={`${alt} — foto ${activeIndex + 1}`} className={styles.mainImage} />
-          <div
-            className={styles.zoomOverlay}
-            style={{
-              backgroundImage: `url(${images[activeIndex]})`,
-              backgroundPosition: `${zoomPos.x}% ${zoomPos.y}%`,
-            }}
-          />
-          <button
-            type="button"
-            className={[styles.zoomBadge, zoomEnabled && styles.zoomBadgeActive].filter(Boolean).join(' ')}
-            onClick={() => setZoomEnabled((z) => !z)}
-            aria-pressed={zoomEnabled}
-            aria-label={zoomEnabled ? 'Desativar zoom da imagem' : 'Ativar zoom da imagem'}
-          >
-            <Icon.Search width="14" height="14" />
-          </button>
-        </div>
-        {NavArrows}
-      </div>
-    </div>
+    <>
+      {content}
+      {LightboxPortal}
+    </>
   );
 }
