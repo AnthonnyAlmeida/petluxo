@@ -75,4 +75,22 @@ export const PRODUCT_DETAILS = {
       peso: '1 kg',
     },
   },
+  6: {
+    specs: {
+      tamanho: 'M / Pequeno',
+      dimensoes: '60 × 60 × 75 cm',
+      material: 'Poliéster',
+      formato: 'Quadrado',
+      indicacaoUso: 'Cães de pequeno porte e gatos',
+    },
+    whatsIncluded: [
+      'Cabana/tenda',
+      'Colchão com fibra siliconada',
+      'Colchão com abertura em zíper para retirada do enchimento',
+      'Tapete decorativo, que também pode ser usado para os potes de alimentação',
+      'Almofada em formato de ossinho',
+      'Bandeirolas decorativas para acabamento',
+    ],
+    careInstructions: 'Produto desmontável e lavável — pode ser lavado à máquina em ciclo de menor duração. Não é à prova d\'água. Personalizável. O colchão pode ser utilizado no inverno para deixar o refúgio mais aconchegante; no verão, pode ser retirado para proporcionar mais espaço e ventilação, mantendo o pet protegido do contato direto com o chão.',
+  },
 };

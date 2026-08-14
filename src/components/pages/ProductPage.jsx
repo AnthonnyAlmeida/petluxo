@@ -32,6 +32,9 @@ const SPEC_LABELS = {
   ajusteAltura: 'Ajuste de altura',
   dimensoes: 'Dimensões',
   peso: 'Peso',
+  tamanho: 'Tamanho',
+  material: 'Material',
+  formato: 'Formato',
 };
 
 export default function ProductPage() {
