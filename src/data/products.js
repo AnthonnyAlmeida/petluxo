@@ -455,6 +455,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81Q6FKrYN',
     tags: ['tapete', 'personalizado', 'alimentação', 'impermeável', 'antiderrapante', 'minimalista', 'gato', 'cachorro'],
+    visible: false,
   },
   {
     id: 30,
