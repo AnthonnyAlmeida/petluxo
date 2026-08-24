@@ -119,6 +119,7 @@ export const PRODUCTS = [
     badge: 'MAIS VENDIDOS',
     buyLink: 'https://pag.ae/81J8cPYS6',
     tags: ['toca', 'casinha', 'ninho', 'abrigo', 'esconderijo', 'cama'],
+    visible: false,
   },
   {
     id: 18,
