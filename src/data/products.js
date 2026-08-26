@@ -308,11 +308,12 @@ export const PRODUCTS = [
     originalPrice: null,
     category: ['brinquedos'],
     order: 16,
-    categoryOrder: { 'brinquedos': 200 },
+    categoryOrder: {"brinquedos":200},
     image: '/images/products/arranhador-bola-de-sisal-maison/principal.webp',
     badge: null,
     buyLink: 'https://pag.ae/81MunByX6',
     tags: ['arranhar', 'gato', 'brinquedo', 'sisal'],
+    visible: false,
   },
   {
     id: 21,
