@@ -119,6 +119,7 @@ export const PRODUCTS = [
     badge: 'MAIS VENDIDOS',
     buyLink: 'https://pag.ae/81J8cPYS6',
     tags: ['toca', 'casinha', 'ninho', 'abrigo', 'esconderijo', 'cama'],
+    visible: false,
   },
   {
     id: 18,
@@ -227,6 +228,7 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/81VR7uoS1',
     tags: ['sofá', 'cama', 'ortopédico', 'descanso'],
     supplierLink: 'https://pt.aliexpress.com/item/1005012110217817.html?spm=a2g0o.home.pcJustForYou.1.31c83f401X3Q76&gps-id=pcJustForYou&scm=1007.13562.416251.0&scm_id=1007.13562.416251.0&scm-url=1007.13562.416251.0&pvid=68e35ce3-eb73-441c-8892-c9e37a2e4e85&_t=gps-id%3ApcJustForYou%2Cscm-url%3A1007.13562.416251.0%2Cpvid%3A68e35ce3-eb73-441c-8892-c9e37a2e4e85%2Ctpp_buckets%3A668%232846%238114%231999&pdp_ext_f=%7B%22order%22%3A%222%22%2C%22eval%22%3A%221%22%2C%22sceneId%22%3A%223562%22%2C%22fromPage%22%3A%22recommend%22%7D&pdp_npi=6%40dis%21BRL%21332.99%21332.99%21%21%21404.56%21404.56%21%402101e80317824941076255599ed585%2112000057538247850%21rec%21BR%21%21ABXZ%211%210%21n_tag%3A-29910%3Bd%3A6a0a19aa%3Bm03_new_user%3A-29895&utparam-url=scene%3ApcJustForYou%7Cquery_from%3A%7Cx_object_id%3A1005012110217817%7C_p_origin_prod%3A',
+    visible: false,
   },
   {
     id: 14,
@@ -307,11 +309,12 @@ export const PRODUCTS = [
     originalPrice: null,
     category: ['brinquedos'],
     order: 16,
-    categoryOrder: { 'brinquedos': 200 },
+    categoryOrder: {"brinquedos":200},
     image: '/images/products/arranhador-bola-de-sisal-maison/principal.webp',
     badge: null,
     buyLink: 'https://pag.ae/81MunByX6',
     tags: ['arranhar', 'gato', 'brinquedo', 'sisal'],
+    visible: false,
   },
   {
     id: 21,
@@ -454,6 +457,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81Q6FKrYN',
     tags: ['tapete', 'personalizado', 'alimentação', 'impermeável', 'antiderrapante', 'minimalista', 'gato', 'cachorro'],
+    visible: false,
   },
   {
     id: 30,
