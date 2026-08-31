@@ -40,6 +40,9 @@ const SPEC_LABELS = {
   modelos: 'Modelos',
   caracteristicas: 'Características',
   estilo: 'Estilo',
+  diametroTigela: 'Diâmetro da tigela',
+  materialSuporte: 'Material do suporte',
+  design: 'Design',
 };
 
 export default function ProductPage() {
