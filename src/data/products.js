@@ -102,6 +102,7 @@ export const PRODUCTS = [
     badge: 'MAIS VENDIDOS',
     buyLinks: [{ size: '800ml', link: 'https://pag.ae/81LGZCXsP' }, { size: '1200ml', link: 'https://pag.ae/81LHgsgcP' }, { size: '1800ml', link: 'https://pag.ae/81LHi4Ret' }],
     tags: ['tigela', 'pote', 'cerâmica', 'ração', 'alimentação'],
+    visible: false,
   },
   {
     id: 6,
