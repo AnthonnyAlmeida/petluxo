@@ -35,6 +35,11 @@ const SPEC_LABELS = {
   tamanho: 'Tamanho',
   material: 'Material',
   formato: 'Formato',
+  tipo: 'Tipo',
+  cor: 'Cor',
+  modelos: 'Modelos',
+  caracteristicas: 'Características',
+  estilo: 'Estilo',
 };
 
 export default function ProductPage() {

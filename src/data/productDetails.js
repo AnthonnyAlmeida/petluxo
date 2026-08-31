@@ -93,4 +93,20 @@ export const PRODUCT_DETAILS = {
     ],
     careInstructions: 'Produto desmontável e lavável — pode ser lavado à máquina em ciclo de menor duração. Não é à prova d\'água. Personalizável. O colchão pode ser utilizado no inverno para deixar o refúgio mais aconchegante; no verão, pode ser retirado para proporcionar mais espaço e ventilação, mantendo o pet protegido do contato direto com o chão.',
   },
+  16: {
+    specs: {
+      tipo: 'Comedouro elevado',
+      material: 'Tigela em cerâmica com suporte de madeira',
+      cor: 'Branco',
+      modelos: 'Disponível com 1 ou 2 tigelas',
+      caracteristicas: 'Design elevado, cerâmica resistente e fácil de higienizar',
+      indicacaoUso: 'Cães de diferentes portes, conforme o tamanho escolhido',
+      estilo: 'Sofisticado, moderno e elegante',
+    },
+    sizeChart: [
+      { size: '800 ml', height: '15,5 cm', length: '—', width: '—', weight: '—' },
+      { size: '1.200 ml', height: '18,5 cm', length: '—', width: '—', weight: '—' },
+      { size: '1.800 ml', height: '21 cm', length: '—', width: '—', weight: '—' },
+    ],
+  },
 };
