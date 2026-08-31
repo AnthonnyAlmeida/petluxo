@@ -94,6 +94,12 @@ export const PRODUCT_DETAILS = {
     careInstructions: 'Produto desmontável e lavável — pode ser lavado à máquina em ciclo de menor duração. Não é à prova d\'água. Personalizável. O colchão pode ser utilizado no inverno para deixar o refúgio mais aconchegante; no verão, pode ser retirado para proporcionar mais espaço e ventilação, mantendo o pet protegido do contato direto com o chão.',
   },
   16: {
+    gallery: [
+      '/images/products/comedouro-maison-eleve/principal.webp',
+      '/images/products/comedouro-maison-eleve/comedouro-maison-eleve-2.webp',
+      '/images/products/comedouro-maison-eleve/comedouro-maison-eleve-3.webp',
+      '/images/products/comedouro-maison-eleve/comedouro-maison-eleve-4.webp',
+    ],
     specs: {
       tipo: 'Comedouro elevado',
       material: 'Tigela em cerâmica com suporte de madeira',
