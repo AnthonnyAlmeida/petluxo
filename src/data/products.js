@@ -601,5 +601,23 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/81SERKLKu',
     tags: ['arranhador', 'madeira natural', 'dobravel', 'sisal', 'sustentavel', 'gatos', 'design', 'espreguicadeira', 'arranhador felino'],
     supplierLink: 'https://www.mercadolivre.com.br/arranhador-p-gato-cadeira-portatil-3-niveis-de-altura-marrom-claro/p/MLB74318925?pdp_filters=item_id%3AMLB4801522905&matt_tool=38524122#origin=share&sid=share&wid=MLB4801522905&action=copy',
+  },
+  {
+    id: 38,
+    name: 'Refúgio Majestá - Caminha Premium em Madeira com Cortinas',
+    shortName: 'Refúgio Majestá',
+    subtitle: 'Design sofisticado e conforto absoluto para o descanso do seu pet',
+    description: 'O Refúgio Majestá une design e bem-estar em uma peça encantadora, criada para pets que merecem um cantinho tão especial quanto o restante da casa. Sua estrutura em madeira de Pinus com acabamento protetor traz um charme acolhedor e elegante, enquanto a almofada macia proporciona um espaço confortável para momentos de descanso e tranquilidade. As cortinas aconchegantes complementam o design sofisticado, transformando o espaço do seu pet em um verdadeiro refúgio. Mais do que uma caminha, é uma peça que complementa a decoração e reflete seu amor pelo bem-estar do animal.',
+    bullets: ['Design sofisticado e exclusivo em madeira de Pinus', 'Almofada macia com enchimento confortável de alta qualidade', 'Cortinas decorativas que elevam o conforto visual', 'Ideal para pets de pequeno porte, até aproximadamente 10 kg', 'Estrutura robusta com acabamento protetor duradouro', 'Complementa a decoração e torna o ambiente mais sofisticado'],
+    price: 'R$ 999,90',
+    originalPrice: 'R$ 597,00',
+    category: ['sono-refugio', 'conforto'],
+    order: 52,
+    categoryOrder: {"sono-refugio":1100,"conforto":1600},
+    featured: false,
+    image: '/images/products/refugio-majesta---caminha-premium-em-madeira-com-cortinas.webp',
+    badge: 'Novidade',
+    buyLink: 'https://pag.ae/827Z5Q7YG',
+    tags: ['caminha premium', 'madeira', 'refugio', 'conforto', 'design', 'pequeno porte', 'cortinas', 'aconchego'],
   }
 ];
