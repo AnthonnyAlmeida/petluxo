@@ -43,6 +43,9 @@ const SPEC_LABELS = {
   diametroTigela: 'Diâmetro da tigela',
   materialSuporte: 'Material do suporte',
   design: 'Design',
+  ferragens: 'Ferragens',
+  composicaoKit: 'Composição do kit',
+  tamanhosDisponiveis: 'Tamanhos disponíveis',
 };
 
 export default function ProductPage() {

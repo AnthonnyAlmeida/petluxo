@@ -120,4 +120,24 @@ export const PRODUCT_DETAILS = {
       { size: '1.800 ml', height: '24 cm', length: '—', width: '26,5 cm', weight: '—' },
     ],
   },
+  9: {
+    gallery: [
+      '/images/products/elan-couro/principal.webp',
+      '/images/products/elan-couro/elan-couro-2.webp',
+      '/images/products/elan-couro/elan-couro-3.webp',
+      '/images/products/elan-couro/elan-couro-4.webp',
+    ],
+    specs: {
+      material: 'Couro caramelo',
+      ferragens: 'Tom dourado envelhecido',
+      composicaoKit: 'Coleira ajustável, guia em corda trançada e bolsinha porta acessórios',
+      tamanhosDisponiveis: 'PP, M e G',
+    },
+    whatsIncluded: [
+      'Coleira ajustável',
+      'Guia em corda trançada',
+      'Bolsinha porta acessórios',
+    ],
+    sizeGuideNote: 'Guia de referência PetLuxo por porte do pet — PP: 2 a 4 kg · M: 9 a 15 kg · G: 15 a 23 kg. Consulte o guia completo de medidas para mais detalhes por raça.',
+  },
 };
