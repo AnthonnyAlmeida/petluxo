@@ -140,4 +140,28 @@ export const PRODUCT_DETAILS = {
     ],
     sizeGuideNote: 'Guia de referência PetLuxo por porte do pet — PP: 2 a 4 kg · M: 9 a 15 kg · G: 15 a 23 kg. Consulte o guia completo de medidas para mais detalhes por raça.',
   },
+  38: {
+    gallery: [
+      '/images/products/refugio-majesta/principal.webp',
+      '/images/products/refugio-majesta/refugio-majesta-2.webp',
+    ],
+    specs: {
+      estrutura: 'Madeira de Pinus com acabamento protetor',
+      almofada: 'Macia, com enchimento confortável — aproximadamente 15 cm de espessura',
+      cortinas: 'Tecido, para mais aconchego',
+      dimensoesEstruturaExterna: '85 × 85 cm',
+      baseInterna: 'Aproximadamente 67 × 67 cm',
+      alturaTotal: 'Aproximadamente 72 cm',
+      pesoProduto: 'Aproximadamente 18 kg',
+      indicacaoUso: 'Pets de pequeno porte, com até aproximadamente 10 kg',
+      ondeUtilizar: 'Quartos, salas e ambientes internos. Evitar exposição direta e prolongada ao sol, chuva e umidade.',
+    },
+    whatsIncluded: [
+      'Refúgio Majestá completo',
+      'Almofada macia',
+      'Cortinas decorativas',
+      'Detalhe decorativo especial',
+    ],
+    careInstructions: 'Limpe a estrutura com pano macio e seco, ou levemente umedecido. Evite produtos abrasivos. Não deixe exposto diretamente à chuva e mantenha em ambiente protegido da umidade excessiva. Siga as recomendações de higienização da almofada.',
+  },
 };

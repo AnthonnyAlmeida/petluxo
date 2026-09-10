@@ -46,6 +46,13 @@ const SPEC_LABELS = {
   ferragens: 'Ferragens',
   composicaoKit: 'Composição do kit',
   tamanhosDisponiveis: 'Tamanhos disponíveis',
+  almofada: 'Almofada',
+  cortinas: 'Cortinas',
+  dimensoesEstruturaExterna: 'Dimensões da estrutura externa',
+  baseInterna: 'Base interna',
+  alturaTotal: 'Altura total',
+  pesoProduto: 'Peso do produto',
+  ondeUtilizar: 'Onde utilizar',
 };
 
 export default function ProductPage() {
