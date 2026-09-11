@@ -191,7 +191,11 @@ export const PRODUCTS = [
     categoryOrder: {"couro":1400},
     image: '/images/products/elan-couro/principal.webp',
     badge: null,
-    buyLink: 'https://pag.ae/827f8owEm',
+    buyLinks: [
+      { size: 'PP', link: 'https://pag.ae/827rqQKra' },
+      { size: 'M', link: 'https://pag.ae/8294DGNVn' },
+      { size: 'G', link: 'https://pag.ae/8294FiLYH' },
+    ],
     tags: ['élan couro', 'coleira', 'guia', 'conjunto', 'couro caramelo', 'kit passeio'],
     supplierLink: 'https://www.zampe.com.br/kit-milano-camelo',
   },
