@@ -642,5 +642,6 @@ export const PRODUCTS = [
     badge: 'Novo',
     buyLink: 'https://pag.ae/82amk1aTH',
     tags: ['brinquedo', 'peluca', 'interativo', 'estimulacao', 'premium', 'diversao', 'apito'],
+    supplierLink: 'https://share.temu.com/ahx9uW6N8uA',
   }
 ];
