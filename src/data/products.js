@@ -624,5 +624,23 @@ export const PRODUCTS = [
     badge: 'Novidade',
     buyLink: 'https://pag.ae/827Z5Q7YG',
     tags: ['caminha premium', 'madeira', 'refugio', 'conforto', 'design', 'pequeno porte', 'cortinas', 'aconchego'],
+  },
+  {
+    id: 39,
+    name: 'Brinquedo PetLuxo Companhia para Brincar',
+    shortName: 'Brinquedo PetLuxo',
+    subtitle: 'Porque brincar também é uma forma de amar',
+    description: 'Um pequeno companheiro confeccionado em pelúcia macia e texturizada, pensado para cães que gostam de interagir, carregar, apertar e mastigar. Seu formato divertido e apito interno despertam a curiosidade, tornando a brincadeira mais estimulante e transformando momentos simples em experiências de diversão e conexão.',
+    bullets: ['Pelúcia macia e texturizada para máximo conforto', 'Apito interno que estimula a interação e curiosidade', 'Estrutura reforçada para brincadeiras intensas', 'Formato divertido e ergonômico para carregar', 'Material atóxico e seguro para seu cão'],
+    price: 'R$ 59,90',
+    originalPrice: null,
+    category: ['brinquedos', 'mais-vendidos'],
+    order: 53,
+    categoryOrder: {"brinquedos":400,"mais-vendidos":1700},
+    featured: false,
+    image: '/images/products/brinquedo-petluxo-companhia-para-brincar.webp',
+    badge: 'Novo',
+    buyLink: 'https://pag.ae/82amk1aTH',
+    tags: ['brinquedo', 'peluca', 'interativo', 'estimulacao', 'premium', 'diversao', 'apito'],
   }
 ];
