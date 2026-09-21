@@ -643,5 +643,23 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/82amk1aTH',
     tags: ['brinquedo', 'peluca', 'interativo', 'estimulacao', 'premium', 'diversao', 'apito'],
     supplierLink: 'https://share.temu.com/ahx9uW6N8uA',
+  },
+  {
+    id: 40,
+    name: 'Polvo Mimo™ Brinquedo Interativo com Som para Cães',
+    shortName: 'Polvo Mimo™ Interativo',
+    subtitle: 'Brinquedo com som que estimula curiosidade e interação',
+    description: 'O Polvo Mimo™ transforma a hora da brincadeira em um momento especial para seu pet. Com formato divertido, textura macia e tentáculos flexíveis, é fácil de segurar e carregar. Seu som interno ao ser pressionado desperta a curiosidade do cão, tornando a brincadeira mais envolvente e estimulante.',
+    bullets: ['Formato de polvo com tentáculos flexíveis e textura macia', 'Som interno que estimula a interação e curiosidade', 'Indicado para cães de diferentes portes', 'Ideal para brincadeiras interativas e exploração', 'Leve e fácil de carregar durante o passeio'],
+    price: 'R$ 49,90',
+    originalPrice: 'R$ 59,90',
+    category: ['brinquedos', 'mais-vendidos'],
+    order: 54,
+    categoryOrder: {"brinquedos":500,"mais-vendidos":1800},
+    featured: false,
+    image: '/images/products/polvo-mimo-brinquedo-interativo-com-som-para-caes.webp',
+    badge: null,
+    buyLink: 'https://pag.ae/82b7PF9Vo',
+    tags: ['brinquedo interativo', 'som estimulante', 'polvo mimo', 'brincadeira caes', 'brinquedo macio', 'interacao pet'],
   }
 ];
