@@ -164,4 +164,29 @@ export const PRODUCT_DETAILS = {
     ],
     careInstructions: 'Limpe a estrutura com pano macio e seco, ou levemente umedecido. Evite produtos abrasivos. Não deixe exposto diretamente à chuva e mantenha em ambiente protegido da umidade excessiva. Siga as recomendações de higienização da almofada.',
   },
+  21: {
+    gallery: [
+      '/images/products/executive-bed/principal.webp',
+      '/images/products/executive-bed/executive-bed-2.webp',
+      '/images/products/executive-bed/executive-bed-3.webp',
+      '/images/products/executive-bed/executive-bed-4.webp',
+      '/images/products/executive-bed/executive-bed-5.webp',
+    ],
+    specs: {
+      revestimento: 'Couro ecológico',
+      enchimento: 'Fibra siliconada',
+      design: 'Laterais elevadas, formato envolvente inspirado no mobiliário clássico',
+      fechamento: 'Zíper para fácil higienização',
+      baseInferior: 'Material escuro',
+    },
+    sizeChart: [
+      { size: 'M', height: '20 cm', length: '50 cm', width: '40 cm', weight: 'Consulte disponibilidade' },
+      { size: 'G', height: '20 cm', length: '60 cm', width: '50 cm', weight: 'Consulte disponibilidade' },
+    ],
+    whatsIncluded: [
+      'Cama Executive Bed completa',
+      'Almofada com fibra siliconada',
+    ],
+    careInstructions: 'Higienize com pano macio umedecido e detergente neutro. Evite produtos abrasivos. Abra o zíper para facilitar a limpeza da almofada interna, seguindo as recomendações de higienização do enchimento.',
+  },
 };

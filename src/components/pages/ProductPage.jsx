@@ -53,6 +53,9 @@ const SPEC_LABELS = {
   alturaTotal: 'Altura total',
   pesoProduto: 'Peso do produto',
   ondeUtilizar: 'Onde utilizar',
+  revestimento: 'Revestimento',
+  enchimento: 'Enchimento',
+  baseInferior: 'Base inferior',
 };
 
 export default function ProductPage() {
