@@ -207,4 +207,34 @@ export const PRODUCT_DETAILS = {
     ],
     sizeGuideNote: 'Medidas realizadas manualmente, podendo apresentar variação aproximada de 1–3 cm.',
   },
+  35: {
+    gallery: [
+      '/images/products/manta-serenity-petluxo-premium/principal.webp',
+      '/images/products/manta-serenity-petluxo-premium/manta-serenity-2.webp',
+      '/images/products/manta-serenity-petluxo-premium/manta-serenity-3.webp',
+    ],
+    specs: {
+      material: '100% poliéster',
+      enchimento: 'Poliéster',
+      caracteristicas: 'Textura tipo waffle nos dois lados, reversível, com desempenho térmico médio e proteção contra água e umidade',
+      dimensoes: '81,3 × 61 cm',
+      peso: '227 g',
+      acabamento: 'Bordas com costura reforçada',
+      ondeUtilizar: 'Camas, sofás, poltronas, canis, carros, caixas de transporte e superfícies de descanso, em ambientes internos e externos',
+      indicacaoUso: 'Cães pequenos, filhotes e gatos, em diferentes momentos e estações do ano',
+      seguranca: 'Certificação OEKO-TEX® STANDARD 100, conforme as informações disponibilizadas pelo fabricante',
+    },
+    whatsIncluded: [
+      '1 Manta Serenity',
+    ],
+    careInstructions: 'Lavável à máquina. Para maior conservação do produto, recomenda-se lavagem em ciclo frio e secagem em temperatura baixa.',
+    faq: [
+      { question: 'A Manta Serenity é reversível?', answer: 'Sim. O produto é reversível e possui textura tipo waffle nos dois lados.' },
+      { question: 'Qual é a medida e o peso da Manta?', answer: 'A Manta Serenity mede 81,3 × 61 cm e tem peso aproximado de 227 g.' },
+      { question: 'A Manta protege camas e sofás?', answer: 'Sim. Sua camada protetora ajuda a evitar a passagem de líquidos e a proteger superfícies contra umidade, pelos, manchas e pequenos acidentes.' },
+      { question: 'Posso lavar a Manta Serenity na máquina?', answer: 'Sim. Ela é lavável à máquina. Para maior conservação do produto, recomenda-se lavagem em ciclo frio e secagem em temperatura baixa.' },
+      { question: 'A Manta tem certificação?', answer: 'Sim. O produto é apresentado com certificação OEKO-TEX® STANDARD 100, conforme as informações disponibilizadas pelo fabricante.' },
+      { question: 'Em quais lugares posso usar a Manta?', answer: 'Pode ser utilizada sobre camas, sofás, poltronas, canis, carros, caixas de transporte e outras superfícies de descanso, em ambientes internos e externos.' },
+    ],
+  },
 };
