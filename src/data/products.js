@@ -663,5 +663,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/82b7PF9Vo',
     tags: ['brinquedo interativo', 'som estimulante', 'polvo mimo', 'brincadeira caes', 'brinquedo macio', 'interacao pet'],
+    supplierLink: 'https://share.temu.com/Hn4oAOZ3RaA',
   }
 ];
