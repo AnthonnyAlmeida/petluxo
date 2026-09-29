@@ -625,6 +625,7 @@ export const PRODUCTS = [
     badge: 'Novidade',
     buyLink: 'https://pag.ae/827Z5Q7YG',
     tags: ['caminha premium', 'madeira', 'refugio', 'conforto', 'design', 'pequeno porte', 'cortinas', 'aconchego'],
+    supplierLink: 'https://happypi.com.br/produtos/happy-dream/?variant=1107494305&pf=mc&gad_source=1&gad_campaignid=22839501351&gbraid=0AAAAAp306BLxLWdvOouVArXdw6hYwcTIu&gclid=CjwKCAjww-3VBhAcEiwAwUUIu0jbngGkVUqlRivStJUUZKPO9KGaU1uR06Wz4_Mgz9kU01YU-KWvyBoCVJ4QAvD_BwE',
   },
   {
     id: 39,
