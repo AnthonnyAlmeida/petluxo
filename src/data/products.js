@@ -552,6 +552,7 @@ export const PRODUCTS = [
     badge: 'NOVO',
     buyLink: 'https://pag.ae/81QSpn4pr',
     tags: ['bolsa termica', 'passeio', 'pet', 'viagem', 'premium', 'matelasse', 'sofisticado'],
+    supplierLink: 'https://www.aliexpress.com/item/1005011653963283.html',
   },
   {
     id: 35,
