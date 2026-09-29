@@ -570,6 +570,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81QSF8Xw6',
     tags: ['manta premium', 'conforto', 'sono', 'refugio', 'pet sofisticado', 'aconchego', 'viagem'],
+    supplierLink: 'PetAmi Cobertor impermeável para cachorro, cobertor à prova de vazamento para cães pequenos e médios, protetor de capa de sofá de sofá de lã, gato de pelúcia lavável reversível, 61 x 81 cm, bege https://a.co/d/06cNZHoj',
   },
   {
     id: 36,
