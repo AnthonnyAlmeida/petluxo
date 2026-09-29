@@ -189,4 +189,22 @@ export const PRODUCT_DETAILS = {
     ],
     careInstructions: 'Higienize com pano macio umedecido e detergente neutro. Evite produtos abrasivos. Abra o zíper para facilitar a limpeza da almofada interna, seguindo as recomendações de higienização do enchimento.',
   },
+  34: {
+    specs: {
+      modelo: 'Signature Metalassê',
+      materialExterno: 'Nylon',
+      revestimento: 'Folha de alumínio',
+      acabamento: 'Metalassê',
+      isolamentoTermico: 'Sim',
+      protecaoVazamentos: 'Sim',
+      uso: 'Multifuncional',
+      largura: '22,9 cm',
+      altura: '19,5 cm',
+      espessura: '15,2 cm',
+    },
+    whatsIncluded: [
+      '1 Bolsa Térmica Signature Metalassê',
+    ],
+    sizeGuideNote: 'Medidas realizadas manualmente, podendo apresentar variação aproximada de 1–3 cm.',
+  },
 };

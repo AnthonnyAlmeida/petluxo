@@ -26,6 +26,14 @@ const SPEC_LABELS = {
   tipoAlcas: 'Tipo de alças',
   fechamento: 'Fechamento',
   indicacaoUso: 'Indicação de uso',
+  modelo: 'Modelo',
+  acabamento: 'Acabamento',
+  isolamentoTermico: 'Isolamento térmico',
+  protecaoVazamentos: 'Proteção contra vazamentos',
+  uso: 'Uso',
+  largura: 'Largura',
+  altura: 'Altura',
+  espessura: 'Espessura',
   superficieArranhador: 'Superfície do arranhador',
   capacidade: 'Capacidade',
   montagem: 'Montagem',
@@ -187,6 +195,12 @@ function ProductPageContent({ product }) {
               {details.howToChooseSize && (
                 <AccordionItem title="Como escolher o tamanho ideal">
                   <p className={styles.sectionText}>{details.howToChooseSize}</p>
+                </AccordionItem>
+              )}
+
+              {details.sizeGuideNote && (
+                <AccordionItem title="Guia de medidas">
+                  <p className={styles.sectionText}>{details.sizeGuideNote}</p>
                 </AccordionItem>
               )}
 
