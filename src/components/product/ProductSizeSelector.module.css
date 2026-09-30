@@ -17,6 +17,9 @@
   flex-wrap: wrap;
 }
 .sizeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 6px 16px;
   border: 1px solid var(--vinho);
   border-radius: 4px;
@@ -29,4 +32,13 @@
 .sizeBtnActive {
   background: var(--vinho);
   color: var(--offwhite);
+}
+
+/* Amostra da cor (usada só quando variationType === 'cor') */
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(42, 37, 34, 0.18);
+  flex-shrink: 0;
 }

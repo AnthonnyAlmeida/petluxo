@@ -44,7 +44,7 @@ export function ProductModal({ product, onClose }) {
               <div className="price serif">{product.price}</div>
             )}
             {product.buyLinks && (
-              <ProductSizeSelector buyLinks={product.buyLinks} selectedSize={selectedSize} onSelect={setSelectedSize} />
+              <ProductSizeSelector buyLinks={product.buyLinks} selectedSize={selectedSize} onSelect={setSelectedSize} variationType={product.variationType}/>
             )}
           </div>
           <div className={styles.modalScroll}>

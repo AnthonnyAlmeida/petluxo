@@ -300,7 +300,11 @@ export const PRODUCTS = [
     categoryOrder: {"colecao-passeio":400},
     image: '/images/products/bolsa-voyage-signature/principal.webp',
     badge: null,
-    buyLink: 'https://pag.ae/81LHebDYP',
+    variationType: 'cor',
+    buyLinks: [
+      { size: 'Cinza', link: 'https://pag.ae/81LHebDYP', color: '#A9A49C' },
+      { size: 'Rosa', link: 'https://pag.ae/82cLZ3jr1', color: '#B08A81' },
+    ],
     tags: ['mochila', 'bolsa', 'viagem', 'transporte'],
     supplierLink: 'Aproveite mais essa promoção no SuperApp Magalu - Comedouro dobrável https://m.magazineluiza.com.br/comedouro-dobravel-mr-toni/p/fj1c8d55hd/pe/ptbb/?partner_id=64853&utm_source=pdp_desk&utm_medium=share&seller_id=specialvetclinicaveterinaria',
   },

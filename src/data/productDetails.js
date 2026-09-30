@@ -14,6 +14,15 @@
  */
 
 export const PRODUCT_DETAILS = {
+  17: {
+    gallery: [
+      '/images/products/bolsa-voyage-signature/principal.webp',
+      '/images/products/bolsa-voyage-signature/bolsa-voyage-signature-2.webp',
+      '/images/products/bolsa-voyage-signature/bolsa-voyage-signature-3.webp',
+      '/images/products/bolsa-voyage-signature/bolsa-voyage-signature-4.webp',
+      '/images/products/bolsa-voyage-signature/bolsa-voyage-signature-5.webp',
+    ],
+  },
   8: {
     gallery: [
       '/images/products/bolsa-transporte-petluxo/principal.webp',

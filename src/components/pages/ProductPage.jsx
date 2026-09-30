@@ -125,7 +125,7 @@ function ProductPageContent({ product }) {
             )}
 
             {product.buyLinks && (
-              <ProductSizeSelector buyLinks={product.buyLinks} selectedSize={selectedSize} onSelect={setSelectedSize} />
+              <ProductSizeSelector buyLinks={product.buyLinks} selectedSize={selectedSize} onSelect={setSelectedSize} variationType={product.variationType}/>
             )}
 
             <p className={styles.description}>{product.description}</p>
