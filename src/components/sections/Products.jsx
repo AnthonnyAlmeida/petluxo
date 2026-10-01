@@ -85,6 +85,16 @@ export function Products({ onQuick }) {
     }
   }
 
+  /* Mesmo padrão de handleCollapse: limpar a categoria troca `isFiltering`
+   * para false e desmonta o grid de resultados, montando os carrosséis por
+   * categoria. Sem o scroll o usuário ficaria numa posição arbitrária. */
+  function handleExploreCategories() {
+    setActiveCategory(null);
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
   function clearSearch() {
     setQuery('');
     inputRef.current?.focus();
@@ -162,6 +172,7 @@ export function Products({ onQuick }) {
         {/* Modo filtro: grid flat de resultados */}
         {isFiltering ? (
           filteredProducts.length > 0 ? (
+            <>
             <div className={styles.resultsGrid}>
               {filteredProducts.map((product, i) => (
                 <div
@@ -173,6 +184,27 @@ export function Products({ onQuick }) {
                 </div>
               ))}
             </div>
+
+            {/* Encerramento editorial — ponto final da seleção.
+             * Só aparece na navegação por categoria (pill ou seletor mobile)
+             * sem busca textual: com query ativa o texto "fim desta categoria"
+             * mentiria, já que a categoria tem mais produtos fora do filtro.
+             * A condição de `filteredProducts.length > 0` é garantida por este
+             * branch — não é preciso repetir o teste. */}
+            {activeCategory !== null && query.trim() === '' && (
+              <div className={styles.endNotice}>
+                <div className="section-tag">
+                  <span className="line"></span><span>FIM DESTA SELEÇÃO</span>
+                </div>
+                <p className={[styles.endNoticeTitle, 'serif'].filter(Boolean).join(' ')}>
+                  Você chegou ao fim desta categoria.
+                </p>
+                <button className="btn btn-ghost" onClick={handleExploreCategories}>
+                  Explorar categorias <Icon.ArrowR/>
+                </button>
+              </div>
+            )}
+            </>
           ) : (
             <div className={styles.emptyState}>
               <span className={styles.emptyDot} aria-hidden="true">◆</span>

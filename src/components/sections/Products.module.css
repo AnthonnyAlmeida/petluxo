@@ -166,6 +166,38 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ---------- Encerramento da seleção (só com categoria ativa) ----------
+ * Ponto final editorial entre o último produto da categoria filtrada e a
+ * seção "Sobre Nós". Entra depois do .resultsGrid, nunca depois dos
+ * carrosséis do catálogo normal.
+ * Animação: `resultFadeIn` (a mesma dos cards) em vez de `.reveal` — não
+ * depende do IntersectionObserver local para ficar visível. */
+.endNotice {
+  margin-top: clamp(36px, 5vh, 60px);
+  padding-top: clamp(24px, 3.5vh, 36px);
+  padding-bottom: clamp(4px, 1vh, 12px);
+  /* Divisor sutil — mesmo idioma de .productsCategoryBlock */
+  border-top: 1px solid rgba(176, 137, 104, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  opacity: 0;
+  animation: resultFadeIn 0.5s ease forwards;
+}
+/* O .section-tag global traz margin-bottom próprio; aqui o espaçamento é
+ * controlado pelo gap do flex, para não somar as duas coisas. */
+.endNotice > :global(.section-tag) {
+  margin-bottom: 0;
+}
+.endNoticeTitle {
+  margin: 0;
+  font-size: clamp(21px, 2.4vw, 30px);
+  line-height: 1.25;
+  color: var(--ink);
+}
+
 /* ---------- Estado vazio ---------- */
 .emptyState {
   text-align: center;
@@ -233,4 +265,11 @@
     -ms-overflow-style: none;
   }
   .pillsScroll::-webkit-scrollbar { display: none; }
+  /* Pausa menor no mobile — o bloco não pode competir com o grid nem
+   * empurrar o "Sobre Nós" para longe demais. */
+  .endNotice {
+    margin-top: 32px;
+    padding-top: 24px;
+    gap: 14px;
+  }
 }
