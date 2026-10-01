@@ -8,6 +8,7 @@ import { Icon } from '../../icons.jsx';
 import { CATEGORIES, PRODUCTS } from '../../data/products.js';
 import { ProductGrid } from '../product/ProductGrid.jsx';
 import { ProductCard } from '../product/ProductCard.jsx';
+import { CategorySelector } from '../ui/CategorySelector.jsx';
 import { wa } from '../../lib/whatsapp.js';
 import '../../styles/buttons.css';
 import styles from './Products.module.css';
@@ -126,25 +127,36 @@ export function Products({ onQuick }) {
           </div>
         </div>
 
-        {/* Pills de categoria */}
-        <div className={styles.pillsWrap}>
-          <div className={styles.pillsScroll}>
-            <button
-              className={[styles.pill, activeCategory === null && styles.pillActive].filter(Boolean).join(' ')}
-              onClick={() => setActiveCategory(null)}
-            >
-              Todos
-            </button>
-            {categoriesWithProducts.map(cat => (
+        {/* Desktop (≥ 641px): pills de categoria como estão */}
+        <div className={styles.categoryFilterDesktop}>
+          <div className={styles.pillsWrap}>
+            <div className={styles.pillsScroll}>
               <button
-                key={cat.id}
-                className={[styles.pill, activeCategory === cat.id && styles.pillActive].filter(Boolean).join(' ')}
-                onClick={() => setActiveCategory(prev => prev === cat.id ? null : cat.id)}
+                className={[styles.pill, activeCategory === null && styles.pillActive].filter(Boolean).join(' ')}
+                onClick={() => setActiveCategory(null)}
               >
-                {cat.label}
+                Todos
               </button>
-            ))}
+              {categoriesWithProducts.map(cat => (
+                <button
+                  key={cat.id}
+                  className={[styles.pill, activeCategory === cat.id && styles.pillActive].filter(Boolean).join(' ')}
+                  onClick={() => setActiveCategory(prev => prev === cat.id ? null : cat.id)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* Mobile (≤ 640px): seletor fechado + bottom sheet */}
+        <div className={styles.categoryFilterMobile}>
+          <CategorySelector
+            categories={categoriesWithProducts}
+            value={activeCategory}
+            onSelect={setActiveCategory}
+          />
         </div>
 
         {/* Modo filtro: grid flat de resultados */}

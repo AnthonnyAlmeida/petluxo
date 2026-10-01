@@ -1,0 +1,168 @@
+/* PetLuxo — CategorySelector (mobile)
+ * Panel fullscreen (top→bottom, 100dvh) aberto sobre um backdrop escuro.
+ * Só a lista de categorias rola internamente; o botão X e o handle ficam fixos no topo.
+ * Pattern visual: mesmo DNA dos pills — border caramelo, text-transform uppercase,
+ * font-family var(--mono), active em var(--vinho). */
+
+.root {
+  width: 100%;
+}
+
+/* ---------- Botão fechado (sempre visível no mobile) ---------- */
+.trigger {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px;
+  background: var(--offwhite);
+  border: 1px solid rgba(176, 137, 104, 0.3);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.trigger:hover {
+  border-color: var(--caramelo);
+  color: var(--caramelo);
+}
+.triggerLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.triggerLabelSelected {
+  color: var(--ink);
+}
+.triggerChevron {
+  flex-shrink: 0;
+  color: var(--ink-soft);
+  transition: transform 0.3s ease;
+}
+.triggerChevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ---------- Backdrop (overlay escuro, captura de clique) ---------- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 37, 34, 0.6);
+  z-index: var(--z-modal);
+}
+
+/* ---------- Panel fullscreen ---------- */
+.sheet {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;            /* fallback para navegadores sem suporte a dvh */
+  height: 100dvh;           /* viewport dinâmico: exclui a barra de endereços no mobile */
+  max-height: 100dvh;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
+  background: var(--offwhite);
+  border-radius: 0;
+  padding: 16px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  /* pan-y permite rolar a lista interna sem bloquear o scroll vertical da página
+     quando o sheet não cobre — aqui o body já está bloqueado via overflow:hidden. */
+  touch-action: pan-y;
+}
+
+/* Barra de arrasto no topo */
+.handle {
+  width: 40px;
+  height: 4px;
+  background: rgba(42, 37, 34, 0.12);
+  border-radius: 2px;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+/* Botão fechar (X) — fixo no topo, sempre acessível */
+.closeBtn {
+  align-self: flex-end;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(176, 137, 104, 0.3);
+  background: var(--bege-soft);
+  color: var(--ink-soft);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.closeBtn:hover {
+  border-color: var(--caramelo);
+  color: var(--caramelo);
+}
+
+/* ---------- Lista rolável (só esta área rola) ---------- */
+.optionsScroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  padding-right: 4px; /* espaço para a scrollbar */
+}
+.optionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cada opção = botão full-width com toque mínimo de 44px */
+.option {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid rgba(176, 137, 104, 0.18);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.option:hover {
+  border-color: var(--caramelo);
+  color: var(--caramelo);
+}
+
+/* Categoria atualmente selecionada (mesmo destaque do pillActive) */
+.optionActive {
+  background: var(--vinho);
+  border-color: var(--vinho);
+  color: var(--offwhite);
+}
+.optionActive:hover {
+  background: var(--vinho-soft);
+  border-color: var(--vinho-soft);
+  color: var(--offwhite);
+}

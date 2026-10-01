@@ -205,6 +205,23 @@
   .resultsGrid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ---------- Switch desktop/mobile entre pills e selector ----------
+ * Mobile-first: o selector (CategorySelector) é o padrão; os pills são
+ * mostrados apenas em telas largas. O seletor continua renderizado no DOM
+ * em desktop, mas display:none não ocupa layout nem tab order. */
+.categoryFilterDesktop { display: none; }
+.categoryFilterMobile {
+  display: block;
+  margin-bottom: 40px;
+}
+
+/* ---------- @media (min-width: 641px) — desktop ----------
+ * (breakpoint complementa o max-width:640px já usado no .pillsScroll abaixo) */
+@media (min-width: 641px) {
+  .categoryFilterDesktop { display: block; }
+  .categoryFilterMobile { display: none; }
+}
+
 /* ---------- @media (max-width: 640px) ---------- */
 @media (max-width: 640px) {
   .resultsGrid { grid-template-columns: 1fr; }
