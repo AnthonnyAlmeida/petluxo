@@ -71,7 +71,7 @@ export const PRODUCT_DETAILS = {
     ],
     specs: {
       material: 'Tecido',
-      cor: 'Café',
+      cor: 'Cinza',
       enchimento: 'Fibras de polipropileno',
       indicacaoUso: 'Gato / Cachorro',
       fonteEnergia: 'Nenhum',
