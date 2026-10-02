@@ -664,7 +664,7 @@ export const PRODUCTS = [
     order: 54,
     categoryOrder: {"brinquedos":500},
     featured: false,
-    image: '/images/products/polvo-mimo-brinquedo-interativo-com-som-para-caes.webp',
+    image: '/images/products/polvo-mimo/principal.webp',
     badge: null,
     buyLink: 'https://pag.ae/82b7PF9Vo',
     tags: ['brinquedo interativo', 'som estimulante', 'polvo mimo', 'brincadeira caes', 'brinquedo macio', 'interacao pet'],

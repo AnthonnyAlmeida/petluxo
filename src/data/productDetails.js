@@ -263,4 +263,17 @@ export const PRODUCT_DETAILS = {
       { question: 'Em quais lugares posso usar a Manta?', answer: 'Pode ser utilizada sobre camas, sofás, poltronas, canis, carros, caixas de transporte e outras superfícies de descanso, em ambientes internos e externos.' },
     ],
   },
+  40: {
+    gallery: [
+      '/images/products/polvo-mimo/principal.webp',
+      '/images/products/polvo-mimo/polvo-mimo-2.webp',
+    ],
+    specs: {
+      material: 'Pelúcia',
+      formato: 'Polvo',
+      som: 'Pequeno som ao toque',
+      caracteristicas: 'Macio e resistente a roer',
+      dimensoes: '32 cm de altura × 8,5 cm de largura',
+    },
+  },
 };

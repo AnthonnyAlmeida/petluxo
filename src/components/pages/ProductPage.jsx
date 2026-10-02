@@ -43,6 +43,7 @@ const SPEC_LABELS = {
   tamanho: 'Tamanho',
   material: 'Material',
   formato: 'Formato',
+  som: 'Som',
   tipo: 'Tipo',
   cor: 'Cor',
   modelos: 'Modelos',
