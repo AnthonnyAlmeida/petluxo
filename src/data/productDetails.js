@@ -263,6 +263,19 @@ export const PRODUCT_DETAILS = {
       { question: 'Em quais lugares posso usar a Manta?', answer: 'Pode ser utilizada sobre camas, sofás, poltronas, canis, carros, caixas de transporte e outras superfícies de descanso, em ambientes internos e externos.' },
     ],
   },
+  39: {
+    gallery: [
+      '/images/products/brinquedo-petluxo/principal.webp',
+      '/images/products/brinquedo-petluxo/brinquedo-petluxo-2.webp',
+    ],
+    specs: {
+      material: 'Pelúcia',
+      formato: 'Desenho animado',
+      som: 'Apito interno',
+      indicacaoUso: 'Cães de pequeno, médio e grande porte',
+      dimensoes: '25,5 cm de altura × 13,5 cm de largura',
+    },
+  },
   40: {
     gallery: [
       '/images/products/polvo-mimo/principal.webp',

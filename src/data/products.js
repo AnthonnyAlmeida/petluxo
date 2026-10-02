@@ -645,7 +645,7 @@ export const PRODUCTS = [
     order: 53,
     categoryOrder: {"brinquedos":400,"mais-vendidos":1700},
     featured: false,
-    image: '/images/products/brinquedo-petluxo-companhia-para-brincar.webp',
+    image: '/images/products/brinquedo-petluxo/principal.webp',
     badge: 'Novo',
     buyLink: 'https://pag.ae/82amk1aTH',
     tags: ['brinquedo', 'peluca', 'interativo', 'estimulacao', 'premium', 'diversao', 'apito'],
