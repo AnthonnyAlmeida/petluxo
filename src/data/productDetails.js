@@ -64,6 +64,23 @@ export const PRODUCT_DETAILS = {
       { question: 'Posso personalizar com o nome do meu pet?', answer: 'Consulte a disponibilidade deste serviço para o modelo escolhido.' },
     ],
   },
+  12: {
+    gallery: [
+      '/images/products/sofa-petluxo-essence/principal.webp',
+      '/images/products/sofa-petluxo-essence/sofa-petluxo-essence-2.webp',
+    ],
+    specs: {
+      material: 'Tecido',
+      cor: 'Café',
+      enchimento: 'Fibras de polipropileno',
+      indicacaoUso: 'Gato / Cachorro',
+      fonteEnergia: 'Nenhum',
+      comprimentoTotal: '65 cm',
+      larguraTotal: '48 cm',
+      alturaTotal: '19 cm',
+      areaInterna: '53 × 40 cm',
+    },
+  },
   37: {
     gallery: [
       '/images/products/espreguicadeira-madeira-dobravel/principal.webp',
