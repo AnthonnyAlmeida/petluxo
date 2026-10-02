@@ -289,4 +289,18 @@ export const PRODUCT_DETAILS = {
       dimensoes: '32 cm de altura × 8,5 cm de largura',
     },
   },
+  36: {
+    gallery: [
+      '/images/products/comedouro-nomade-premium/principal.webp',
+      '/images/products/comedouro-nomade-premium/comedouro-nomade-premium-2.webp',
+      '/images/products/comedouro-nomade-premium/comedouro-nomade-premium-3.webp',
+    ],
+    specs: {
+      material: 'Tecido com revestimento interno impermeável',
+      capacidade: '800 ml',
+      formato: 'Dobrável e portátil',
+      indicacaoUso: 'Para água e alimento',
+      caracteristicas: 'Leve e com mosquetão para prender à guia',
+    },
+  },
 };
