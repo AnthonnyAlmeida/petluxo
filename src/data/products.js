@@ -673,5 +673,38 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/82b7PF9Vo',
     tags: ['brinquedo interativo', 'som estimulante', 'polvo mimo', 'brincadeira caes', 'brinquedo macio', 'interacao pet'],
     supplierLink: 'https://share.temu.com/Hn4oAOZ3RaA',
+  },
+  {
+    id: 41,
+    name: 'Bolsa Auréa Voyage',
+    shortName: 'Auréa Voyage',
+    subtitle: 'Elegância para acompanhar cada jornada.',
+    description: 'A Auréa Voyage foi criada para tutores que não abrem mão de estilo, segurança e conforto ao lado de seu pet. Com design sofisticado, acabamento cuidadosamente trabalhado e interior acolhedor, ela combina praticidade e elegância para acompanhar pequenos e grandes momentos — dos passeios do dia a dia às viagens. Mais do que uma bolsa de transporte, a Auréa Voyage foi pensada para tornar cada deslocamento uma experiência mais confortável para você e seu pet.',
+    bullets: [
+      'Segurança reforçada: trava interna para conexão à coleira, ajudando a manter o pet seguro durante o transporte',
+      'Ampla ventilação: telas respiráveis proporcionam circulação de ar e maior conforto',
+      'Fundo estruturado: mais estabilidade e segurança',
+      'Forro impermeável: facilita higienização e praticidade',
+      'Tapete de pelúcia incluso',
+      'Apta para cabine de avião, sempre de acordo com as regras, dimensões e condições da companhia aérea',
+      'Bolsos para pequenos objetos',
+      'Laço decorativo removível',
+    ],
+    price: 'R$ 1.197,00',
+    prices: [
+      { size: 'P', price: 'R$ 1.197,00' },
+      { size: 'M', price: 'R$ 1.297,00' },
+    ],
+    originalPrice: null,
+    category: ['couro'],
+    order: 55,
+    categoryOrder: { 'couro': 1600 },
+    image: '/images/products/bolsa-aurea-voyage/principal.webp',
+    badge: null,
+    buyLinks: [
+      { size: 'P', link: 'https://pag.ae/82daAZYS1' },
+      { size: 'M', link: 'https://pag.ae/82djrGDVo' },
+    ],
+    tags: ['bolsa', 'transporte', 'mochila', 'viagem', 'couro rosé', 'ouro rosa', 'passeio'],
   }
 ];

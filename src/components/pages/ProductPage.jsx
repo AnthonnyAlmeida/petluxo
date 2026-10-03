@@ -65,6 +65,9 @@ const SPEC_LABELS = {
   revestimento: 'Revestimento',
   enchimento: 'Enchimento',
   baseInferior: 'Base inferior',
+  indicacao: 'Indicação',
+  tapeteInterno: 'Tapete interno',
+  alcaTransversal: 'Alça transversal',
 };
 
 export default function ProductPage() {
