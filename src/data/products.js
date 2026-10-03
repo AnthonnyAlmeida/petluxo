@@ -706,5 +706,38 @@ export const PRODUCTS = [
       { size: 'M', link: 'https://pag.ae/82djrGDVo' },
     ],
     tags: ['bolsa', 'transporte', 'mochila', 'viagem', 'couro rosé', 'ouro rosa', 'passeio'],
+  },
+  {
+    id: 42,
+    name: 'Bolsa Majestic Travel',
+    shortName: 'Majestic Travel',
+    subtitle: 'Sofisticação que vai onde o seu pet está',
+    description: 'A Bolsa Majestic Travel foi cuidadosamente selecionada pela PetLuxo para tornar cada passeio e viagem uma experiência mais segura, confortável e elegante. Um design sofisticado, pensado para acompanhar você e seu pet em diferentes momentos, unindo praticidade, conforto e detalhes que fazem a diferença.',
+    bullets: [
+      'Segurança reforçada: trava interna para acoplar à coleira, ajudando a evitar fugas durante o transporte',
+      'Ampla ventilação: telas respiráveis que favorecem a circulação de ar e proporcionam maior conforto ao pet',
+      'Fundo estruturado e removível: mais estabilidade e segurança durante o transporte, com estrutura removível para facilitar o uso',
+      'Forro impermeável: prático e fácil de higienizar, ideal para a rotina com o pet',
+      'Tapete de pelúcia incluso: um espaço mais aconchegante e confortável para o pet durante passeios e viagens',
+      'Apta para cabines de avião, conforme as regras e dimensões permitidas pela companhia aérea',
+      'Alça de mão e alça transversal: duas opções de transporte para maior praticidade',
+      'Design sofisticado: acabamento premium com detalhes em corrente e elementos cuidadosamente trabalhados',
+    ],
+    price: 'a partir de R$ 1.197,00',
+    prices: [
+      { size: 'P', price: 'R$ 1.197,00' },
+      { size: 'M', price: 'R$ 1.297,00' },
+    ],
+    originalPrice: null,
+    category: ['couro'],
+    order: 56,
+    categoryOrder: { 'couro': 1700 },
+    image: '/images/products/bolsa-majestic-travel/principal.webp',
+    badge: null,
+    buyLinks: [
+      { size: 'P', link: 'https://pag.ae/82daDPQ9o' },
+      { size: 'M', link: 'https://pag.ae/82djpRrEm' },
+    ],
+    tags: ['mochila', 'bolsa', 'transporte', 'viagem', 'passeio', 'azul marinho'],
   }
 ];
