@@ -3,6 +3,7 @@
 import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { PRODUCTS } from '../../data/products.js';
+import { wa } from '../../lib/whatsapp.js';
 import '../../styles/buttons.css';
 import styles from './Featured.module.css';
 
@@ -30,7 +31,10 @@ export function Featured() {
   const lowestPrice = product.prices
     ? product.prices.reduce((min, p) => parsePriceValue(p.price) < parsePriceValue(min.price) ? p : min).price
     : product.price;
-  const buyHref = product.buyLink || product.buyLinks?.[0]?.link;
+  /* CTA TEMPORÁRIO: com o PagBank desativado (HIDE_BUY_CTA em
+   * ProductBuyButton.jsx), o destaque aponta para o WhatsApp, com a mesma
+   * mensagem do fluxo de produto. buyLink/buyLinks continuam no catálogo. */
+  const waHref = wa(`Olá! Gostaria de mais informações sobre "${product.name}".`);
 
   return (
     <section className={[styles.featured, 'section-pad'].filter(Boolean).join(' ')}>
@@ -59,8 +63,8 @@ export function Featured() {
             {product.description}
           </p>
           <div className="reveal d5" style={{display:"flex", gap:14, flexWrap:"wrap"}}>
-            <a className="btn btn-primary" href={buyHref} target="_blank" rel="noopener">
-              COMPRAR AGORA <Icon.ArrowR className="arr"/>
+            <a className="btn btn-primary" href={waHref} target="_blank" rel="noopener noreferrer">
+              <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
             </a>
             <a className="btn btn-ghost" href="#produtos">VER TODOS OS PRODUTOS</a>
           </div>

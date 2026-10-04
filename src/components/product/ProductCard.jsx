@@ -33,8 +33,10 @@ export function ProductCard({ product, index, onQuick }) {
             <span className={styles.priceOriginal}>{product.originalPrice}</span>
           )}
           <div className={styles.price}>{product.price}</div>
+          {/* Legenda TEMPORÁRIA: enquanto o PagBank estiver desativado
+              (HIDE_BUY_CTA em ProductBuyButton.jsx), todo o fluxo é WhatsApp. */}
           <small className={styles.priceVia}>
-            {product.buyLink || product.buyLinks ? 'COMPRAR AGORA' : 'VIA WHATSAPP'}
+            VIA WHATSAPP
           </small>
         </div>
       </div>
