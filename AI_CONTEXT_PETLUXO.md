@@ -1,19 +1,21 @@
 # PetLuxo — Contexto do Projeto
 
-E-commerce institucional (site estático, sem backend/banco de dados) para produtos premium de pets. Catálogo, busca/filtro e checkout são resolvidos inteiramente no front-end; a "compra" é um redirecionamento para um link de pagamento PagBank (ou, na ausência dele, para o WhatsApp).
+Snapshot técnico do estado atual do código. E-commerce institucional (site estático, sem backend e sem banco de dados) para produtos premium de pets. Catálogo, busca, filtro e visualização de produto são resolvidos inteiramente no front-end.
+
+**O fluxo de compra é o PagBank, com o CTA temporariamente oculto.** Os links `buyLink`/`buyLinks` continuam gravados em `products.js` e continuam sendo o caminho de compra pretendido; o que existe hoje é um interruptor de interface (`HIDE_BUY_CTA`) que esconde o botão "COMPRAR AGORA" e joga todo o tráfego para o WhatsApp. Ver [Fluxo de compra](#fluxo-de-compra).
 
 - **Produção:** https://petluxostory.com.br
-- **Repositório:** GitHub → deploy automático via Vercel a cada push em `main`
 - **Instagram:** @petluxostory
+- **Hospedagem:** Vercel (plano Hobby), deploy automático a cada push em `main`
 
 ## Stack
 
 - **React 18.3.1** (componentes funcionais + hooks, sem gerenciador de estado externo)
-- **React Router DOM 7** (`BrowserRouter`, rotas declaradas em `src/app/page.jsx`)
+- **React Router DOM 7** (`BrowserRouter` em `src/main.jsx`, rotas declaradas em `src/app/page.jsx`)
 - **Vite 6** como bundler/dev server
-- **CSS Modules** por componente — não há framework de UI (Tailwind, MUI etc.)
+- **CSS Modules** por componente — não há framework de UI
 - Sem TypeScript — projeto 100% JavaScript (`.jsx`/`.js`)
-- **`yet-another-react-lightbox`** (+ plugin `Zoom`) — única dependência de UI de terceiros do projeto até agora, usada exclusivamente pelo `ProductLightbox` (ver seção própria abaixo). Carregada sob demanda via `React.lazy`, nunca baixada por quem não tem dispositivo touch.
+- **`yet-another-react-lightbox`** (^3.32.2, com o plugin oficial `Zoom`) — única dependência de UI de terceiros, usada exclusivamente pelo `ProductLightbox`. Carregada sob demanda via `React.lazy`, só para quem tem dispositivo touch.
 
 Scripts (`package.json`): `npm run dev` (porta 5173, `--host` liberado em `vite.config.js`), `npm run build`, `npm run preview`.
 
@@ -22,311 +24,480 @@ Scripts (`package.json`): `npm run dev` (porta 5173, `--host` liberado em `vite.
 ```
 petluxo/
 ├── index.html                  # Shell HTML: meta tags, Open Graph, Twitter Card, Google Analytics (gtag)
+├── assets/                     # Imagens bundadas pelo Vite (fora de public/, importadas por caminho)
+│   ├── logo.webp
+│   ├── hero/image-hero.webp    # Usada por Hero.jsx
+│   └── sobre_nos/              # foto_sobre_nos.webp, sobre_nos.webp
 ├── public/
 │   ├── favicon.ico / favicon.svg
 │   ├── og-image.png
 │   ├── robots.txt / sitemap.xml
-│   ├── 404.html                # Redireciona para index.html preservando o path (suporte a SPA na Vercel)
+│   ├── 404.html                # Guarda o pathname em sessionStorage e redireciona (suporte a SPA na Vercel)
 │   └── images/
 │       ├── brand/
-│       └── products/            # Uma pasta por produto (slug kebab-case) — ver seção própria abaixo
+│       └── products/           # Uma pasta por produto (slug kebab-case) — ver seção própria
 ├── src/
-│   ├── main.jsx                 # Entry point: monta <App/>, inicializa link do FAB do WhatsApp, restaura path do
-│   │                             # 404.html, bloqueia pinch-zoom nativo do Safari/iOS fora do lightbox (ver seção
-│   │                             # "Bloqueio de pinch-zoom no Safari/iOS" abaixo)
+│   ├── main.jsx                # Entry point: monta <App/>, inicializa o FAB do WhatsApp, restaura o path
+│   │                           # do 404.html, instala a lógica global de bloqueio/reset de pinch-zoom
 │   ├── app/
-│   │   ├── page.jsx             # Componente raiz — define as <Routes> e monta a home (todas as seções)
-│   │   ├── ScrollToTop.jsx      # Reseta o scroll ao topo a cada troca de rota (ver seção própria abaixo)
-│   │   └── DevTweaks.jsx        # Painel de ajustes visuais, carregado só em dev (ver seção própria abaixo)
+│   │   ├── page.jsx            # Rotas + HomePage (todas as seções)
+│   │   ├── ScrollToTop.jsx     # Reseta o scroll a cada troca de rota
+│   │   └── DevTweaks.jsx       # Painel de ajustes visuais, só em dev
 │   ├── components/
-│   │   ├── layout/              # Navbar (com drawer mobile), MinimalNavbar (header reduzido, só ProductPage) e Footer
-│   │   ├── product/              # ProductCard, ProductGrid (carrossel), ProductModal (quick view), ProductGallery
-│   │   │                         # (galeria da ProductPage), ProductLightbox (visualizador em tela cheia, touch-only —
-│   │   │                         # ver seção própria abaixo), ProductSizeSelector, ProductBuyButton
-│   │   ├── sections/              # Hero, Featured, Products, Story, Differentials, CTA, FAQ, NotFound
-│   │   ├── pages/                # PrivacyPage, ReturnPolicyPage, ShippingPolicyPage, TermsPage (rotas de política),
-│   │   │                         # ProductPage (ficha completa de produto, rota /produto/:id)
-│   │   └── ui/                  # Button, Container, Section, TrustBadges, Accordion (Accordion + AccordionItem),
-│   │                             # BrandSeal (selo global "Por que escolher a PetLuxo?")
+│   │   ├── layout/              # Navbar (com drawer mobile), MinimalNavbar (só ProductPage), Footer
+│   │   ├── product/             # ProductCard, ProductGrid, ProductModal, ProductGallery, ProductLightbox,
+│   │   │                        # ProductSizeSelector, ProductBuyButton
+│   │   ├── sections/            # Hero, Featured, Products, Story, Differentials, CTA, FAQ, NotFound
+│   │   ├── pages/               # ProductPage (/produto/:id) + PrivacyPage, ReturnPolicyPage,
+│   │   │                        # ShippingPolicyPage, TermsPage
+│   │   └── ui/                  # Button, Container, Section, TrustBadges, Accordion, BrandSeal,
+│   │                            # CategorySelector (bottom sheet de categoria no mobile)
 │   ├── data/
 │   │   ├── products.js          # Fonte de verdade do catálogo (CATEGORIES + PRODUCTS)
-│   │   └── productDetails.js    # Conteúdo expandido de produtos (ficha completa), opcional, indexado por id — ver seção própria abaixo
+│   │   └── productDetails.js    # Conteúdo expandido de produtos, indexado por id
 │   ├── hooks/
-│   │   ├── useScroll.js         # useScrollEffects: scroll-reveal via IntersectionObserver + paralaxe do logo na Hero
-│   │   └── useProductBuy.js     # Estado de tamanho selecionado + link/preço ativos, compartilhado entre ProductModal e ProductPage
-│   ├── lib/
-│   │   └── whatsapp.js          # Geração de links wa.me
-│   ├── icons.jsx                 # Conjunto de ícones SVG inline usados nos componentes
-│   ├── tweaks-panel.jsx          # Componentes genéricos do painel de dev (TweaksPanel, TweakSection, TweakRadio, TweakToggle, useTweaks)
+│   │   ├── useScroll.js         # useScrollEffects: scroll-reveal + paralaxe do logo na Hero
+│   │   └── useProductBuy.js     # Variação selecionada + link/preço ativos
+│   ├── lib/whatsapp.js          # Geração de links wa.me
+│   ├── icons.jsx                # Ícones SVG inline
+│   ├── tweaks-panel.jsx         # Componentes do painel de dev (TweaksPanel, TweakSection, TweakRadio,
+│   │                            # TweakToggle, useTweaks)
 │   └── styles/
-│       ├── variables.css        # Design tokens (cores, tipografia, espaçamentos)
+│       ├── variables.css        # Design tokens
 │       ├── globals.css          # Reset + utilitárias globais
 │       ├── animations.css       # @keyframes globais
-│       └── buttons.css          # Estilos de `.btn` e variantes, importado por quem usa botões
-└── docs/                        # CSS_MIGRATION.md, DECISIONS.md, DEPLOY.md, PRODUCT_EXPANSION.md, README.md, TODO.md
+│       └── buttons.css          # Estilos de .btn e variantes
+└── docs/
+    ├── CHECKOUT_ARCHITECTURE.md # Plano (não implementado) de carrinho + Mercado Pago + Neon + Melhor Envio
+    ├── CSS_MIGRATION.md
+    ├── DECISIONS.md
+    ├── DEPLOY.md
+    ├── PRODUCT_EXPANSION.md     # Decisão de arquitetura da ficha de produto (descreve 9 campos —
+    │                            # o código tem 10, ver "Expansão de conteúdo de produtos")
+    ├── README.md
+    └── TODO.md
 ```
+
+Não existem `api/`, `vercel.json`, `db/` nem `src/data/shipping.js` no projeto.
+
+## Fluxo de compra
+
+### `HIDE_BUY_CTA` — o interruptor temporário que oculta o CTA do PagBank
+
+`src/components/product/ProductBuyButton.jsx` define, no topo do arquivo:
+
+```js
+const HIDE_BUY_CTA = true;
+```
+
+**Essa constante é um estado temporário, não uma decisão de arquitetura.** O fluxo de compra pretendido do projeto é PagBank; o interruptor existe só para esconder o CTA de pagamento enquanto isso. Nada em `products.js` foi removido — os 37 produtos continuam com `buyLink`/`buyLinks` válidos e `Featured`/`ProductCard` mantêm o texto e a estrutura prontos para voltar.
+
+Enquanto a constante estiver `true`, **nenhum link `buyLink`/`buyLinks` é renderizado na interface** — ela esconde apenas o botão "COMPRAR AGORA".
+
+Efeito nos quatro estados do componente:
+
+| Estado do produto | O que é renderizado com `HIDE_BUY_CTA = true` |
+|---|---|
+| `badge === 'ESGOTADO'` | Botão "ESGOTADO" desabilitado (`opacity: 0.5`) + link "CONSULTAR VIA WHATSAPP" em `styles.waLink` — **o único lugar do projeto que ainda usa essa classe** |
+| Tem `buyLinks` | **Só** o CTA "CONSULTAR VIA WHATSAPP" (`btn btn-primary btn-full`) |
+| Tem `buyLink` | **Só** o CTA "CONSULTAR VIA WHATSAPP" |
+| Sem nenhum link | CTA "CONSULTAR VIA WHATSAPP" |
+
+Mensagem do link: `Olá! Gostaria de mais informações sobre "<product.name>".` — a mesma em todos os produtos.
+
+Ao colocar a constante em `false`, os CTAs "COMPRAR AGORA" voltam a aparecer e os dois WhatsApp dos estados 2 e 3 precisam voltar de `btn btn-primary btn-full` para `styles.waLink` (conforme o comentário no próprio arquivo).
+
+### Propagação para o restante da UI
+
+- **`ProductCard`** — exibe sempre o texto "VIA WHATSAPP" em `<small className={styles.priceVia}>` (`ProductCard.jsx:36-40`). O texto é fixo e não depende de `buyLink`/`buyLinks`.
+- **`Featured`** — não usa `buyLink` nem `buyLinks`. Os CTAs são "CONSULTAR VIA WHATSAPP" (mesma mensagem do `ProductBuyButton`) e "VER TODOS OS PRODUTOS" (`btn btn-ghost` apontando para `#produtos`).
+- **`useProductBuy` / `ProductSizeSelector`** — continuam calculando a variação selecionada e `activeBuyLink`, mas o valor selecionado só alimenta o texto do preço, nenhum link.
+- **`checkout` planejado** — `docs/CHECKOUT_ARCHITECTURE.md` descreve o destino desse fluxo (carrinho, Mercado Pago, Neon, Melhor Envio). Nenhum código dele existe.
+
+### Conteúdo institucional que ainda cita PagBank (consequência do estado temporário)
+
+O interruptor só age na interface — o texto das páginas não foi acompanhado. Estas referências continuam descrevendo o PagBank como gateway ativo, o que é coerente com o fluxo pretendido e só fica errado enquanto `HIDE_BUY_CTA` estiver ligado:
+
+- `src/components/sections/FAQ.jsx:39` — "A compra é segura?" → "os pagamentos são processados pelo PagBank".
+- `src/components/layout/Footer.jsx:63-68` — selo "PagBank Pagamento Seguro" no rodapé.
+- `src/components/pages/PrivacyPage.jsx:48,58,64,84` — tratamento de dados e processamento pelo PagBank.
+- `src/components/pages/ShippingPolicyPage.jsx:60` — "O valor do frete é calculado automaticamente pelo PagBank no momento da compra".
+- `src/components/pages/TermsPage.jsx:87` — redirecionamentos para plataformas externas como PagBank.
+
+**Não "conserte" esses textos para WhatsApp** — eles descrevem o fluxo real e voltam a ficar corretos quando o interruptor for desligado. Ajustá-los agora só criaria retrabalho.
 
 ## Catálogo de produtos (`src/data/products.js`)
 
-Estado atual: **9 categorias**, **35 produtos** (8 deles com `visible: false`, portanto ocultos no site). Desses 35, **29 usam `buyLink` único** e **6 usam `buyLinks`** (ids 9, 14, 16, 17, 21 e 28 — sendo que os ids 14, 16, 21 e 28 também têm `prices`, e o id 17 é o único com variação por **cor** em vez de tamanho).
+**9 categorias**, **37 produtos** (ids de 1 a 42, sem 2, 5, 7, 11 e 23). **29 visíveis** e **8 ocultos** (`visible: false`: ids 6, 13, 16, 19, 20, 27, 29, 32).
+
+Dos 37: **28 usam `buyLink` único** e **9 usam `buyLinks`** (ids 8, 9, 14, 16, 17, 21, 28, 41, 42). Sete têm `prices` (ids 8, 14, 16, 21, 28, 41, 42); os ids 9 e 17 têm `buyLinks` sem `prices`. Nenhum produto está sem link de compra.
 
 ### `CATEGORIES`
-Array de `{ id, label, visible }`. `visible: false` remove a categoria das pills de filtro e dos carrosséis, mesmo que existam produtos nela.
 
-IDs atuais, na ordem declarada: `mais-vendidos`, `couro`, `conforto`, `a-mesa`, `colecao-cozy-luxo`, `brinquedos`, `colecao-passeio`, `sono-refugio`, `viagem-mobilidade`.
+Array de `{ id, label, visible }`. Todas as 9 categorias estão com `visible: true`. `visible: false` em uma categoria a remove das pills de filtro e dos carrosséis mesmo que existam produtos nela.
 
-### `PRODUCTS`
-Array de objetos de produto. Campos:
+IDs, na ordem declarada: `mais-vendidos`, `couro`, `conforto`, `a-mesa`, `colecao-cozy-luxo`, `brinquedos`, `colecao-passeio`, `sono-refugio`, `viagem-mobilidade`.
+
+Produtos visíveis por categoria: mais-vendidos 2, couro 7, conforto 3, a-mesa 4, colecao-cozy-luxo 3, brinquedos 3, colecao-passeio 3, sono-refugio 8, viagem-mobilidade 3.
+
+### Campos de `PRODUCTS`
 
 | Campo | Tipo | Observação |
 |---|---|---|
 | `id` | number | Único |
-| `name` / `shortName` | string | `shortName` é usado no card/modal quando presente, e também é a base do slug da pasta de imagem (ver seção "Convenção de pastas de imagem" abaixo) |
-| `subtitle` | string \| null | Subtítulo opcional exibido no modal |
-| `description` | string | Texto longo do quick view |
-| `bullets` | string[] | Lista de destaques no modal |
-| `price` | string | Preço formatado (ex.: `"R$ 149,90"` ou `"a partir de R$ 329,90"` quando há variações) |
-| `originalPrice` | string \| null | Preço "de", exibido riscado quando presente |
-| `prices` | `{size, price}[]` (opcional) | Usado junto com `buyLinks` para produtos com variação de tamanho |
-| `category` | string[] | Um produto pode pertencer a múltiplas categorias simultaneamente |
-| `order` | number | Não usado atualmente na ordenação de exibição (a ordenação real é por `categoryOrder`) |
-| `categoryOrder` | `{ [categoryId]: number }` | Peso de ordenação **por categoria** — cada categoria em que o produto aparece tem seu próprio peso; maior valor aparece primeiro nos carrosséis/grid daquela categoria |
-| `image` | string | `/images/products/<slug-da-pasta>/principal.webp` — 33 dos 35 produtos seguem essa convenção de pasta própria; os ids 39 e 40 (brinquedos adicionados pelo painel admin) ainda têm a imagem solta na raiz de `products/` (ver seção "Convenção de pastas de imagem" abaixo) |
-| `badge` | string \| null | Selo exibido no card (ex.: `"MAIS VENDIDOS"`, `"NOVO"`, `"PREMIUM"`, `"EXCLUSIVO"`, ou `"ESGOTADO"` — este último desabilita a compra e mostra apenas o link de WhatsApp) |
-| `buyLink` | string (opcional) | Link único de pagamento PagBank |
-| `buyLinks` | `{size, link, color?}[]` (opcional) | Alternativa a `buyLink` quando o produto tem variações — o modal exibe seletor de variação. O campo `size` é a **chave de seleção** (o `useProductBuy` cruza `selectedSize` com `buyLink.size` por igualdade de string), então precisa ser idêntico ao rótulo exibido; `color` (hex) é opcional e só é usado quando o produto tem `variationType: 'cor'` (ver seção "Variação por cor" abaixo) |
-| `variationType` | string (opcional) | `'cor'` faz o `ProductSizeSelector` renderizar um swatch por variação, com o rótulo "Selecione a cor:". Ausente ou com qualquer outro valor = comportamento padrão de tamanho. Único produto que usa hoje: id 17 |
+| `name` / `shortName` | string | `shortName` é usado no card/modal quando presente. **Ausente em 3 produtos** (ids 3, 4 e 10), que exibem `name` |
+| `subtitle` | string \| null | Opcional. **A chave não existe** nos ids 3, 4 e 10 |
+| `description` | string | Texto longo (quick view e ficha) |
+| `bullets` | string[] | Lista de destaques |
+| `price` | string | Preço formatado; `"a partir de R$ ..."` quando há variação |
+| `originalPrice` | string \| null | Exibido riscado quando presente |
+| `prices` | `{size, price}[]` | Ids 8, 14, 16, 21, 28, 41, 42 |
+| `category` | string[] | Um produto pode estar em várias categorias |
+| `order` | number | Não usado na ordenação de exibição |
+| `categoryOrder` | `{ [categoryId]: number }` | Peso **por categoria**; maior valor aparece primeiro no carrossel daquela categoria |
+| `image` | string | `/images/products/<slug-da-pasta>/principal.webp` — segue a convenção para os 37 produtos |
+| `badge` | string \| null | Valores em uso: `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `Novo`, `Novidade`, `EXCLUSIVO`, `ESGOTADO`. `ESGOTADO` desabilita a compra e mantém só o WhatsApp |
+| `buyLink` | string | Link PagBank único (28 produtos) |
+| `buyLinks` | `{size, link, color?}[]` | Variação (9 produtos). `size` é a chave de seleção |
+| `variationType` | string | `'cor'` só no id 17; ausente = seleção por tamanho |
 | `tags` | string[] | Usado na busca textual |
-| `supplierLink` | string (opcional) | Link/nota interna do fornecedor (não é exibido na UI) |
-| `visible` | boolean (opcional) | Quando `false`, o produto some do site (grids, carrosséis, busca) mesmo com dados completos |
-| `featured` | boolean (opcional) | Quando `true`, marca o produto exibido na seção `Featured` ("Produto em Destaque"). Deve haver no máximo um produto com `featured: true` visível por vez — a seção usa o primeiro encontrado |
+| `supplierLink` | string | Referência interna do fornecedor; não é exibido na UI |
+| `visible` | boolean | `false` remove o produto de grids, carrosséis, busca e da rota `/produto/:id` |
+| `featured` | boolean | Só o id 8 tem `featured: true`. Os ids 13, 37, 38, 39 e 40 têm `featured: false` explícito; os demais não têm o campo |
 
-Não há build step, CMS ou banco por trás deste arquivo — edições são feitas diretamente no código-fonte (inclusive por um painel administrativo externo ao repositório, que também commita direto neste arquivo).
+### Inventário
+
+| id | shortName | categorias | vis. | badge | compra | prices | originalPrice | featured |
+|---|---|---|---|---|---|---|---|---|
+| 1 | Brinquedo Interativo | brinquedos | visível | ESGOTADO | buyLink | — | sim | — |
+| 3 | Garrafa Portátil Premium | viagem-mobilidade | visível | — | buyLink | — | sim | — |
+| 4 | Comedouro Elevado | a-mesa | visível | — | buyLink | — | — | — |
+| 6 | Refúgio Cozy | mais-vendidos, conforto, sono-refugio | oculto | MAIS VENDIDOS | buyLink | — | — | — |
+| 8 | Bolsa Transporte | mais-vendidos, couro | visível | MAIS VENDIDOS | buyLinks(2) | prices(2) | — | **true** |
+| 9 | Élan Couro | couro | visível | — | buyLinks(3) | — | — | — |
+| 10 | Porta Saquinhos | couro | visível | — | buyLink | — | — | — |
+| 12 | Sofá Essence | conforto, sono-refugio | visível | — | buyLink | — | — | — |
+| 13 | Sofá Lounge PetLuxo™ | conforto, sono-refugio | oculto | — | buyLink | — | — | false |
+| 14 | Cama CloudNest™ | sono-refugio | visível | — | buyLinks(3) | prices(3) | — | — |
+| 15 | Coleira Atena™ | couro | visível | — | buyLink | — | — | — |
+| 16 | Comedouro Maison Élevé | mais-vendidos, a-mesa | oculto | MAIS VENDIDOS | buyLinks(3) | prices(3) | — | — |
+| 17 | Bolsa Voyage Signature | colecao-passeio | visível | — | buyLinks(2) | — | — | — |
+| 18 | Cama Suspensa Élysée | conforto, sono-refugio | visível | — | buyLink | — | — | — |
+| 19 | Arranhador Sisal | brinquedos | oculto | — | buyLink | — | — | — |
+| 20 | Cama Suspensa Aura | mais-vendidos, conforto, sono-refugio | oculto | MAIS VENDIDOS | buyLink | — | — | — |
+| 21 | Executive Bed™ | couro, sono-refugio | visível | — | buyLinks(2) | prices(2) | — | — |
+| 22 | Bowl Cerâmica Spoiled | a-mesa | visível | — | buyLink | — | — | — |
+| 24 | Fonte Automática Elegance | a-mesa | visível | — | buyLink | — | — | — |
+| 25 | Mesa Gourmet Nordic™ | a-mesa | visível | — | buyLink | — | — | — |
+| 26 | Roma Walk Set | colecao-passeio | visível | — | buyLink | — | — | — |
+| 27 | Ursinho Interativo Kong | brinquedos | oculto | — | buyLink | — | — | — |
+| 28 | Cabana Teepee Luxo | sono-refugio | visível | — | buyLinks(3) | prices(3) | — | — |
+| 29 | Tapete Elegance | a-mesa | oculto | — | buyLink | — | — | — |
+| 30 | Cesto Organizador Cozy | colecao-cozy-luxo | visível | — | buyLink | — | — | — |
+| 31 | Estação de Passeio PetLuxo™ | colecao-cozy-luxo | visível | — | buyLink | — | — | — |
+| 32 | Quadro Pet Personalizado | colecao-cozy-luxo | oculto | — | buyLink | — | — | — |
+| 33 | Reservatório Hermético Cozy | colecao-cozy-luxo | visível | PREMIUM | buyLink | — | — | — |
+| 34 | Bolsa Térmica Metalassê | colecao-passeio | visível | NOVO | buyLink | — | — | — |
+| 35 | Manta Serenity™ | sono-refugio | visível | — | buyLink | — | — | — |
+| 36 | Comedouro Nômade Premium | viagem-mobilidade | visível | PREMIUM | buyLink | — | — | — |
+| 37 | Chaise Féline | viagem-mobilidade, sono-refugio | visível | EXCLUSIVO | buyLink | — | — | false |
+| 38 | Refúgio Majesté | sono-refugio, conforto | visível | Novidade | buyLink | — | — | false |
+| 39 | Brinquedo PetLuxo | brinquedos, mais-vendidos | visível | Novo | buyLink | — | — | false |
+| 40 | Polvo Mimo™ Interativo | brinquedos | visível | — | buyLink | — | sim | false |
+| 41 | Auréa Voyage | couro | visível | — | buyLinks(2) | prices(2) | — | — |
+| 42 | Majestic Travel | couro | visível | — | buyLinks(2) | prices(2) | — | — |
+
+### Quirks conhecidos do catálogo
+
+- **id 31**: `buyLink` tem um espaço no fim — `'https://pag.ae/81QtMgE9m '`.
+- **id 17**: `supplierLink` aponta para a página de um comedouro dobrável na Magalu — não corresponde ao produto. Nunca exibido na UI.
+- **id 9**: `supplierLink` aponta para `.../kit-milano-camelo`, nome anterior do produto. Nunca exibido na UI.
+- **Ordenação do grid de resultados**: `filteredProducts` em `Products.jsx` ordena pelo **maior** valor de `categoryOrder` entre todas as categorias do produto (`Math.max(...Object.values(categoryOrder))`), não pela categoria ativa.
+
+Não há build step, CMS ou banco por trás deste arquivo. As edições são feitas direto no código-fonte, inclusive por um painel administrativo externo ao repositório, que escreve neste mesmo arquivo.
 
 ## Expansão de conteúdo de produtos (`src/data/productDetails.js`)
 
-Ficha completa de produto, com conteúdo opcional além do que já existe em `products.js`: galeria de fotos adicionais, especificações técnicas estruturadas, tabela de medidas por tamanho, texto de "como escolher o tamanho", guia de medidas (`sizeGuideNote`), "o que acompanha", cuidados/conservação, nota de viagem aérea, garantia e FAQ por produto. Decisão de arquitetura completa e plano de fases em [`docs/PRODUCT_EXPANSION.md`](docs/PRODUCT_EXPANSION.md) — **esse doc ainda descreve o schema com 9 campos e não lista `sizeGuideNote`**, que existe e é renderizado (10º campo, em uso nos ids 9 e 34).
+Conteúdo opcional de ficha completa, **em arquivo separado** de `products.js` — isolamento deliberado, já que o painel administrativo externo reescreve `products.js` e não conhece estes dados.
 
-- **`PRODUCT_DETAILS`**: objeto indexado por `id` de produto, definido em `src/data/productDetails.js` — arquivo **separado** de `products.js` de propósito, para isolar completamente do painel admin externo (que só escreve em `products.js`). **Dez produtos têm entrada populada até o momento** (ids 6, 8, 9, 16, 17, 21, 34, 35, 37 e 38): a **Bolsa Transporte PetLuxo** (`id: 8`), piloto da Fase 3, com o schema completo (specs, sizeChart, howToChooseSize, whatsIncluded, careInstructions, airTravelNote, warranty, faq) e também piloto validado do campo `gallery` (4 fotos, desde **2026-08-10**); a **Chaise Féline** (`id: 37`), populada em **2026-08-13** só com `specs` (7 campos: estrutura, superfície do arranhador, capacidade, montagem, ajuste de altura, dimensões, peso) — produto de tamanho único, sem `sizeChart` nem as demais seções opcionais; o **Refúgio PetLuxo Cozy** (`id: 6`), populado em **2026-08-14** com `specs` (5 campos: tamanho, dimensões, material, formato, indicação de uso), `whatsIncluded` (6 itens) e `careInstructions` (a observação de uso sazonal inverno/verão foi incorporada ao final desse campo, seguindo o mesmo padrão de campo sem slot dedicado já usado no piloto da Bolsa Transporte — ver "Nota de padronização do piloto" abaixo) — sem `gallery`, `sizeChart`, `howToChooseSize`, `airTravelNote`, `warranty` nem `faq`; o **Comedouro Maison Élevé** (`id: 16`), populado em **2026-08-31** com `specs` (7 campos: tipo, material, cor, modelos, características, indicação de uso, estilo) e `sizeChart` com as 3 capacidades do produto (800 ml, 1.200 ml, 1.800 ml) — primeiro caso de `sizeChart` **parcial**: só a altura era conhecida por capacidade, então `length`/`width`/`weight` de cada linha foram preenchidos com `'—'` em vez de omitir as colunas (ver "Nota de `sizeChart` parcial" abaixo) — sem `gallery`, `howToChooseSize`, `whatsIncluded`, `careInstructions`, `airTravelNote`, `warranty` nem `faq`; e o **Élan Couro** (`id: 9`), populado em **2026-09-10** com `gallery` (4 fotos), `specs` (4 campos: material, ferragens, composição do kit, tamanhos disponíveis) e `whatsIncluded` (3 itens) — sem `sizeChart`, `howToChooseSize`, `careInstructions`, `airTravelNote`, `warranty` nem `faq`; o **Refúgio Majestá** (`id: 38`), populado em **2026-09-10** com `gallery` (2 fotos), `specs` (9 campos: estrutura, almofada, cortinas, dimensões da estrutura externa, base interna, altura total, peso do produto, indicação de uso, onde utilizar) e `whatsIncluded` (4 itens) — sem `sizeChart`, `howToChooseSize`, `airTravelNote`, `warranty` nem `faq`; a **Cama Executive Bed** (`id: 21`), populada em **2026-09-25** com `gallery` (5 fotos), `specs` (5 campos), `sizeChart` (M e G, com `weight` como "Consulte disponibilidade"), `whatsIncluded` (2 itens) e `careInstructions`; a **Bolsa Térmica Signature** (`id: 34`), populada em **2026-09-29** com `specs` (10 campos), `whatsIncluded` (1 item) e `sizeGuideNote` (variação de medida de 1–3 cm) — sem `gallery` nem as demais seções; a **Manta Serenity** (`id: 35`), populada em **2026-09-29** com `gallery` (3 fotos), `specs` (8 campos), `whatsIncluded` (1 item), `careInstructions` e `faq` (6 perguntas) — único produto hoje com `faq` além do piloto; e a **Bolsa Voyage Signature** (`id: 17`), populada em **2026-09-30** **só com `gallery`** (5 fotos) — entrada intencionalmente mínima, porque ainda não há specs, medidas, cuidados, garantia ou FAQ levantados para o produto (nada foi inventado para preencher lacuna; ver "Estado atual do ID 17" abaixo).
-- Todo campo dentro de uma entrada é opcional (`gallery`, `specs`, `sizeChart`, `howToChooseSize`, `sizeGuideNote`, `whatsIncluded`, `careInstructions`, `airTravelNote`, `warranty`, `faq`). Produto sem entrada em `PRODUCT_DETAILS` continua funcionando exatamente como hoje, sem nenhuma seção nova aparecendo. **Correção de registro (2026-09-30):** versões anteriores deste documento afirmavam que `sizeGuideNote` não era renderizado — isso não é mais verdade: `ProductPage.jsx` renderiza um `AccordionItem` "Guia de medidas" para ele (logo após "Como escolher o tamanho ideal"), e `docs/PRODUCT_EXPANSION.md` ainda descreve o schema de 9 campos, sem `sizeGuideNote`. O schema efetivo do código tem 10 campos.
-- **`ProductPage`** (`src/components/pages/ProductPage.jsx`, rota `/produto/:id`): busca o produto em `PRODUCTS` pelo `id` da URL; se não existir ou tiver `visible === false`, renderiza `NotFound` com o `Navbar` padrão. Quando o produto existe, usa `MinimalNavbar` (ver seção própria abaixo) em vez do `Navbar` padrão. Exibe os dados que já existem em `products.js` (imagem via `ProductGallery`, nome, subtitle, description, bullets, preço), o selo `BrandSeal` (ver abaixo) e, condicionalmente, cada seção de `PRODUCT_DETAILS[product.id]` — só a que tiver dados, dentro de um `Accordion` (ver abaixo).
-- As labels exibidas para cada chave de `specs` vêm de um mapa fixo `SPEC_LABELS` no topo de `ProductPage.jsx` (ex.: `estrutura` → "Estrutura", `superficieArranhador` → "Superfície do arranhador"). Chave de `specs` sem entrada nesse mapa cai no fallback `key` cru — como o CSS aplica `text-transform: uppercase` sem inserir espaços, uma chave em camelCase sem label cadastrado aparece grudada (ex. "SUPERFICIEARRANHADOR"). **Sempre que um novo campo de `specs` for introduzido em `productDetails.js`, adicionar a label correspondente em `SPEC_LABELS`** — foi o que faltou (e foi corrigido) ao popular o piloto da Chaise Féline; o mesmo cuidado foi seguido ao popular o Refúgio PetLuxo Cozy (`tamanho`, `material`, `formato` adicionados ao mapa), o Comedouro Maison Élevé (`tipo`, `cor`, `modelos`, `caracteristicas`, `estilo` adicionados ao mapa; `material` e `indicacaoUso` já existiam de pilotos anteriores e foram reaproveitados sem alteração — atenção para não confundir a chave `material` com `materialExterno`, que já existia no mapa com outro significado, específico do tecido externo de bolsas), o Élan Couro (`ferragens`, `composicaoKit`, `tamanhosDisponiveis` adicionados ao mapa) e o Refúgio Majestá (`almofada`, `cortinas`, `dimensoesEstruturaExterna`, `baseInterna`, `alturaTotal`, `pesoProduto`, `ondeUtilizar` adicionados ao mapa; `estrutura` e `indicacaoUso` já existiam e foram reaproveitados sem alteração).
-- **Nota de `sizeChart` parcial (piloto do Comedouro Maison Élevé, `id: 16`, 2026-08-31):** até então, todo `sizeChart` populado tinha as 4 dimensões (`height`, `length`, `width`, `weight`) com dado real ou um texto de fallback tipo "Consulte disponibilidade". O Comedouro só tinha, por natureza do produto (capacidade em ml, não um estojo com comprimento/largura), a altura por tamanho — sem comprimento, largura ou peso indicado fazendo sentido. Em vez de omitir essas chaves do objeto (o que quebraria a tabela, já que `ProductPage.jsx` renderiza `row.length`/`row.width`/`row.weight` incondicionalmente, sem checagem de presença), cada linha manteve as 4 chaves com `'—'` nas 3 sem dado — a tabela renderiza normalmente, com colunas vazias visualmente sinalizadas em vez de quebradas. Padrão a repetir sempre que um produto novo tiver `sizeChart` com dimensões inaplicáveis ou não fornecidas.
-- O `ProductModal` (quick view) ganhou um link condicional "Ver ficha completa", que só aparece quando `PRODUCT_DETAILS[product.id]` existe, apontando para `/produto/:id`. O modal em si não mudou de comportamento (continua mostrando só a imagem única de `product.image`, sem galeria — a galeria interativa é exclusiva da `ProductPage`). **Nota (2026-08-13):** desde que o clique no card passou a pular o modal para produtos com ficha completa (ver seção "Navegação direta para produtos com ficha completa" abaixo), esse link na prática só aparece em modais que o novo fluxo já não abre mais para esses produtos — não é contraditório, apenas redundante nesse caso específico; o link não foi removido porque o modal continua acessível por outras vias e o comportamento condicional em si continua correto.
-- A lógica de 3 estados do botão de compra (ESGOTADO / `buyLinks` com seletor de variação / `buyLink` único / fallback WhatsApp) e o estado da variação selecionada foram extraídos para componentes/hook compartilhados entre `ProductModal` e `ProductPage`, em vez de duplicados: `useProductBuy` (`src/hooks/useProductBuy.js`), `ProductBuyButton` e `ProductSizeSelector` (`src/components/product/`). O `useProductBuy` não sabe o que é tamanho ou cor — ele só casa `selectedSize` com `buyLink.size` e devolve `activeBuyLink`/`activePrice`; a diferença de apresentação fica a cargo de `ProductSizeSelector` (ver seção "Variação por cor").
-- **Nota de padronização do piloto:** o schema não tem campo dedicado a observações gerais (variação de tonalidade entre lotes/telas, lembrete de conferir medidas antes da compra, uso sazonal do produto). No piloto da Bolsa Transporte, a observação sobre variação de tonalidade foi incorporada ao final de `careInstructions` (por ser um aviso geral de aparência do produto, mais próximo de "cuidados" do que de qualquer outro campo existente) e o lembrete de conferir medidas foi incorporado ao final de `howToChooseSize` (por já tratar diretamente de medidas). No Refúgio PetLuxo Cozy, o mesmo raciocínio foi aplicado à observação de uso sazonal (colchão removível no verão/mantido no inverno): por ser uma instrução de manuseio do produto, foi incorporada ao final de `careInstructions`. Nenhum campo novo foi criado — esse padrão já se repetiu em dois produtos (Fase 4); vale reavaliar se compensa formalizar um campo próprio no schema (ex. `usageNotes` ou similar) caso volte a aparecer com frequência.
+### `PRODUCT_DETAILS`
 
-### Navegação direta para produtos com ficha completa (`ProductCard`, `src/components/product/ProductCard.jsx`)
+Objeto indexado por `id` de produto. **16 produtos têm entrada**: 6, 8, 9, 12, 16, 17, 21, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
 
-Desde **2026-08-13**, clicar em um `ProductCard` (usado nos carrosséis de `ProductGrid` e nos grids flat de resultado de busca/filtro) tem dois comportamentos possíveis, decididos dentro do próprio `ProductCard`:
+### Schema (10 campos, todos opcionais)
 
-- **Produto com entrada em `PRODUCT_DETAILS[product.id]`:** o clique navega direto para `/produto/:id` via `useNavigate()` do React Router — o `ProductModal` (quick view) nunca chega a abrir para esse produto a partir do card.
-- **Produto sem entrada em `PRODUCT_DETAILS`:** comportamento inalterado — o clique chama a prop `onQuick(product)`, que continua sendo repassada de `Products.jsx` (estado `quick` da `HomePage`, em `src/app/page.jsx`) através de `ProductGrid` até `ProductCard`, abrindo o `ProductModal` normalmente.
+| Campo | Tipo | Renderizado como |
+|---|---|---|
+| `gallery` | `string[]` | Alimenta o `ProductGallery` (fora do acordeão) |
+| `specs` | `{ [chave]: valor }` | `AccordionItem` "Especificações técnicas" |
+| `sizeChart` | `{size, height, length, width, weight}[]` | `AccordionItem` "Tabela de medidas" |
+| `howToChooseSize` | `string` | `AccordionItem` "Como escolher o tamanho ideal" |
+| `sizeGuideNote` | `string` | `AccordionItem` "Guia de medidas" |
+| `whatsIncluded` | `string[]` | `AccordionItem` "O que acompanha" |
+| `careInstructions` | `string` | `AccordionItem` "Limpeza e conservação" |
+| `airTravelNote` | `string` | `AccordionItem` "Uso em viagens aéreas" |
+| `warranty` | `string` | `AccordionItem` "Garantia" |
+| `faq` | `{question, answer}[]` | `AccordionItem` "Perguntas frequentes" |
 
-A checagem usa o mesmo padrão já usado no `ProductModal` (`Boolean(PRODUCT_DETAILS[product.id])`), decidida localmente em `ProductCard` — não foi necessário alterar `Products.jsx` nem `ProductGrid.jsx`, já que a prop `onQuick` continua fluindo do mesmo jeito para os produtos que ainda dependem dela. `ProductModal` em si não foi removido nem alterado; continua sendo o quick view padrão para todo produto sem ficha completa.
+`docs/PRODUCT_EXPANSION.md` descreve apenas **9 campos** — não lista `sizeGuideNote`, que existe, é renderizado e está em uso. O schema efetivo do código tem 10.
 
-### `ScrollToTop` — reset de scroll entre rotas (`src/app/ScrollToTop.jsx`)
+A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeChart → howToChooseSize → sizeGuideNote → whatsIncluded → careInstructions → airTravelNote → warranty → faq), não no arquivo de dados. Todos começam fechados (nenhum usa `defaultOpen`).
 
-Componente sem renderização (`return null`), montado uma única vez em `App()` (`src/app/page.jsx`), dentro do `<BrowserRouter>` (que envolve `<App/>` em `src/main.jsx`), como irmão de `<Routes>`. Usa `useLocation()` e um `useEffect` disparado em toda mudança de `pathname` para rolar a janela ao topo — sem esse componente, uma navegação client-side (ex.: clicar num card, no link "Ver ficha completa", ou em qualquer rota nova) preservava a posição de scroll da página anterior, já que uma SPA não recarrega o documento.
+### Estado por produto
 
-- **Efeito duplo (imediato + `requestAnimationFrame`):** o `useEffect` chama `window.scrollTo({ top: 0, left: 0, behavior: 'instant' })` de imediato e agenda uma segunda chamada idêntica no próximo frame. Foi necessário reforçar a chamada porque, com `scroll-behavior: smooth` definido globalmente em `html, body` (`src/styles/globals.css`), uma rolagem suave do usuário ainda em andamento no exato momento da navegação (ex.: inércia de scroll/trackpad, ou o auto-scroll-into-view que ferramentas de automação de UI disparam antes de um clique) podia continuar assentando por cima do reset, deixando a página alguns pixels abaixo do topo. `behavior: 'instant'` já evita a animação suave da própria chamada; o reforço via `requestAnimationFrame` é o que garante que nada sobrescreva esse reset logo em seguida — validado via Playwright rodando a mesma transição de rota repetidas vezes (posição final sempre em `scrollY === 0`, nunca sobrando os poucos pixels residuais observados antes do reforço).
-- **`overflow-anchor: none` global (`html, body` em `src/styles/globals.css`):** adicionado junto com o `ScrollToTop`, desativa o "scroll anchoring" nativo do navegador — o ajuste automático de scroll que o navegador faz quando o conteúdo acima da posição atual muda de altura (por exemplo, imagens da galeria de produto terminando de carregar). Numa SPA com troca de rota via client-side routing, essa "correção" automática do navegador não tem serventia (o conteúdo da rota anterior já não existe mais) e só competia com o reset do `ScrollToTop`.
-- Aplica-se a **todas as rotas** do site (home, `/produto/:id`, páginas de política, 404), não só à `ProductPage` — o mesmo problema de scroll preservado indevidamente também afeta, por exemplo, ir da home para `/politica-de-privacidade`.
+14 das 16 entradas têm `gallery`. As exceções são os ids **6** e **34**.
 
-## `ProductGallery` — galeria interativa da `ProductPage` (`src/components/product/ProductGallery.jsx`)
+| id | Produto | Campos presentes |
+|---|---|---|
+| 6 | Refúgio Cozy | `specs` (5), `whatsIncluded` (6), `careInstructions` |
+| 8 | Bolsa Transporte | `gallery` (4), `specs` (8), `sizeChart` (3), `howToChooseSize`, `whatsIncluded` (4), `careInstructions`, `airTravelNote`, `warranty`, `faq` (6) |
+| 9 | Élan Couro | `gallery` (4), `specs` (4), `whatsIncluded` (3), `sizeGuideNote` |
+| 12 | Sofá Essence | `gallery` (2), `specs` (9) |
+| 16 | Comedouro Maison Élevé | `gallery` (4), `specs` (12), `sizeChart` (3) |
+| 17 | Bolsa Voyage Signature | `gallery` (5) — nada mais |
+| 21 | Executive Bed™ | `gallery` (5), `specs` (5), `sizeChart` (2), `whatsIncluded` (2), `careInstructions` |
+| 34 | Bolsa Térmica Metalassé | `specs` (10), `whatsIncluded` (1), `sizeGuideNote` |
+| 35 | Manta Serenity™ | `gallery` (3), `specs` (9), `whatsIncluded` (1), `careInstructions`, `faq` (6) |
+| 36 | Comedouro Nômade Premium | `gallery` (3), `specs` (5) |
+| 37 | Chaise Féline | `gallery` (7), `specs` (7) |
+| 38 | Refúgio Majesté | `gallery` (2), `specs` (9), `whatsIncluded` (4), `careInstructions` |
+| 39 | Brinquedo PetLuxo | `gallery` (2), `specs` (5) |
+| 40 | Polvo Mimo™ Interativo | `gallery` (2), `specs` (5) |
+| 41 | Auréa Voyage | schema completo: `gallery` (3), `specs` (10), `sizeChart` (2), `howToChooseSize`, `sizeGuideNote`, `whatsIncluded` (2), `careInstructions`, `airTravelNote`, `warranty`, `faq` (8) |
+| 42 | Majestic Travel | schema completo: `gallery` (4), `specs` (10), `sizeChart` (2), `howToChooseSize`, `sizeGuideNote`, `whatsIncluded` (2), `careInstructions`, `airTravelNote`, `warranty`, `faq` (8) |
 
-Componente que renderiza a imagem do produto na `ProductPage`, recebendo `images` (array de caminhos, sempre com a imagem de capa como **primeiro item**) e `alt` (nome do produto). Substituiu, em **2026-08-10**, o bloco estático anterior (imagem principal fixa + fileira de miniaturas sem interatividade abaixo dela) que existia desde a Fase 3 mas nunca tinha sido de fato testado com um produto com `gallery` populado.
+`sizeGuideNote` está em uso nos ids 9, 34, 41 e 42.
 
-- **`ProductPage.jsx`** monta o array chamando o componente com `images={details?.gallery?.length > 0 ? details.gallery : [product.image]}` — ou seja, quando não há `gallery` em `PRODUCT_DETAILS[id]`, cai para um array de um único item (o `product.image`), preservando o comportamento antigo de imagem única sem nenhum elemento de galeria.
-- **1 imagem (`images.length <= 1`):** renderiza só a imagem, sem miniaturas, setas ou dots (a lupa de zoom também não existe nesse branch). Em dispositivo touch, tocar na imagem abre o `ProductLightbox` (ver seção própria abaixo) mesmo com uma foto só — é o único elemento novo desse branch, para manter consistência com os demais produtos.
-- **Mais de 1 imagem, telas ≥ 640px (desktop e tablet):** miniaturas clicáveis em coluna à **esquerda** da imagem principal (`<button>` real por miniatura, mesma filosofia de acessibilidade nativa do `Accordion` — navegável por teclado). Clicar numa miniatura troca a imagem principal exibida; a miniatura ativa recebe `aria-current="true"` e destaque visual (borda em `var(--vinho)`, mais grossa). Estado (`activeIndex`) mantido com `useState`, sem lib externa.
-- **Mais de 1 imagem, telas < 640px (mobile):** miniaturas não aparecem — vira um carrossel arrastável de 1 imagem por vez, ocupando a largura toda. Detecção de swipe por `touchstart`/`touchmove`/`touchend` com limiar de 50px (mesma técnica e mesmos números já usados em `ProductGrid`, o carrossel de categorias da home — nada de biblioteca nova). O breakpoint de 640px é o mesmo já usado em `ProductGrid` (`usePerView`) para decidir "1 item por vez" — escolhido por consistência, não por CSS media query: a troca de layout é decidida em JS (`window.innerWidth`, com listener de `resize`), então desktop/tablet e mobile renderizam **estruturas de DOM diferentes**, não a mesma estrutura escondida por CSS.
-- Como o breakpoint interno da galeria (640px) é mais baixo que o breakpoint que empilha `ProductPage` em uma coluna (900px, ver `.layout` em `ProductPage.module.css`), uma tela de tablet (~768px) já cai no layout de duas colunas empilhadas (galeria acima, informações abaixo) **mas ainda mostra miniaturas à esquerda da imagem dentro do bloco da galeria** — os dois breakpoints resolvem preocupações diferentes e não precisam coincidir.
+Produto sem entrada em `PRODUCT_DETAILS` funciona normalmente: a `ProductPage` mostra apenas o bloco principal, o `BrandSeal` e a imagem única.
 
-**Três adições em 2026-08-11**, todas condicionadas a `images.length > 1` (produto sem `gallery` continua sem nenhum elemento novo — sem seta, sem dot, sem lupa — mesma lógica condicional que já existia para as miniaturas):
+### `SPEC_LABELS` — labels das chaves de `specs`
 
-- **Zoom com lupa (desktop/tablet, ≥640px, só em dispositivos SEM touch):** ver comportamento por clique logo abaixo. Desde **2026-08-14**, o botão da lupa (`.zoomBadge`) fica **escondido em dispositivos touch** — ver seção `ProductLightbox` abaixo para o motivo (foi substituído pelo tap-to-open do lightbox, que faz o mesmo papel de forma melhor em touch).
-- **Setas de navegação (todas as resoluções):** um par de botões circulares (`.navArrow`, ‹ à esquerda / › à direita) sobrepostos à imagem principal — tanto no `.mainImageWrap` do desktop/tablet quanto no `.mobileViewport` do carrossel mobile —, usando os mesmos SVGs de seta (path idêntico) já usados em `ProductGrid` para consistência visual entre os dois carrosséis do site. Chamam as mesmas `goPrev`/`goNext` que atualizam o `activeIndex` compartilhado por miniaturas, swipe e dots — clicar na seta marca a miniatura correspondente como ativa (e vice-versa), tudo sincronizado no mesmo estado, sem lógica duplicada. Nas extremidades (primeira/última foto) o botão correspondente fica `disabled` com opacidade reduzida, mesmo padrão visual já usado em `.carouselArrow:disabled` do `ProductGrid` — sem looping, os controles clampam em vez de dar a volta.
-- **Dots no mobile (<640px, junto do carrossel por swipe):** fileira de bolinhas abaixo da imagem (`.dots`/`.dot`/`.dotActive`), reaproveitando quase literalmente o CSS de `.carouselDots`/`.carouselDot`/`.carouselDotActive` de `ProductGrid` (mesmo raciocínio de tamanho, cor `rgba(42,37,34,0.2)` para inativo, pílula alongada em `var(--vinho)` para o ativo — só trocou `var(--caramelo)` do `ProductGrid` por `var(--vinho)` para combinar com a paleta já usada nas miniaturas do desktop). Cada dot é um `<button>` clicável que chama `setActiveIndex(i)` diretamente — não é só indicador passivo. Como o dot ativo deriva do mesmo `activeIndex` usado pelo swipe e pelas setas, arrastar o carrossel atualiza os dots automaticamente, sem estado duplicado.
+Mapa fixo no topo de `ProductPage.jsx` (`SPEC_LABELS`, ~50 entradas) que traduz as chaves de `specs` para o texto exibido no `<dt>`. Chave sem entrada no mapa cai no fallback da chave crua — e como o CSS aplica `text-transform: uppercase` sem inserir espaços, uma chave camelCase aparece grudada.
 
-**Zoom com lupa — comportamento por clique (revisado em 2026-08-11):** o zoom deixou de ser automático no hover (comportamento original de 2026-08-11, cedo demais na mesma data) e virou um **toggle explícito**. `.zoomBadge` é um `<button>` real (não mais um `<span aria-hidden>` decorativo), com estado próprio `zoomEnabled` (`useState`, começa `false`) e `aria-pressed` refletindo o estado:
-  - **Zoom desativado (padrão ao carregar a página):** hover na imagem não faz nada — `onImageMouseMove` retorna cedo (`if (!zoomEnabled) return`) sem atualizar `zoomPos`, e a regra CSS que revela o overlay (`.mainImageWrapZoomActive:hover .zoomOverlay { opacity: 1 }`) só existe quando a classe modificadora `.mainImageWrapZoomActive` está presente no wrapper — que só acontece com `zoomEnabled === true`. O badge mostra fundo claro (`rgba(248,246,243,.9)`) e ícone escuro (`var(--ink)`).
-  - **Clique no badge:** alterna `zoomEnabled` (`setZoomEnabled(z => !z)`). Quando ativa, o badge muda visualmente para fundo `var(--vinho)` com ícone claro (`var(--offwhite)`, classe `.zoomBadgeActive`) — sinalização clara de que o modo está ligado. `aria-label` também muda ("Ativar zoom da imagem" ↔ "Desativar zoom da imagem").
-  - **Com zoom ativado:** mover o mouse sobre `.mainImageWrap` funciona exatamente como antes — `backgroundPosition` do `.zoomOverlay` segue o cursor, `background-size: 200% 200%` simula a lupa.
-  - **Independente da foto exibida:** `zoomEnabled` é um estado à parte de `activeIndex` — trocar de foto (seta, miniatura ou, no mobile, swipe/dot, embora a lupa em si não exista no mobile) não reseta o zoom; se estava ativado antes da troca, continua ativado na foto nova.
-  - Exclusivo de telas ≥640px **e dispositivos sem touch** (ver `ProductLightbox` abaixo) — em mobile ou em qualquer dispositivo touch esse badge nem é renderizado.
+**Ao introduzir uma chave nova de `specs` em `productDetails.js`, a label correspondente precisa ser adicionada ao mapa.**
 
-## `ProductLightbox` — visualizador de foto em tela cheia, exclusivo de dispositivos touch (`src/components/product/ProductLightbox.jsx`)
+**Pendência atual:** o id 12 usa quatro chaves que **não** estão no `SPEC_LABELS` — `fonteEnergia`, `comprimentoTotal`, `larguraTotal` e `areaInterna`. Elas renderizam hoje com o fallback cru em uppercase.
 
-Adicionado em **2026-08-14**. Em dispositivos touch (celular, tablet), tocar na imagem principal do `ProductGallery` (em qualquer um dos 3 branches — imagem única, carrossel mobile, ou miniaturas desktop/tablet) abre a foto em tela cheia, com pinch-to-zoom, pan quando ampliada, swipe lateral para trocar de foto quando sem zoom, setas de navegação e botão de fechar. Em dispositivos sem touch (mouse/desktop), nada muda — a imagem principal continua com a lupa por hover de sempre, sem abrir nada ao clicar.
+### `sizeChart` parcial
 
-- **Biblioteca: `yet-another-react-lightbox` (v3.32) + plugin oficial `Zoom`.** Decisão pesquisada antes de implementar (não é reimplementação manual de gestos) — ~373 mil downloads/semana no npm, ativamente mantida, zero dependências de runtime, arquitetura modular (só o core + plugin `Zoom` são importados, não Thumbnails/Video/Share/etc). O plugin `Zoom` cobre pinch-to-zoom, double-tap zoom, pan e swipe; setas e botão de fechar já vêm no core. O body scroll lock (vazamento de scroll atrás do modal, problema clássico de iOS Safari) é tratado nativamente pelo módulo `NoScroll` do core — nenhum tratamento manual foi necessário para isso.
-- **Detecção de dispositivo touch — hook `usePointerCoarse`** (local em `ProductGallery.jsx`, ao lado do `useIsMobile` já existente): baseado em `window.matchMedia('(pointer: coarse)')`, o sinal moderno correto para "o input primário é touch" — **independente** do `useIsMobile(640)` já existente, que só decide *layout* (miniaturas vs carrossel). Um tablet/notebook touch em paisagem pode ter `isMobile=false` e `isTouch=true`; uma janela desktop estreitada com mouse pode ter `isMobile=true` e `isTouch=false`. O gate `isTouch` decide a abertura do lightbox nos 3 branches do `ProductGallery`, independentemente de qual layout está ativo.
-- **Code-splitting via `React.lazy`:** `ProductLightbox.jsx` é importado com `React.lazy(() => import('./ProductLightbox.jsx'))` em `ProductGallery.jsx`, e só renderizado dentro de `{isTouch && <Suspense>...}` — ou seja, o *gate* está no render condicional, não numa prop `open={false}` de um componente sempre montado. Isso garante que usuários sem touch **nunca baixam o chunk JS/CSS da lib**. Confirmado em `npm run build`: `ProductLightbox` gera um chunk `.js` (~42 kB, ~15 kB gzip) e um `.css` próprios, separados do bundle principal; e via Playwright, checando que nenhuma requisição de rede contendo o nome do chunk acontece numa sessão sem touch.
-- **Abrir o lightbox por branch:** no branch de imagem única e no desktop/tablet (miniaturas), um `onClick` simples na `.mainImageWrap` basta (`isTouch ? () => openLightbox(...) : undefined`). No branch mobile (carrossel com swipe manual já existente), não dá para usar `onClick` — o evento `click` sintético dispara depois do `touchend`, quando o estado de arrasto (`dragging.current`) já foi resetado. Em vez disso, o `onTouchEnd` já existente foi estendido: se não houve swipe e o deslocamento em ambos os eixos foi desprezível (`< 10px`, mesmo threshold de 8px já usado para detectar arrasto), é um toque real → abre o lightbox. Isso evita abrir o lightbox quando o usuário só estava rolando a página verticalmente com o dedo sobre a imagem.
-- **Theming via CSS custom properties `--yarl__*`** (`ProductLightbox.module.css`, aplicado via prop `className` do `<Lightbox>`): `--yarl__portal_zindex` usa `var(--z-above-modal)` (1100, acima do `--z-modal` de 1000 do `ProductModal`), cores de botão/backdrop baseadas em `--ink`/`--offwhite`/`--dourado` de `variables.css`.
-- **Pegadinha encontrada durante a implementação — backdrop precisa ser opaco (alpha 1):** a primeira tentativa usou `--yarl__color_backdrop: rgba(42, 37, 34, 0.96)` (quase opaco, mas não totalmente). Isso causava o backdrop do lightbox não cobrir visualmente o topo/base da tela em alguns cenários de teste automatizado (Playwright/Chromium headless) — a página por trás ficava visível, mesmo com todos os estilos computados (`position: fixed`, `inset: 0`, `z-index` corretos, `elementFromPoint` confirmando que o lightbox intercepta toda a área) batendo certo. Trocar para `--yarl__color_backdrop: var(--ink)` (opaco, alpha 1) resolveu — o comportamento nunca foi 100% explicado (não achamos `clip-path`/`mask`/`contain`/`filter` nenhum na cadeia de elementos), mas ficou consistente em repetidas execuções antes e depois da troca. Fica registrado: **se o backdrop do lightbox precisar de transparência no futuro, testar bem visualmente** (não só via computed style) antes de assumir que funciona.
-- **`maxZoomPixelRatio: 2`** (prop `zoom` do `<Lightbox>`, em `ProductLightbox.jsx`): ajustado para baixo a partir do padrão da lib (3), calibrado observando as fotos reais de `PRODUCT_DETAILS` — a galeria do catálogo vai de ~830px a ~1536px no lado maior (resolução moderada, fotos de WhatsApp convertidas), e um teto de zoom maior deixaria ampliar bem além da resolução nativa da imagem, ficando visivelmente borrado.
-- **Bloqueio de pinch-zoom/double-tap-zoom do navegador fora do lightbox — CSS `touch-action`, não a meta tag `user-scalable=no`:** `html, body` em `src/styles/globals.css` ganhou `touch-action: pan-x pan-y`, que bloqueia pinch-zoom e double-tap-zoom do navegador no **site inteiro** (não só na `ProductPage`) mas mantém a rolagem normal funcionando. `user-scalable=no` (a técnica antiga, na meta tag viewport de `index.html`) foi descartada de propósito — é uma falha de acessibilidade documentada (WCAG 1.4.4/1.4.10) porque bloqueia o zoom do site inteiro sem nenhuma granularidade, para todo mundo. `touch-action` é por elemento: o container do `ProductLightbox` (via YARL) já declara seu próprio `touch-action: none` internamente, e pela spec o valor efetivo numa árvore de elementos é a interseção com os ancestrais — o mais restritivo vence — então dentro do lightbox o pinch-zoom funciona normalmente sem nenhuma configuração extra do projeto. Também não conflita com o swipe manual já existente em `ProductGallery` (`.mobileViewport { touch-action: pan-y }`) nem em `ProductGrid` — ambos já declaravam seu próprio `touch-action` local, que continua sendo o valor efetivo por interseção, idêntico a antes da mudança.
-- **Ressalva de acessibilidade, documentada de propósito (decisão consciente, não descoberta depois):** bloquear pinch-zoom via `touch-action` fora do lightbox reduz a capacidade de zoom da página para quem depende de pinch-zoom por baixa visão — o `ProductLightbox` foi pensado como a válvula de escape para examinar fotos de perto, mas não substitui zoom de leitura de texto em outras partes do site. Não afeta o zoom de acessibilidade em nível de sistema operacional (ex.: "Zoom" do iOS via 3 dedos), que é independente do `touch-action` do navegador.
-- **Validação (2026-08-14):** Playwright confirmou, em viewport mobile touch (375px), tablet touch em paisagem (1024px, layout desktop com miniaturas mas comportamento touch) e desktop sem touch (1280px): abrir/fechar o lightbox, troca de foto por seta, plugin `Zoom` montado (botões de zoom presentes), body scroll lock ligando/desligando corretamente, lupa escondida em touch e funcionando normalmente sem touch, e nenhuma requisição do chunk do lightbox em sessão sem touch. **Limitação conhecida e não resolvida por automação:** Playwright não simula pinch-to-zoom real de dois dedos de forma confiável — a sensação do gesto de pinça em si (fluidez, responsividade) só foi validada indiretamente (plugin montado, controles de zoom presentes e funcionais via clique) e depende de teste manual num aparelho físico real.
+`ProductPage.jsx` renderiza `row.length`, `row.width` e `row.weight` **incondicionalmente**, então toda linha precisa das 4 chaves. Quando a dimensão não se aplica ao produto, o padrão é manter a chave com o valor `'—'` em vez de omitir. O id 16 usa esse padrão (`length` e `weight` como `'—'`, já que o produto é variado por capacidade em ml). Outra forma de sinalizar dado desconhecido em uso é o texto "Consulte disponibilidade" (ids 8 e 21).
 
-### Bloqueio de pinch-zoom no Safari/iOS — lacuna do `touch-action` (`src/main.jsx`)
+Observação para testes automatizados: como o colapso do acordeão usa `grid-template-rows: 0fr` + `overflow: hidden`, `boundingBox()`/`isVisible()` em cima de um elemento dentro do painel fechado pode retornar retângulo não vazio. Para confirmar que a seção está fechada, checar o `clientHeight` do `.panelInner`.
 
-**Bug crítico encontrado em 2026-08-14, num iPhone físico real:** mesmo com `touch-action: pan-x pan-y` em `html, body` (ver seção acima), era possível dar pinch-zoom na página inteira no Safari/iOS fora do `ProductLightbox`, e o zoom não voltava sozinho ao tamanho normal.
+### Observações gerais dentro de campos existentes
 
-- **Causa raiz, confirmada por pesquisa antes de corrigir (não foi um remendo às cegas):** o pinch-zoom de página no Safari/iOS é disparado pelos eventos `gesturestart`/`gesturechange`/`gestureend` — uma `GestureEvent` proprietária do WebKit, documentada como a **única** implementação desses três eventos entre os motores de navegador (Chrome/Blink e Firefox/Gecko não os disparam nunca; tratam gesto de pinça como `wheel` event com `ctrlKey: true`, herdado do Internet Explorer). `touch-action` controla os comportamentos padrão de toque/scroll do navegador, mas **não** intercepta nem suprime a `GestureEvent` do WebKit — são dois mecanismos paralelos, e essa lacuna é justamente por que `touch-action` sozinho não bastou.
-- **Correção: listener global de `gesturestart`/`gesturechange`/`gestureend` com `preventDefault()`, em `src/main.jsx`**, ao lado das outras inicializações imperativas que já rodam ali fora do React (link do FAB do WhatsApp, restauração do path do 404.html) — mesmo padrão do arquivo, sem introduzir componente novo para um efeito colateral global de boot único.
-  - `document.addEventListener('gesturestart', fn, { passive: false })` (e o mesmo para `gesturechange`/`gestureend`) — o `{ passive: false }` é obrigatório; sem ele o navegador pode ignorar o `preventDefault()` chamado dentro do handler.
-  - **Não precisa de detecção de navegador:** como só o WebKit/Safari dispara esses três eventos, o listener simplesmente nunca executa nada em Chrome, Firefox, Edge, Samsung Internet ou qualquer navegador Chromium/Gecko (mobile ou desktop) — é um no-op garantido nos demais navegadores, cobrindo o requisito de não quebrar nada fora do Safari sem precisar checar `navigator.userAgent`.
-  - **Exceção para o `ProductLightbox`:** o handler primeiro checa `event.target.closest('[class*="yarl__portal"]')` — se o toque está dentro do container raiz do lightbox (a classe pública do `yet-another-react-lightbox`, a mesma família de classes `.yarl__*` usada no theming), o `preventDefault()` é pulado e o zoom nativo do plugin `Zoom` continua funcionando normalmente ali dentro.
-  - **Complementar, não substitui:** o `touch-action: pan-x pan-y` de `globals.css` continua no lugar — ele resolve os comportamentos de touch "normais" (pan, double-tap-zoom em navegadores que respeitam `touch-action` para isso) e é a camada correta/moderna para todos os outros navegadores; o listener de `gesturestart` é a camada extra específica para fechar a lacuna do WebKit.
-- **Campo de busca com `font-size` abaixo de 16px (`.searchInput`, `src/components/sections/Products.module.css`):** outra causa possível do mesmo sintoma, verificada e confirmada — o campo de busca da seção `Products` tinha `font-size: 13px`. iOS Safari dá zoom automático na página ao focar em qualquer `<input>`/`<textarea>`/`<select>` com `font-size` computado menor que 16px, para tornar o texto legível; abaixo desse limiar não tem meio-termo, é tudo ou nada. Corrigido para `font-size: 16px`, com `padding` reduzido de `12px 0` para `10px 0` e `line-height: 1.2` explícito para compensar — a altura total da barra de busca (~41px) ficou praticamente idêntica à anterior; o texto em si fica ligeiramente maior (13px → 16px), sem outra mudança de design. Nenhum outro `<input>` de produção existe no site — os únicos outros campos (`src/tweaks-panel.jsx`) são exclusivos do `DevTweaks`, carregado só em `import.meta.env.DEV` e nunca embarcado no build de produção, então não contribuem para o bug em produção.
-- **Validação (2026-08-14):** Playwright confirmou o campo de busca com `font-size: 16px` computado e altura da barra praticamente inalterada (~41px, igual antes e depois, mobile e desktop). Para a lógica do listener de gesto, como Playwright/Chromium não dispara `gesturestart`/`gesturechange`/`gestureend` de verdade (são exclusivos do WebKit), a validação possível foi disparar eventos `gesturestart` sintéticos via `dispatchEvent` — confirmado que um evento disparado fora do lightbox chega com `defaultPrevented: true` (bloqueado) e um disparado com alvo dentro do portal do lightbox chega com `defaultPrevented: false` (permitido), provando que a lógica condicional do handler está correta. **Isso não é o mesmo que testar o gesto físico real do Safari/iOS** — a suíte completa de touch/lightbox (abrir/fechar, troca de foto, code-splitting) rodou de novo sem regressão, e o build (`npm run build`) passou sem erros, mas a confirmação final de que o bug do zoom "grudado" realmente para de acontecer **depende de teste manual num iPhone físico**.
+O schema não tem campo dedicado a observações gerais (variação de tonalidade entre lotes, lembrete de conferir medidas, uso sazonal). Onde aparece hoje, a observação é incorporada ao final de `careInstructions` (aviso de aparência/manuseio) ou de `howToChooseSize` (lembrete de medidas).
 
-## `Accordion` — acordeão genérico (`src/components/ui/Accordion.jsx`)
+### Link "Ver ficha completa" no `ProductModal`
 
-Componente genérico e reutilizável, sem conhecimento de produto: `Accordion` é só um wrapper visual (`<div>` com as bordas entre itens); `AccordionItem` (`title`, `defaultOpen`, `children`) controla seu próprio estado `open` internamente via `useState` — não há estado compartilhado no `Accordion` pai, então múltiplos itens podem ficar abertos ao mesmo tempo por padrão.
+`ProductModal.jsx` renderiza um link "Ver ficha completa →" só quando `PRODUCT_DETAILS[product.id]` existe, apontando para `/produto/:id`. Na prática ele quase não aparece, porque produtos com ficha completa não abrem mais o modal a partir do card (ver `ProductCard`).
 
-Usado hoje só em `ProductPage.jsx`, envolvendo exclusivamente as seções de conteúdo expandido de `PRODUCT_DETAILS` (specs, sizeChart, howToChooseSize, sizeGuideNote, whatsIncluded, careInstructions, airTravelNote, warranty, faq) — o bloco principal do produto (imagem/nome/preço/descrição/bullets/botão de compra) e o `BrandSeal` continuam fora do acordeão, renderizados normalmente. Cada `AccordionItem` só é renderizado quando aquele campo tem dado (mesma renderização condicional que já existia antes do acordeão) — produto sem aquele campo não gera item vazio. Todas as seções começam fechadas por padrão (nenhum `AccordionItem` usa `defaultOpen` em `ProductPage.jsx`) e só abrem ao clique do usuário. A ordem dos itens é fixa no JSX, não no arquivo de dados: specs → sizeChart → howToChooseSize → sizeGuideNote → whatsIncluded → careInstructions → airTravelNote → warranty → faq.
+## `ProductPage` (`src/components/pages/ProductPage.jsx`, rota `/produto/:id`)
 
-Detalhes de implementação:
-- Cabeçalho é um `<button>` real dentro de um `<h3>` (`aria-expanded`, `aria-controls` apontando para o painel, navegável por teclado/Enter/Espaço nativamente por ser um `button`), com um `Icon.Chevron` (`src/icons.jsx`) que gira 180° via CSS quando aberto.
-- A transição de abrir/fechar usa a técnica de CSS Grid `grid-template-rows: 0fr → 1fr` (`Accordion.module.css`, classe `.panel`) em vez de medir altura via JS — mais simples e sem layout thrashing. Pegadinha encontrada e corrigida durante a implementação: o padding do conteúdo **não pode** ficar no elemento que tem `overflow: hidden` direto dentro do grid item (`.panelInner`), porque padding conta para a altura mínima da caixa mesmo com a track em `0fr`, causando um vazamento visual de alguns pixels de conteúdo mesmo com o item "fechado". A correção foi mover o padding para um `<div>` filho adicional (`.panelContent`), deixando `.panelInner` (o grid item de fato) sem padding — só `overflow: hidden` e `min-height: 0`.
-- Estilizado com os tokens de `variables.css` (título em `var(--serif)`, chevron em `var(--caramelo)`, bordas em `var(--bege)`, hover/foco em `var(--vinho)`), sem aparência de componente genérico "cru".
-- **Nota de teste automatizado:** o colapso do painel via `grid-template-rows: 0fr` + `overflow: hidden` no `.panelInner` faz com que o conteúdo interno (`.panelContent` e seus filhos) mantenha sua própria altura de layout "natural" — ou seja, `boundingBox()`/`isVisible()` do Playwright em cima de um elemento *dentro* do painel colapsado pode retornar um retângulo não-vazio (o elemento não sabe que está sendo clipado por um ancestral com altura 0), dando falso positivo de "visível". Para validar programaticamente que uma seção está de fato fechada, é preciso checar o `clientHeight` do próprio `.panelInner` (via `closest('[class*="panelInner"]')`), não a visibilidade do conteúdo filho — confirmado ao validar o piloto do Refúgio PetLuxo Cozy (`id: 6`) em **2026-08-14**.
+Busca o produto em `PRODUCTS` pelo `id` da URL. Se não existir ou tiver `visible === false`, renderiza `Navbar` + `NotFound` + `Footer`. Quando existe, usa `MinimalNavbar` no lugar do `Navbar` padrão.
 
-## Variação por cor (`ProductSizeSelector`, `src/components/product/ProductSizeSelector.jsx`)
+Estrutura renderizada:
 
-Adicionado em **2026-09-30** com a expansão da **Bolsa Voyage Signature** (`id: 17`), o primeiro produto do catálogo com variação que **não** é tamanho. A decisão foi **generalizar o seletor existente**, não criar um componente paralelo: `ProductSizeSelector` continua sendo o mesmo componente, usado nos mesmos dois lugares (`ProductPage` e `ProductModal`), com a mesma lista vinda de `product.buyLinks` e o mesmo `onSelect` — só ganhou uma prop opcional.
+1. Link "← Voltar para a loja"
+2. `ProductGallery` com `images={details?.gallery?.length > 0 ? details.gallery : [product.image]}`
+3. Bloco de informações: nome (`product.name`), `subtitle`, `originalPrice` riscado, preço, `ProductSizeSelector` (se houver `buyLinks`), descrição, `bullets`, `ProductBuyButton` + `TrustBadges`
+4. `BrandSeal`
+5. `Accordion` com as seções condicionais de `PRODUCT_DETAILS[product.id]`
 
-- **Prop `variationType`** (opcional, passada por `ProductPage.jsx` e `ProductModal.jsx` a partir de `product.variationType`): quando vale `'cor'`, o rótulo vira "Selecione a cor:" (em vez de "Selecione o tamanho:") e cada botão ganha, antes do texto, um `<span className={styles.swatch}>` com `background` = campo `color` da entrada correspondente do `buyLinks`. Ausente ou com qualquer outro valor → comportamento de tamanho idêntico ao de antes. Como a prop tem default implícito de tamanho, **nenhum dos 5 produtos com `buyLinks` por tamanho (ids 9, 14, 16, 21, 28) foi afetado** — verificado um a um via Playwright em `/produto/:id`.
-- **Chave `size` continua sendo a chave de seleção**, mesmo para cores: `useProductBuy` faz o cruzamento por igualdade de string (`buyLinks.find(bl => bl.size === selectedSize)`) e o primeiro item é pré-selecionado no `useEffect`. Por isso, para cor, `buyLinks[i].size` guarda o **próprio nome da cor** (`'Cinza'`, `'Rosa'`) — que é também o texto exibido no botão. Nenhum "Tam." aparece na tela, e o estado ativo (`aria-pressed` + classe `.sizeBtnActive`) é o mesmo dos outros produtos. A chave em si é semanticamente "rótulo da variação", não necessariamente um tamanho — dívida conhecida caso apareça um terceiro tipo de variação.
-- **Nenhuma lógica de compra nova:** a cor selecionada controla exclusivamente `activeBuyLink.link` via o `ProductBuyButton` já existente. O ID 17 não tem `prices`, então o bloco de preço continua renderizando o `price` único, igual nas duas cores (confirmado em teste automatizado: `R$ 429,00` nas duas).
-- **Visual:** o botão ganhou `display: inline-flex; align-items: center; gap: 8px` (para alinhar swatch + nome) e a classe `.swatch` — círculo de 12px com `border-radius: 50%` e um `box-shadow: inset 0 0 0 1px rgba(42, 37, 34, 0.18)` discreto, sem cor nova no `variables.css`. O resultado mantém o mesmo DNA do seletor de tamanho: 13px, borda `var(--vinho)`, raio 4px, ativo com fundo vinho e texto `var(--offwhite)` (~89×35px e ~84×35px no ID 17, medido no browser). Nenhuma alteração em CSS global.
-- **`aria-pressed` adicionado** aos botões do seletor (não existia antes): reflete o estado ativo e vale tanto para tamanho quanto para cor.
-- **Cores dos swatches medidas das fotos, não escolhidas por nome de cor:** como o modelo que executou a implementação não tem input visual, os hex foram derivados por análise de pixels (PIL + `colorsys`, mediana por matiz/saturação/valor) das fotos reais do produto em `public/images/products/bolsa-voyage-signature/`: **Cinza `#A9A49C`** (mediana da região neutra de `principal.webp`, s ≈ 0.08) e **Rosa `#B08A81`** (mediana dos pixels rosados de `bolsa-voyage-signature-5.webp`, matiz ≈ 12°, s ≈ 0.24). Se o valor real da cor divergir, basta trocar o hex no `products.js` — o resto do componente não depende dele.
-- **Risco do painel admin:** `products.js` é reescrito pelo painel externo, que não conhece `variationType` nem `color`. Se ele sobrescrever a entrada do id 17, o mais provável é o `color` sumir (e os botões ficarem só com o texto "Cinza"/"Rosa", ainda funcionais) ou o `buyLinks` voltar a `buyLink` único. Vale conferir o diff de `products.js` ao receber commits do painel.
+**Bloco de preço:** quando o produto tem `prices`, renderiza apenas a linha da variação selecionada (`activePrice.size — activePrice.price`) se houver `buyLinks` e `selectedSize`; sem `buyLinks`, lista todas as linhas de `prices`. Sem `prices`, renderiza o `product.price` único.
 
-## `MinimalNavbar` — header reduzido, exclusivo da `ProductPage` (`src/components/layout/MinimalNavbar.jsx`)
+## Navegação a partir do `ProductCard` (`src/components/product/ProductCard.jsx`)
 
-Header fixo simplificado, usado **somente** quando `ProductPage` renderiza a ficha de um produto existente e visível — mostra apenas a marca (disco do logo + "PETLUXO"), sem os links de seção (Produtos/Sobre/FAQ/Contato), sem botão de WhatsApp e sem hambúrguer/drawer, em qualquer resolução. A marca continua sendo um link para `/`.
+O `ProductCard` decide sozinho o destino do clique, usando `Boolean(PRODUCT_DETAILS[product.id])`:
 
-- **Por que existe:** o `Navbar` padrão foi construído para navegar entre seções da home (âncoras `#produtos`, `#sobre`, `#faq`, `#contato`) — isso não faz sentido dentro de uma ficha de produto específica, onde o cliente já chegou ao destino. Além disso, a altura real do `Navbar` padrão no mobile (~80px, definida pelo botão hambúrguer de 44px) era maior que o `padding-top` reservado pela `ProductPage` (que usava um `clamp()` baseado em `vw`, encolhendo para perto do piso de 48px em telas estreitas) — o header ficava sobrepondo o link "← Voltar para a loja". No desktop o mesmo `clamp` calculava um valor coincidentemente maior que a altura real do Navbar, por isso o problema só era visível no mobile.
-- **Reaproveitamento de estilos:** em vez de duplicar CSS, `MinimalNavbar.jsx` importa `Navbar.module.css` e usa diretamente as classes `.nav`/`.navScrolled` (fixed no topo, mesmo `z-index: var(--z-navbar)`, mesmo efeito de blur ao rolar a página) e `.brandMark`/`.logoDisc` (mesma tipografia/ícone da marca). Não existe `MinimalNavbar.module.css` — não há nada específico o suficiente para justificar um arquivo próprio.
-- **Onde é usado:** exclusivamente dentro de `ProductPage.jsx`, no branch em que o produto existe e está visível. O branch de "produto não encontrado" (`id` inválido ou `visible === false`) continua usando o `Navbar` padrão + `NotFound`, para manter a mesma experiência do 404 global do site (rota catch-all `*` em `src/app/page.jsx`), com navegação completa para o usuário se orientar. **Nenhuma outra página** (home, políticas, 404 global) foi alterada — todas continuam com `Navbar` padrão.
-- **Botão de WhatsApp:** decisão consciente de **não** incluir no `MinimalNavbar`, por dois motivos: (1) já existe precedente no projeto de remover CTAs de WhatsApp redundantes de contextos de navegação (commit `refactor: remove botão WhatsApp do drawer mobile da Navbar`); (2) a `ProductPage` já oferece WhatsApp de sobra — via `ProductBuyButton` (link secundário/fallback de compra) e via `Footer` — então repetí-lo no header só adicionaria ruído a um header pensado para ser mínimo.
-- **`padding-top` da `ProductPage`:** ajustado em `ProductPage.module.css` (`.page`) de `clamp(48px, 8vw, 96px)` para um valor fixo de `96px` (sem escala em `vw`), já que a causa raiz do bug de sobreposição no mobile era justamente esse `clamp` encolher abaixo da altura real do header em telas estreitas. `96px` cobre com folga a altura real do `MinimalNavbar` em qualquer largura (~68px no mobile mais estreito, sem o hambúrguer; ~74px no desktop).
+- **Com entrada em `PRODUCT_DETAILS`:** navega direto para `/produto/:id` via `useNavigate()`. O `ProductModal` não abre.
+- **Sem entrada:** chama a prop `onQuick(product)`, que continua fluindo de `Products.jsx` (estado `quick` do `HomePage`, em `src/app/page.jsx`) → `ProductGrid` → `ProductCard`, abrindo o `ProductModal`.
 
-## `BrandSeal` — selo "Por que escolher a PetLuxo?" (`src/components/ui/BrandSeal.jsx`)
+Conteúdo do card: botão de "visualizar" (ícone `Plus`), imagem (`loading="lazy"`), badge, `shortName || name`, `originalPrice` riscado quando houver, `price`, e o texto fixo "VIA WHATSAPP".
 
-Componente estático e global, sem props de produto (mesmo padrão de `TrustBadges.jsx`): renderiza sempre os mesmos 6 diferenciais fixos (curadoria premium, envio para todo o Brasil, compra segura, atendimento personalizado, conforto do pet, qualidade/elegância), cada um com emoji + texto curto. Usado dentro de `ProductPage`, entre o bloco principal do produto (imagem/preço/descrição/bullets) e as seções de conteúdo expandido — aparece em toda ficha de produto, independente de o produto ter ou não entrada em `PRODUCT_DETAILS`.
+O `ProductModal` não foi removido: continua sendo o quick view de todo produto **sem** ficha completa.
 
-**Distinto de `Differentials.jsx`** (seção da home, também com título "POR QUE ESCOLHER A PETLUXO", mas com 4 itens em formato de seção editorial completa, com números, título grande e call-to-action). `BrandSeal` é um bloco compacto e denso (card com grid 2 colunas, tipografia pequena), pensado para reforçar confiança dentro da ficha de produto sem competir visualmente com o conteúdo. Os dois componentes não compartilham código nem conteúdo e `Differentials.jsx` não foi alterado.
+## `ProductBuyButton` (`src/components/product/ProductBuyButton.jsx`)
 
-### Convenção de pastas de imagem por produto (`public/images/products/`)
+Componente compartilhado por `ProductModal` e `ProductPage`. Centraliza os 4 estados de compra (ver tabela em [Fluxo de compra](#fluxo-de-compra)). Recebe `{ product, activeBuyLink }`. Usa `wa()` para montar o link e importa `../../styles/buttons.css`.
 
-**33 dos 35 produtos** têm sua própria pasta dentro de `public/images/products/`, nomeada com um slug — kebab-case, minúsculo, sem acento, sem espaço, sem símbolos de marca registrada (™, ®) nem separadores decorativos (`|`, `—`). As duas exceções são os ids 39 e 40 (brinquedos criados pelo painel admin em setembro de 2026), que ainda têm a imagem solta na raiz de `products/`. Dentro da pasta:
+Com `HIDE_BUY_CTA = true`, `activeBuyLink` é recebido mas não determina nenhum link renderizado — só o texto do preço na página/modal.
 
-- `principal.webp` — sempre a imagem de capa (a referenciada em `product.image`, usada no card, no modal e como imagem principal da `ProductPage`).
-- `<slug-da-pasta>-2.webp`, `<slug-da-pasta>-3.webp`, ... — fotos adicionais de galeria, com o **slug da pasta como prefixo** seguido de número sequencial (ex.: `bolsa-transporte-petluxo-2.webp`, `bolsa-transporte-petluxo-3.webp`), para uso em `PRODUCT_DETAILS[id].gallery`. Numeração começa em `2` (o `1` conceitual é o `principal.webp`), ordenada pela ordem cronológica em que as fotos foram tiradas/recebidas (não pela ordem alfabética do nome original do arquivo). **Convenção adotada em 2026-08-10**, substituindo a numeração simples sem prefixo (`2.webp`, `3.webp`) usada antes — o prefixo evita ambiguidade quando o arquivo é visto fora do contexto da pasta (download avulso, listagem que mistura produtos, etc.).
-- **Primeiro caso real, e já validado ponta a ponta:** a Bolsa Transporte PetLuxo (`id: 8`, pasta `bolsa-transporte-petluxo`) recebeu 3 fotos adicionais via WhatsApp, convertidas para `bolsa-transporte-petluxo-2.webp`, `-3.webp` e `-4.webp` com `cwebp -q 82` (ferramenta disponível no sistema; o projeto não usa `sharp` nem ImageMagick para esse fluxo). Em **2026-08-10**, `PRODUCT_DETAILS[8].gallery` foi populado com os 4 caminhos (`principal.webp` primeiro, seguido dos 3 arquivos acima) e renderizado pelo componente `ProductGallery` (ver seção própria acima) — miniaturas + troca de imagem no desktop/tablet, carrossel por swipe no mobile, tudo validado visualmente e via Playwright em `/produto/8`. Em **2026-08-11**, o mesmo produto validou também zoom com lupa (depois revisado para o modelo de toggle por clique, na mesma data), setas de navegação e dots (ver seção `ProductGallery` acima).
-- A pasta `espreguicadeira-madeira-dobravel` (produto `id: 37`) manteve esse nome mesmo após o produto ser renomeado para "Chaise Féline" em **2026-08-13** — convenção já documentada e aceita: o nome da pasta é só um identificador de arquivo, pode ficar desatualizado em relação ao nome de exibição do produto sem nenhum efeito funcional.
-- Hoje 8 dos 10 produtos com entrada em `PRODUCT_DETAILS` têm `gallery` populada (ids 8, 9, 16, 17, 21, 35, 37 e 38); os ids 6 e 34 são entrada sem galeria. A maioria das 33 pastas ainda tem só `principal.webp`, aguardando fotos. O Refúgio PetLuxo Cozy (`id: 6`, pasta `refugio-petluxo-cozy`) segue como exemplo de entrada sem galeria, com apenas `specs`, `whatsIncluded` e `careInstructions` (ver seção "Expansão de conteúdo de produtos" acima).
+## `ProductSizeSelector` e variação por cor (`src/components/product/ProductSizeSelector.jsx`)
 
-- **Base do slug da pasta: `shortName`, não `name`.** O `name` de um produto costuma incluir subtítulo/qualificador de marketing (ex.: `"Comedouro Maison Élevé™ | Cerâmica Premium com Suporte Elevado"`), o que gerava pastas com nomes muito longos quando o slug era derivado dele. Desde 2026-08-09, o slug da pasta é gerado a partir do `shortName` do produto (ex.: `"Comedouro Maison Élevé"` → `comedouro-maison-eleve`), que é mais curto e estável por natureza — o mesmo campo já usado como nome de exibição no card/modal. Em **2026-08-09**, os 15 produtos cuja pasta passava de ~40 caracteres foram renomeados retroativamente para seguir essa convenção (ex.: `bolsa-voyage-signature-transporte-luxury-para-pets` → `bolsa-voyage-signature`; `cesto-organizador-personalizado-para-pets-colecao-cozy-luxo` → `cesto-organizador-cozy`), preservando histórico do arquivo via `git mv`. Produtos cujo slug baseado em `name` já era razoavelmente curto não foram tocados nessa passada — por isso o catálogo hoje tem uma mistura de pastas com slug de `name` (as que já eram curtas) e de `shortName` (as que eram longas); não há problema nisso, é só identificador de arquivo.
-- **Ao cadastrar um produto novo:** gerar o slug da pasta a partir do `shortName` (não do `name`) desde o início, para não repetir o problema. Antes de criar a pasta, checar se o slug gerado colide com algum já existente em `public/images/products/` — se colidir, ajustar manualmente um dos dois (ex.: acrescentar uma palavra distintiva) para manter unicidade.
-- A ideia original era migrar produto por produto, só quando ganhasse galeria própria; essa decisão foi revertida em favor de deixar a convenção consistente em todo o catálogo desde já — os 32 produtos foram migrados de uma vez, preservando o histórico do arquivo via `git mv`. Detalhes e o risco aceito (nome da pasta pode ficar desatualizado se o produto for renomeado — inofensivo, é só identificador de arquivo) estão documentados em [`docs/PRODUCT_EXPANSION.md`](docs/PRODUCT_EXPANSION.md).
-- **Produto id 17 (`Bolsa Voyage Signature`):** em **2026-09-30** a pasta já existente `bolsa-voyage-signature/` recebeu 4 fotos reais do produto, já convertidas e nomeadas segundo a convenção (`bolsa-voyage-signature-2.webp` a `-5.webp`; `-2` é a única horizontal, 1312×1199, as outras três verticais ~1050×1620). `PRODUCT_DETAILS[17].gallery` foi populado com os 5 caminhos (`principal.webp` primeiro). O `principal.webp` **não** foi trocado (944×1037) — segue como capa. Na mesma data o `buyLink` único do produto virou `buyLinks` por cor (Cinza/Rosa) com `variationType: 'cor'`, ver seção "Variação por cor" acima. Tudo isso foi commitado em **`7b950de` "feat: expand Bolsa Voyage Signature with color variants"** (2026-09-30), junto das 4 fotos novas — ainda não estava no remoto no momento desta atualização.
-- **Nota:** há três arquivos soltos na raiz de `products/` (fora de qualquer pasta): `arranhador-felino-sisal-ajustavel-4-niveis-portatil.webp` (resíduo anterior à migração, não referenciado por nenhum produto — candidato a limpeza) e `brinquedo-petluxo-companhia-para-brincar.webp` / `polvo-mimo-brinquedo-interativo-com-som-para-caes.webp` (ids 39 e 40, referenciados no `image` como estão — o painel admin os gravou assim; vale migrá-los para pastas próprias quando forem revisados).
-- **Produto id 21 (`Cama Executive Bed™`):** em **2026-09-25**, 4 fotos reais do produto (recebidas em `.jpeg`) foram convertidas com `cwebp -q 82` e organizadas na pasta já existente `executive-bed/`. Numa primeira passada, o `principal.webp` antigo (um render de ambientação/lifestyle, não uma foto real do produto) foi substituído pela foto real de visão frontal, corpo inteiro e bem iluminada; as outras 3 fotos viraram `executive-bed-2.webp` (visão geral angulada), `executive-bed-3.webp` (detalhe de canto com tachas) e `executive-bed-4.webp` (close-up mais próximo, canto/costura). Numa segunda passada, ainda em **2026-09-25**, essa decisão foi revertida a pedido: `principal.webp` foi restaurado ao render de ambientação original via `git checkout HEAD --`, voltando a ser a capa do produto. A foto frontal (que havia sido sobrescrita ao virar `principal.webp` e não tinha mais cópia solta em `public/`) foi recuperada de um artefato de build anterior em `dist/images/products/executive-bed/principal.webp` (cópia estática gerada pelo `npm run build` rodado antes da reversão) e salva como um **5º item de galeria**, `executive-bed-5.webp` — **não** foi renomeada para `executive-bed-4.webp` como inicialmente cogitado, porque esse slot já estava ocupado pelo close-up de canto/costura (uma foto real distinta, que seria perdida sem necessidade). `PRODUCT_DETAILS[21].gallery` reflete isso: `principal.webp` (render de ambientação, capa) + `executive-bed-2.webp` (visão geral angulada) + `executive-bed-3.webp` (detalhe de canto) + `executive-bed-4.webp` (close-up mais próximo) + `executive-bed-5.webp` (frontal, recuperada) — 5 itens no total, não 4. `specs` (5 campos: `revestimento`, `enchimento`, `design`, `fechamento`, `baseInferior` — os três primeiros novos e já adicionados ao mapa `SPEC_LABELS` de `ProductPage.jsx`; `design` e `fechamento` já existiam e foram reaproveitados), `sizeChart` com os 2 tamanhos do produto (M e G, cujos `prices`/`buyLinks` já existiam em `products.js`) e `whatsIncluded` completam a ficha — sem `howToChooseSize`, `airTravelNote`, `warranty` nem `faq`. **Peso aproximado por tamanho não foi informado** — o campo `weight` do `sizeChart` usa `'Consulte disponibilidade'` nas duas linhas, mesmo padrão já usado no piloto da Bolsa Transporte PetLuxo para dado ainda não confirmado com o fornecedor. Mudanças deixadas no working tree para revisão, sem commit.
-- **Produto id 9 (`Élan Couro`, ex-"Kit Milano Camelo"):** em **2026-09-10**, a pasta de imagens foi renomeada de `kit-milano-camelo/` para `elan-couro/` via `git mv`. Quatro fotos novas do Élan Couro, recebidas em `.png`, foram convertidas com `cwebp -q 82` e padronizadas: `principal.webp` (visão geral do conjunto — coleira, guia e tag sobre bancada de mármore) e `elan-couro-2.webp`/`-3.webp`/`-4.webp` (coleira no pet, coleira em detalhe isolada, e dispensers de saquinho em detalhe, nessa ordem). O `principal.webp` antigo (foto do Kit Milano) foi excluído. Na mesma data, o cadastro em `products.js` foi finalizado (`name`, `shortName`, `subtitle` — campo novo para esse produto, não existia antes —, `description`, `bullets`, `price: 'R$ 999,90'`, `image` apontando para a pasta nova, `tags`) e uma entrada `9` foi adicionada a `PRODUCT_DETAILS` em `productDetails.js` (`gallery` com as 4 fotos, `specs` com 4 campos — `material`, `ferragens`, `composicaoKit`, `tamanhosDisponiveis`, os 3 últimos novos e já adicionados ao mapa `SPEC_LABELS` de `ProductPage.jsx` — e `whatsIncluded` com os 3 itens do kit). `category`, `order`, `categoryOrder` e `supplierLink` (que ainda aponta para a URL antiga do fornecedor, `.../kit-milano-camelo` — é só uma referência interna, não afeta a UI) foram mantidos como estavam.
-  - **`buyLinks` por tamanho (resolvido em 2026-09-10, commit `2016940`):** o produto tinha 3 tamanhos (PP, M, G) e usava um único `buyLink` temporário (`https://pag.ae/827f8owEm`) para os três. Hoje já são 3 `buyLinks` distintos (`827rqQKra`, `8294DGNVn`, `8294FiLYH` para PP/M/G), então o produto passou a exibir o `ProductSizeSelector` na ficha — mas **sem `prices`**, então o preço continua sendo o único `price: 'R$ 999,90'`, sem tabela de valores por tamanho.
-  - **Campo `sizeGuideNote`:** a entrada de `id: 9` em `PRODUCT_DETAILS` inclui um campo `sizeGuideNote` (texto de referência de peso por tamanho: PP 2–4 kg, M 9–15 kg, G 15–23 kg) que não faz parte do schema descrito em `docs/PRODUCT_EXPANSION.md` (que ainda lista 9 campos) — mas que **é renderizado**: `ProductPage.jsx` tem um `AccordionItem` "Guia de medidas" para ele, logo abaixo de "Como escolher o tamanho ideal". **Correção de registro (2026-09-30):** este documento afirmava antes que o campo existia no objeto mas não aparecia em lugar nenhum da ficha; o oposto é o real. `sizeGuideNote` virou de fato o 10º campo do schema e já é usado em dois produtos (id 9 e id 34) — vale incorporá-lo ao schema de `docs/PRODUCT_EXPANSION.md` numa próxima passada.
-  - **Pendente:** peso e dimensões para uso em cálculo de frete (`shipping.js` ou equivalente) ainda não foram cadastrados para este produto.
-- **Produto id 38 (`Refúgio Majestá`):** publicado pelo painel admin externo em **2026-09-10** (commits `feat: imagem refugio-majesta---caminha-premium-em-madeira-com-cortinas.webp adicionada via painel admin` e `feat: novo produto adicionado via painel admin`), já com `buyLink` real (`https://pag.ae/827Z5Q7YG`) — não é um placeholder temporário como o do Élan Couro acima. O painel admin gravou a imagem solta na raiz de `products/` (`refugio-majesta---caminha-premium-em-madeira-com-cortinas.webp`, sem pasta própria) — reorganizada na mesma data para seguir a convenção: pasta `refugio-majesta/` (slug do `shortName` "Refúgio Majestá") criada via `git mv`, arquivo movido para `refugio-majesta/principal.webp`, e o campo `image` em `products.js` atualizado. Também corrigido nessa passada: o produto tinha `originalPrice: 'R$ 597,00'` junto de `price: 'R$ 999,90'` — resíduo de um preço antigo (o valor "de" era maior que o "por", o que não fazia sentido de promoção) — removido (`originalPrice: null`); o produto não está em promoção, preço único R$ 999,90. Em **2026-09-10**, também recebeu ficha completa em `PRODUCT_DETAILS[38]` (`productDetails.js`): `gallery` com 2 fotos (`principal.webp` + `refugio-majesta-2.webp`, esta última convertida de `.jpeg` recebido via WhatsApp para `.webp` com `cwebp -q 82` e renomeada para seguir a convenção `<slug>-2.webp`), `specs` com 9 campos (estrutura, almofada, cortinas, dimensões da estrutura externa, base interna, altura total, peso do produto, indicação de uso, onde utilizar) e `whatsIncluded` com 4 itens — sem `sizeChart`, `howToChooseSize`, `airTravelNote`, `warranty` nem `faq`. **Pendente:** peso (18 kg) e dimensões (85×85×72 cm) já foram levantados (inclusive já registrados dentro de `specs` acima, como texto) mas ainda não foram cadastrados de forma estruturada em `shipping.js`/equivalente — esse arquivo ainda não existe no projeto.
+Componente único para tamanho e cor, usado em `ProductPage` e `ProductModal` com a mesma lista de `product.buyLinks` e o mesmo `onSelect`. Props: `buyLinks`, `selectedSize`, `onSelect`, `variationType`.
 
-### Estado atual do ID 17 (`Bolsa Voyage Signature`)
+- `variationType === 'cor'` → rótulo "Selecione a cor:" e cada botão ganha um `<span className={styles.swatch}>` com `background` = campo `color` da entrada.
+- Ausente ou outro valor → rótulo "Selecione o tamanho:", sem swatch. É o caso de 8 dos 9 produtos com `buyLinks`.
+- Único produto com `variationType: 'cor'`: **id 17** (`buyLinks` com `size` = 'Cinza' e 'Rosa', e `color` = `#A9A49C` / `#B08A81`).
+- Cada botão tem `aria-pressed` refletindo o estado ativo; a chave continua sendo `buyLink.size`, com cruzamento por igualdade de string no `useProductBuy`.
 
-Referência rápida para quem for dar continuidade à ficha desse produto (populada em **2026-09-30**).
+### `useProductBuy` (`src/hooks/useProductBuy.js`)
 
-- **`PRODUCT_DETAILS[17]` tem só `gallery`** (5 fotos). Deliberadamente mínimo: ainda **não** há dados levantados no projeto para `specs`, `sizeChart`, `howToChooseSize`, `sizeGuideNote`, `whatsIncluded`, `careInstructions`, `airTravelNote`, `warranty` nem `faq`, e nada foi inventado para tapar a lacuna. Como o produto só tem `gallery`, a `ProductPage` dele hoje mostra bloco principal + `BrandSeal` + galeria interativa, **sem nenhum `AccordionItem`** — comportamento esperado, não bug.
-- **Compra em `products.js`:** `variationType: 'cor'` + `buyLinks` de 2 entradas (`{ size: 'Cinza', link: 'https://pag.ae/81LHebDYP', color: '#A9A49C' }` e `{ size: 'Rosa', link: 'https://pag.ae/82cLZ3jr1', color: '#B08A81' }`). O link da Cinza é o `buyLink` que o produto já tinha; o da Rosa foi informado pelo negócio em **2026-09-30**. **Preço único `R$ 429,00` nas duas cores** — sem `prices`, sem `originalPrice`, sem badge.
-- **O que ainda falta levantar com o negócio** (nada disso existe hoje no repositório): material externo e forração, tipo de alças, fechamento, ventilação, medida interna/externa e peso indicado, indicação de porte mais precisa, o que acompanha o produto, instruções de limpeza, garantia e qualquer FAQ. Só preencher o que for informado — o padrão do projeto é entrada parcial, não campo em branco.
-- **Duas ressalvas conhecidas:** (1) o `supplierLink` do id 17 aponta para a página de um **comedouro dobrável da Magalu** — resíduo errado de cadastro, nunca exibido na UI, deixado como está por estar fora do escopo da expansão; (2) `products.js` é reescrito pelo painel admin, que não conhece `variationType`/`color` — conferir o diff desse arquivo a cada commit vindo do painel.
+Mantém `selectedSize` (inicializado com o primeiro `buyLinks[0].size` num `useEffect` dependente de `product`) e deriva `activeBuyLink` (`buyLinks.find(bl => bl.size === selectedSize)`) e `activePrice` (`prices.find(p => p.size === selectedSize)`). Não distingue tamanho de cor.
+
+## `ProductGrid` (carrossel)
+
+Carrossel próprio, sem biblioteca externa. Paginação por `perView` (1 item abaixo de 640px, 2 abaixo de 1024px, 3 acima), setas, dots e swipe touch com limiar de 50px e detecção de direção. Props: `products`, `onQuick`, `resetKey`, `title`.
+
+## `ProductGallery` (`src/components/product/ProductGallery.jsx`)
+
+Recebe `images` (array de caminhos, com a capa sempre como **primeiro** item) e `alt`. Três branches:
+
+- **`images.length <= 1`:** só a imagem, sem miniaturas, setas, dots nem lupa. Em touch, tocar abre o `ProductLightbox`.
+- **Desktop/tablet (≥ 640px, mais de 1 imagem):** miniaturas clicáveis em coluna à **esquerda** (`<button>` por miniatura, `aria-current` na ativa) + par de setas circulares (`.navArrow`) sobre a imagem principal, desabilitadas nas extremidades (sem looping).
+- **Mobile (< 640px, mais de 1 imagem):** carrossel arrastável de 1 imagem por vez, com swipe por `touchstart`/`touchmove`/`touchend` (limiar de 50px) e fileira de dots clicáveis.
+
+Dois hooks locais: `useIsMobile(640)` decide **layout**; `usePointerCoarse()` (`window.matchMedia('(pointer: coarse)')`) decide o **gate do lightbox**. São independentes — um tablet touch em paisagem tem `isMobile=false` e `isTouch=true`. A troca de layout é decidida em JS com listener de `resize`, então desktop e mobile renderizam estruturas de DOM diferentes.
+
+**Zoom com lupa:** botão `.zoomBadge` (um `<button>` real com `aria-pressed`) que **alterna** `zoomEnabled` (inicia `false`). Com zoom ativo, `onMouseMouseMove` sobre `.mainImageWrap` atualiza `backgroundPosition` do `.zoomOverlay` (`background-size: 200% 200%`). O badge só existe em telas ≥ 640px **sem touch** — em touch ele é substituído pelo toque que abre o lightbox. `zoomEnabled` é estado independente de `activeIndex`: trocar de foto não reseta o zoom.
+
+## `ProductLightbox` (`src/components/product/ProductLightbox.jsx`)
+
+Visualizador em tela cheia para dispositivos touch. Importado com `React.lazy` em `ProductGallery.jsx` e renderizado só dentro de `{isTouch && <Suspense>}` — o gate está no render condicional, não numa prop `open={false}`, então quem não tem touch nunca baixa o chunk da biblioteca.
+
+- Pinch-to-zoom, double-tap, pan e swipe vêm do plugin `Zoom` do `yet-another-react-lightbox`; setas, fechar e o scroll lock do body vêm do core.
+- `maxZoomPixelRatio: 2` (prop `zoom`) — calibrado para a resolução real das fotos do catálogo (~830px a ~1536px no lado maior).
+- Theming por CSS custom properties `--yarl__*` em `ProductLightbox.module.css`, aplicados via prop `className`. `--yarl__portal_zindex` usa `var(--z-above-modal)`.
+- **`--yarl__color_backdrop` é opaco (`var(--ink)`, alpha 1) por decisão conscious** — com backdrop translúcido o fundo vazava em alguns cenários de teste automatizado, apesar de todos os estilos computados estarem corretos. Se precisar de transparência no futuro, validar visualmente.
+- Abre pelo `onClick` na `.mainImageWrap` nos branches de imagem única e desktop/tablet. No branch mobile, o `onTouchEnd` já existente foi estendido: sem swipe e com deslocamento `< 10px` em ambos os eixos, trata como toque real e abre o lightbox — evita abrir quando o usuário só rolava a página sobre a imagem.
+
+**Ressalva de acessibilidade (consciente):** o pinch-zoom fora do lightbox é bloqueado via `touch-action` e listener de gesto, o que reduz a capacidade de zoom da página para quem depende de pinch-zoom por baixa visão. Não afeta o zoom de acessibilidade em nível de sistema operacional (ex.: "Zoom" do iOS), que é independente do `touch-action`.
+
+## `Accordion` (`src/components/ui/Accordion.jsx`)
+
+Genérico e sem conhecimento de produto. `Accordion` é só o wrapper visual (`<div>` com as bordas entre itens); `AccordionItem` (`title`, `defaultOpen`, `children`) controla seu próprio estado `open` — não há estado compartilhado no pai, então vários itens podem ficar abertos ao mesmo tempo.
+
+Usado hoje só em `ProductPage.jsx`. O bloco principal do produto e o `BrandSeal` ficam **fora** do acordeão.
+
+Cabeçalho é um `<button>` real dentro de `<h3>` (`aria-expanded`, `aria-controls`, navegável por teclado), com `Icon.Chevron` girando 180° via CSS. A transição usa CSS Grid `grid-template-rows: 0fr → 1fr` na `.panel`, sem medir altura em JS.
+
+**Pegadinha de layout:** o padding do conteúdo não pode ficar no elemento com `overflow: hidden` dentro do grid item (`.panelInner`), porque padding conta para a altura mínima mesmo com a track em `0fr` e vaza alguns pixels de conteúdo. O padding fica num filho adicional (`.panelContent`), deixando `.panelInner` só com `overflow: hidden` e `min-height: 0`.
+
+## `MinimalNavbar` (`src/components/layout/MinimalNavbar.jsx`)
+
+Header fixo reduzido, usado **somente** na `ProductPage` de um produto existente e visível: só a marca (disco do logo + "PETLUXO"), sem links de seção, sem botão de WhatsApp e sem hambúrguer/drawer, em qualquer resolução. A marca é link para `/`.
+
+Existe porque o `Navbar` padrão foi feito para navegar âncoras da home (`#produtos`, `#sobre`, `#faq`, `#contato`), o que não faz sentido numa ficha de produto — e porque a altura real do `Navbar` no mobile (~80px) era maior que o `padding-top` reservado pela `ProductPage`, deixando o header sobrepor o link "← Voltar para a loja".
+
+Reaproveita `Navbar.module.css` (`.nav`, `.navScrolled`, `.brandMark`, `.logoDisc`) — **não existe** `MinimalNavbar.module.css`. O `padding-top` do `.page` em `ProductPage.module.css` é um valor fixo de `96px`, sem escala em `vw`.
+
+O branch de produto não encontrado (id inválido ou `visible === false`) usa o `Navbar` padrão + `NotFound`, igual ao 404 global.
+
+## `BrandSeal` (`src/components/ui/BrandSeal.jsx`)
+
+Componente estático e global, sem props de produto (mesmo padrão de `TrustBadges`): renderiza sempre os mesmos 6 diferenciais fixos, cada um com emoji + texto curto. Aparece em toda ficha de produto, independente de haver entrada em `PRODUCT_DETAILS`.
+
+Distinto de `Differentials.jsx` (seção da home, título "POR QUE ESCOLHER A PETLUXO" com 4 itens em formato editorial). Não compartilham código nem conteúdo.
 
 ## Seções da home (`src/app/page.jsx`)
 
-Ordem: `Navbar` → `Hero` → `Featured` → `Products` → `Story` → `Differentials` → `CTA` → `FAQ` → `Footer`, mais `ProductModal` (quick view global) e, em desenvolvimento, `DevTweaks`. `ScrollToTop` (ver seção própria acima) é montado como irmão de `<Routes>` em `App()`, fora de qualquer página específica.
+Ordem: `Navbar` → `Hero` → `Featured` → `Products` → `Story` → `Differentials` → `CTA` → `FAQ` → `Footer`, mais `ProductModal` (quick view global) e, em desenvolvimento, `DevTweaks`. `ScrollToTop` é montado como irmão de `<Routes>` dentro de `App()`.
 
-Rotas adicionais (fora da home): `/produto/:id` (ficha completa de produto, ver seção acima), `/politica-de-privacidade`, `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega`, `/termos-de-uso`, e um catch-all `*` que renderiza `NotFound` dentro do layout padrão (Navbar + Footer).
+Rotas fora da home: `/produto/:id`, `/politica-de-privacidade`, `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega`, `/termos-de-uso`, e um catch-all `*` com `NotFound` dentro do layout padrão.
 
 ### `Featured` (`src/components/sections/Featured.jsx`)
-Seção "Produto em Destaque", logo após a Hero. Busca em `PRODUCTS` o primeiro produto com `featured === true && visible !== false` e renderiza imagem, nome (com `PetLuxo™` estilizado em itálico/dourado quando presente no nome), subtítulo, descrição completa e botão "COMPRAR AGORA" (`buyLink` ou o primeiro item de `buyLinks`). Se o produto tiver `prices`, mostra o menor valor precedido de "A PARTIR DE". Se nenhum produto tiver `featured: true`, a seção não renderiza nada.
+
+Busca em `PRODUCTS` o **primeiro** produto com `featured === true && visible !== false` (hoje: id 8, Bolsa Transporte) e renderiza a seção "Produto em Destaque". Se nenhum produto tiver `featured: true`, a seção não renderiza nada.
+
+Conteúdo: tag "DESTAQUE" sobre a imagem, "A PARTIR DE" + o **menor** valor de `prices` quando o produto tem `prices` (senão o `price` único), nome com `PetLuxo™` estilizado em itálico/dourado quando presente no `name` (função `renderName`), `subtitle`, `description` e **dois CTAs**:
+
+- "CONSULTAR VIA WHATSAPP" (`btn btn-primary`, `wa()` com a mensagem `Olá! Gostaria de mais informações sobre "<name>".`)
+- "VER TODOS OS PRODUTOS" (`btn btn-ghost`, `href="#produtos"`)
+
+Não há nenhum `buyLink`/`buyLinks` neste componente.
 
 ### `Products` (`src/components/sections/Products.jsx`)
-Seção central do catálogo. Dois modos de exibição:
 
-- **Modo padrão** (sem busca/filtro ativo): carrossel "Mais Vendidos" sempre visível + botão "Ver mais produtos" que expande um carrossel por categoria (uma `ProductGrid` para cada categoria com `visible !== false` que tenha ao menos um produto visível).
-- **Modo filtro** (busca digitada e/ou pill de categoria selecionada): substitui os carrosséis por um grid flat (`resultsGrid`) com todos os produtos que combinam o filtro; exibe estado vazio com link para WhatsApp quando nada é encontrado.
+Dois modos de exibição:
 
-A busca casa por palavras (todas as palavras digitadas precisam aparecer) em `name`, `shortName`, `label` das categorias do produto e `tags`. Produtos com `visible: false` nunca aparecem em busca, filtro ou carrosséis.
+- **Padrão** (sem busca/filtro ativo): carrossel "Mais Vendidos" sempre visível (hoje 2 produtos: ids 39 e 8, ordenados por `categoryOrder['mais-vendidos']` decrescente) + botão "Ver mais produtos" que expande um `ProductGrid` por categoria com `visible !== false` que tenha ao menos um produto visível.
+- **Filtro** (busca digitada e/ou categoria selecionada): grid flat (`resultsGrid`) com os produtos que combinam, e estado vazio com link para WhatsApp quando nada é encontrado.
 
-O campo de busca (`.searchInput`) usa `font-size: 16px` desde **2026-08-14** (era 13px) — ver seção "Bloqueio de pinch-zoom no Safari/iOS" acima para o motivo (abaixo de 16px, o iOS Safari dá zoom automático na página ao focar o campo).
+**Busca:** casa por palavras (todas as palavras digitadas precisam aparecer) em `name`, `shortName`, label das categorias do produto e `tags`. Produtos com `visible: false` nunca aparecem.
 
-#### Encerramento da categoria — "FIM DESTA SELEÇÃO" (`Products.jsx` + `Products.module.css`)
+**Ordenação do grid de resultados:** por `Math.max(...Object.values(categoryOrder))` decrescente — o maior peso entre todas as categorias do produto, não o da categoria ativa. Já os carrosséis por categoria ordenam pela `categoryOrder` da categoria específica.
 
-Adicionado em **2026-10-01**. Bloco editorial discreto renderizado entre o **último produto da categoria filtrada** e a seção "Sobre Nós" (`Story`), que fica imediatamente depois de `Products` na home (`src/app/page.jsx:43-44`). Antes disso, a transição era produto → foto grande do "Sobre Nós" sem nenhum elemento indicando o fim da seleção.
+**Filtro de categoria — dois componentes:**
+- Desktop (≥ 641px): pills horizontais em `styles.pillsScroll`, com "Todos" + uma pill por categoria que tenha produto visível (`categoriesWithProducts`).
+- Mobile (≤ 640px): `CategorySelector` (`src/components/ui/CategorySelector.jsx`) — botão fechado que mostra a categoria selecionada (ou "Todos") e abre um **bottom sheet** com todas as opções. Fecha com `Escape` e devolve o foco ao botão gatilho; enquanto aberto, congela a página com `body { position: fixed; top: -scrollY }` (técnica necessária porque `overflow: hidden` não basta com `scroll-behavior: smooth`).
 
-- **Ponto de inserção:** dentro do branch `filteredProducts.length > 0` do ternário de `isFiltering`, logo após o `</div>` do `resultsGrid`. Como o ternário é uma **expressão** (não uma lista de filhos JSX), os dois elementos ficaram envolvidos em um fragmento `<>…</>` — dois JSX irmãos dentro de um branch parenthesizado não parseiam sem ele.
-- **Condição de exibição:** `activeCategory !== null && query.trim() === ''`. `isFiltering` **não** é usado como condição — ele também representa busca textual e dispararia o bloco após qualquer busca. `filteredProducts.length > 0` também não é testado: é garantido pela posição no branch. E o bloco, por estar dentro do branch de filtro, é **exclusivamente** excluído do catálogo normal — nada aparece depois de cada categoria no modo padrão.
-- **Busca + categoria combinadas:** o bloco **não** aparece (o texto "fim desta categoria" mentiria, já que a categoria tem mais produtos fora do filtro de texto).
-- **Conteúdo:** label editorial "FIM DESTA SELEÇÃO" (reaproveitando o `.section-tag` global), a linha "Você chegou ao fim desta categoria." em `.serif`, e o CTA "Explorar categorias" (`.btn.btn-ghost` + `Icon.ArrowR`). Nenhuma dependência nova; `buttons.css` e `icons.jsx` já eram importados pelo arquivo.
-- **Visual:** divisor superior `1px solid rgba(176,137,104,0.18)` — o mesmo idioma de `.productsCategoryBlock` —, conteúdo centralizado, altura de ~150px (mobile) a ~181px (desktop). Pausa total entre o último card e a imagem do "Sobre Nós": ~286px no mobile, ~335px no desktop. No `max-width: 640px` o espaçamento encolhe (margin-top 32px, padding-top 24px, gap 14px).
-- **Animação:** `resultFadeIn` (o mesmo keyframe dos cards do `resultsGrid`), **não** `.reveal` — o `.reveal` global depende do IntersectionObserver para sair de `opacity: 0` e ficaria invisível silenciosamente se uma refatoração futura mexesse no array de dependências do observer local de `Products.jsx:66-79`. O `resultFadeIn` é CSS puro e determinístico.
-- **CTA "Explorar categorias":** `handleExploreCategories` faz `setActiveCategory(null)` + `sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })` — o mesmo padrão de `handleCollapse`. O scroll não é polimento: sem ele o usuário fica no fim da página quando o grid de resultados é desmontado e todos os carrosséis são montados no lugar, com `overflow-anchor: none` global desativando a correção do navegador.
-- **Acessibilidade:** CTA é `<button>` nativo com texto completo (a seta é complementar, nunca a única indicação da ação) e foco de teclado visível pelo outline padrão do navegador. Nenhum elemento interativo novo além do próprio CTA.
-- **Validação (2026-10-01):** Playwright em 3 viewports (375 touch, 768 touch, 1440 desktop) confirmou — encerramento **ausente** no catálogo normal, na busca textual pura e na busca+categoria; **presente** com categoria selecionada, em todos os breakpoints; ordem no DOM último card → encerramento → imagem do "Sobre Nós"; `opacity: 1` final (sem depender do IntersectionObserver); CTA nativo, acionável por `Enter`; após o CTA, encerramento removido, grid desmontado, pill "Todos" reativada e `#produtos` no topo do viewport. Sem erros de console. `npm run build` passou.
+Há também um botão `searchClear` (ícone ×) que aparece quando há texto na busca, limpando o campo e devolvendo o foco ao input.
 
-### `ProductGrid` (carrossel)
-Carrossel próprio (sem biblioteca externa), com paginação por `perView` responsivo (1 item < 640px, 2 < 1024px, 3 acima disso), setas, dots e swipe touch (limiar de 50px, com detecção de direção para não capturar scroll vertical). **A mesma técnica de swipe (limiar de 50px, `touchstart`/`touchmove`/`touchend`) e o mesmo visual de setas/dots foram reaproveitados em `ProductGallery`** (ver seção "Expansão de conteúdo de produtos" acima) — carrossel mobile, setas de navegação em todas as resoluções e dots no mobile da ficha de produto.
+**Encerramento da categoria — "FIM DESTA SELEÇÃO":** bloco editorial entre o último produto da categoria filtrada e a seção "Sobre Nós" (`Story`). Aparece dentro do branch de filtro, logo após o `resultsGrid`, com a condição `activeCategory !== null && query.trim() === ''` — não aparece na busca textual pura nem na busca+categoria (o texto "fim desta categoria" mentiria). Conteúdo: label "FIM DESTA SELEÇÃO" (`.section-tag`), a linha "Você chegou ao fim desta categoria." em `.serif`, e o CTA "Explorar categorias" (`btn btn-ghost` + `Icon.ArrowR`), que faz `setActiveCategory(null)` + `scrollIntoView({ behavior: 'smooth', block: 'start' })` — mesmo padrão de `handleCollapse`. Animação por `resultFadeIn` (CSS puro), não por `.reveal`.
 
-### `ProductCard`
-Card clicável. Mostra imagem, badge, nome, preço (com preço original riscado quando houver) e rótulo "COMPRAR AGORA" ou "VIA WHATSAPP" conforme o produto tenha `buyLink`/`buyLinks` ou não. O clique tem dois comportamentos, decididos dentro do próprio componente (ver seção "Navegação direta para produtos com ficha completa" acima): navega direto para `/produto/:id` se o produto tiver entrada em `PRODUCT_DETAILS`; caso contrário, chama a prop `onQuick` para abrir o `ProductModal` (quick view), como sempre funcionou.
+**Observador local de reveal:** `Products.jsx` tem um `IntersectionObserver` próprio que reobserva `.reveal:not(.in)` a cada mudança de `isFiltering`/`filteredProducts`/`expanded`, porque o `useScrollEffects` global roda só uma vez no mount e não enxerga elementos montados depois pelo React.
 
-### `ProductModal` (quick view)
-Modal com imagem, descrição, bullets e botão de ação. Aberto via callback `onQuick`, que hoje só é efetivamente chamado pelo `ProductCard` para produtos **sem** entrada em `PRODUCT_DETAILS` (ver seção "Navegação direta para produtos com ficha completa" acima) — para produtos com ficha completa, o clique no card pula o modal e vai direto para `/produto/:id`. Regras de exibição do botão principal (via `ProductBuyButton`, compartilhado com `ProductPage` — ver seção "Expansão de conteúdo de produtos"):
-1. `badge === 'ESGOTADO'` → botão de compra desabilitado + link "CONSULTAR VIA WHATSAPP"
-2. Produto com `buyLinks` → seletor de variação (`ProductSizeSelector`, que é de tamanho por padrão e de **cor** quando `product.variationType === 'cor'` — ver seção "Variação por cor") + botão "COMPRAR AGORA" apontando para o link da variação selecionada
-3. Produto com `buyLink` único → botão "COMPRAR AGORA" direto
-4. Nenhum link de compra → botão único "CONSULTAR VIA WHATSAPP"
+**Input de busca:** `.searchInput` usa `font-size: 16px` — abaixo de 16px o iOS Safari dá zoom automático na página ao focar o campo (ver [Bloqueio de pinch-zoom](#bloqueio-de-pinch-zoom-e-reset-de-escala)). `padding: 10px 0` e `line-height` explícito mantêm a altura da barra próxima à original com 13px.
 
-Em todos os casos com link de compra, também é oferecido um link secundário para WhatsApp. Quando o produto tem ficha completa (`PRODUCT_DETAILS[product.id]` existe), um link "Ver ficha completa" leva para `/produto/:id` — mantido mesmo sendo redundante para produtos que, na prática, não abrem mais o modal a partir do card (ver nota na seção "Expansão de conteúdo de produtos").
+## `ScrollToTop` (`src/app/ScrollToTop.jsx`)
+
+Componente sem renderização (`return null`), montado uma única vez em `App()`, dentro do `<BrowserRouter>`, como irmão de `<Routes>`. Usa `useLocation()` e um `useEffect` em toda mudança de `pathname` para rolar ao topo.
+
+- **Chamada dupla (imediato + `requestAnimationFrame`):** chama `window.scrollTo({ top: 0, left: 0, behavior: 'instant' })` de imediato e agenda uma segunda chamada idêntica no frame seguinte. O reforço é necessário porque, com `scroll-behavior: smooth` global, uma rolagem suave ainda em andamento no momento da navegação continuava assentando por cima do reset.
+- **`overflow-anchor: none` global:** desativa o scroll anchoring nativo, que num cliente-side routing só competia com o reset (o conteúdo da rota anterior não existe mais).
+- Vale para todas as rotas, não só `ProductPage`.
+
+## Bloqueio de pinch-zoom e reset de escala
+
+### `globals.css`
+
+`html, body` define:
+
+- `scroll-behavior: smooth` — rolagem suave para links âncora.
+- `overflow-anchor: none` — desativa o scroll anchoring nativo (ver `ScrollToTop`).
+- `touch-action: pan-x pan-y` — bloqueia pinch-zoom e double-tap-zoom do navegador no site inteiro, mantendo a rolagem normal. É por elemento: o container do `ProductLightbox` declara `touch-action: none` internamente e, pela spec, o valor efetivo é a interseção com os ancestrais — o mais restritivo vence — então o pinch-zoom funciona normalmente dentro dele.
+
+`user-scalable=no` na meta viewport **não** é usado (falha de acessibilidade documentada, WCAG 1.4.4/1.4.10).
+
+Também há um override de espaçamento da seção de produtos: `#produtos.section-pad { padding: clamp(36px, 4vh, 56px) 0 }`.
+
+### `main.jsx` — camada específica do WebKit
+
+`touch-action` sozinho não basta no Safari/iOS: o pinch-zoom de página no WebKit é disparado pelos eventos `gesturestart`/`gesturechange`/`gestureend`, uma `GestureEvent` proprietária que o `touch-action` não cobre. `src/main.jsx` instala, fora do React e no mesmo padrão de inicialização do arquivo:
+
+**1. Bloqueio dos gestos** — `blockPinchZoomGesture` com `preventDefault()`, registrado nos três eventos com `{ passive: false }` (obrigatório, senão o navegador pode ignorar o `preventDefault`). Como só o WebKit dispara esses eventos (Chromium e Gecko tratam pinça como `wheel` com `ctrlKey`), é no-op garantido nos demais navegadores, sem checar `navigator.userAgent`. Exceção: `isInsideLightbox(target)` faz `closest('[class*="yarl__portal"]')` e pula o `preventDefault` dentro do lightbox.
+
+**2. Reset da escala (`resetPageZoomToNormal`)** — rede de segurança para quando o `preventDefault` perde a corrida com o reconhecimento nativo de gesto e a página fica ampliada. Não existe método padronizado de reset (`VisualViewport.resetScale()` foi discutido no CSSWG e nunca implementado; `scale` também não é animável por CSS), então a técnica é alternar o `content` da `<meta name="viewport">` para `maximum-scale=1.0`, o que faz o WebKit encaixar a escala de volta em 1x num reflow. Safeguards:
+- guarda `isResettingPageZoom` para evitar reentrância;
+- `void document.documentElement.offsetHeight` força um reflow síncrono entre as duas escritas do atributo (sem isso o navegador pode agrupá-las e nunca aplicar o reset);
+- dois `requestAnimationFrame` em sequência antes de restaurar o `content` original;
+- skip se existir `.yarl__portal` (lightbox aberto).
+
+**3. Gatilhos do reset:**
+- `gestureend` (com `{ passive: true }`), pulando o alvo dentro do lightbox e ignorando repetições dentro de 100ms — alguns builds do WebKit disparam `gestureend` duas vezes para o mesmo gesto;
+- `visualViewport.addEventListener('resize')` com debounce de 150ms: `resize` dispara durante e depois do gesto, e o debounce detecta quando a escala parou de mudar, cobrindo o caso em que `gestureend` não chega. Também pula se houver lightbox aberto.
+
+**Limite conhecido:** pinch-to-zoom real de dois dedos não é simulável de forma confiável em automação — a validação disso exige aparelho físico.
 
 ## WhatsApp (`src/lib/whatsapp.js`)
 
-Número lido de `import.meta.env.VITE_WHATSAPP_PHONE`, com fallback hardcoded `5561994063917` caso a variável não esteja definida. `wa(texto)` monta a URL `wa.me` com a mensagem pré-codificada; usado no botão flutuante (FAB, inicializado em `main.jsx` a partir do elemento `#waFab`), na Navbar, no Footer e nos fallbacks de compra. `MinimalNavbar` é a única exceção — não tem botão de WhatsApp (ver seção própria acima).
+Número lido de `import.meta.env.VITE_WHATSAPP_PHONE`, com fallback hardcoded `5561994063917`. `wa(texto)` monta a URL `wa.me` com a mensagem pré-codificada. É o destino de compra de todo o site (ver [Fluxo de compra](#fluxo-de-compra)) e aparece no FAB flutuante (inicializado em `main.jsx` a partir de `#waFab`), na Navbar, no Footer, na Featured, no estado vazio da busca e no `FAQ`.
 
-`.env.local` e `.env.example` definem `VITE_WHATSAPP_PHONE` (prefixo correto para o Vite expor a variável via `import.meta.env`).
+`MinimalNavbar` é a única tela **sem** botão de WhatsApp — a `ProductPage` já tem dois caminhos (o `ProductBuyButton` e o `Footer`).
+
+`.env.local` e `.env.example` definem `VITE_WHATSAPP_PHONE` (prefixo `VITE_` para o Vite expor a variável).
 
 ## Estilos
 
-Sem framework de UI. Cada componente com necessidade de estilo próprio tem um `.module.css` (scoped via CSS Modules). Estilos globais ficam em `src/styles/`: tokens de design (`variables.css`), reset/utilitárias (`globals.css`), `@keyframes` (`animations.css`) e estilos de botão (`buttons.css`, importado explicitamente pelos componentes que usam `.btn`). Fontes via Google Fonts: Cormorant Garamond (serifada, títulos), Inter (texto) e JetBrains Mono.
+Sem framework de UI. Cada componente com estilo próprio tem um `.module.css`. Estilos globais em `src/styles/`: tokens (`variables.css`), reset/utilitárias (`globals.css`), `@keyframes` (`animations.css`) e `.btn` + variantes (`buttons.css`, importado explicitamente por quem usa botões).
 
-`html, body` em `globals.css` define `scroll-behavior: smooth` (rolagem suave para links âncora, ex. navegação da home), `overflow-anchor: none` desde **2026-08-13** (desativa o scroll anchoring nativo do navegador entre trocas de rota — ver seção `ScrollToTop` acima para o motivo) e `touch-action: pan-x pan-y` desde **2026-08-14** (bloqueia pinch-zoom/double-tap-zoom do navegador no site inteiro, mantendo a rolagem normal — ver seção `ProductLightbox` acima para a técnica). Essa última, no Safari/iOS, precisou de reforço via JavaScript (`src/main.jsx`) para cobrir o pinch-zoom de verdade — ver seção "Bloqueio de pinch-zoom no Safari/iOS" acima.
+Utilitárias globais relevantes: `.wrap` (max-width + padding lateral), `.section-pad`, `.section-tag` (com `.num` e `.line`), `.serif`, `.italic`, `.gold-text` (gradiente com `-webkit-background-clip: text`), `.hairline`, `.reveal` + `.in` + `.d1`..`.d5`, `.grain` (overlay de textura em `position: fixed`, z-index 200), `::selection`.
 
-## DevTweaks (apenas desenvolvimento)
+Fontes via Google Fonts: Cormorant Garamond (serif), Inter (texto) e JetBrains Mono (mono).
 
-`src/app/DevTweaks.jsx` é carregado via `React.lazy` somente quando `import.meta.env.DEV` é verdadeiro — o Vite elimina esse import do bundle de produção por dead-code elimination. Usa os componentes genéricos de `src/tweaks-panel.jsx` para expor, em runtime, um painel que ajusta variáveis CSS ao vivo: tom de acento (dourado/vinho/grafite), visibilidade do FAB do WhatsApp e da textura de grão de fundo.
+## `DevTweaks` (apenas desenvolvimento)
+
+`src/app/DevTweaks.jsx` é carregado via `React.lazy` só quando `import.meta.env.DEV` — o Vite elimina o import do bundle de produção por dead-code elimination. Usa os componentes genéricos de `src/tweaks-panel.jsx` para expor em runtime: tom de acento (dourado/vinho/grafite), visibilidade do FAB do WhatsApp e da textura de grão de fundo. Nenhum `<input>` de produção existe no site além do campo de busca da seção `Products`.
 
 ## SEO / Analytics
 
-`index.html` define meta tags completas (description, Open Graph, Twitter Card), `theme-color`, favicon e Google Analytics (GA4 via `gtag.js`, measurement ID `G-KKMV5VHR48`). `public/robots.txt` e `public/sitemap.xml` complementam o SEO básico. `public/404.html` guarda o pathname em `sessionStorage` e redireciona para `/`; `main.jsx` restaura esse pathname com `history.replaceState`, permitindo deep links funcionarem em uma SPA hospedada como site estático na Vercel. Meta tags são únicas e globais (não há gerenciamento de `<head>` por rota) — `/produto/:id` herda as mesmas meta tags da home; ver limitações em `docs/PRODUCT_EXPANSION.md`.
+`index.html` define meta tags (description, Open Graph, Twitter Card, `theme-color`), favicon e Google Analytics (GA4 via `gtag.js`, `G-KKMV5VHR48`). `public/robots.txt` e `public/sitemap.xml` completam o SEO. `public/404.html` guarda o pathname em `sessionStorage` e redireciona para `/`; `main.jsx` restaura o pathname com `history.replaceState`.
 
-## Deploy
+As meta tags são únicas e globais — não há gerenciamento de `<head>` por rota, então `/produto/:id` herda as mesmas tags da home (limitação registrada em `docs/PRODUCT_EXPANSION.md`).
 
-Hospedagem: Vercel (plano Hobby, exige repositório público). Deploy automático a cada push em `main`: Vercel roda `npm run build` e publica o conteúdo de `dist/`. Projeto Vercel vinculado localmente via `.vercel/project.json`.
+## Deploy e variáveis de ambiente
 
-## Variáveis de ambiente
+Hospedagem na Vercel (plano Hobby, exige repositório público). Deploy automático a cada push em `main`: a Vercel roda `npm run build` e publica `dist/`. Projeto vinculado localmente via `.vercel/project.json`. Não há `vercel.json` — o roteamento de SPA depende do `public/404.html`.
 
-Única variável de ambiente do projeto: `VITE_WHATSAPP_PHONE` (ver `.env.example`). Não há outras integrações externas (sem API própria, sem banco de dados, sem serviço de autenticação).
+Única variável de ambiente do projeto: `VITE_WHATSAPP_PHONE`. Sem API própria, sem banco, sem autenticação. As variáveis do checkout planejado estão listadas em `docs/CHECKOUT_ARCHITECTURE.md` e **não** existem.
