@@ -388,4 +388,31 @@ export const PRODUCT_DETAILS = {
       { question: 'Como escolher o tamanho ideal do meu pet?', answer: 'A capacidade de peso é uma referência. Antes da compra, recomendamos verificar as dimensões internas da bolsa e o porte do pet para garantir conforto e segurança.' },
     ],
   },
+  10: {
+    gallery: [
+      '/images/products/porta-saquinhos-em-couro/principal.webp',
+    ],
+    specs: {
+      material: 'Couro bovino legítimo',
+      cor: 'Rosé',
+      tamanho: 'Único',
+      dimensoes: '5 cm (L) × 8 cm (A) × 3,5 cm (P)',
+      fixacao: 'Mosquetão de metal',
+      producao: 'Artesanal',
+    },
+    whatsIncluded: [
+      '1 Porta Saquinhos em Couro',
+      'Os saquinhos higiênicos NÃO acompanham o produto.',
+    ],
+    careInstructions: 'Limpar com pano levemente úmido e sabão neutro. Secar naturalmente à sombra. Não lavar à máquina.',
+    warranty: 'Garantia de 6 meses contra defeitos de fabricação.',
+    faq: [
+      { question: 'Os saquinhos higiênicos acompanham o produto?', answer: 'Não. Os saquinhos higiênicos NÃO acompanham o produto. O Porta Saquinhos é vendido separadamente.' },
+      { question: 'Qual é o material do porta saquinhos?', answer: 'Couro bovino legítimo.' },
+      { question: 'Qual é o tamanho do produto?', answer: 'Tamanho único: 5 cm (largura) × 8 cm (altura) × 3,5 cm (profundidade).' },
+      { question: 'Como prender o porta saquinhos na guia?', answer: 'O produto possui mosquetão de metal que permite prender na maioria das guias.' },
+      { question: 'Como fazer a limpeza?', answer: 'Limpar com pano levemente úmido e sabão neutro. Secar naturalmente à sombra. Não lavar à máquina.' },
+      { question: 'Qual é a garantia?', answer: 'Garantia de 6 meses contra defeitos de fabricação.' },
+    ],
+  },
 };

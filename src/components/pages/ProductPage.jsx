@@ -68,6 +68,8 @@ const SPEC_LABELS = {
   indicacao: 'Indicação',
   tapeteInterno: 'Tapete interno',
   alcaTransversal: 'Alça transversal',
+  fixacao: 'Fixação',
+  producao: 'Produção',
 };
 
 export default function ProductPage() {
