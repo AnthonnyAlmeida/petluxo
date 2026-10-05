@@ -49,6 +49,7 @@ export const PRODUCTS = [
     buyLink: 'https://pag.ae/81J8xDn2N',
     tags: ['água', 'passeio', 'hidratação', 'squeeze'],
     supplierLink: 'Olha o que eu achei na Wish! https://dl.wish.com/BXrR9',
+    visible: false,
   },
   {
     id: 4,
