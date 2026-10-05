@@ -257,7 +257,7 @@ export const PRODUCTS = [
     badge: null,
     buyLinks: [{ size: 'Tam. P', link: 'https://pag.ae/81LH8SGzp' }, { size: 'Tam. M', link: 'https://pag.ae/81LHw9Qb8' }, { size: 'Tam. G', link: 'https://pag.ae/81LHxFzTK' }],
     tags: ['cama', 'ninho', 'conforto', 'descanso', 'pelúcia'],
-    visible: false,
+    visible: true,
   },
   {
     id: 15,
