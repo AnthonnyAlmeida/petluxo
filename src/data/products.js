@@ -353,6 +353,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81NMeTc16',
     tags: ['tigela', 'pote', 'cerâmica', 'alimentação'],
+    visible: false,
   },
   {
     id: 24,
