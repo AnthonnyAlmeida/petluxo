@@ -415,4 +415,23 @@ export const PRODUCT_DETAILS = {
       { question: 'Qual é a garantia?', answer: 'Garantia de 6 meses contra defeitos de fabricação.' },
     ],
   },
+  26: {
+    gallery: [
+      '/images/products/kit-solenne/principal.webp',
+      '/images/products/kit-solenne/kit-solenne-2.webp',
+    ],
+    specs: {
+      material: 'Couro',
+      cor: 'Off White',
+      composicaoKit: 'Coleira, guia e porta acessórios',
+      tamanhosDisponiveis: 'PP, P, M e G',
+      indicacao: 'Cachorro',
+    },
+    whatsIncluded: [
+      'Coleira',
+      'Guia',
+      'Porta acessórios',
+    ],
+    careInstructions: 'A resistência e durabilidade do produto depende da tração que o animal pratica durante o passeio. Se o seu cachorro puxar muito forte por um determinado tempo a resistência do produto pode diminuir. É importante treinar o seu cão para caminhar ao seu lado e não puxar a guia para evitar esse tipo de problema.',
+  },
 };

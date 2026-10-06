@@ -189,7 +189,7 @@ Produtos visíveis por categoria: mais-vendidos 2, couro 7, conforto 3, a-mesa 4
 | 22 | Bowl Cerâmica Spoiled | a-mesa | visível | — | buyLink | — | — | — |
 | 24 | Fonte Automática Elegance | a-mesa | visível | — | buyLink | — | — | — |
 | 25 | Mesa Gourmet Nordic™ | a-mesa | visível | — | buyLink | — | — | — |
-| 26 | Roma Walk Set | colecao-passeio | visível | — | buyLink | — | — | — |
+| 26 | Kit Solenne | colecao-passeio | visível | — | buyLink | — | — | — |
 | 27 | Ursinho Interativo Kong | brinquedos | oculto | — | buyLink | — | — | — |
 | 28 | Cabana Teepee Luxo | sono-refugio | visível | — | buyLinks(3) | prices(3) | — | — |
 | 29 | Tapete Elegance | a-mesa | oculto | — | buyLink | — | — | — |
