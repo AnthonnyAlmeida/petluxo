@@ -222,7 +222,7 @@ Conteúdo opcional de ficha completa, **em arquivo separado** de `products.js` �
 
 ### `PRODUCT_DETAILS`
 
-Objeto indexado por `id` de produto. **17 produtos têm entrada**: 6, 8, 9, 10, 12, 16, 17, 21, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
+Objeto indexado por `id` de produto. **18 produtos têm entrada**: 6, 8, 9, 10, 12, 16, 17, 21, 26, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
 
 ### Schema (10 campos, todos opcionais)
 
@@ -245,7 +245,7 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 
 ### Estado por produto
 
-15 das 17 entradas têm `gallery`. As exceções são os ids **6** e **34**.
+16 das 18 entradas têm `gallery`. As exceções são os ids **6** e **34**.
 
 | id | Produto | Campos presentes |
 |---|---|---|
@@ -257,6 +257,7 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 | 16 | Comedouro Maison Élevé | `gallery` (4), `specs` (12), `sizeChart` (3) |
 | 17 | Bolsa Voyage Signature | `gallery` (5) — nada mais |
 | 21 | Executive Bed™ | `gallery` (5), `specs` (5), `sizeChart` (2), `whatsIncluded` (2), `careInstructions` |
+| 26 | Kit Solenne | `gallery` (2), `specs` (5), `whatsIncluded` (3), `careInstructions` |
 | 34 | Bolsa Térmica Metalassé | `specs` (10), `whatsIncluded` (1), `sizeGuideNote` |
 | 35 | Manta Serenity™ | `gallery` (3), `specs` (9), `whatsIncluded` (1), `careInstructions`, `faq` (6) |
 | 36 | Comedouro Nômade Premium | `gallery` (3), `specs` (5) |
