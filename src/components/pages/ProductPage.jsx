@@ -70,6 +70,12 @@ const SPEC_LABELS = {
   alcaTransversal: 'Alça transversal',
   fixacao: 'Fixação',
   producao: 'Produção',
+  tecido: 'Tecido',
+  confeccao: 'Confecção',
+  protecaoEnchimento: 'Proteção do enchimento',
+  personalizacao: 'Personalização',
+  acabamentoPorta: 'Acabamento da porta',
+  coresTecidos: 'Cores e tecidos',
 };
 
 export default function ProductPage() {

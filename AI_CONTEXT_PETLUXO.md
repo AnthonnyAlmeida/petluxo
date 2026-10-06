@@ -191,7 +191,7 @@ Produtos visíveis por categoria: mais-vendidos 2, couro 7, conforto 3, a-mesa 4
 | 25 | Mesa Gourmet Nordic™ | a-mesa | visível | — | buyLink | — | — | — |
 | 26 | Kit Solenne | colecao-passeio | visível | — | buyLink | — | — | — |
 | 27 | Ursinho Interativo Kong | brinquedos | oculto | — | buyLink | — | — | — |
-| 28 | Cabana Teepee Luxo | sono-refugio | visível | — | buyLinks(3) | prices(3) | — | — |
+| 28 | Cabana Lumière | sono-refugio | visível | — | buyLinks(3) | prices(3) | — | — |
 | 29 | Tapete Elegance | a-mesa | oculto | — | buyLink | — | — | — |
 | 30 | Cesto Organizador Cozy | colecao-cozy-luxo | visível | — | buyLink | — | — | — |
 | 31 | Estação de Passeio PetLuxo™ | colecao-cozy-luxo | visível | — | buyLink | — | — | — |
@@ -222,7 +222,7 @@ Conteúdo opcional de ficha completa, **em arquivo separado** de `products.js` �
 
 ### `PRODUCT_DETAILS`
 
-Objeto indexado por `id` de produto. **18 produtos têm entrada**: 6, 8, 9, 10, 12, 16, 17, 21, 26, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
+Objeto indexado por `id` de produto. **19 produtos têm entrada**: 6, 8, 9, 10, 12, 16, 17, 21, 26, 28, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
 
 ### Schema (10 campos, todos opcionais)
 
@@ -245,7 +245,7 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 
 ### Estado por produto
 
-16 das 18 entradas têm `gallery`. As exceções são os ids **6** e **34**.
+17 das 19 entradas têm `gallery`. As exceções são os ids **6** e **34**.
 
 | id | Produto | Campos presentes |
 |---|---|---|
@@ -258,6 +258,7 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 | 17 | Bolsa Voyage Signature | `gallery` (5) — nada mais |
 | 21 | Executive Bed™ | `gallery` (5), `specs` (5), `sizeChart` (2), `whatsIncluded` (2), `careInstructions` |
 | 26 | Kit Solenne | `gallery` (2), `specs` (5), `whatsIncluded` (3), `careInstructions` |
+| 28 | Cabana Lumière | `gallery` (4), `specs` (9), `sizeChart` (3), `howToChooseSize`, `sizeGuideNote`, `whatsIncluded` (2), `careInstructions`, `faq` (7) |
 | 34 | Bolsa Térmica Metalassé | `specs` (10), `whatsIncluded` (1), `sizeGuideNote` |
 | 35 | Manta Serenity™ | `gallery` (3), `specs` (9), `whatsIncluded` (1), `careInstructions`, `faq` (6) |
 | 36 | Comedouro Nômade Premium | `gallery` (3), `specs` (5) |
@@ -268,7 +269,7 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 | 41 | Auréa Voyage | schema completo: `gallery` (3), `specs` (10), `sizeChart` (2), `howToChooseSize`, `sizeGuideNote`, `whatsIncluded` (2), `careInstructions`, `airTravelNote`, `warranty`, `faq` (8) |
 | 42 | Majestic Travel | schema completo: `gallery` (4), `specs` (10), `sizeChart` (2), `howToChooseSize`, `sizeGuideNote`, `whatsIncluded` (2), `careInstructions`, `airTravelNote`, `warranty`, `faq` (8) |
 
-`sizeGuideNote` está em uso nos ids 9, 34, 41 e 42.
+`sizeGuideNote` está em uso nos ids 9, 28, 34, 41 e 42.
 
 Produto sem entrada em `PRODUCT_DETAILS` funciona normalmente: a `ProductPage` mostra apenas o bloco principal, o `BrandSeal` e a imagem única.
 

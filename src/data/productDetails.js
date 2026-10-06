@@ -14,6 +14,46 @@
  */
 
 export const PRODUCT_DETAILS = {
+  28: {
+    gallery: [
+      '/images/products/cabana-lumiere/principal.webp',
+      '/images/products/cabana-lumiere/cabana-lumiere-2.webp',
+      '/images/products/cabana-lumiere/cabana-lumiere-3.webp',
+      '/images/products/cabana-lumiere/cabana-lumiere-4.webp',
+    ],
+    specs: {
+      tecido: 'Veludo ou linho',
+      confeccao: '100% artesanal',
+      producao: 'Sob encomenda',
+      montagem: 'Fácil de montar',
+      enchimento: 'Fibra siliconada importada',
+      protecaoEnchimento: 'Anti-fungos e antiácaros',
+      personalizacao: 'Nome do pet bordado',
+      acabamentoPorta: 'Pompom opcional, sem custo adicional',
+      coresTecidos: 'Consultar disponibilidade',
+    },
+    sizeChart: [
+      { size: 'Tam. P', height: '57 cm', length: '50 cm', width: '50 cm', weight: 'Até 5 kg' },
+      { size: 'Tam. M', height: '62 cm', length: '60 cm', width: '60 cm', weight: 'Até 12 kg' },
+      { size: 'Tam. G', height: '72 cm', length: '65 cm', width: '65 cm', weight: 'Até 20 kg' },
+    ],
+    howToChooseSize: 'A Cabana Lumière está disponível em três tamanhos (P, M e G), com referências de peso até 5 kg, 12 kg e 20 kg, respectivamente. Para escolher o tamanho ideal, considere o porte do seu pet e o espaço necessário para que ele se acomode confortavelmente dentro da cabana. As referências de peso são orientações de escolha e não representam capacidade estrutural do produto. As medidas indicadas são externas.',
+    sizeGuideNote: 'As dimensões fornecidas são medidas externas da cabana.',
+    whatsIncluded: [
+      'Almofada interna',
+      '1 travesseirinho simples combinando',
+    ],
+    careInstructions: 'Os zíperes permitem retirar o enchimento para facilitar a lavagem completa.',
+    faq: [
+      { question: 'Quais os tipos de tecido disponíveis?', answer: 'A Cabana Lumière é oferecida em veludo ou linho, conforme a disponibilidade de cada momento.' },
+      { question: 'Posso personalizar com o nome do meu pet?', answer: 'Sim. A Cabana Lumière é personalizada com o nome do seu pet bordado.' },
+      { question: 'O pompom na portinha é obrigatório?', answer: 'Não. O pompom na portinha é opcional e pode ser solicitado sem custo adicional no momento da encomenda.' },
+      { question: 'O que acompanha a Cabana Lumière?', answer: 'A Cabana Lumière acompanha a almofada interna e 1 travesseirinho simples combinando.' },
+      { question: 'Como escolher o tamanho ideal?', answer: 'A Cabana Lumière está disponível em três tamanhos (P, M e G), com referências de peso até 5 kg, 12 kg e 20 kg, respectivamente. Considere o porte do seu pet e o espaço necessário para que ele se acomode confortavelmente. As referências de peso são orientações de escolha e não representam capacidade estrutural do produto.' },
+      { question: 'Como faço a limpeza da Cabana Lumière?', answer: 'Os zíperes permitem retirar o enchimento para lavagem completa da almofada e estrutura.' },
+      { question: 'A Cabana Lumière é produzida sob encomenda?', answer: 'Sim. A Cabana Lumière é produzida artesanalmente sob encomenda, com atenção a cada detalhe para garantir exclusividade e qualidade.' },
+    ],
+  },
   17: {
     gallery: [
       '/images/products/bolsa-voyage-signature/principal.webp',
