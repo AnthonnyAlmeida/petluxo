@@ -222,7 +222,7 @@ Conteúdo opcional de ficha completa, **em arquivo separado** de `products.js` �
 
 ### `PRODUCT_DETAILS`
 
-Objeto indexado por `id` de produto. **16 produtos têm entrada**: 6, 8, 9, 12, 16, 17, 21, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
+Objeto indexado por `id` de produto. **17 produtos têm entrada**: 6, 8, 9, 10, 12, 16, 17, 21, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
 
 ### Schema (10 campos, todos opcionais)
 
@@ -245,13 +245,14 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 
 ### Estado por produto
 
-14 das 16 entradas têm `gallery`. As exceções são os ids **6** e **34**.
+15 das 17 entradas têm `gallery`. As exceções são os ids **6** e **34**.
 
 | id | Produto | Campos presentes |
 |---|---|---|
 | 6 | Refúgio Cozy | `specs` (5), `whatsIncluded` (6), `careInstructions` |
 | 8 | Bolsa Transporte | `gallery` (4), `specs` (8), `sizeChart` (3), `howToChooseSize`, `whatsIncluded` (4), `careInstructions`, `airTravelNote`, `warranty`, `faq` (6) |
 | 9 | Élan Couro | `gallery` (4), `specs` (4), `whatsIncluded` (3), `sizeGuideNote` |
+| 10 | Porta Saquinhos | `gallery` (1), `specs` (6), `whatsIncluded` (2), `careInstructions`, `warranty`, `faq` (6) |
 | 12 | Sofá Essence | `gallery` (2), `specs` (9) |
 | 16 | Comedouro Maison Élevé | `gallery` (4), `specs` (12), `sizeChart` (3) |
 | 17 | Bolsa Voyage Signature | `gallery` (5) — nada mais |
