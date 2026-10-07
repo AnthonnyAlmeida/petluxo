@@ -435,7 +435,7 @@ export const PRODUCTS = [
     price: 'a partir de R$ 1.190,00',
     prices: [{ size: 'Tam. P (até 5kg)', price: 'R$ 1.190,00' }, { size: 'Tam. M (até 12kg)', price: 'R$ 1.390,00' }, { size: 'Tam. G (até 20kg)', price: 'R$ 1.590,00' }],
     originalPrice: null,
-    category: ['sono-refugio'],
+    category: ['sono-refugio', 'mais-vendidos'],
     order: 23,
     categoryOrder: {"sono-refugio":200},
     image: '/images/products/cabana-lumiere/principal.webp',
