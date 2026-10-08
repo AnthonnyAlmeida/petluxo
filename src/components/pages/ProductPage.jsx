@@ -60,6 +60,8 @@ const SPEC_LABELS = {
   dimensoesEstruturaExterna: 'Dimensões da estrutura externa',
   baseInterna: 'Base interna',
   alturaTotal: 'Altura total',
+  diametroCesto: 'Diâmetro do cesto',
+  aberturaFrontal: 'Abertura frontal',
   pesoProduto: 'Peso do produto',
   ondeUtilizar: 'Onde utilizar',
   revestimento: 'Revestimento',

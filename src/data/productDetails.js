@@ -474,4 +474,52 @@ export const PRODUCT_DETAILS = {
     ],
     careInstructions: 'A resistência e durabilidade do produto depende da tração que o animal pratica durante o passeio. Se o seu cachorro puxar muito forte por um determinado tempo a resistência do produto pode diminuir. É importante treinar o seu cão para caminhar ao seu lado e não puxar a guia para evitar esse tipo de problema.',
   },
+  20: {
+    gallery: [
+      '/images/products/cama-suspensa-rattan-aura/principal.webp',
+      '/images/products/cama-suspensa-rattan-aura/01.webp',
+      '/images/products/cama-suspensa-rattan-aura/02.webp',
+      '/images/products/cama-suspensa-rattan-aura/03.webp',
+    ],
+    specs: {
+      material: 'Rattan sintético durável e ecológico',
+      estrutura: 'Base metálica reforçada, estável e segura',
+      alturaTotal: '35,5 cm',
+      diametroCesto: '24,5 cm',
+      aberturaFrontal: '17 cm',
+      indicacaoUso: 'Filhotes e pets de pequeno porte; até cerca de 4 meses, dependendo do tamanho do animal',
+      caracteristicas: 'Leve, compacta e fácil de transportar',
+    },
+    whatsIncluded: [
+      '1 Refúgio Suspenso',
+    ],
+    careInstructions: 'Lavável e fácil de limpar. O produto não é à prova d’água e deve ser protegido de chuva e exposição prolongada à água.',
+    warranty: 'Garantia de 3 meses do vendedor.',
+    faq: [
+      {
+        question: 'Para quais pets o Refúgio Suspenso é indicado?',
+        answer: 'É indicado para filhotes e pets de pequeno porte, até cerca de 4 meses, dependendo do tamanho do animal.',
+      },
+      {
+        question: 'Quais são as medidas do Refúgio Suspenso?',
+        answer: 'A altura total é de aproximadamente 35,5 cm, o diâmetro do cesto é de 24,5 cm e a abertura frontal mede aproximadamente 17 cm.',
+      },
+      {
+        question: 'O Refúgio Suspenso é feito de rattan natural?',
+        answer: 'Não. Ele é feito em rattan sintético, com visual de vime natural e acabamento artesanal.',
+      },
+      {
+        question: 'O Refúgio Suspenso é à prova d’água?',
+        answer: 'Não. O produto não é à prova d’água e deve ser protegido de chuva e exposição prolongada à água.',
+      },
+      {
+        question: 'A estrutura é estável?',
+        answer: 'Sim. O produto possui base metálica reforçada, estável e segura.',
+      },
+      {
+        question: 'Onde o Refúgio Suspenso pode ser usado?',
+        answer: 'Ele combina com salas, quartos, cozinhas e varandas cobertas. Também pode funcionar como peça decorativa ou organizadora.',
+      },
+    ],
+  },
 };

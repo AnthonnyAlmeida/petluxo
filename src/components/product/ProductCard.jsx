@@ -28,6 +28,9 @@ export function ProductCard({ product, index, onQuick }) {
       </div>
       <div className={styles.meta}>
         <div className={styles.name}>{product.shortName || product.name}</div>
+        {product.cardNote && (
+          <small className={styles.cardNote}>{product.cardNote}</small>
+        )}
         <div className={styles.priceCol}>
           {product.originalPrice && (
             <span className={styles.priceOriginal}>{product.originalPrice}</span>

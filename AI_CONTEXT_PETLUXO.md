@@ -128,7 +128,7 @@ O interruptor só age na interface — o texto das páginas não foi acompanhado
 
 ## Catálogo de produtos (`src/data/products.js`)
 
-**9 categorias**, **37 produtos** (ids de 1 a 42, sem 2, 5, 7, 11 e 23). **29 visíveis** e **8 ocultos** (`visible: false`: ids 6, 13, 16, 19, 20, 27, 29, 32).
+**9 categorias**, **37 produtos** (ids de 1 a 42, sem 2, 5, 7, 11 e 23). **30 visíveis** e **7 ocultos** (`visible: false`: ids 13, 16, 19, 20, 27, 29, 32).
 
 Dos 37: **28 usam `buyLink` único** e **9 usam `buyLinks`** (ids 8, 9, 14, 16, 17, 21, 28, 41, 42). Sete têm `prices` (ids 8, 14, 16, 21, 28, 41, 42); os ids 9 e 17 têm `buyLinks` sem `prices`. Nenhum produto está sem link de compra.
 
@@ -138,7 +138,7 @@ Array de `{ id, label, visible }`. Todas as 9 categorias estão com `visible: tr
 
 IDs, na ordem declarada: `mais-vendidos`, `couro`, `conforto`, `a-mesa`, `colecao-cozy-luxo`, `brinquedos`, `colecao-passeio`, `sono-refugio`, `viagem-mobilidade`.
 
-Produtos visíveis por categoria: mais-vendidos 2, couro 7, conforto 3, a-mesa 4, colecao-cozy-luxo 3, brinquedos 3, colecao-passeio 3, sono-refugio 8, viagem-mobilidade 3.
+Produtos visíveis por categoria: mais-vendidos 3, couro 7, conforto 4, a-mesa 4, colecao-cozy-luxo 3, brinquedos 3, colecao-passeio 3, sono-refugio 9, viagem-mobilidade 3.
 
 ### Campos de `PRODUCTS`
 
@@ -184,7 +184,7 @@ Produtos visíveis por categoria: mais-vendidos 2, couro 7, conforto 3, a-mesa 4
 | 17 | Bolsa Voyage Signature | colecao-passeio | visível | — | buyLinks(2) | — | — | — |
 | 18 | Cama Suspensa Élysée | conforto, sono-refugio | visível | — | buyLink | — | — | — |
 | 19 | Arranhador Sisal | brinquedos | oculto | — | buyLink | — | — | — |
-| 20 | Cama Suspensa Aura | mais-vendidos, conforto, sono-refugio | oculto | MAIS VENDIDOS | buyLink | — | — | — |
+| 20 | Refúgio Suspenso | mais-vendidos, conforto, sono-refugio | visível | MAIS VENDIDOS | buyLink | — | — | — |
 | 21 | Executive Bed™ | couro, sono-refugio | visível | — | buyLinks(2) | prices(2) | — | — |
 | 22 | Bowl Cerâmica Spoiled | a-mesa | visível | — | buyLink | — | — | — |
 | 24 | Fonte Automática Elegance | a-mesa | visível | — | buyLink | — | — | — |
@@ -222,7 +222,7 @@ Conteúdo opcional de ficha completa, **em arquivo separado** de `products.js` �
 
 ### `PRODUCT_DETAILS`
 
-Objeto indexado por `id` de produto. **19 produtos têm entrada**: 6, 8, 9, 10, 12, 16, 17, 21, 26, 28, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
+Objeto indexado por `id` de produto. **20 produtos têm entrada**: 6, 8, 9, 10, 12, 16, 17, 20, 21, 26, 28, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
 
 ### Schema (10 campos, todos opcionais)
 
@@ -245,7 +245,7 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 
 ### Estado por produto
 
-17 das 19 entradas têm `gallery`. As exceções são os ids **6** e **34**.
+18 das 20 entradas têm `gallery`. As exceções são os ids **6** e **34**.
 
 | id | Produto | Campos presentes |
 |---|---|---|
@@ -256,6 +256,7 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 | 12 | Sofá Essence | `gallery` (2), `specs` (9) |
 | 16 | Comedouro Maison Élevé | `gallery` (4), `specs` (12), `sizeChart` (3) |
 | 17 | Bolsa Voyage Signature | `gallery` (5) — nada mais |
+| 20 | Refúgio Suspenso | `gallery` (4), `specs` (7), `whatsIncluded` (1), `careInstructions`, `warranty`, `faq` (6) |
 | 21 | Executive Bed™ | `gallery` (5), `specs` (5), `sizeChart` (2), `whatsIncluded` (2), `careInstructions` |
 | 26 | Kit Solenne | `gallery` (2), `specs` (5), `whatsIncluded` (3), `careInstructions` |
 | 28 | Cabana Lumière | `gallery` (4), `specs` (9), `sizeChart` (3), `howToChooseSize`, `sizeGuideNote`, `whatsIncluded` (2), `careInstructions`, `faq` (7) |
@@ -275,11 +276,13 @@ Produto sem entrada em `PRODUCT_DETAILS` funciona normalmente: a `ProductPage` m
 
 ### `SPEC_LABELS` — labels das chaves de `specs`
 
-Mapa fixo no topo de `ProductPage.jsx` (`SPEC_LABELS`, ~50 entradas) que traduz as chaves de `specs` para o texto exibido no `<dt>`. Chave sem entrada no mapa cai no fallback da chave crua — e como o CSS aplica `text-transform: uppercase` sem inserir espaços, uma chave camelCase aparece grudada.
+Mapa fixo no topo de `ProductPage.jsx` (`SPEC_LABELS`, ~52 entradas) que traduz as chaves de `specs` para o texto exibido no `<dt>`. Chave sem entrada no mapa cai no fallback da chave crua — e como o CSS aplica `text-transform: uppercase` sem inserir espaços, uma chave camelCase aparece grudada.
 
 **Ao introduzir uma chave nova de `specs` em `productDetails.js`, a label correspondente precisa ser adicionada ao mapa.**
 
 **Pendência atual:** o id 12 usa quatro chaves que **não** estão no `SPEC_LABELS` — `fonteEnergia`, `comprimentoTotal`, `larguraTotal` e `areaInterna`. Elas renderizam hoje com o fallback cru em uppercase.
+
+**Chaves adicionadas para o id 20:** `diametroCesto` (Diâmetro do cesto) e `aberturaFrontal` (Abertura frontal).
 
 ### `sizeChart` parcial
 
@@ -319,6 +322,12 @@ O `ProductCard` decide sozinho o destino do clique, usando `Boolean(PRODUCT_DETA
 Conteúdo do card: botão de "visualizar" (ícone `Plus`), imagem (`loading="lazy"`), badge, `shortName || name`, `originalPrice` riscado quando houver, `price`, e o texto fixo "VIA WHATSAPP".
 
 O `ProductModal` não foi removido: continua sendo o quick view de todo produto **sem** ficha completa.
+
+## `cardNote` — aviso específico na vitrine
+
+Alguns produtos exibem um aviso compacto no card, abaixo do nome e acima do preço. O campo `cardNote` em `products.js` é uma string opcional que, quando presente, é renderizada em `ProductCard.jsx` com a classe `styles.cardNote` (fonte mono, tamanho 9px, letter-spacing 0.08em, cor caramelo). Produtos sem `cardNote` mantêm comportamento idêntico ao anterior.
+
+Hoje em uso: id 20 (`Refúgio Suspenso`) com `cardNote: 'Tamanho compacto • indicado para filhotes e pets pequenos'`.
 
 ## `ProductBuyButton` (`src/components/product/ProductBuyButton.jsx`)
 
@@ -414,7 +423,7 @@ Não há nenhum `buyLink`/`buyLinks` neste componente.
 
 Dois modos de exibição:
 
-- **Padrão** (sem busca/filtro ativo): carrossel "Mais Vendidos" sempre visível (hoje 2 produtos: ids 39 e 8, ordenados por `categoryOrder['mais-vendidos']` decrescente) + botão "Ver mais produtos" que expande um `ProductGrid` por categoria com `visible !== false` que tenha ao menos um produto visível.
+- **Padrão** (sem busca/filtro ativo): carrossel "Mais Vendidos" sempre visível (hoje 3 produtos: ids 39, 8 e 6, ordenados por `categoryOrder['mais-vendidos']` decrescente) + botão "Ver mais produtos" que expande um `ProductGrid` por categoria com `visible !== false` que tenha ao menos um produto visível.
 - **Filtro** (busca digitada e/ou categoria selecionada): grid flat (`resultsGrid`) com os produtos que combinam, e estado vazio com link para WhatsApp quando nada é encontrado.
 
 **Busca:** casa por palavras (todas as palavras digitadas precisam aparecer) em `name`, `shortName`, label das categorias do produto e `tags`. Produtos com `visible: false` nunca aparecem.
