@@ -65,6 +65,7 @@ export const PRODUCT_DETAILS = {
     specs: {},              // objeto chave:valor opcional — specs técnicas estruturadas
     sizeChart: [],          // { size, height, length, width, weight }[] opcional
     howToChooseSize: '',    // string opcional — texto de orientação "como escolher o tamanho ideal"
+    sizeGuideNote: '',      // string opcional — nota complementar sobre medidas (ex.: variação manual, referência por porte)
     whatsIncluded: [],      // string[] opcional — "o que acompanha o produto"
     careInstructions: '',   // string opcional — limpeza e conservação
     airTravelNote: '',      // string opcional — só produtos aplicáveis a viagens aéreas
@@ -80,6 +81,7 @@ export const PRODUCT_DETAILS = {
 | `specs` | objeto (opcional) | Chave:valor livre — ex.: `materialExterno`, `forracaoInterna`, `estrutura`, `ventilacao`, `seguranca`, `tipoAlcas`, `fechamento`, `indicacaoUso` |
 | `sizeChart` | `{size, height, length, width, weight}[]` (opcional) | Só faz sentido para produtos com variação de tamanho |
 | `howToChooseSize` | string (opcional) | Texto livre |
+| `sizeGuideNote` | string (opcional) | Nota complementar sobre medidas (ex.: variação manual, referência por porte do pet) |
 | `whatsIncluded` | string[] (opcional) | Lista simples |
 | `careInstructions` | string (opcional) | Texto livre |
 | `airTravelNote` | string (opcional) | Omitir em produtos sem aplicação a viagem aérea |
