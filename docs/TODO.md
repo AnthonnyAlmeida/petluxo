@@ -23,14 +23,14 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [x] **17. Completar `SPEC_LABELS` do id 12** 🟢
       Adicionar `fonteEnergia`, `comprimentoTotal`, `larguraTotal` e `areaInterna` em `ProductPage.jsx`. Hoje aparecem cruas e grudadas em maiúsculas.
 
-- [ ] **19. Atualizar `docs/PRODUCT_EXPANSION.md`** 🟢
+- [x] **19. Atualizar `docs/PRODUCT_EXPANSION.md`** 🟢
       O documento descreve 9 campos; o código tem 10 (falta `sizeGuideNote`).
 
-- [ ] **20. Decidir sobre o campo `order`** 🟢
-      Não é usado na ordenação (a exibição usa `categoryOrder`). Antes de remover, confirmar que o painel administrativo externo não depende dele.
+- [x] **20. Campo `order` mantido no catálogo** 🟢
+      O painel administrativo externo (`petluxo-admin`) usa `order` para ordenar a listagem de produtos (`ProductsPage.jsx`) e calcular o próximo valor a partir do maior existente (`AdminPage.jsx`). O serializador preserva o campo ao publicar `products.js`. O frontend não o usa (a ordenação de exibição é via `categoryOrder`), mas a remoção quebraria o fluxo do painel. Decisão: manter enquanto o painel depender dele.
 
-- [ ] **9. Melhorar título e descrição da home** 🟢
-      Título mais específico, com palavras-chave (ex.: "camas de luxo para cachorro", "coleiras de couro"). Descrição concisa, idealmente entre 150 e 160 caracteres, com a mensagem principal no início (hoje ~170). Esse tamanho é referência editorial: o Google pode gerar outro snippet conforme a busca.
+- [x] **9. Melhorar título e descrição da home** 🟢
+      Título: "PetLuxo — Camas de luxo, coleiras de couro e acessórios premium" (63 chars). Meta description: "PetLuxo: camas de luxo, coleiras de couro e acessórios premium para cães e gatos. Design sofisticado, materiais nobres. Compre via WhatsApp." (140 chars). Open Graph e Twitter Card atualizados consistentemente.
 
 - [ ] **11. Padronizar o nome da marca** 🟢
       Domínio "petluxostory" vs. marca "PetLuxo". Decidir o nome canônico e alinhar título, Open Graph e textos.

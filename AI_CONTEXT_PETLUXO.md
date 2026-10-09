@@ -153,7 +153,7 @@ Produtos visíveis por categoria: mais-vendidos 3, couro 7, conforto 4, a-mesa 4
 | `originalPrice` | string \| null | Exibido riscado quando presente |
 | `prices` | `{size, price}[]` | Ids 8, 14, 16, 21, 28, 41, 42 |
 | `category` | string[] | Um produto pode estar em várias categorias |
-| `order` | number | Não usado na ordenação de exibição |
+| `order` | number | Não usado na ordenação de exibição (frontend usa `categoryOrder`). **Mantido porque o painel administrativo externo (`petluxo-admin`) depende dele**: `ProductsPage.jsx` ordena a listagem por `order`; `AdminPage.jsx` calcula o próximo valor a partir do maior existente; o serializador preserva o campo ao reescrever `products.js`. Remover quebraria o fluxo do painel. |
 | `categoryOrder` | `{ [categoryId]: number }` | Peso **por categoria**; maior valor aparece primeiro no carrossel daquela categoria |
 | `image` | string | `/images/products/<slug-da-pasta>/principal.webp` — segue a convenção para os 37 produtos |
 | `badge` | string \| null | Valores em uso: `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, `ESGOTADO`. `ESGOTADO` desabilita a compra e mantém só o WhatsApp |
