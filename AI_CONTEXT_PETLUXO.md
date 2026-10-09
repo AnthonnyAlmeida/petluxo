@@ -156,7 +156,7 @@ Produtos visíveis por categoria: mais-vendidos 3, couro 7, conforto 4, a-mesa 4
 | `order` | number | Não usado na ordenação de exibição |
 | `categoryOrder` | `{ [categoryId]: number }` | Peso **por categoria**; maior valor aparece primeiro no carrossel daquela categoria |
 | `image` | string | `/images/products/<slug-da-pasta>/principal.webp` — segue a convenção para os 37 produtos |
-| `badge` | string \| null | Valores em uso: `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `Novo`, `Novidade`, `EXCLUSIVO`, `ESGOTADO`. `ESGOTADO` desabilita a compra e mantém só o WhatsApp |
+| `badge` | string \| null | Valores em uso: `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, `ESGOTADO`. `ESGOTADO` desabilita a compra e mantém só o WhatsApp |
 | `buyLink` | string | Link PagBank único (28 produtos) |
 | `buyLinks` | `{size, link, color?}[]` | Variação (9 produtos). `size` é a chave de seleção |
 | `variationType` | string | `'cor'` só no id 17; ausente = seleção por tamanho |
