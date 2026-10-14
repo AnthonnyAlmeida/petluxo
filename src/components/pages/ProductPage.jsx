@@ -82,6 +82,14 @@ const SPEC_LABELS = {
   personalizacao: 'Personalização',
   acabamentoPorta: 'Acabamento da porta',
   coresTecidos: 'Cores e tecidos',
+  produto: 'Produto',
+  marca: 'Marca',
+  origem: 'Origem',
+  tecidoExterno: 'Tecido externo',
+  interior: 'Interior',
+  conteudo: 'Conteúdo da embalagem',
+  tamanhos: 'Tamanhos',
+  frete: 'Frete',
 };
 
 export default function ProductPage() {

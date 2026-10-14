@@ -14,6 +14,46 @@
  */
 
 export const PRODUCT_DETAILS = {
+  2: {
+    gallery: [
+      '/images/products/refugio-cozy/principal.webp',
+      '/images/products/refugio-cozy/refugio-cozy-2.webp',
+    ],
+    specs: {
+      produto: 'Cabana para pets Refúgio Cozy',
+      marca: 'PetLuxo',
+      origem: 'Produção própria',
+      producao: 'Sob encomenda, em todos os tamanhos',
+      tecidoExterno: 'Impermeável',
+      interior: 'Acabamento macio e quentinho',
+      personalizacao: 'Tecido da cabana, detalhes da almofada conforme opções disponíveis e etiqueta com nome do pet bordado',
+      conteudo: '1 cabana personalizada e 1 almofada',
+      tamanhos: 'P, M, G e GG',
+      frete: 'Calculado à parte, por conta do comprador',
+    },
+    sizeChart: [
+      { size: 'P', height: '—', length: '—', width: '—', weight: 'Até 3 kg' },
+      { size: 'M', height: '—', length: '—', width: '—', weight: 'Acima de 3 kg até 10 kg' },
+      { size: 'G', height: '—', length: '—', width: '—', weight: 'Acima de 10 kg até 20 kg' },
+      { size: 'GG', height: '—', length: '—', width: '—', weight: 'Acima de 20 kg até 30 kg' },
+    ],
+    howToChooseSize: 'A referência disponível para escolha é o peso do pet. P: até 3 kg. M: acima de 3 kg até 10 kg. G: acima de 10 kg até 20 kg. GG: acima de 20 kg até 30 kg. Para pets acima de 30 kg, é necessário solicitar uma cabana maior sob encomenda, pelo WhatsApp da PetLuxo. Oriente o cliente a confirmar pelo WhatsApp o tamanho adequado sempre que houver dúvida. Todos os tamanhos são produzidos sob encomenda.',
+    sizeGuideNote: 'Ainda não existem medidas dimensionais confirmadas para publicar. A escolha é feita com base no peso do pet; caso haja dúvida entre tamanhos, entre em contato pelo WhatsApp.',
+    whatsIncluded: [
+      '1 cabana Refúgio Cozy personalizada',
+      '1 almofada para complementar o cantinho do seu pet',
+    ],
+    careInstructions: 'Para conservar o tecido, o bordado e os acabamentos, siga as instruções de limpeza indicadas para os materiais utilizados. Confirme as orientações de lavagem antes de higienizar a peça.',
+    warranty: 'Garantia contra defeitos de fabricação.',
+    faq: [
+      { question: 'A Refúgio Cozy é feita sob encomenda?', answer: 'Sim. Todos os tamanhos são produzidos sob encomenda, com personalizações definidas no momento do pedido.' },
+      { question: 'O que posso personalizar?', answer: 'Você pode escolher o tecido da cabana, os detalhes da almofada conforme as opções disponíveis e incluir o nome do pet bordado na etiqueta.' },
+      { question: 'O que vem na compra?', answer: 'Cada pedido inclui 1 cabana Refúgio Cozy personalizada e 1 almofada.' },
+      { question: 'Qual o prazo de produção e entrega?', answer: 'Os prazos de produção e entrega são combinados durante o atendimento, pois cada peça é feita sob encomenda.' },
+      { question: 'Como escolher o tamanho certo?', answer: 'A escolha é feita com base no peso do pet (P: até 3 kg; M: acima de 3 kg até 10 kg; G: acima de 10 kg até 20 kg; GG: acima de 20 kg até 30 kg). Para pets acima de 30 kg, é necessário solicitar uma cabana maior sob encomenda, pelo WhatsApp da PetLuxo.' },
+      { question: 'O frete é grátis?', answer: 'Não. O frete é calculado à parte e por conta do comprador.' },
+    ],
+  },
   28: {
     gallery: [
       '/images/products/cabana-lumiere/principal.webp',
