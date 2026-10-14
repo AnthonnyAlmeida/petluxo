@@ -61,7 +61,12 @@ export function ProductModal({ product, onClose }) {
             )}
           </div>
           <div className={[styles.modalInfoFooter, styles.modalBtnStack].join(' ')}>
-            <ProductBuyButton product={product} activeBuyLink={activeBuyLink} />
+            <ProductBuyButton
+              product={product}
+              activeBuyLink={activeBuyLink}
+              selectedSize={selectedSize}
+              activePrice={activePrice}
+            />
             <TrustBadges variant="modal" />
           </div>
         </div>

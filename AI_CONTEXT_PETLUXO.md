@@ -103,15 +103,15 @@ Efeito nos quatro estados do componente:
 | Tem `buyLink` | **Só** o CTA "CONSULTAR VIA WHATSAPP" |
 | Sem nenhum link | CTA "CONSULTAR VIA WHATSAPP" |
 
-Mensagem do link: `Olá! Gostaria de mais informações sobre "<product.name>".` — a mesma em todos os produtos.
+Mensagem do link: dinâmica, inclui nome do produto, variação selecionada (tamanho/cor) quando aplicável, preço correspondente à seleção atual (usando preço ativo e fallback para preço padrão do produto) e link absoluto para a página do produto (/produto/:id).
 
 Ao colocar a constante em `false`, os CTAs "COMPRAR AGORA" voltam a aparecer e os dois WhatsApp dos estados 2 e 3 precisam voltar de `btn btn-primary btn-full` para `styles.waLink` (conforme o comentário no próprio arquivo).
 
 ### Propagação para o restante da UI
 
 - **`ProductCard`** — exibe sempre o texto "VIA WHATSAPP" em `<small className={styles.priceVia}>` (`ProductCard.jsx:36-40`). O texto é fixo e não depende de `buyLink`/`buyLinks`.
-- **`Featured`** — não usa `buyLink` nem `buyLinks`. Os CTAs são "CONSULTAR VIA WHATSAPP" (mesma mensagem do `ProductBuyButton`) e "VER TODOS OS PRODUTOS" (`btn btn-ghost` apontando para `#produtos`).
-- **`useProductBuy` / `ProductSizeSelector`** — continuam calculando a variação selecionada e `activeBuyLink`, mas o valor selecionado só alimenta o texto do preço, nenhum link.
+- **`Featured`** — não usa `buyLink` nem `buyLinks`. Os CTAs são "CONSULTAR VIA WHATSAPP" (mesma mensagem dinâmica do `ProductBuyButton`) e "VER TODOS OS PRODUTOS" (`btn btn-ghost` apontando para `#produtos`).
+- **`useProductBuy` / `ProductSizeSelector`** — continuam calculando a variação selecionada e `activeBuyLink`, e esses valores alimentam tanto o texto do preço quanto a mensagem dinâmica do WhatsApp.
 - **`checkout` planejado** — `docs/CHECKOUT_ARCHITECTURE.md` descreve o destino desse fluxo (carrinho, Mercado Pago, Neon, Melhor Envio). Nenhum código dele existe.
 
 ### Conteúdo institucional que ainda cita PagBank (consequência do estado temporário)
@@ -331,9 +331,9 @@ Hoje em uso: id 20 (`Refúgio Suspenso`) com `cardNote: 'Tamanho compacto • in
 
 ## `ProductBuyButton` (`src/components/product/ProductBuyButton.jsx`)
 
-Componente compartilhado por `ProductModal` e `ProductPage`. Centraliza os 4 estados de compra (ver tabela em [Fluxo de compra](#fluxo-de-compra)). Recebe `{ product, activeBuyLink }`. Usa `wa()` para montar o link e importa `../../styles/buttons.css`.
+Componente compartilhado por `ProductModal` e `ProductPage`. Centraliza os 4 estados de compra (ver tabela em [Fluxo de compra](#fluxo-de-compra)). Recebe `{ product, activeBuyLink, selectedSize, activePrice }`. Usa `wa()` para montar um link dinâmico que inclui nome do produto, variação selecionada (ex: "Tamanho: M" ou "Cor: Cinza"), preço e link para a página do produto, e importa `../../styles/buttons.css`.
 
-Com `HIDE_BUY_CTA = true`, `activeBuyLink` é recebido mas não determina nenhum link renderizado — só o texto do preço na página/modal.
+Com `HIDE_BUY_CTA = true`, `activeBuyLink` é recebido mas não determina nenhum link de compra renderizado — o WhatsApp usa a variação selecionada, preço e link do produto.
 
 ## `ProductSizeSelector` e variação por cor (`src/components/product/ProductSizeSelector.jsx`)
 

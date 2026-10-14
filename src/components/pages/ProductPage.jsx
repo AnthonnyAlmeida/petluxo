@@ -155,7 +155,12 @@ function ProductPageContent({ product }) {
             )}
 
             <div className={styles.buyStack}>
-              <ProductBuyButton product={product} activeBuyLink={activeBuyLink} />
+              <ProductBuyButton
+                product={product}
+                activeBuyLink={activeBuyLink}
+                selectedSize={selectedSize}
+                activePrice={activePrice}
+              />
               <TrustBadges variant="modal" />
             </div>
           </div>

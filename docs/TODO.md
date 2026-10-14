@@ -42,8 +42,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 ## Próximas entregas
 
-- [ ] **5. Mensagem do WhatsApp por produto** 🟡
-      Hoje a mensagem é idêntica em todos os produtos. Incluir variação selecionada (tamanho/cor), preço e link `/produto/:id`. O `useProductBuy` já calcula `selectedSize`, `activeBuyLink` e `activePrice`; falta passar para o `wa()` em `ProductBuyButton`.
+- [x] **5. Mensagem do WhatsApp por produto** 🟢
+       Mensagem dinâmica que inclui nome do produto, variação selecionada (tamanho/cor) quando aplicável, preço correspondente à seleção atual (usando preço ativo e fallback para preço padrão do produto) e link absoluto para a página do produto (/produto/:id). Implementado em `ProductBuyButton.jsx` recebendo `selectedSize` e `activePrice` do hook `useProductBuy` via props, evitando recálculo desnecessário e formatando variação sem duplicação (ex: "Tamanho: M").
 
 - [ ] **13. Privacidade e consentimento do GA4 (LGPD)** 🟡
       Definir a base legal e o mecanismo de consentimento aplicável ao GA4; impedir o carregamento do `gtag.js` antes da autorização quando exigida pela estratégia adotada; revisar a política de privacidade. A implementação (banner ou outro mecanismo) decorre dessa análise.

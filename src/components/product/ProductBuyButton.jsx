@@ -23,8 +23,19 @@ import { wa } from '../../lib/whatsapp.js';
 import '../../styles/buttons.css';
 import styles from './ProductBuyButton.module.css';
 
-export function ProductBuyButton({ product, activeBuyLink }) {
-  const waLink = wa(`Olá! Gostaria de mais informações sobre "${product.name}".`);
+export function ProductBuyButton({ product, activeBuyLink, selectedSize, activePrice }) {
+  // Build dynamic WhatsApp message
+  let variationText = '';
+  if (product.buyLinks && selectedSize) {
+    variationText =
+      product.variationType === 'cor' ? `Cor: ${selectedSize}` : `Tamanho: ${selectedSize}`;
+  }
+
+  const priceText = activePrice ? activePrice.price : product.price;
+
+  const productLink = `${window.location.origin}/produto/${product.id}`;
+  const message = `Olá! Gostaria de mais informações sobre "${product.name}".${variationText ? `\n\n${variationText}` : ''}\nPreço: ${priceText}\nLink: ${productLink}`;
+  const waLink = wa(message);
 
   if (product.badge === 'ESGOTADO') {
     return (
