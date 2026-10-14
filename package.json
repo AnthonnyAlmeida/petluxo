@@ -4,8 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "node scripts/validate-catalog.js && vite build",
+    "preview": "vite preview",
+    "validate:catalog": "node scripts/validate-catalog.js"
   },
   "dependencies": {
     "react": "^18.3.1",

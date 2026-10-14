@@ -32,18 +32,11 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [x] **9. Melhorar título e descrição da home** 🟢
       Título: "PetLuxo — Camas de luxo, coleiras de couro e acessórios premium" (63 chars). Meta description: "PetLuxo: camas de luxo, coleiras de couro e acessórios premium para cães e gatos. Design sofisticado, materiais nobres. Compre via WhatsApp." (140 chars). Open Graph e Twitter Card atualizados consistentemente.
 
-- [ ] **11. Padronizar o nome da marca** 🟢
-      Domínio "petluxostory" vs. marca "PetLuxo". Decidir o nome canônico e alinhar título, Open Graph e textos.
+- [x] **11. Padronizar o nome da marca** 🟢
+      Decisão: marca oficial é **PetLuxo**; domínio permanece **petluxostory.com.br**. Não há necessidade de alinhar domínio ao nome comercial. Configuração atual mantida sem alterações no site, metadados, textos, URLs ou domínio.
 
-- [ ] **14. Criar a validação do catálogo no build** 🟡
-      Script que falhe o build para evitar regressões, já que o push em `main` vai direto para produção e o painel externo reescreve `products.js`. Verificar:
-  - links vazios, com espaço ou malformados;
-  - IDs duplicados e categorias inexistentes em `CATEGORIES`;
-  - `buyLinks` inconsistentes com `prices` (mesmos tamanhos);
-  - badges fora do padrão;
-  - imagens referenciadas que não existem em `public/images/products/`.
-
-  Respeitar as exceções legítimas do catálogo (ex.: ids 9 e 17 têm `buyLinks` sem `prices`; ids 3, 4 e 10 não têm `shortName`/`subtitle`). A validação não deve exigir que todos os produtos tenham os mesmos campos.
+- [x] **14. Criar a validação do catálogo no build** 🟡
+      Script `scripts/validate-catalog.js` integrado ao `npm run build`. Valida: links (vazios, espaços, malformados), IDs duplicados, categorias inválidas, consistência prices/buyLinks (respeitando exceções IDs 9 e 17), badges contra padrão oficial (MAIS VENDIDOS, PREMIUM, NOVO, EXCLUSIVO, ESGOTADO), existência de imagens em `public/images/products/`. Exceções legítimas preservadas (IDs 3, 4, 10 sem shortName obrigatório). Build falha com código != 0 se houver erros.
 
 ---
 
