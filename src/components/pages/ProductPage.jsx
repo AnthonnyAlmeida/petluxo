@@ -225,7 +225,39 @@ function ProductPageContent({ product }) {
 
               {details.howToChooseSize && (
                 <AccordionItem title="Como escolher o tamanho ideal">
-                  <p className={styles.sectionText}>{details.howToChooseSize}</p>
+                  {(() => {
+                    const text = details.howToChooseSize
+                    const isCozy = (product?.id === 2 || details?.id === 2)
+                    if (isCozy) {
+                      const parts = text.split('\n\n')
+                      const intro = parts[0] || ''
+                      const listPart = parts[1] || ''
+                      const p2 = parts[2] || ''
+                      const p3 = parts[3] || ''
+                      const p4 = parts[4] || ''
+                      const listItems = listPart
+                        .split('\n')
+                        .map((l) => l.replace(/^[-•]\s*/, '').trim())
+                        .filter((l) => l)
+
+                      return (
+                        <div className={styles.sectionText}>
+                          <p>{intro}</p>
+                          {listItems.length > 0 && (
+                            <ul style={{ margin: '0.75rem 0 0.75rem 1.5rem', padding: 0 }}>
+                              {listItems.map((item, i) => (
+                                <li key={i}>{item}</li>
+                              ))}
+                            </ul>
+                          )}
+                          {p2 && <p style={{ marginTop: '0.75rem' }}>{p2}</p>}
+                          {p3 && <p style={{ marginTop: '0.75rem' }}>{p3}</p>}
+                          {p4 && <p style={{ marginTop: '0.75rem' }}>{p4}</p>}
+                        </div>
+                      )
+                    }
+                    return <p className={styles.sectionText}>{text}</p>
+                  })()}
                 </AccordionItem>
               )}
 

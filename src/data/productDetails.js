@@ -31,13 +31,8 @@ export const PRODUCT_DETAILS = {
       tamanhos: 'P, M, G e GG',
       frete: 'Calculado à parte, por conta do comprador',
     },
-    sizeChart: [
-      { size: 'P', height: '—', length: '—', width: '—', weight: 'Até 3 kg' },
-      { size: 'M', height: '—', length: '—', width: '—', weight: 'Acima de 3 kg até 10 kg' },
-      { size: 'G', height: '—', length: '—', width: '—', weight: 'Acima de 10 kg até 20 kg' },
-      { size: 'GG', height: '—', length: '—', width: '—', weight: 'Acima de 20 kg até 30 kg' },
-    ],
-    howToChooseSize: 'A referência disponível para escolha é o peso do pet. P: até 3 kg. M: acima de 3 kg até 10 kg. G: acima de 10 kg até 20 kg. GG: acima de 20 kg até 30 kg. Para pets acima de 30 kg, é necessário solicitar uma cabana maior sob encomenda, pelo WhatsApp da PetLuxo. Oriente o cliente a confirmar pelo WhatsApp o tamanho adequado sempre que houver dúvida. Todos os tamanhos são produzidos sob encomenda.',
+    sizeChart: [],
+    howToChooseSize: 'A escolha do tamanho ideal da Refúgio Cozy é feita com base no peso do pet:\n\n- P: até 3 kg\n- M: acima de 3 kg até 10 kg\n- G: acima de 10 kg até 20 kg\n- GG: acima de 20 kg até 30 kg\n\nSeu pet pesa mais de 30 kg? A PetLuxo também produz cabanas maiores sob encomenda. Entre em contato pelo WhatsApp para consultar as opções.\n\nFicou em dúvida sobre qual tamanho escolher? Nossa equipe pode ajudar você a encontrar a melhor opção para o seu pet.\n\nTodos os tamanhos são produzidos sob encomenda.',
     sizeGuideNote: 'Ainda não existem medidas dimensionais confirmadas para publicar. A escolha é feita com base no peso do pet; caso haja dúvida entre tamanhos, entre em contato pelo WhatsApp.',
     whatsIncluded: [
       '1 cabana Refúgio Cozy personalizada',
