@@ -128,7 +128,7 @@ O interruptor só age na interface — o texto das páginas não foi acompanhado
 
 ## Catálogo de produtos (`src/data/products.js`)
 
-**9 categorias**, **37 produtos** (ids de 1 a 42, sem 2, 5, 7, 11 e 23). **30 visíveis** e **7 ocultos** (`visible: false`: ids 13, 16, 19, 20, 27, 29, 32).
+**9 categorias**, **37 produtos** (ids de 1 a 42, sem 5, 6, 7, 11 e 23). **Visibilidade:** conforme `products.js` (ver tabela para valores por produto).
 
 Dos 37: **28 usam `buyLink` único** e **9 usam `buyLinks`** (ids 8, 9, 14, 16, 17, 21, 28, 41, 42). Sete têm `prices` (ids 8, 14, 16, 21, 28, 41, 42); os ids 9 e 17 têm `buyLinks` sem `prices`. Nenhum produto está sem link de compra.
 
@@ -170,9 +170,9 @@ Produtos visíveis por categoria: mais-vendidos 3, couro 7, conforto 4, a-mesa 4
 | id | shortName | categorias | vis. | badge | compra | prices | originalPrice | featured |
 |---|---|---|---|---|---|---|---|---|
 | 1 | Brinquedo Interativo | brinquedos | visível | ESGOTADO | buyLink | — | sim | — |
+| 2 | Refúgio Cozy — Cabana Personalizada PetLuxo | sono-refugio | visível | NOVO | buyLink | — | — | **true** |
 | 3 | Garrafa Portátil Premium | viagem-mobilidade | visível | — | buyLink | — | sim | — |
 | 4 | Comedouro Elevado | a-mesa | visível | — | buyLink | — | — | — |
-| 6 | Refúgio Cozy | mais-vendidos, conforto, sono-refugio | oculto | MAIS VENDIDOS | buyLink | — | — | — |
 | 8 | Bolsa Transporte | mais-vendidos, couro | visível | MAIS VENDIDOS | buyLinks(2) | prices(2) | — | **true** |
 | 9 | Élan Couro | couro | visível | — | buyLinks(3) | — | — | — |
 | 10 | Porta Saquinhos | couro | visível | — | buyLink | — | — | — |
@@ -222,7 +222,7 @@ Conteúdo opcional de ficha completa, **em arquivo separado** de `products.js` �
 
 ### `PRODUCT_DETAILS`
 
-Objeto indexado por `id` de produto. **20 produtos têm entrada**: 6, 8, 9, 10, 12, 16, 17, 20, 21, 26, 28, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
+Objeto indexado por `id` de produto. **20 produtos têm entrada**: 2, 8, 9, 10, 12, 16, 17, 20, 21, 26, 28, 34, 35, 36, 37, 38, 39, 40, 41 e 42.
 
 ### Schema (10 campos, todos opcionais)
 
@@ -249,7 +249,7 @@ A ordem dos `AccordionItem` é fixa no JSX de `ProductPage.jsx` (specs → sizeC
 
 | id | Produto | Campos presentes |
 |---|---|---|
-| 6 | Refúgio Cozy | `specs` (5), `whatsIncluded` (6), `careInstructions` |
+| 2 | Refúgio Cozy | `gallery` (2), `specs` (9), `sizeChart` (vazio), `howToChooseSize` (peso), `sizeGuideNote`, `whatsIncluded` (2), `careInstructions`, `warranty`, `faq` (6) |
 | 8 | Bolsa Transporte | `gallery` (4), `specs` (8), `sizeChart` (3), `howToChooseSize`, `whatsIncluded` (4), `careInstructions`, `airTravelNote`, `warranty`, `faq` (6) |
 | 9 | Élan Couro | `gallery` (4), `specs` (4), `whatsIncluded` (3), `sizeGuideNote` |
 | 10 | Porta Saquinhos | `gallery` (1), `specs` (6), `whatsIncluded` (2), `careInstructions`, `warranty`, `faq` (6) |
@@ -287,6 +287,8 @@ Mapa fixo no topo de `ProductPage.jsx` (`SPEC_LABELS`, ~52 entradas) que traduz 
 ### `sizeChart` parcial
 
 `ProductPage.jsx` renderiza `row.length`, `row.width` e `row.weight` **incondicionalmente**, então toda linha precisa das 4 chaves. Quando a dimensão não se aplica ao produto, o padrão é manter a chave com o valor `'—'` em vez de omitir. O id 16 usa esse padrão (`length` e `weight` como `'—'`, já que o produto é variado por capacidade em ml). Outra forma de sinalizar dado desconhecido em uso é o texto "Consulte disponibilidade" (ids 8 e 21).
+
+Quando `sizeChart` estiver vazio (ex.: id 2), a seção de tabela de medidas não exibe conteúdo; a página prioriza `howToChooseSize` com orientação exclusivamente por peso.
 
 Observação para testes automatizados: como o colapso do acordeão usa `grid-template-rows: 0fr` + `overflow: hidden`, `boundingBox()`/`isVisible()` em cima de um elemento dentro do painel fechado pode retornar retângulo não vazio. Para confirmar que a seção está fechada, checar o `clientHeight` do `.panelInner`.
 
