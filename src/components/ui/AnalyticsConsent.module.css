@@ -1,0 +1,157 @@
+/* PetLuxo — AnalyticsConsent.module.css
+ * Banner discreto de consentimento para analytics (GA4/LGPD).
+ * Cores alinhadas ao design system existente (variáveis globais). */
+
+.banner {
+  position: fixed;
+  inset: auto 28px 28px auto;
+  z-index: var(--z-above-modal);
+  max-width: 400px;
+  width: 100%;
+  background: var(--offwhite);
+  border: 1px solid var(--bege);
+  box-shadow: 0 10px 34px -10px rgba(42, 37, 34, 0.30);
+  border-radius: 12px;
+  padding: clamp(14px, 3vw, 20px);
+  font-family: var(--sans);
+  color: var(--ink);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 84vh;
+  overflow-y: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(14px, 2.8vw, 16px);
+  font-weight: 600;
+  color: var(--vinho);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.desc {
+  margin: 0;
+  font-size: clamp(12px, 2.4vw, 13px);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 2px;
+}
+
+.btnAccept {
+  background: var(--vinho);
+  color: var(--offwhite);
+  box-shadow: 0 4px 14px -6px rgba(107, 30, 43, 0.45);
+}
+
+.btnAccept:hover {
+  opacity: 0.92;
+  box-shadow: 0 6px 18px -6px rgba(107, 30, 43, 0.55);
+}
+
+.btnDeny {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--vinho);
+}
+
+.btnDeny:hover {
+  background: rgba(107, 30, 43, 0.06);
+  border-color: var(--vinho-soft);
+}
+
+.btnRevise {
+  background: transparent;
+  color: var(--dourado);
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 500;
+  text-transform: none;
+  cursor: pointer;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.btnRevise:hover {
+  opacity: 1;
+  text-decoration: underline;
+  color: var(--caramelo);
+}
+
+/* Mobile: prioriza área ocupada, botões empilhados e toque confortável */
+@media (max-width: 640px) {
+  .banner {
+    inset: auto 16px 16px auto;
+    max-width: none;
+    width: calc(100% - 32px);
+    padding: clamp(12px, 4vw, 16px);
+    gap: 7px;
+    max-height: 82vh;
+  }
+  .content {
+    gap: 5px;
+  }
+  .actions {
+    gap: 5px;
+    margin-top: 1px;
+  }
+  .title {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .desc {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .btn {
+    padding: 11px 16px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+  .btnRevise {
+    font-size: 12px;
+  }
+}

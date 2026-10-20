@@ -89,18 +89,24 @@ export default function PrivacyPage() {
 
           <Section title="Cookies e Google Analytics">
             <p>
-              Utilizamos cookies do Google Analytics para analisar o tráfego do site de forma
-              anônima (páginas visitadas, origem do acesso). Nenhum dado pessoal identificável é
-              coletado por essa ferramenta. Você pode desativar os cookies do Google Analytics a
-              qualquer momento em:{' '}
-              <a
-                href="https://tools.google.com/dlpage/gaoptout"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                tools.google.com/dlpage/gaoptout
-              </a>
-              , ou nas configurações de cookies do seu navegador.
+              O site utiliza o Google Analytics (GA4) para analisar o tráfego
+              (páginas visitadas, origem do acesso). O carregamento do
+              rastreamento depende do seu consentimento: ele só é iniciado
+              quando você aceita explicitamente por meio do banner de
+              consentimento apresentado no site, e pode ser recusado ou revogado a qualquer
+              momento.
+            </p>
+            <p>
+              Não afirmamos que os dados coletados pelo Google Analytics são
+              anônimos, nem garantimos a eficácia de ferramentas externas de
+              desativação (como o link de opt-out do Google) para o GA4. Se
+              desejar revisar ou revogar sua escolha de analytics, use o link
+              <strong>Gerenciar preferências de analytics</strong> no banner do
+              site ou entre em contato pelo e-mail abaixo.
+            </p>
+            <p>
+              Para controlar cookies de forma geral, utilize as configurações
+              do seu navegador.
             </p>
           </Section>
 
@@ -121,8 +127,11 @@ export default function PrivacyPage() {
                 realizado (Art. 7º, V da Lei 13.709/2019)
               </li>
               <li>
-                <strong>Legítimo interesse</strong> — para análise de tráfego via Google Analytics
-                (Art. 7º, IX da Lei 13.709/2019)
+                <strong>Consentimento</strong> — para análise de tráfego via Google
+                Analytics (GA4), coletado por meio do banner de consentimento do site.
+                Você pode aceitar, recusar ou revogar essa escolha a qualquer momento.
+                A definição definitiva entre consentimento e legítimo interesse para
+                analytics ainda depende de confirmação jurídica.
               </li>
             </ul>
           </Section>

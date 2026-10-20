@@ -1,7 +1,7 @@
 /* PetLuxo — App (página principal) */
 
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { ScrollToTop } from './ScrollToTop.jsx';
 import { Navbar } from '../components/layout/Navbar.jsx';
 import { Footer } from '../components/layout/Footer.jsx';
@@ -20,6 +20,8 @@ import ReturnPolicyPage from '../components/pages/ReturnPolicyPage.jsx';
 import ShippingPolicyPage from '../components/pages/ShippingPolicyPage.jsx';
 import TermsPage from '../components/pages/TermsPage.jsx';
 import { useScrollEffects } from '../hooks/useScroll.js';
+import { trackPageView, isConsentGranted } from '../lib/analytics.js';
+import AnalyticsConsent from '../components/ui/AnalyticsConsent.jsx';
 
 /* TweaksPanel — carregado apenas em desenvolvimento.
  * O Vite elimina este import do bundle de produção via dead-code elimination
@@ -59,9 +61,18 @@ function HomePage() {
 }
 
 export default function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isConsentGranted()) {
+      trackPageView(location.pathname);
+    }
+  }, [location.pathname]);
+
   return (
     <>
     <ScrollToTop/>
+    <AnalyticsConsent />
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/produto/:id" element={<ProductPage />} />
