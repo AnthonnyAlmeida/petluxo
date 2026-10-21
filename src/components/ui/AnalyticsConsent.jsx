@@ -5,18 +5,20 @@
  * revisar e revogar a escolha a qualquer momento.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   getConsent,
   setConsent,
   isConsentGranted,
   revokeConsent,
   initGA4,
+  trackPageView,
 } from '../../lib/analytics.js';
 import styles from './AnalyticsConsent.module.css';
 
 export default function AnalyticsConsent() {
   const [show, setShow] = useState(() => getConsent() === null);
+  const bannerRef = useRef(null);
 
   useEffect(() => {
     if (getConsent() !== null) {
@@ -24,15 +26,25 @@ export default function AnalyticsConsent() {
     }
   }, []);
 
+  // Quando o banner aparece, move o foco para dentro dele (alertdialog)
+  useEffect(() => {
+    if (show && bannerRef.current) {
+      bannerRef.current.focus();
+    }
+  }, [show]);
+
   const handleAccept = () => {
     setConsent('granted');
     setShow(false);
+    if (document.body) document.body.focus();
     initGA4();
+    trackPageView(typeof window !== 'undefined' ? window.location.pathname : '/');
   };
 
   const handleDeny = () => {
     setConsent('denied');
     setShow(false);
+    if (document.body) document.body.focus();
   };
 
   const handleRevoke = () => {
@@ -44,7 +56,9 @@ export default function AnalyticsConsent() {
 
   return (
     <div
+      ref={bannerRef}
       className={styles.banner}
+      tabIndex={-1}
       role="alertdialog"
       aria-modal="true"
       aria-labelledby="analytics-consent-title"
