@@ -15,7 +15,9 @@
     "yet-another-react-lightbox": "^3.32.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.49.0",
     "vite": "^6.3.3"
   }
 }

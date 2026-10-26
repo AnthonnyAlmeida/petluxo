@@ -7,6 +7,7 @@ dist
 *.log
 
 .vercel
+test-results/
 
 # Contexto para IA
 AI_CONTEXT_PETLUXO.md
