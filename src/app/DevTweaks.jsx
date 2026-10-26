@@ -9,7 +9,6 @@ import { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakToggle } from '.
 
 const TWEAK_DEFAULTS = {
   accent: "dourado",
-  showFab: true,
   showGrain: true,
   headerStyle: "discreto",
 };
@@ -28,9 +27,7 @@ export default function DevTweaks() {
     root.style.setProperty("--caramelo", a.caramelo);
     root.style.setProperty("--dourado", a.dourado);
 
-    const fab = document.getElementById("waFab");
     const grain = document.querySelector(".grain");
-    if (fab) fab.style.display = tweaks.showFab ? "" : "none";
     if (grain) grain.style.display = tweaks.showGrain ? "" : "none";
   }, [tweaks]);
 
@@ -49,7 +46,6 @@ export default function DevTweaks() {
         />
       </TweakSection>
       <TweakSection title="Atmosfera">
-        <TweakToggle label="Botão WhatsApp flutuante" value={tweaks.showFab}   onChange={v => setTweak("showFab", v)}/>
         <TweakToggle label="Textura de papel (grão)"  value={tweaks.showGrain} onChange={v => setTweak("showGrain", v)}/>
       </TweakSection>
     </TweaksPanel>

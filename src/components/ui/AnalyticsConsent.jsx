@@ -9,7 +9,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   getConsent,
   setConsent,
-  isConsentGranted,
   revokeConsent,
   initGA4,
   trackPageView,

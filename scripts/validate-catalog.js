@@ -1,5 +1,5 @@
 import { CATEGORIES, PRODUCTS } from '../src/data/products.js';
-import { readFileSync, existsSync } from 'fs';
+import { existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 
