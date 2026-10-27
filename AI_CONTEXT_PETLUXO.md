@@ -6,8 +6,12 @@ Site estático (sem backend, sem banco, sem API) de produtos premium para pets. 
 
 - **Produção:** https://petluxostory.com.br
 - **Instagram:** @petluxostory
-- **Hospedagem:** Vercel (Hobby), deploy a cada push em `main`. Estado atual do deploy: não verificado.
-- **Repositório:** público. `main` == `origin/main` em `aaa5a76` na data da verificação; working tree com alterações só de documentação (`README.md`, `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md`, `docs/PRODUCT_EXPANSION.md`, `docs/README.md`, `docs/TODO.md`), não commitadas.
+- **Hospedagem:** Vercel (Hobby), deploy a cada push em `main`. Verificado em 2026-10-27 por `curl`: o site responde em `https://www.petluxostory.com.br` (HTTP 200, `server: Vercel`) e o domínio raiz devolve 307 para o `www`; `index.html` (og:url, og:image, twitter:image), sitemap e robots já declaram o `www` no código (alterado em 2026-10-27, ainda não deployado).
+- **DNS (dig, 2026-10-27):** NS `ns1/ns2.vercel-dns.com`; A da raiz `64.29.17.1` e `216.198.79.1`; A do `www` `64.29.17.65` e `64.29.17.1` (sem CNAME); sem MX/TXT/AAAA na raiz; CAA sectigo, letsencrypt e pki.goog; sem DS/DNSKEY visíveis (DNSSEC no Registro.br: não verificado).
+- **Vercel (curl, 2026-10-27):** `/produto/2`, `/xyz.png` e `/assets/` dão 404 com o corpo do `404.html`; `/404.html` dá 200; os estáticos também enviam `access-control-allow-origin: *`. `docs/DEPLOY.md` afirma `Host:` no `robots.txt` e "todas as URLs" no sitemap: falso (robots tem 4 linhas; sitemap só a home).
+- **Build (2026-10-27, Node 22.23.4):** `npm run build` ~22 s, 99 arquivos, 14 MB, maior `public/og-image.png` (1.837.059 B). `VITE_WHATSAPP_PHONE` é opcional, com número padrão no código (`src/lib/whatsapp.js:4`); se existir na Vercel, replicar como variável de build.
+- **Migração para Cloudflare Workers:** plano e checklist em `docs/CLOUDFLARE_MIGRATION.md` (fase F1 aplicada no código em 2026-10-27, sem commit: `.nvmrc` com `22`, `wrangler.jsonc` com `single-page-application`, `public/_headers` só com cabeçalhos de segurança; Worker, DNS e virada ainda não feitos). Workers Builds usa Node 24.22.1 por padrão (22.23.4 pré-instalado), conforme a documentação da Cloudflare.
+- **Repositório:** público. Em 2026-10-27, `main` em `09dc402`; working tree com a fase F1 da migração e docs, não commitados. `AI_CONTEXT_PETLUXO.md` está no `.gitignore`, mas continua tracked.
 
 ## Estado por área (LIVE × EM DESENVOLVIMENTO × PLANEJADO)
 
@@ -39,7 +43,7 @@ Não existem `api/`, `functions/`, `db/`, `vercel.json` nem `src/data/shipping.j
 petluxo/
 ├── index.html                 # meta tags, OG, Twitter; sem gtag (GA4 carrega por src/lib/analytics.js)
 ├── assets/                    # logo.webp, hero/image-hero.webp, sobre_nos/*.webp (importados pelo Vite)
-├── public/                    # favicon, og-image.png, og-image.jpg, robots.txt, sitemap.xml (só a home), 404.html, images/products/<slug>/
+├── public/                    # favicon, og-image.png, og-image.jpg, robots.txt, sitemap.xml (só a home), 404.html, _headers, images/products/<slug>/
 ├── scripts/validate-catalog.js
 ├── tests/analytics-consent.spec.js
 ├── playwright.config.js
@@ -70,7 +74,7 @@ Pastas/arquivos locais ignorados ou não tracked: `.kilo/` (só um `.gitignore`)
 
 `/produto/:id` com id inexistente ou `visible === false` renderiza Navbar + NotFound + Footer. Produto existente usa `MinimalNavbar` (só a marca, link para `/`).
 
-Sem `vercel.json`: o acesso direto a rotas depende de `public/404.html` (grava o pathname em `sessionStorage`) e da restauração em `main.jsx`. Meta tags são únicas (as de `index.html`); `/produto/:id` herda as da home. `public/sitemap.xml` lista apenas a home.
+Sem `vercel.json`: o acesso direto a rotas depende de `public/404.html` (grava o pathname em `sessionStorage`) e da restauração em `main.jsx`. Meta tags são únicas (as de `index.html`); `/produto/:id` herda as da home. `public/sitemap.xml` lista apenas a home. Em produção (verificado em 2026-10-27), acesso direto a `/produto/2`, `/politica-de-privacidade` e `/xyz.png` devolve HTTP 404 (com o conteúdo do `404.html`, que redireciona por JS); `/404.html` devolve 200. Não há `<link rel="canonical">` em `index.html`.
 
 ## Compra: `HIDE_BUY_CTA`
 
@@ -141,7 +145,7 @@ Produtos citados:
 
 Convenção: `public/images/products/<slug>/principal.webp` + `<slug>-2.webp`, `-3`, ... Todos os 37 produtos usam `principal.webp`; todos os arquivos referenciados existem; não há galeria apontando para arquivo ausente nem foto órfã solta dentro das pastas. Exceção: a pasta `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`, 72 KB) não é referenciada por nenhum produto atual (foi do produto id 37 antigo, removido em 2026-06-08; o id 37 hoje é outro produto). `.gitkeep` em `products/` e `brand/` (`brand/` vazia).
 
-Todas as fotos `principal.webp` agora têm menos de 150 KB (maior: polvo-mimo, 142 KB; recomprimidas com `cwebp -q 82`, mesmas dimensões, maior lado 1620 px). Antes eram PNGs com extensão `.webp` (de 0,9 a 2,4 MB). Nenhum arquivo em `public/images` ou `assets` passa de 500 KB, exceto `public/og-image.png` (1,8 MB, PNG 1536×1024, 3:2; mantido para links e prévias antigas, sem alteração). A prévia de compartilhamento usa `public/og-image.jpg` (JPEG sRGB 1200×630, 73 KB, sem metadados, q85), feito por corte central do PNG (1536×806 a partir de y=109) e redução; logo e textos ficam inteiros. `index.html` aponta `og:image` e `twitter:image` para `https://petluxostory.com.br/og-image.jpg` e tem `og:image:type` (image/jpeg), `og:image:width` (1200), `og:image:height` (630) e `og:image:alt` (texto do `<title>`). `README.md` e `docs/README.md` descrevem os dois arquivos (PNG 1536×1024 e JPG 1200×630). Backup dos originais das fotos fora do projeto, em `~/backup-petluxo-imagens-2026-10-26/`.
+Todas as fotos `principal.webp` agora têm menos de 150 KB (maior: polvo-mimo, 142 KB; recomprimidas com `cwebp -q 82`, mesmas dimensões, maior lado 1620 px). Antes eram PNGs com extensão `.webp` (de 0,9 a 2,4 MB). Nenhum arquivo em `public/images` ou `assets` passa de 500 KB, exceto `public/og-image.png` (1,8 MB, PNG 1536×1024, 3:2; mantido para links e prévias antigas, sem alteração). A prévia de compartilhamento usa `public/og-image.jpg` (JPEG sRGB 1200×630, 73 KB, sem metadados, q85), feito por corte central do PNG (1536×806 a partir de y=109) e redução; logo e textos ficam inteiros. `index.html` aponta `og:image` e `twitter:image` para `https://www.petluxostory.com.br/og-image.jpg` e tem `og:image:type` (image/jpeg), `og:image:width` (1200), `og:image:height` (630) e `og:image:alt` (texto do `<title>`). `README.md` e `docs/README.md` descrevem os dois arquivos (PNG 1536×1024 e JPG 1200×630). Backup dos originais das fotos fora do projeto, em `~/backup-petluxo-imagens-2026-10-26/`.
 
 ## Componentes (confirmado por leitura/grep)
 

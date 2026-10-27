@@ -58,8 +58,8 @@ Formato de cada item: descrição · **Resp.** · arquivo:linha · **Dep.** · *
 
 ### F1 – Mudanças no repositório (sem aplicar nesta tarefa)
 
-- [ ] **F1.1 `.nvmrc` (novo, raiz)** com o conteúdo exato `22` (só a versão principal). Justificativa: a versão principal resolve para a 22.x pré-instalada na imagem de build da Cloudflare (https://developers.cloudflare.com/workers/ci-cd/builds/build-image/) e não quebra se o patch mudar; o Node local do dono (22.23.4) pertence à mesma linha 22. Resp.: Claude Code. Dep.: nenhuma. Verificar: o log do build mostra Node 22.x. Risco: baixo. Rollback: remover o arquivo. *Correção:* o padrão do Workers Builds hoje é **24.22.1** (não 24.18.0); por isso o arquivo é necessário: sem `.nvmrc` o build rodaria em Node 24 em vez de 22. Alternativa equivalente: variável de build `NODE_VERSION` com o valor `22`.
-- [ ] **F1.2 `wrangler.jsonc` (novo, raiz)** — conteúdo exato:
+- [x] **F1.1 `.nvmrc` (novo, raiz)** com o conteúdo exato `22` (só a versão principal). Justificativa: a versão principal resolve para a 22.x pré-instalada na imagem de build da Cloudflare (https://developers.cloudflare.com/workers/ci-cd/builds/build-image/) e não quebra se o patch mudar; o Node local do dono (22.23.4) pertence à mesma linha 22. Resp.: Claude Code. Dep.: nenhuma. Verificar: o log do build mostra Node 22.x. Risco: baixo. Rollback: remover o arquivo. *Correção:* o padrão do Workers Builds hoje é **24.22.1** (não 24.18.0); por isso o arquivo é necessário: sem `.nvmrc` o build rodaria em Node 24 em vez de 22. Alternativa equivalente: variável de build `NODE_VERSION` com o valor `22`. (F1.1 com 22 por ajuste combinado)
+- [x] **F1.2 `wrangler.jsonc` (novo, raiz)** — conteúdo exato:
   ```jsonc
   {
     "name": "petluxo",
@@ -72,7 +72,7 @@ Formato de cada item: descrição · **Resp.** · arquivo:linha · **Dep.** · *
   ```
   Sem `main` (Worker só de assets, sem script). Sem `routes` de propósito: os Custom Domains são criados no dashboard na F3b, porque exigem zona ativa. O nome tem que ser o mesmo do Worker criado no dashboard (NÃO VERIFICADO o efeito exato de nomes diferentes no Workers Builds). Se D2 virar `404-page`, trocar o valor para `"404-page"`. Resp.: Claude Code. Verificar: `npx wrangler deploy --dry-run` seria o teste local, mas exige instalar o pacote — fica para o deploy de teste (F2). Risco: baixo. Rollback: remover o arquivo (a Vercel ignora).
   Fonte: https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/
-- [ ] **F1.3 `public/_headers` (novo)** — conteúdo exato:
+- [x] **F1.3 `public/_headers` (novo)** — conteúdo exato: (F1.3 só segurança, por ajuste combinado)
   ```
   /*
     Strict-Transport-Security: max-age=63072000
@@ -80,20 +80,20 @@ Formato de cada item: descrição · **Resp.** · arquivo:linha · **Dep.** · *
     Referrer-Policy: strict-origin-when-cross-origin
   ```
   Sem regras de cache de propósito: a Vercel hoje serve tudo sem cache longo, então não há perda. Isso elimina o risco de o fallback de SPA devolver `index.html` com `immutable` por 1 ano para um chunk antigo de `/assets/*`. Justificativas: (a) HSTS com o mesmo valor que a Vercel serve hoje (`max-age=63072000`), **sem** `includeSubDomains`/`preload` (não é decisão desta migração); (b) sem CSP: GA4 e Google Fonts exigiriam uma política cuidadosa, tratar à parte. O padrão da Cloudflare para assets é `public, max-age=0, must-revalidate`, igual ao que a Vercel serve hoje (doc: https://developers.cloudflare.com/workers/static-assets/headers/). Limites: 100 regras, 2.000 caracteres por linha. `_headers` **não** vale para respostas geradas por Worker (não há Worker aqui). Resp.: Claude Code. Dep.: F1.2. Verificar: `curl -I` em cada tipo de URL (F2). Risco: **baixo** — a única dúvida é se `_headers` se aplica ao `index.html` servido pelo fallback de SPA; o teste F2.2 resolve conferindo os 3 cabeçalhos de segurança numa rota de SPA (ex.: `/produto/2`). Rollback: apagar o arquivo.
-- [ ] **F1.4 Metadados com `www`** (D1) — diffs em texto:
+- [x] **F1.4 Metadados com `www`** (D1) — diffs em texto:
   - `index.html:13`: `<meta property="og:url" content="https://petluxostory.com.br"/>` → `content="https://www.petluxostory.com.br/"`
   - `index.html:14`: `og:image` → `https://www.petluxostory.com.br/og-image.jpg`
   - `index.html:29`: `twitter:image` → `https://www.petluxostory.com.br/og-image.jpg`
   - Sem canonical (D4). Resp.: Claude Code. Verificar: `curl -s https://www.petluxostory.com.br/ | grep og:` e depuradores de prévia (F2.8). Risco: baixo (as URLs antigas passam por 301 → `www`). Rollback: reverter o commit.
-- [ ] **F1.5 `public/sitemap.xml:4`**: `<loc>https://petluxostory.com.br/</loc>` → `<loc>https://www.petluxostory.com.br/</loc>`; atualizar `lastmod` (linha 5, hoje `2026-05-04`). O sitemap só lista a home (verificado). Resp.: Claude Code. Rollback: reverter.
-- [ ] **F1.6 `public/robots.txt:4`**: `Sitemap: https://petluxostory.com.br/sitemap.xml` → `Sitemap: https://www.petluxostory.com.br/sitemap.xml`. (O arquivo tem 4 linhas e **não** tem `Host:`, ao contrário do que `docs/DEPLOY.md` afirma.) Resp.: Claude Code. Rollback: reverter.
-- [ ] **F1.7 `src/lib/analytics.js:80-87` — nenhuma mudança.** O domínio `.petluxostory.com.br` cobre raiz e `www`; os cookies de analytics continuam sendo limpos igual. Resp.: Claude Code (só confirmar). Risco: nenhum.
-- [ ] **F1.8 `src/main.jsx:8` (comentário) e `public/404.html`** — conforme D2/D7:
+- [x] **F1.5 `public/sitemap.xml:4`**: `<loc>https://petluxostory.com.br/</loc>` → `<loc>https://www.petluxostory.com.br/</loc>`; atualizar `lastmod` (linha 5, hoje `2026-05-04`). O sitemap só lista a home (verificado). Resp.: Claude Code. Rollback: reverter.
+- [x] **F1.6 `public/robots.txt:4`**: `Sitemap: https://petluxostory.com.br/sitemap.xml` → `Sitemap: https://www.petluxostory.com.br/sitemap.xml`. (O arquivo tem 4 linhas e **não** tem `Host:`, ao contrário do que `docs/DEPLOY.md` afirma.) Resp.: Claude Code. Rollback: reverter.
+- [x] **F1.7 `src/lib/analytics.js:80-87` — nenhuma mudança.** O domínio `.petluxostory.com.br` cobre raiz e `www`; os cookies de analytics continuam sendo limpos igual. Resp.: Claude Code (só confirmar). Risco: nenhum.
+- [x] **F1.8 `src/main.jsx:8` (comentário) e `public/404.html`** — conforme D2/D7:
   - **Agora (SPA mode):** manter `404.html` e `main.jsx:9-13` como estão (inertes, inofensivos) e só trocar o comentário da linha 8 para `// Restaura pathname gravado pelo 404.html (legado do redirect SPA da Vercel; inerte com o fallback de SPA da Cloudflare)`.
   - **Depois de validado (F4):** remover `public/404.html` e o bloco `main.jsx:9-13`.
   - **Se D2 = `404-page`:** manter `404.html` e o bloco (o `404.html` passa a ser servido com status 404 e o redirect JS continua necessário; https://developers.cloudflare.com/workers/static-assets/routing/static-site-generation/).
   Resp.: Claude Code. Risco: baixo. Rollback: reverter.
-- [ ] **F1.9 `.gitignore`** (hoje `.vercel` na linha 9): **manter** `.vercel` até o projeto Vercel sair; **acrescentar** as linhas `.wrangler/` e `.dev.vars`. Resp.: Claude Code. Risco: nenhum.
+- [x] **F1.9 `.gitignore`** (hoje `.vercel` na linha 9): **manter** `.vercel` até o projeto Vercel sair; **acrescentar** as linhas `.wrangler/` e `.dev.vars`. Resp.: Claude Code. Risco: nenhum.
 - [ ] **F1.10 (D5, opcional) `package.json`:** acrescentar `wrangler` em `devDependencies` e, se quiser, `"engines": { "node": ">=22" }`. O `build` atual (`node scripts/validate-catalog.js && vite build`) funciona sem mudança. Resp.: Claude Code (exige `npm install`, que esta tarefa não faz). Risco: baixo.
 - [ ] **F1.11 Confirmar que nada mais no repositório depende da Vercel:** `grep -rni vercel src tests scripts index.html` não achou nada (verificado em 2026-10-27); as ocorrências estão só em docs (F5) e em `.gitignore:9`.
 
