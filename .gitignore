@@ -11,3 +11,5 @@ test-results/
 
 # Contexto para IA
 AI_CONTEXT_PETLUXO.md
+.wrangler/
+.dev.vars
