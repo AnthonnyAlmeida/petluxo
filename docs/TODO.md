@@ -2,8 +2,7 @@
 
 Lista consolidada de melhorias. **Não mexer** (decisões intencionais, não pendências):
 
-- `HIDE_BUY_CTA` em `ProductBuyButton.jsx`: o CTA do PagBank fica oculto de propósito, para o dinheiro cair na hora e o pedido ser feito ao fornecedor. O checkout próprio é um plano futuro.
-- Os textos que citam o PagBank (FAQ, Footer, políticas): descrevem o fluxo pretendido e voltam a ficar corretos quando o CTA for religado.
+- `HIDE_BUY_CTA` em `ProductBuyButton.jsx`: o CTA "COMPRAR AGORA" fica oculto de propósito; o atendimento é só por WhatsApp. O checkout próprio é um plano futuro.
 
 Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
@@ -12,7 +11,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 ## Quick wins e correções imediatas
 
 - [ ] **4. Conferir o plano da Vercel** 🟢 **(urgente)**
-      O projeto é uma loja, ou seja, uso comercial. Verificar nos termos e na documentação atuais da Vercel se o plano Hobby permite isso; pelas condições vigentes, uso comercial é direcionado aos planos Pro ou Enterprise. Decidir o plano antes de qualquer outra mudança de infraestrutura.
+      O projeto é uma loja, ou seja, uso comercial. Verificar nos termos e na documentação atuais da Vercel se o plano Hobby permite isso; pelas condições vigentes, uso comercial é direcionado aos planos Pro ou Enterprise. Decidir o plano antes de qualquer outra mudança de infraestrutura. Depende deste item: privatizar o repositório (item 23) e o checkout próprio.
 
 - [x] **15. Corrigir `buyLink` do id 31** 🟢
       Tem espaço no final: `'https://pag.ae/81QtMgE9m '`.
@@ -43,13 +42,13 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 ## Próximas entregas
 
 - [x] **5. Mensagem do WhatsApp por produto** 🟢
-       Mensagem dinâmica que inclui nome do produto, variação selecionada (tamanho/cor) quando aplicável, preço correspondente à seleção atual (usando preço ativo e fallback para preço padrão do produto) e link absoluto para a página do produto (/produto/:id). Implementado em `ProductBuyButton.jsx` recebendo `selectedSize` e `activePrice` do hook `useProductBuy` via props, evitando recálculo desnecessário e formatando variação sem duplicação (ex: "Tamanho: M").
+      Mensagem dinâmica que inclui nome do produto, variação selecionada (tamanho/cor) quando aplicável, preço correspondente à seleção atual (usando preço ativo e fallback para preço padrão do produto) e link absoluto para a página do produto (/produto/:id). Implementado em `ProductBuyButton.jsx` recebendo `selectedSize` e `activePrice` do hook `useProductBuy` via props, evitando recálculo desnecessário e formatando variação sem duplicação (ex: "Tamanho: M").
 
 - [x] **13. Privacidade e consentimento do GA4 (LGPD)** 🟡
       Definir a base legal e o mecanismo de consentimento aplicável ao GA4; impedir o carregamento do `gtag.js` antes da autorização quando exigida pela estratégia adotada; revisar a política de privacidade. A implementação (banner ou outro mecanismo) decorre dessa análise.
 
 - [ ] **6. Eventos do GA4 para clique no WhatsApp** 🟡
-      **Depende do item 13.** O evento deve identificar produto e origem do clique (FAB, Navbar, Featured, Footer, ficha), sem enviar dados pessoais em parâmetros ou URL, e respeitar o consentimento adotado.
+      Desbloqueado: o item 13 está concluído. O evento deve identificar produto e origem do clique (Navbar, Featured, CTA, FAQ, Footer, busca sem resultado em `Products.jsx`, ficha e modal de produto via `ProductBuyButton`), sem enviar dados pessoais em parâmetros ou URL, e respeitar o consentimento adotado.
 
 - [ ] **1. Rotas de produto e tratamento de 404** 🟡
       Hoje as rotas dependem de `public/404.html` (redireciona via JavaScript) e de `main.jsx`. Verificar e documentar o comportamento real de `/produto/:id` em acesso direto (status HTTP recebido, e como Google e apps de mensagem tratam) antes de presumir a causa.
@@ -86,7 +85,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Informar com clareza as condições de entrega (fornecedor + frete), parte de apresentar a oferta com informação clara ao consumidor. O schema de `productDetails.js` não tem campo dedicado: criar `deliveryNote` (e renderizar no `ProductPage`) ou, provisoriamente, usar `faq`/`warranty`. O campo é uma decisão de implementação, não a obrigação em si.
 
 - [ ] **8. Completar fichas dos produtos sem `PRODUCT_DETAILS`** 🔴
-      17 dos 37 produtos abrem só o modal rápido. Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
+      17 dos 37 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32, 33). Dos 28 visíveis, 9 estão sem ficha e abrem só o modal rápido: ids 1, 14, 15, 18, 24, 25, 30, 31, 33 (os outros 8 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
       JSON-LD `Product` nas fichas e URLs dos produtos visíveis em `public/sitemap.xml`. Faz mais sentido depois do item 2.
@@ -103,4 +102,32 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 ## Quando for implementar o checkout próprio
 
 - [ ] **21. Conferir regras de liberação de saldo do gateway** 🟢
-      Verificar prazo de recebimento por forma de pagamento antes de escolher o gateway (`docs/CHECKOUT_ARCHITECTURE.md` cita Mercado Pago), para não repetir o problema de caixa do modelo de compra sob encomenda ao fornecedor.
+      Verificar prazo de recebimento por forma de pagamento antes de escolher o gateway (a intenção é a InfinitePay; `docs/CHECKOUT_ARCHITECTURE.md` ainda cita Mercado Pago), para não repetir o problema de caixa do modelo de compra sob encomenda ao fornecedor.
+      A confirmar com a InfinitePay: se o checkout integrado aceita débito; taxas do cartão à vista e parcelado; custo e condições do recebimento na hora (há relatos de plano com permanência mínima); prazo de liberação por forma de pagamento.
+
+- [ ] **22. Alinhar os textos que citam o PagBank ao atendimento por WhatsApp** 🟡
+      Os links do PagBank provavelmente não voltam (`docs/DECISIONS.md` §12). Hoje citam o PagBank como gateway ativo: `src/components/sections/FAQ.jsx:39`; `src/components/layout/Footer.jsx:63` e `:68`; `src/components/pages/PrivacyPage.jsx:48`, `:58`, `:64` e `:84`; `src/components/pages/ShippingPolicyPage.jsx:60`; `src/components/pages/TermsPage.jsx:87`. A nova redação depende de decisão do dono; não escrever a redação neste item.
+
+- [ ] **23. Decidir sobre privatizar o repositório** 🟡
+      Pré-requisitos: item 4; corrigir as miniaturas do painel `petluxo-admin` que usam `raw.githubusercontent.com` (`ProductsPage.jsx:351` e `CategoriesPage.jsx:399` e, no modo edição, `Step3Photo.jsx:21`); testar um commit do painel com o repositório privado (autor do commit e deploy da Vercel); conferir o escopo do token. A documentação do projeto (`README.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md` §8) afirma que o repositório deve ser público; isso não foi verificado na conta.
+
+- [ ] **24. Conferir PNG com extensão `.webp` nas fotos de galeria** 🟢
+      Rodar `file public/images/products/*/*.webp | grep PNG` e verificar no painel (`petluxo-admin/src/lib/imageConverter.js`) como as fotos são convertidas, para evitar que o problema volte a cada produto novo. Causa não verificada.
+
+- [ ] **25. Rotacionar periodicamente o token de acesso do painel ao GitHub** 🟢
+      O token atual (fine-grained, só o repositório `petluxo`, permissão Contents em leitura e escrita) não tem vencimento. Definir uma rotina de troca (sugestão: a cada 6 a 12 meses). Última troca: 2026-10-26. Não registrar o valor do token em nenhum arquivo.
+
+- [ ] **26. Reescrever `docs/CHECKOUT_ARCHITECTURE.md` para InfinitePay com frete grátis** 🟡
+      Saem Mercado Pago e Melhor Envio. Continuam servidor (funções) e banco. Pagamento por redirecionamento para checkout hospedado. Confirmação de pagamento pela API (retorno ao site e webhook não bastam como prova). Débito a confirmar.
+
+- [ ] **27. Resíduos de código de baixa prioridade** 🟢 - A exceção de `shortName` para os ids 3, 4 e 10 em `scripts/validate-catalog.js` não é mais necessária: todos os 37 produtos têm `shortName`. - `:global(.price)` em `ProductModal.module.css:66` está fora da lista permitida em `docs/CSS_MIGRATION.md`. - `<a href="/">` na Navbar (`Navbar.jsx:30`) recarrega a página; trocar por `Link` mudaria o comportamento do clique no logo na home, então avaliar antes.
+
+---
+
+## Concluídos recentemente
+
+- [x] Limpeza de dados e código morto (2026-10-26)
+- [x] Fotos de produto convertidas para WebP de verdade e arquivo solto organizado (2026-10-26)
+- [x] og-image em JPEG 1200×630 com tags de tamanho (2026-10-26)
+- [x] Troca do token de acesso do painel (2026-10-26)
+- [x] Sincronização dos READMEs e docs (2026-10-26)

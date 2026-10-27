@@ -12,7 +12,6 @@ O objetivo é migrar para CSS Modules mantendo o visual 100% idêntico — nova 
 ```
 src/styles/
   globals.css         # reset, utilitárias, tipografia, .reveal
-  animations.css      # apenas @keyframes, nomeados por componente
   variables.css       # tokens de cor, tipografia, espaçamento, z-index
   buttons.css         # global controlado — apenas .btn e variantes
 
@@ -33,14 +32,21 @@ src/components/
     ProductCard.module.css
     ProductGrid.module.css
     ProductModal.module.css
+    ProductBuyButton.module.css
+    ProductGallery.module.css
+    ProductLightbox.module.css
+    ProductSizeSelector.module.css
   ui/
+    Accordion.module.css
+    AnalyticsConsent.module.css
+    BrandSeal.module.css
+    CategorySelector.module.css
     TrustBadges.module.css
   pages/
-    PrivacyPage.module.css
-    ReturnPolicyPage.module.css
-    ShippingPolicyPage.module.css
-    TermsPage.module.css
+    ProductPage.module.css
 ```
+
+As páginas de política (`PrivacyPage`, `ReturnPolicyPage`, `ShippingPolicyPage`, `TermsPage`) não têm módulo: usam estilo inline. Os `@keyframes` ficam nos próprios módulos (`Hero.module.css`, `Products.module.css`); não existe `animations.css`.
 
 ---
 
@@ -74,6 +80,17 @@ Permitido APENAS para:
 - `.reveal` e `.reveal.d1`–`.d5`
 - Utilitárias globais: `.serif`, `.italic`, `.gold`, `.gold-text`, `.eyebrow`, `.wrap`, `.section-tag`
 - Classes de bibliotecas third-party
+
+Usos de `:global()` que existem hoje no código:
+- `Products.module.css:191` — `.endNotice > :global(.section-tag)`
+- `Differentials.module.css:18` — `.diffs :global(.section-tag)`
+- `Story.module.css:46` e `:50` — `.storyGrid > :global(.reveal)` e `::before`
+- `ProductCard.module.css:94` — `.product .badge:global(.gold)`
+- `CTA.module.css:87` — `.ctaRow :global(.btn)` (media query)
+- `Hero.module.css:260` e `:272` — `.heroCtaRow :global(.btn)` (media queries)
+- `ProductModal.module.css:66` — `.modalInfo :global(.price)`: **uso fora da lista permitida, a revisar** (`.price` não está entre as utilitárias globais acima)
+
+`.btn` vem de `buttons.css` (global controlado) e também não consta na lista permitida acima.
 
 ### Mistura de classes no JSX
 ```jsx
@@ -109,11 +126,11 @@ Durante a migração, NUNCA corrigir comportamento inesperado com:
 Se algo quebrar visivelmente → reverter e investigar antes de avançar.
 
 ### @keyframes em CSS Modules
-CSS Modules no Vite processa nomes de keyframes como identificadores locais. Keyframes definidos em arquivos globais separados (como `animations.css`) **não são resolvidos automaticamente** dentro de um `.module.css`.
+CSS Modules no Vite processa nomes de keyframes como identificadores locais. Keyframes definidos em arquivos globais separados **não são resolvidos automaticamente** dentro de um `.module.css`.
 
 **Regra:** Se um componente usa `animation:` em seu módulo, declare os `@keyframes` necessários diretamente no próprio `.module.css`.
 
-O arquivo `animations.css` continua válido para uso em contexto global (ex: classes utilitárias no `globals.css`), mas não deve ser referenciado por nome dentro de módulos.
+Hoje os keyframes usados estão declarados em `Hero.module.css` (`heroRise`, `heroFade`, `heroFloaty`, `stageRotate`, `scrollCueLine`) e `Products.module.css` (`resultFadeIn`); o arquivo global `animations.css` não existe mais.
 
 Exemplo correto:
 ```css
@@ -127,7 +144,7 @@ Exemplo correto:
 ## Checklist de execução
 
 ### Passo 0 — Preparação da base ✅ Concluído
-- [x] Criar `src/styles/animations.css` com todos os @keyframes renomeados
+- [x] Criar `src/styles/animations.css` com todos os @keyframes renomeados (arquivo removido depois; os keyframes hoje ficam nos próprios módulos)
   - `rise` → `heroRise`
   - `fade` → `heroFade`
   - `rotate` → `stageRotate`
@@ -137,8 +154,8 @@ Exemplo correto:
 - [x] Adicionar z-index tokens em `variables.css`
 - [x] Substituir z-index hardcoded no globals.css pelas variáveis
 - [x] Remover classes órfãs: `.grain` (mantida — usada em index.html), `.diff-item .icon`, `.modal-info .row`, `.cat-chip`, `.product-grid`
-- [x] Importar `animations.css` em `main.jsx`
-- [x] Adicionar seção `## Convenções CSS` no `AI_CONTEXT.md`
+- [x] Importar `animations.css` em `main.jsx` (import removido junto com o arquivo)
+- [x] Adicionar seção `## Convenções CSS` no `AI_CONTEXT_PETLUXO.md` (arquivo hoje chamado AI_CONTEXT_PETLUXO.md)
 - [x] ✅ Revisão visual: desktop + mobile + tablet
 - [x] ✅ Commits: `refactor: passo 0a` e `refactor: passo 0b`
 
@@ -283,7 +300,7 @@ Exemplo correto:
 #### 3c — Hero
 - [x] Criar `src/components/sections/Hero.module.css`
 - [x] Migrar classes do globals.css → module
-- [x] Referenciar keyframes de `animations.css`
+- [x] Declarar os keyframes no próprio `Hero.module.css`
 - [x] Atualizar `Hero.jsx`
 - [x] Build sem erros
 - [x] ✅ Revisão visual: desktop + mobile + tablet (testar animações de entrada)
@@ -295,10 +312,10 @@ Exemplo correto:
 
 - [x] Criar `src/styles/buttons.css` com cabeçalho de global controlado
 - [x] Extrair `.btn` e variantes do globals.css → `buttons.css`
-- [x] Importar `buttons.css` nos 8 componentes que usam botões (Featured, CTA, ProductModal, Hero, NotFound, Navbar, Products, Button)
+- [x] Importar `buttons.css` nos componentes que usam botões (hoje: Featured, CTA, Hero, NotFound, Navbar, Products, ProductBuyButton)
 - [x] Limpar globals.css — contém apenas reset, utilitárias, tipografia, `.reveal`
-- [x] Verificar que globals.css ficou abaixo de 200 linhas — **150 linhas**
-- [x] Atualizar `AI_CONTEXT.md` com seção `## Arquitetura CSS` final
+- [x] Verificar que globals.css ficou abaixo de 200 linhas — **150 linhas** (hoje: 166 linhas)
+- [x] Atualizar `AI_CONTEXT_PETLUXO.md` com seção `## Arquitetura CSS` final (arquivo hoje chamado AI_CONTEXT_PETLUXO.md)
 - [x] ✅ Revisão visual completa: todos os componentes, desktop + mobile
 - [x] ✅ Commit: `refactor: passo final — buttons.css, limpeza globals.css`
 

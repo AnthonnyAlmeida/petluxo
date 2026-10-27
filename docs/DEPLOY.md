@@ -73,13 +73,13 @@ Atualizar as URLs em todos os arquivos acima e no painel da Vercel.
 Após cada deploy, cheque:
 
 - [ ] Site carrega sem erros no navegador
-- [ ] Botões "COMPRAR AGORA" abrem o link PagBank correto em nova aba
+- [ ] O botão "COMPRAR AGORA" não aparece (oculto por `HIDE_BUY_CTA` em `ProductBuyButton.jsx`); o CTA ativo é "CONSULTAR VIA WHATSAPP"
 - [ ] Botões WhatsApp funcionam (abrem conversa correta)
 - [ ] Menu hambúrguer funciona no celular
 - [ ] Imagens carregam (hero, logo, produtos)
 - [ ] Favicon aparece na aba do navegador
 - [ ] Acessar `/robots.txt` e `/sitemap.xml` retorna os arquivos corretos
-- [ ] Google Analytics recebe eventos (verificar em GA4 → Tempo Real)
+- [ ] Google Analytics recebe eventos (verificar em GA4 → Tempo Real) — os eventos só chegam depois de o visitante aceitar o consentimento no banner
 
 ---
 

@@ -190,6 +190,8 @@ Produtos como Cama CloudNest™ (id 14) e Comedouro Maison Élevé (id 16) têm 
 
 ## 10. CTA dinâmico no card (COMPRAR AGORA vs VIA WHATSAPP)
 
+> **Superada pela seção 12** (estado atual: atendimento só por WhatsApp; o botão "COMPRAR AGORA" está oculto por `HIDE_BUY_CTA`).
+
 **Motivação:**
 Com a integração do PagBank, passou a existir distinção clara entre produtos com link de compra direta e produtos que apenas redirecionam para WhatsApp.
 
@@ -207,9 +209,32 @@ Com a integração do PagBank, passou a existir distinção clara entre produtos
 
 ## 11. Narrativa: WhatsApp → compra direta via PagBank
 
+> **Superada pela seção 12** (estado atual: atendimento só por WhatsApp; o botão "COMPRAR AGORA" está oculto por `HIDE_BUY_CTA`).
+
 **Situação original:**
 Toda a narrativa do site direcionava para WhatsApp como canal principal de venda.
 
 **O que mudou:**
 Com a integração PagBank, o botão principal no modal passou a ser "COMPRAR AGORA". WhatsApp ficou como canal secundário de consulta. Produtos sem link PagBank ainda usam WhatsApp como primário. O CTA no card reflete a mesma hierarquia.
 
+---
+
+## 12. Atendimento só por WhatsApp; PagBank retirado; checkout próprio planejado
+
+**Situação (conferida no código):**
+- O atendimento e o fechamento são por WhatsApp. O CTA ativo é "CONSULTAR VIA WHATSAPP", montado em `src/components/product/ProductBuyButton.jsx` com `wa()` de `src/lib/whatsapp.js`.
+- `HIDE_BUY_CTA = true` (`ProductBuyButton.jsx:18`) oculta o botão "COMPRAR AGORA" (renderizado só com `!HIDE_BUY_CTA`, linha 60).
+- O card mostra "VIA WHATSAPP" fixo sob o preço (`src/components/product/ProductCard.jsx:42`).
+- Os `buyLink`/`buyLinks` continuam em `src/data/products.js`. Os `buyLinks` carregam os tamanhos (`size`) usados pelo seletor; os preços por tamanho vêm de `prices` (`src/hooks/useProductBuy.js:20-21`). O validador do catálogo exige link em todo produto (`scripts/validate-catalog.js:58`).
+
+**Decisão (dono, 2026-10-26):**
+Os links do PagBank provavelmente não voltam. A intenção é um checkout próprio com InfinitePay, configurado para o dinheiro cair na hora, com frete grátis (sem cálculo de frete). Ainda não é definitivo.
+
+**Consequências:**
+- Textos do site que citam o PagBank como gateway ativo ficam desalinhados e viram pendência (item 22 do `docs/TODO.md`): `FAQ.jsx:39`, `Footer.jsx:63` e `:68`, `PrivacyPage.jsx:48`, `:58`, `:64` e `:84`, `ShippingPolicyPage.jsx:60`, `TermsPage.jsx:87` (todos em `src/components/`).
+- O plano em `docs/CHECKOUT_ARCHITECTURE.md` (Mercado Pago, Melhor Envio) precisa ser reescrito (item 26 do `docs/TODO.md`).
+
+**A confirmar com a InfinitePay (não são fatos):**
+- Se o checkout integrado aceita débito.
+- Custo do cartão parcelado e do recebimento na hora.
+- Prazos de liberação por forma de pagamento.

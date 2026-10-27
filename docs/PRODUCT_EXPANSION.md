@@ -16,7 +16,7 @@ A ficha de produto atual (imagem única, descrição, bullets) é considerada ra
 
 Além disso, foi pedido um selo fixo "Por que escolher a PetLuxo?" com 6 diferenciais — esse **não é conteúdo por produto**, é um componente global reutilizável.
 
-Ponto central do pedido: o negócio ainda está levantando esse nível de detalhe produto por produto (32 produtos no catálogo). A estrutura precisa suportar produtos com dados completos e produtos com dados parciais/ausentes ao mesmo tempo, sem quebrar nada.
+Ponto central do pedido: o negócio ainda está levantando esse nível de detalhe produto por produto (37 produtos no catálogo hoje). A estrutura precisa suportar produtos com dados completos e produtos com dados parciais/ausentes ao mesmo tempo, sem quebrar nada.
 
 ## Decisão de arquitetura
 
@@ -48,7 +48,7 @@ Cada campo em `productDetails.js` é opcional. Cada seção da `ProductPage` só
 
 Acesso a `/produto/:id` de um produto com `visible: false` ou de um `id` que não existe em `PRODUCTS` renderiza o componente `NotFound` já existente (mesmo tratamento do catch-all `*`), em vez de vazar um produto que deveria estar oculto do site.
 
-A página reutiliza a mesma lógica de 3 estados do botão de compra que já existe em `ProductModal.jsx` (badge `ESGOTADO` → botão desabilitado + WhatsApp; `buyLinks` → seletor de tamanho; `buyLink` único → botão direto; nenhum dos dois → só WhatsApp), em vez de duplicar essa regra.
+A página reutiliza a mesma lógica de 3 estados do botão de compra, que vive em `ProductBuyButton.jsx` e é compartilhada com `ProductModal.jsx` (badge `ESGOTADO` → botão desabilitado + WhatsApp; `buyLinks` → seletor de tamanho; `buyLink` único → botão direto; nenhum dos dois → só WhatsApp), em vez de duplicar essa regra.
 
 ### Selo "Por que escolher a PetLuxo?"
 
@@ -101,6 +101,8 @@ Dentro da pasta:
 
 **Migração completa, não mais gradual.** A ideia original era migrar produto por produto, só quando cada um ganhasse galeria própria (decisão registrada na primeira versão deste documento). Essa decisão foi revertida: os **32 produtos do catálogo** foram migrados de uma vez para a pasta própria, para manter o padrão consistente em todo o site desde já, independentemente de já terem ou não fotos adicionais — a maioria ainda tem só `principal.webp` na pasta, aguardando galeria. Produtos novos que entrarem no catálogo devem seguir a mesma convenção desde o cadastro.
 
+**Formato dos arquivos.** Os arquivos `.webp` devem ser WebP de verdade, convertidos com `cwebp -q 82` (sem alterar as dimensões). Para conferir, rodar `file <arquivo>`: um WebP real aparece como `Web/P image`; `PNG image data` indica um PNG com extensão `.webp`, que deve ser reconvertido.
+
 **Risco aceito:** o nome da pasta (slug) é gerado a partir do nome do produto no momento da migração e não é atualizado automaticamente se o produto for renomeado depois. Isso não é grave — é só um identificador de arquivo interno, não precisa acompanhar o nome exibido no site. Uma pasta com nome "desatualizado" continua funcionando normalmente; só fica um pouco menos autoexplicativa para quem for editar o catálogo no futuro.
 
 ## Riscos documentados
@@ -113,9 +115,9 @@ Dentro da pasta:
 
 ## Plano de implementação
 
-- [ ] **Fase 1 — Fundação:** criar `productDetails.js` vazio, `ProductPage.jsx`, rota `/produto/:id` em `src/app/page.jsx`, link condicional "Ver ficha completa" no `ProductModal`, tratamento 404 (produto oculto ou `id` inexistente)
-- [ ] **Fase 2 — Selo global:** implementar `BrandSeal`/`WhyPetLuxo` em `src/components/ui/`, plugar na `ProductPage`
-- [ ] **Fase 3 — Piloto:** popular a Bolsa Transporte PetLuxo com o conteúdo real já recebido, validando o schema na prática
+- [x] **Fase 1 — Fundação:** criar `productDetails.js` vazio, `ProductPage.jsx`, rota `/produto/:id` em `src/app/page.jsx`, link condicional "Ver ficha completa" no `ProductModal`, tratamento 404 (produto oculto ou `id` inexistente)
+- [x] **Fase 2 — Selo global:** implementar `BrandSeal`/`WhyPetLuxo` em `src/components/ui/`, plugar na `ProductPage`
+- [x] **Fase 3 — Piloto:** popular a Bolsa Transporte PetLuxo com o conteúdo real já recebido, validando o schema na prática
 - [ ] **Fase 4 — Rollout gradual:** adicionar entrada em `productDetails.js` um produto por vez, conforme os dados forem levantados — sem tocar em `products.js` nem no painel admin
 
 **Fora de escopo por ora:** meta tags dinâmicas por produto e geração automática de sitemap.

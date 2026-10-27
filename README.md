@@ -26,12 +26,12 @@ O PetLuxo é um site institucional de e-commerce construído com foco em identid
 
 ## Sobre o Projeto
 
-PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, sofás, acessórios de couro, coleiras e comedouros sofisticados. O objetivo é converter visitantes em compradores através de uma experiência visual diferenciada e fluxo de compra direto via PagBank.
+PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, sofás, acessórios de couro, coleiras e comedouros sofisticados. O objetivo é converter visitantes em compradores através de uma experiência visual diferenciada e de atendimento e fechamento por WhatsApp (os links de pagamento PagBank estão cadastrados, mas o botão "Comprar Agora" está oculto).
 
 **Destaques:**
 - Site 100% estático — zero backend, zero banco de dados
 - Deploy automático via GitHub + Vercel
-- Performance otimizada: bundle JS ~183KB (57KB gzip), CSS ~30KB (6.7KB gzip)
+- Performance otimizada: bundle JS ~342KB (105KB gzip), CSS ~55KB (11KB gzip)
 - Arquitetura baseada em componentes React com CSS puro e design system próprio
 
 ---
@@ -40,14 +40,14 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 
 | Recurso | Descrição |
 |---|---|
-| 🛍️ **Catálogo dinâmico** | 21 produtos em 6 categorias, carregados de um arquivo `products.js` centralizado |
+| 🛍️ **Catálogo dinâmico** | 37 produtos em 9 categorias (28 visíveis), carregados de um arquivo `products.js` centralizado |
 | 🎠 **Carrosséis por categoria** | Um carrossel por categoria com setas laterais, dots de paginação e swipe touch |
-| 🔍 **Modal interativo** | Quick view com seletor de tamanho, preço dinâmico e link de compra por variação |
-| 💳 **Integração PagBank** | Botão "Comprar Agora" abre link de pagamento direto (`buyLink` / `buyLinks`) |
-| 💬 **Fallback WhatsApp** | Produtos sem link de pagamento redirecionam para WhatsApp com mensagem pré-preenchida |
+| 🔍 **Modal interativo** | Quick view com seletor de tamanho, preço dinâmico e mensagem de WhatsApp por variação |
+| 💳 **Links PagBank** | Cada produto mantém `buyLink` / `buyLinks`, mas o botão "Comprar Agora" está oculto por `HIDE_BUY_CTA` em `ProductBuyButton.jsx` |
+| 💬 **Consulta via WhatsApp** | CTA ativo "Consultar via WhatsApp", com mensagem pré-preenchida (nome, variação, preço e link da ficha) |
 | 📱 **Totalmente responsivo** | Layout adaptado para desktop (≥980px), tablet (≤980px) e mobile (≤768px / ≤480px) |
 | ✨ **Animações de scroll** | Reveal de elementos com `IntersectionObserver` e efeito parallax no logo da navbar |
-| 🔎 **SEO básico** | Open Graph completo, Twitter Card, sitemap.xml, robots.txt, Google Analytics |
+| 🔎 **SEO básico** | Open Graph completo, Twitter Card, sitemap.xml, robots.txt, GA4 com consentimento |
 | ⚡ **Performance** | Build em ~5s, hot reload instantâneo, DevTweaks excluído do bundle de produção |
 
 ---
@@ -61,7 +61,10 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 | **JavaScript** | ES2022 | Lógica de negócio, estado e interatividade |
 | **CSS Modules** | — | Design system proprietário, sem frameworks de UI; estilos scoped por componente |
 | **Google Fonts** | — | Cormorant Garamond · Inter · JetBrains Mono |
-| **Google Analytics** | GA4 | Rastreamento de visitas via gtag.js |
+| **React Router** | ^7.15.0 | Rotas da home, fichas `/produto/:id` e páginas de política |
+| **yet-another-react-lightbox** | ^3.32.2 | Lightbox com zoom, carregado sob demanda em dispositivos touch |
+| **Google Analytics** | GA4 | `gtag.js` carregado por `src/lib/analytics.js` somente depois do consentimento do visitante |
+| **Playwright** | ^1.49.0 (devDependency) | Testes de consentimento do GA4 em `tests/` |
 | **Vercel** | Hobby | Hospedagem e deploy automático via Git |
 
 ---
@@ -70,28 +73,37 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 
 ```
 petluxo/
-├── index.html               # Shell HTML — meta tags, OG, Analytics
+├── index.html               # Shell HTML — meta tags e OG (GA4 não fica aqui: carrega por src/lib/analytics.js)
 ├── public/
-│   ├── og-image.png         # Capa 1200×630 para redes sociais
+│   ├── og-image.jpg         # Capa 1200×630 usada nas meta tags (og:image / twitter:image)
+│   ├── og-image.png         # Arte original 1536×1024, mantida (links e prévias antigas)
 │   ├── robots.txt / sitemap.xml
 │   └── images/products/     # Fotos dos produtos
 ├── src/
 │   ├── app/
-│   │   └── page.jsx         # Componente raiz — orquestra todas as seções
+│   │   ├── page.jsx         # Rotas + HomePage
+│   │   ├── ScrollToTop.jsx
+│   │   └── DevTweaks.jsx    # Painel de ajustes (só em dev)
 │   ├── components/
-│   │   ├── layout/          # Navbar (hambúrguer mobile) + Footer
-│   │   ├── product/         # ProductCard · ProductGrid · ProductModal
+│   │   ├── layout/          # Navbar (hambúrguer mobile) · MinimalNavbar · Footer
+│   │   ├── product/         # ProductCard · ProductGrid · ProductModal · ProductGallery · ProductLightbox · ProductSizeSelector · ProductBuyButton
 │   │   ├── sections/        # Hero · Featured · Products · Story · Differentials · CTA · FAQ · NotFound
-│   │   └── ui/              # Button · Container · Section · TrustBadges
+│   │   ├── pages/           # ProductPage · PrivacyPage · ReturnPolicyPage · ShippingPolicyPage · TermsPage
+│   │   └── ui/              # Accordion · AnalyticsConsent · BrandSeal · CategorySelector · TrustBadges
 │   ├── data/
-│   │   └── products.js      # ← Fonte de verdade do catálogo
-│   ├── hooks/useScroll.js   # IntersectionObserver + parallax
-│   ├── lib/whatsapp.js      # Gerador de links wa.me
+│   │   ├── products.js      # ← Fonte de verdade do catálogo
+│   │   └── productDetails.js # Fichas expandidas por id
+│   ├── hooks/               # useScroll.js (IntersectionObserver + parallax) · useProductBuy.js
+│   ├── lib/
+│   │   ├── whatsapp.js      # Gerador de links wa.me
+│   │   └── analytics.js     # GA4 com consentimento
 │   └── styles/
 │       ├── variables.css    # Design tokens (cores, tipografia, espaçamentos)
-│       ├── globals.css      # Reset, utilitárias globais, tipografia (~150 linhas)
-│       ├── animations.css   # @keyframes globais (heroRise, heroFade, heroFloaty…)
+│       ├── globals.css      # Reset, utilitárias globais, tipografia e .reveal (166 linhas)
 │       └── buttons.css      # Estilos globais de botões (.btn e variantes)
+├── scripts/validate-catalog.js  # Validador do catálogo (roda antes do build)
+├── tests/analytics-consent.spec.js  # Testes Playwright (9 testes)
+├── playwright.config.js
 └── docs/                    # Documentação técnica detalhada
 ```
 
@@ -100,7 +112,7 @@ petluxo/
 ## Decisões Técnicas
 
 **CSS Modules sem framework**
-Controle total sobre o design, bundle enxuto e identidade visual 100% proprietária. Todos os 14 componentes têm `.module.css` próprio com estilos scoped. Estilos globais divididos em: `variables.css` (tokens), `globals.css` (~150 linhas de reset/utilitárias), `animations.css` (@keyframes) e `buttons.css` (`.btn` e variantes, importado explicitamente por cada componente que usa botões).
+Controle total sobre o design, bundle enxuto e identidade visual 100% proprietária. Os componentes têm `.module.css` próprio com estilos scoped (23 módulos). Estilos globais divididos em: `variables.css` (tokens), `globals.css` (166 linhas de reset/utilitárias) e `buttons.css` (`.btn` e variantes, importado explicitamente por cada componente que usa botões). Os `@keyframes` ficam nos próprios módulos (`Hero.module.css`, `Products.module.css`).
 
 **Carrossel sem biblioteca externa**
 Implementado com React state + `transform: translateX`. Setas laterais usam flexbox (não `position: absolute`) para evitar clipping em containers com `overflow: hidden`. Suporte a swipe touch com detecção de direção e limiar de 50px.
@@ -135,12 +147,17 @@ npm run dev -- --host
 ```
 
 ```bash
-# Build de produção
+# Build de produção (roda o validador de catálogo antes do vite build)
 npm run build
+
+# Só validar o catálogo
+npm run validate:catalog
 
 # Preview local do build
 npm run preview
 ```
+
+**Testes:** `tests/analytics-consent.spec.js` (9 testes Playwright do consentimento GA4) e `playwright.config.js`. Não há script npm para executá-los.
 
 ---
 
@@ -159,7 +176,6 @@ O deploy é automático a cada `git push` para a branch `main`:
 
 ## Melhorias Futuras
 
-- [ ] Páginas individuais de produto com URLs amigáveis
 - [ ] SEO avançado com meta tags dinâmicas por produto
 - [ ] CMS headless para gerenciamento do catálogo sem código
 - [ ] Animações de entrada mais refinadas (Framer Motion ou GSAP)
