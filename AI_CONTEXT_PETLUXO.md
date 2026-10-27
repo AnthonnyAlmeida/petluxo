@@ -7,19 +7,19 @@ Site estático (sem backend, sem banco, sem API) de produtos premium para pets. 
 - **Produção:** https://petluxostory.com.br
 - **Instagram:** @petluxostory
 - **Hospedagem:** Vercel (Hobby), deploy a cada push em `main`. Estado atual do deploy: não verificado.
-- **Repositório:** público. `main` == `origin/main` em `ade0739` na data da verificação; alterações de imagens (recompressão e pasta nova do arranhador) na working tree, não commitadas.
+- **Repositório:** público. `main` == `origin/main` em `aaa5a76` na data da verificação; working tree com alterações só de documentação (`README.md`, `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md`, `docs/PRODUCT_EXPANSION.md`, `docs/README.md`, `docs/TODO.md`), não commitadas.
 
 ## Estado por área (LIVE × EM DESENVOLVIMENTO × PLANEJADO)
 
-| Área | Estado |
-|---|---|
-| Catálogo, busca, filtro por categoria, carrosséis, ficha `/produto/:id`, galeria, lightbox | LIVE |
-| CTA "CONSULTAR VIA WHATSAPP" com mensagem dinâmica (nome, variação, preço, link da ficha) | LIVE |
-| Consentimento GA4 (LGPD) e `page_view` por rota | No código em `main`; confirmar deploy |
-| Validação de catálogo no build (`scripts/validate-catalog.js`) | LIVE no build |
-| Testes Playwright de consentimento GA4 | Staged, não commitado |
-| CTA "COMPRAR AGORA" (links PagBank) | Oculto por `HIDE_BUY_CTA = true` (`ProductBuyButton.jsx:19`); links seguem em `products.js` |
-| Carrinho, checkout, Pix/débito/crédito, Mercado Pago, banco, e-mail transacional, frete, Melhor Envio | APENAS PLANEJADO (`docs/CHECKOUT_ARCHITECTURE.md`). Nenhum código existe |
+| Área                                                                                                  | Estado                                                                                      |
+| ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Catálogo, busca, filtro por categoria, carrosséis, ficha `/produto/:id`, galeria, lightbox            | LIVE                                                                                        |
+| CTA "CONSULTAR VIA WHATSAPP" com mensagem dinâmica (nome, variação, preço, link da ficha)             | LIVE                                                                                        |
+| Consentimento GA4 (LGPD) e `page_view` por rota                                                       | No código em `main`; confirmar deploy                                                       |
+| Validação de catálogo no build (`scripts/validate-catalog.js`)                                        | LIVE no build                                                                               |
+| Testes Playwright de consentimento GA4                                                                | No código em `main` (`tests/`, `playwright.config.js`); sem script npm para executar        |
+| CTA "COMPRAR AGORA" (links PagBank)                                                                   | Oculto por `HIDE_BUY_CTA = true` (`ProductBuyButton.jsx:19`); links seguem em `products.js` |
+| Carrinho, checkout, Pix/débito/crédito, Mercado Pago, banco, e-mail transacional, frete, Melhor Envio | APENAS PLANEJADO (`docs/CHECKOUT_ARCHITECTURE.md`). Nenhum código existe                    |
 
 Não existem `api/`, `functions/`, `db/`, `vercel.json` nem `src/data/shipping.js`.
 
@@ -28,7 +28,7 @@ Não existem `api/`, `functions/`, `db/`, `vercel.json` nem `src/data/shipping.j
 - React ^18.3.1, React Router DOM ^7.15.0 (`BrowserRouter` em `main.jsx`, rotas em `src/app/page.jsx`), Vite ^6.3.3 (instalado 6.4.2), `@vitejs/plugin-react` ^4.3.4.
 - CSS Modules por componente, sem framework de UI. JavaScript puro (sem TypeScript).
 - `yet-another-react-lightbox` ^3.32.2 com plugin `Zoom`, carregado via `React.lazy` só em dispositivo touch.
-- devDependencies de teste (staged): `@playwright/test` e `playwright` ^1.49.0.
+- devDependencies de teste: `@playwright/test` e `playwright` ^1.49.0.
 - Scripts: `dev`, `build` (`node scripts/validate-catalog.js && vite build`), `preview`, `validate:catalog`. Não há script de lint nem de teste.
 - Último `npm run build`: ok, 107 módulos, JS principal ~342 kB (~105 kB gzip), chunk do lightbox ~42 kB; validador de catálogo com 0 avisos.
 - `vite.config.js`: `react()`, host `0.0.0.0`, porta 5173.
@@ -41,8 +41,8 @@ petluxo/
 ├── assets/                    # logo.webp, hero/image-hero.webp, sobre_nos/*.webp (importados pelo Vite)
 ├── public/                    # favicon, og-image.png, og-image.jpg, robots.txt, sitemap.xml (só a home), 404.html, images/products/<slug>/
 ├── scripts/validate-catalog.js
-├── tests/analytics-consent.spec.js   # staged
-├── playwright.config.js              # staged
+├── tests/analytics-consent.spec.js
+├── playwright.config.js
 ├── docs/                      # CHECKOUT_ARCHITECTURE, CSS_MIGRATION, DECISIONS, DEPLOY, PRODUCT_EXPANSION, README, TODO
 └── src/
     ├── main.jsx               # monta <App/>, restaura path do 404.html, bloqueio/reset de pinch-zoom (WebKit)
@@ -89,7 +89,7 @@ WhatsApp (`src/lib/whatsapp.js`): número de `VITE_WHATSAPP_PHONE` com fallback 
 - `src/lib/analytics.js`: ID `G-KKMV5VHR48` hardcoded (não é segredo); consentimento em `localStorage` (`petluxo_analytics_consent`: `granted`/`denied`); `gtag.js` só é injetado depois de `granted`; `config` com `send_page_view: false`; `page_view` explícito por rota via `trackPageView` (fila de page_views pendentes e retry após falha de carregamento).
 - `AnalyticsConsent.jsx`: banner com aceitar/recusar e revogação. Revogar não remove o `gtag.js` já carregado (limitação documentada no arquivo); apaga cookies `_ga*`/`_gid` quando possível.
 - `PrivacyPage.jsx` tem seção "Cookies e Google Analytics"; linha ~134 diz que a base legal "depende de confirmação jurídica".
-- `tests/analytics-consent.spec.js`: 9 testes Playwright (staged); `test-results/.last-run.json` marca `passed`.
+- `tests/analytics-consent.spec.js`: 9 testes Playwright; `test-results/.last-run.json` marca `passed`.
 - Não há eventos de clique no WhatsApp (pendência).
 
 ## Catálogo (`src/data/products.js`)
@@ -105,6 +105,7 @@ Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 
 **Próximos valores livres (do arquivo):** `id` 43; `order` 58 (máximo atual 57, id 2; sem `order` duplicado); `categoryOrder` — maior peso atual por categoria: brinquedos 500, sono-refugio 1500, viagem-mobilidade 300, a-mesa 1200, mais-vendidos 1700, conforto 1600, couro 1700, colecao-passeio 500, colecao-cozy-luxo 800 (convenção observada: pesos em múltiplos de 100, maior aparece primeiro). Pesos de `mais-vendidos`: id 39 = 1700, id 8 = 1600, id 16 = 1400 (oculto), id 20 = 1300, id 28 = 1200.
 
 **Campos** em uso: `id`, `name`, `shortName`, `subtitle`, `description`, `bullets`, `price`, `originalPrice`, `prices`, `category[]`, `order`, `categoryOrder{}`, `image`, `badge`, `buyLink`, `buyLinks`, `variationType`, `tags`, `supplierLink`, `visible`, `featured`, `cardNote`.
+
 - Todos têm `shortName`; só os ids 3, 4 e 10 não têm `subtitle`. Todos têm `tags`. `supplierLink` falta em 16 produtos e é enviado ao navegador.
 - `badge` em uso: `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, `ESGOTADO` (o validador aceita só esses).
 - `featured: true` só no id 2 (Refúgio Cozy). `Featured.jsx` mostra o primeiro produto com `featured === true` e visível. `featured: false` explícito nos ids 13, 37, 38, 39, 40.
@@ -130,6 +131,7 @@ Schema (10 campos, todos opcionais): `gallery`, `specs{}`, `sizeChart[{size,heig
 - Ordem dos `AccordionItem` fixa no JSX: specs → sizeChart → howToChooseSize → sizeGuideNote → whatsIncluded → careInstructions → airTravelNote → warranty → faq (todos fechados por padrão).
 
 Produtos citados:
+
 - **Élan Couro (9):** `buyLinks` PP/M/G, sem `prices`, galeria de 4 fotos; ficha com `specs` 4, `whatsIncluded` 3, `sizeGuideNote`; sem `sizeChart`.
 - **Refúgio Majestá (38)** (nome com "á"): R$ 999,90, `buyLink` único, badge `NOVO`, 2 fotos; ficha com `specs` 9, `whatsIncluded` 4, `careInstructions`.
 - **Refúgio Cozy (id 2):** P/M/G/GG de R$ 394 a R$ 697, links `wa.me`, `featured: true`, 2 fotos, ficha de 9 campos.
@@ -139,7 +141,7 @@ Produtos citados:
 
 Convenção: `public/images/products/<slug>/principal.webp` + `<slug>-2.webp`, `-3`, ... Todos os 37 produtos usam `principal.webp`; todos os arquivos referenciados existem; não há galeria apontando para arquivo ausente nem foto órfã solta dentro das pastas. Exceção: a pasta `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`, 72 KB) não é referenciada por nenhum produto atual (foi do produto id 37 antigo, removido em 2026-06-08; o id 37 hoje é outro produto). `.gitkeep` em `products/` e `brand/` (`brand/` vazia).
 
-Todas as fotos `principal.webp` agora têm menos de 150 KB (maior: polvo-mimo, 142 KB; recomprimidas com `cwebp -q 82`, mesmas dimensões, maior lado 1620 px). Antes eram PNGs com extensão `.webp` (de 0,9 a 2,4 MB). Nenhum arquivo em `public/images` ou `assets` passa de 500 KB, exceto `public/og-image.png` (1,8 MB, PNG 1536×1024, 3:2; mantido para links e prévias antigas, sem alteração). A prévia de compartilhamento usa `public/og-image.jpg` (JPEG sRGB 1200×630, 73 KB, sem metadados, q85), feito por corte central do PNG (1536×806 a partir de y=109) e redução; logo e textos ficam inteiros. `index.html` aponta `og:image` e `twitter:image` para `https://petluxostory.com.br/og-image.jpg` e tem `og:image:type` (image/jpeg), `og:image:width` (1200), `og:image:height` (630) e `og:image:alt` (texto do `<title>`). Referências restantes a `og-image.png` só em `README.md:75`, `docs/README.md:32` e `:63` (documentação). Backup dos originais das fotos fora do projeto, em `~/backup-petluxo-imagens-2026-10-26/`.
+Todas as fotos `principal.webp` agora têm menos de 150 KB (maior: polvo-mimo, 142 KB; recomprimidas com `cwebp -q 82`, mesmas dimensões, maior lado 1620 px). Antes eram PNGs com extensão `.webp` (de 0,9 a 2,4 MB). Nenhum arquivo em `public/images` ou `assets` passa de 500 KB, exceto `public/og-image.png` (1,8 MB, PNG 1536×1024, 3:2; mantido para links e prévias antigas, sem alteração). A prévia de compartilhamento usa `public/og-image.jpg` (JPEG sRGB 1200×630, 73 KB, sem metadados, q85), feito por corte central do PNG (1536×806 a partir de y=109) e redução; logo e textos ficam inteiros. `index.html` aponta `og:image` e `twitter:image` para `https://petluxostory.com.br/og-image.jpg` e tem `og:image:type` (image/jpeg), `og:image:width` (1200), `og:image:height` (630) e `og:image:alt` (texto do `<title>`). `README.md` e `docs/README.md` descrevem os dois arquivos (PNG 1536×1024 e JPG 1200×630). Backup dos originais das fotos fora do projeto, em `~/backup-petluxo-imagens-2026-10-26/`.
 
 ## Componentes (confirmado por leitura/grep)
 
@@ -181,19 +183,22 @@ Auditoria de código e histórico completo do git: nenhum segredo, token, senha 
 
 ## Documentação do repositório
 
-`docs/CHECKOUT_ARCHITECTURE.md` (plano, não iniciado; cita "32 produtos" — hoje 37), `docs/CSS_MIGRATION.md` (migração concluída; ainda cita `animations.css` e `Button`/`Container`/`Section`, que não existem mais), `docs/DECISIONS.md`, `docs/DEPLOY.md`, `docs/PRODUCT_EXPANSION.md`, `docs/README.md` e `README.md` (descrevem bundle, `globals.css`, `Button`/`Container`/`Section` e fluxo PagBank desatualizados), `docs/TODO.md` (itens abertos: 1, 2, 3/18, 4, 6, 7, 8, 10, 12, 21).
+`docs/CHECKOUT_ARCHITECTURE.md` (plano, não iniciado; cita "32 produtos" — hoje 37 — e Mercado Pago/Melhor Envio; precisa ser reescrito para InfinitePay com frete grátis), `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md`, `docs/PRODUCT_EXPANSION.md`, `docs/README.md` e `README.md` (sincronizados com o código: bundle, `globals.css` 166 linhas, árvore de arquivos, analytics com consentimento, `HIDE_BUY_CTA`, og-image, testes), `docs/DECISIONS.md` (seções 10 e 11 marcadas como superadas pela seção 12: atendimento só por WhatsApp, PagBank provavelmente não volta, intenção de checkout próprio com InfinitePay e frete grátis, ainda não definitivo), `docs/TODO.md` (itens abertos: 1, 2, 3/18, 4, 6, 7, 8, 10, 12, 21, 22, 23, 24, 25, 26, 27). `README.md`, `docs/DEPLOY.md` e `docs/DECISIONS.md` (seção 8) afirmam que o repositório deve ser público e que o Hobby não faz deploy de repositório privado; decisão pendente, não verificado.
 
 ## Pendências reais (segundo o código)
 
-1. Commitar os arquivos staged (Playwright, testes, `.gitignore`, TODO) e a limpeza da working tree.
-2. Decidir `HIDE_BUY_CTA` e alinhar FAQ/Footer/políticas ao fluxo real.
-3. Checkout próprio (carrinho, pagamento, frete, e-mail, banco): nada implementado.
+1. Commitar a sincronização da documentação (working tree).
+2. Alinhar os textos do site que citam o PagBank como gateway ativo (`FAQ.jsx:39`, `Footer.jsx:63` e `:68`, `PrivacyPage.jsx`, `ShippingPolicyPage.jsx:60`, `TermsPage.jsx:87`) ao atendimento por WhatsApp; a redação depende de decisão do dono. `HIDE_BUY_CTA` segue `true` por decisão intencional.
+3. Checkout próprio (intenção: InfinitePay, recebimento na hora, frete grátis): nada implementado; a confirmar com a InfinitePay débito, custos e prazos. Reescrever `docs/CHECKOUT_ARCHITECTURE.md`.
 4. Eventos GA4 de clique no WhatsApp.
 5. Meta tags por produto, tratamento de 404, sitemap com produtos, JSON-LD.
 6. Remover `supplierLink` do catálogo público e corrigir ids 9 e 17.
 7. Fichas para os 9 produtos visíveis sem ficha; campo de prazo de entrega.
-8. Atualizar a documentação (`README.md`, `docs/README.md`) que cita `og-image.png`; conferir a prévia em produção (WhatsApp/redes têm cache) depois do deploy.
-9. Revisar bloqueio de pinch-zoom (acessibilidade) e o plano Vercel Hobby para uso comercial.
+8. Conferir a prévia de compartilhamento (`og-image.jpg`) em produção depois do deploy (WhatsApp/redes guardam cache).
+9. Decidir sobre privatizar o repositório (depende do plano Vercel e das miniaturas do painel `petluxo-admin` via `raw.githubusercontent.com`); rotacionar periodicamente o token do painel (sem vencimento; criado em 2026-10-26).
+10. Conferir se há PNG com extensão `.webp` nas galerias e como o painel converte as fotos (causa não verificada).
+11. Resíduos de baixa prioridade: exceção de `shortName` (ids 3, 4, 10) no validador, `:global(.price)` em `ProductModal.module.css:66`, `<a href="/">` na Navbar.
+12. Revisar bloqueio de pinch-zoom (acessibilidade) e o plano Vercel Hobby para uso comercial.
 
 ## Limites desta verificação
 
