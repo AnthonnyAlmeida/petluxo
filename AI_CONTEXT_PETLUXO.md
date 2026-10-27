@@ -7,7 +7,7 @@ Site estático (sem backend, sem banco, sem API) de produtos premium para pets. 
 - **Produção:** https://petluxostory.com.br
 - **Instagram:** @petluxostory
 - **Hospedagem:** Vercel (Hobby), deploy a cada push em `main`. Estado atual do deploy: não verificado.
-- **Repositório:** público. `main` == `origin/main` em `cf76540` na data da auditoria; há alterações staged não commitadas (Playwright: `playwright.config.js`, `tests/analytics-consent.spec.js`, `package*.json`, `.gitignore`, `docs/TODO.md`) e alterações de limpeza de dados/código morto na working tree, também não commitadas.
+- **Repositório:** público. `main` == `origin/main` em `ade0739` na data da verificação; alterações de imagens (recompressão e pasta nova do arranhador) na working tree, não commitadas.
 
 ## Estado por área (LIVE × EM DESENVOLVIMENTO × PLANEJADO)
 
@@ -39,7 +39,7 @@ Não existem `api/`, `functions/`, `db/`, `vercel.json` nem `src/data/shipping.j
 petluxo/
 ├── index.html                 # meta tags, OG, Twitter; sem gtag (GA4 carrega por src/lib/analytics.js)
 ├── assets/                    # logo.webp, hero/image-hero.webp, sobre_nos/*.webp (importados pelo Vite)
-├── public/                    # favicon, og-image.png, robots.txt, sitemap.xml (só a home), 404.html, images/products/<slug>/
+├── public/                    # favicon, og-image.png, og-image.jpg, robots.txt, sitemap.xml (só a home), 404.html, images/products/<slug>/
 ├── scripts/validate-catalog.js
 ├── tests/analytics-consent.spec.js   # staged
 ├── playwright.config.js              # staged
@@ -137,9 +137,9 @@ Produtos citados:
 
 ## Imagens
 
-Convenção: `public/images/products/<slug>/principal.webp` + `<slug>-2.webp`, `-3`, ... Todos os 37 produtos usam `principal.webp`; todos os arquivos referenciados existem; não há galeria apontando para arquivo ausente nem foto órfã dentro das pastas. Exceção solta: `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil.webp` (1,9 MB, fora de pasta, não referenciado); `.gitkeep` em `products/` e `brand/` (`brand/` vazia).
+Convenção: `public/images/products/<slug>/principal.webp` + `<slug>-2.webp`, `-3`, ... Todos os 37 produtos usam `principal.webp`; todos os arquivos referenciados existem; não há galeria apontando para arquivo ausente nem foto órfã solta dentro das pastas. Exceção: a pasta `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`, 72 KB) não é referenciada por nenhum produto atual (foi do produto id 37 antigo, removido em 2026-06-08; o id 37 hoje é outro produto). `.gitkeep` em `products/` e `brand/` (`brand/` vazia).
 
-Fotos principais acima de 1 MB: polvo-mimo, refugio-majesta, brinquedo-petluxo, espreguicadeira-madeira-dobravel, comedouro-nomade-premium, reservatorio-hermetico-cozy, bolsa-termica-signature-matelasse, manta-serenity-petluxo-premium, quadro-pet-personalizado. `public/og-image.png` tem 1,8 MB.
+Todas as fotos `principal.webp` agora têm menos de 150 KB (maior: polvo-mimo, 142 KB; recomprimidas com `cwebp -q 82`, mesmas dimensões, maior lado 1620 px). Antes eram PNGs com extensão `.webp` (de 0,9 a 2,4 MB). Nenhum arquivo em `public/images` ou `assets` passa de 500 KB, exceto `public/og-image.png` (1,8 MB, PNG 1536×1024, 3:2; mantido para links e prévias antigas, sem alteração). A prévia de compartilhamento usa `public/og-image.jpg` (JPEG sRGB 1200×630, 73 KB, sem metadados, q85), feito por corte central do PNG (1536×806 a partir de y=109) e redução; logo e textos ficam inteiros. `index.html` aponta `og:image` e `twitter:image` para `https://petluxostory.com.br/og-image.jpg` e tem `og:image:type` (image/jpeg), `og:image:width` (1200), `og:image:height` (630) e `og:image:alt` (texto do `<title>`). Referências restantes a `og-image.png` só em `README.md:75`, `docs/README.md:32` e `:63` (documentação). Backup dos originais das fotos fora do projeto, em `~/backup-petluxo-imagens-2026-10-26/`.
 
 ## Componentes (confirmado por leitura/grep)
 
@@ -192,7 +192,7 @@ Auditoria de código e histórico completo do git: nenhum segredo, token, senha 
 5. Meta tags por produto, tratamento de 404, sitemap com produtos, JSON-LD.
 6. Remover `supplierLink` do catálogo público e corrigir ids 9 e 17.
 7. Fichas para os 9 produtos visíveis sem ficha; campo de prazo de entrega.
-8. Comprimir imagens grandes (e `og-image.png`) e remover o `.webp` solto.
+8. Atualizar a documentação (`README.md`, `docs/README.md`) que cita `og-image.png`; conferir a prévia em produção (WhatsApp/redes têm cache) depois do deploy.
 9. Revisar bloqueio de pinch-zoom (acessibilidade) e o plano Vercel Hobby para uso comercial.
 
 ## Limites desta verificação
