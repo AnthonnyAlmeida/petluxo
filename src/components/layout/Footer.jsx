@@ -48,7 +48,7 @@ export function Footer() {
 
         <div className={styles.footSocial}>
           <a
-            href="https://www.instagram.com/petluxostory/"
+            href="https://www.instagram.com/pettluxo_/"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.footSocialLink}
