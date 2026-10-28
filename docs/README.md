@@ -6,7 +6,7 @@ PetLuxo é um site institucional de e-commerce de produtos premium para pets (c�
 
 ## URLs
 
-- **Produção:** https://petluxostory.com.br
+- **Produção:** https://www.petluxostory.com.br
 - **Repositório:** https://github.com/AnthonnyAlmeida/petluxo
 
 ## Stack
@@ -164,6 +164,6 @@ npm run preview
 
 ## Variáveis de ambiente
 
-O número de WhatsApp é configurado em `src/lib/whatsapp.js` como fallback: `5561994063917`. Pode ser sobrescrito via variável de ambiente `VITE_WHATSAPP_PHONE` (não configurada na Vercel atualmente — usa o padrão hardcoded).
+O número de WhatsApp é configurado em `src/lib/whatsapp.js` como fallback: `5561994063917`. Pode ser sobrescrito via variável de ambiente `VITE_WHATSAPP_PHONE` (não configurada na Cloudflare — usa o padrão hardcoded).
 
 > Para detalhes completos de arquitetura, catálogo e decisões técnicas, ver `AI_CONTEXT_PETLUXO.md` na raiz do projeto.

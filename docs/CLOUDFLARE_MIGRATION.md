@@ -1,17 +1,11 @@
 # Migração do site: Vercel (Hobby) → Cloudflare Workers com static assets
 
-> **Status (2026-10-28):** **F3b CONCLUÍDA: a produção é servida pelo Worker `petluxo` na Cloudflare** (`www` canônico; raiz → `www` 301; HTTP → HTTPS 301). **F4 EM ANDAMENTO** (janela de rollback de 7 a 14 dias; o projeto Vercel do site fica intacto como plano B). Restam F0.6, F4 e F5. F1, F2 e F3a/F3a.6 foram executadas em 2026-10-27; a virada (F3b) em 2026-10-28. Levantamento feito em 2026-10-27 (curl, dig, `npm run build`, painéis da Vercel e da Cloudflare; documentação oficial consultada na mesma data). Tudo que não foi confirmado está em "NÃO VERIFICADO" (seção 8).
+> **Status (2026-10-28):** **F3b CONCLUÍDA: a produção é servida pelo Worker `petluxo` na Cloudflare** (`www` canônico; raiz → `www` 301; HTTP → HTTPS 301). **F4 EM ANDAMENTO** (janela de rollback de 7 a 14 dias; o projeto Vercel do site fica intacto como plano B). Restam F0.6 e F4 (F5 concluída em 2026-10-28). F1, F2 e F3a/F3a.6 foram executadas em 2026-10-27; a virada (F3b) em 2026-10-28. Levantamento feito em 2026-10-27 (curl, dig, `npm run build`, painéis da Vercel e da Cloudflare; documentação oficial consultada na mesma data). Tudo que não foi confirmado está em "NÃO VERIFICADO" (seção 8).
 > Convenção: **[Dono]** = só a pessoa dona do negócio consegue (contas, painéis, Registro.br). **[Claude Code]** = mudança no repositório.
 
-Revisão de 2026-10-27: 3 ajustes combinados (.nvmrc com a versão principal; _headers só com segurança; ensaio F3a.6).
+Revisão de 2026-10-27: 3 ajustes combinados (`.nvmrc` com a versão principal; `_headers` só com segurança; ensaio F3a.6); DNS real incorporado (ALIAS em vez de A; curinga; sem MX/TXT); F0.1, F0.2 e F0.5 concluídas; F1 aplicada e commitada; F2 executada (Worker de teste; `_headers` confirmado no fallback de SPA); F3a/F3a.6 executadas (nameservers na Cloudflare; ensaio concluído); F3b pronta.
 
-Revisão de 2026-10-27: DNS real incorporado (ALIAS em vez de A; curinga; sem MX/TXT); F0.1, F0.2 e F0.5 concluídas; F1 aplicada e commitada; F3 aguarda acesso ao Registro.br.
-
-Revisão de 2026-10-27: F2 executada (Worker de teste); `_headers` confirmado no fallback de SPA.
-
-Revisão de 2026-10-27: F2 e F3a/F3a.6 executadas; nameservers na Cloudflare; ensaio concluído; F3b pronta.
-
-Revisão de 2026-10-28: virada executada (F3b concluída; produção na Cloudflare); nova F3b.5 (regra HTTP → HTTPS); F0.5, F2.5 e F2.8 fechadas; rollback (seção 7) reescrito para o estado atual; os alvos da Vercel não aparecem mais no painel dela; F4 em andamento.
+Revisão de 2026-10-28: virada executada (F3b concluída; produção na Cloudflare); nova F3b.5 (regra HTTP → HTTPS); F0.5, F2.5 e F2.8 fechadas; rollback (seção 7) reescrito para o estado atual; os alvos da Vercel não aparecem mais no painel dela; F4 em andamento; F5 (documentação) concluída; um commit real do painel disparou o build na Cloudflare.
 
 ## 1. Objetivo e escopo
 
@@ -30,7 +24,7 @@ Revisão de 2026-10-28: virada executada (F3b concluída; produção na Cloudfla
 | F3a e F3a.6 | **concluídas (2026-10-27)** | Zona `Free` na Cloudflare; nameservers trocados no Registro.br; ensaio com `teste1`/`teste2` feito e limpo. |
 | F3b | **CONCLUÍDA (2026-10-28)** | Custom Domains `www` e raiz no Worker; regras "raiz para www" e "http para https" (301). Produção na Cloudflare. |
 | F4 | **EM ANDAMENTO** | Janela de 2026-10-28 → 2026-11-04 a 2026-11-11. Projeto Vercel do site intacto (não mexer). Ver F4.1 a F4.9. |
-| F5 | **pendente (pode andar agora)** | Texto final de DEPLOY/README/DECISIONS/TODO; a virada já ocorreu. `AI_CONTEXT_PETLUXO.md` reescrito em 2026-10-28. |
+| F5 | **concluída (2026-10-28)** | README, DEPLOY, DECISIONS (§8 e nova §13), TODO, CHECKOUT_ARCHITECTURE (aviso) e AI_CONTEXT atualizados. |
 
 ## 2. Decisões pendentes
 
@@ -50,9 +44,8 @@ Revisão de 2026-10-28: virada executada (F3b concluída; produção na Cloudfla
 1. **Já feito:** F0.1 a F0.5; F1 (commitada); F2; F3a e F3a.6 (2026-10-27); **F3b, a virada (2026-10-28): CONCLUÍDA**. A produção é servida pelo Worker `petluxo` na Cloudflare.
 2. **Pendente, sem dependências externas:**
    - **[Dono] F0.6** – conferir o domínio do stream do GA4 e filtros de hostname (e o hit em Tempo Real; ver F2.4).
-   - **[Claude Code] F5** – documentação final (DEPLOY/README/DECISIONS/TODO); a virada já ocorreu.
 3. **[Dono + Claude Code] F4 (EM ANDAMENTO)** – prévias, monitorar 7 a 14 dias (2026-11-04 a 2026-11-11), manter o projeto Vercel do site intacto (plano B), depois removê-lo. Ver F4.1 a F4.9.
-4. **[Claude Code] F5** – documentação final.
+4. **[Claude Code] F5** – documentação final: **concluída em 2026-10-28**.
 5. **O acesso ao Registro.br** só será necessário para um rollback extremo (devolver os nameservers à Vercel; exige o titular do domínio).
 
 ## 4. Checklist por fase
@@ -178,7 +171,7 @@ Formato de cada item: descrição · **Resp.** · arquivo:linha · **Dep.** · *
   - **Certificados:** emitidos sem falha nos dois hostnames (1 a 2 minutos); CAA suficientes (ver F3a.2 b).
   - O Custom Domain cria na lista de DNS uma linha do tipo "Worker" (proxied), sem botões Edit/Delete; some quando o Custom Domain é removido do Worker.
   - **Regra de redirecionamento** (Rules → Redirect Rules → Create rule, modelo "Wildcard pattern"): requisição `https://teste2.petluxostory.com.br/*`, destino `https://www.petluxostory.com.br/${1}`, 301, "Preserve query string" marcado. Teste: `curl -sI "https://teste2.petluxostory.com.br/produto/2?x=1"` → 301 e `location: https://www.petluxostory.com.br/produto/2?x=1`. O formulário tem também "Redirect POST requests" (só relevante para POST). O plano Free mostrou "0 of 10" regras antes e depois. O teste (d) do plano foi feito só no `teste2` (hostname com Custom Domain proxied), não no `teste1`.
-  - **Limpeza:** regra apagada (0 of 10), Custom Domains `teste1` e `teste2` removidos do Worker, DNS de volta às 6 linhas. `dig @<ns da Cloudflare> teste2...` devolveu o CNAME da Vercel; o resolver local demorou alguns minutos a esquecer (caches), e o painel de DNS ainda mostrou por um tempo a linha "Worker" do `teste1` (resíduo de exibição). Nota: depois da limpeza o CNAME próprio do `teste2` também foi apagado/removido (DNS de volta às 6 linhas).
+  - **Limpeza:** regra apagada (0 of 10), Custom Domains `teste1` e `teste2` removidos do Worker, DNS de volta às 6 linhas. `dig @<ns da Cloudflare> teste2...` devolveu o CNAME da Vercel; o resolver local demorou alguns minutos a esquecer (caches), e o painel de DNS ainda mostrou por um tempo a linha "Worker" do `teste1` (resíduo de exibição).
   - **Não respondido pelo ensaio (NÃO VERIFICADO):** se "Always Use HTTPS" está ligado por padrão na zona e como se comporta o HTTP→HTTPS (respondido na virada: a Cloudflare não redirecionou HTTP→HTTPS por padrão; ver F3b.5). Não foi rodado o subconjunto completo da tabela F2.2 (itens `/404.html`, `/sitemap.xml`, `/robots.txt`) nos hostnames de teste: só `/produto/2` foi registrado.
 
   Risco: nenhum para produção (hostnames separados). Rollback: apagar os recursos de teste (já feito).
@@ -214,31 +207,31 @@ Ordem confirmada pelo ensaio F3a.6. Duração medida: 1 a 2 minutos por hostname
 - [ ] **F4.3 Manter o projeto Vercel e o domínio configurado** durante a janela, sem deploys novos desnecessários (o push em `main` continuará acionando a Vercel enquanto o app do GitHub estiver conectado; aceitável). Rollback depende disso (seção 7).
 - [ ] **F4.4 Fim da janela:** desconectar o repositório do projeto Vercel do site, remover o domínio e excluir o projeto; **não** tocar no projeto do painel. Remover `.vercel` do `.gitignore` e a pasta local `.vercel/` só aqui. Resp.: Dono + Claude Code. Risco: baixo depois de 14 dias estáveis.
 - [ ] **F4.5 Limpeza de código (D7):** remover `public/404.html` e `main.jsx:9-13`; reexecutar a tabela de F2.2. Resp.: Claude Code. Rollback: reverter.
-- [ ] **F4.6 Plano Vercel (TODO 4):** a migração resolve a pendência de uso comercial no Hobby; verificar se a Cloudflare tem restrição equivalente para uso comercial no plano gratuito além da cláusula 2.2.1(h) (seção 6): NÃO VERIFICADO.
+- [ ] **F4.6 Plano Vercel (TODO 4, resolvido para o site; o painel ficou no TODO 32):** a migração resolve a pendência de uso comercial no Hobby; verificar se a Cloudflare tem restrição equivalente para uso comercial no plano gratuito além da cláusula 2.2.1(h) (seção 6): NÃO VERIFICADO.
 - [ ] **F4.7 Cache longo (opcional):** depois de a virada estar estável, avaliar adicionar `Cache-Control` immutable para `/assets/*` (nomes com hash do Vite) e cache moderado para `/images/*`; só depois de conferir como o fallback de SPA trata `/assets/*` inexistentes. Não fazer antes.
 - [ ] **F4.8 (pendente) Desligar o endereço `workers.dev` e as Preview URLs** depois de a virada estar estável: acrescentar `"workers_dev": false` e `"preview_urls": false` ao `wrangler.jsonc` (conforme os avisos do deploy) e fazer novo deploy. Doc oficial: https://developers.cloudflare.com/workers/configuration/routing/workers-dev/ (`"workers_dev": false` desliga a rota `workers.dev` no próximo deploy; diz que isso **não** desliga Version/Preview/Deployment URLs; se a rota for desligada só no dashboard, o `wrangler deploy` a religa) e https://developers.cloudflare.com/workers/configuration/previews/ (`"preview_urls": false` desliga as Version URLs; o padrão acompanha o `workers.dev`; é preciso defini-lo explicitamente). **Efeito sobre o acesso pelo domínio próprio: NÃO VERIFICADO** (nenhuma das páginas diz). Só fazer depois de F3b e dos testes na produção, porque o `workers.dev` é usado nos testes até lá. Resp.: Claude Code. Rollback: reverter o commit e fazer novo deploy.
 
-- [ ] **F4.9 Monitorar 7 a 14 dias** (Worker/Deployments, Analytics, Search Console, um commit real do painel). Inclui conferir que o commit do painel dispara o deploy na Cloudflare e que uma foto trocada com o mesmo nome mostra a nova (seção 8, itens 25 e 28). Janela: 2026-10-28 → 2026-11-04 a 2026-11-11. Resp.: Dono.
+- [ ] **F4.9 Monitorar 7 a 14 dias** (Worker/Deployments, Analytics, Search Console, um commit real do painel). **Resultado parcial (2026-10-28):** um commit real do painel (troca de visibilidade de produto) disparou o build na Cloudflare, ficou Ready e a mudança apareceu no site (testado pelo dono). **Pendente:** foto trocada com o mesmo nome mostra a nova (seção 8, item 25). Janela: 2026-10-28 → 2026-11-04 a 2026-11-11. Resp.: Dono.
 
-### F5 – Documentação (o que mudar, onde, texto sugerido)
+### F5 – Documentação (CONCLUÍDA em 2026-10-28; o texto sugerido abaixo é o plano original)
 
-Fazer após a virada confirmada, em um commit só.
+Executada em 2026-10-28, depois da virada. Todos os itens abaixo estão aplicados (o item de `docs/TODO.md:112` virou o item 23 atual; o item de Instagram virou o TODO 28; o item 4 do TODO ficou `[x]` para o site e a questão do painel admin virou o item 32).
 
-- [ ] **README.md:9** badge `Deploy-Vercel` → badge Cloudflare, ex.: `[![Cloudflare](https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?style=flat-square&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)`.
-- [ ] **README.md:33** "Deploy automático via GitHub + Vercel" → "Deploy automático via GitHub + Cloudflare Workers (static assets)".
-- [ ] **README.md:68** linha da tabela `| **Vercel** | Hobby | ... |` → `| **Cloudflare Workers** | Free | Hospedagem estática e deploy automático via Git (Workers Builds) |`.
-- [ ] **README.md:169-173** passo 2 "Vercel detecta o push e executa `npm run build`" → "A Cloudflare (Workers Builds) detecta o push e executa `npm run build`"; remover a nota da linha 173 sobre repositório público/Vercel Hobby e substituir por: "O repositório continua público porque as miniaturas do painel usam `raw.githubusercontent.com`."
-- [ ] **docs/DEPLOY.md (arquivo inteiro)**: reescrever. Estrutura sugerida: (1) fluxo (`git push` → Workers Builds → `dist/` publicado); (2) configuração (`wrangler.jsonc`, `.nvmrc`, `public/_headers`); (3) domínio: DNS na Cloudflare, `www` canônico, regra 301 da raiz, registrador continua no Registro.br só apontando os nameservers; (4) checklist pós-deploy (manter a lista atual, incluindo `/robots.txt` e `/sitemap.xml`); (5) "Se o deploy parar": ver build no dashboard, rodar `npm run build` local, reconectar o app do GitHub. **Corrigir:** a seção "Arquivos atualizados com o domínio real" diz que `robots.txt` tem `Host:` e que o sitemap tem "todas as URLs" — ambos falsos (robots tem 4 linhas sem `Host:`; sitemap só tem a home). Remover o aviso "repositório deve permanecer público (Vercel Hobby)".
-- [ ] **docs/DECISIONS.md:113** "Com o site em produção na Vercel, ..." → "Com o site em produção na Cloudflare, ...".
-- [ ] **docs/DECISIONS.md §8 (159-170)**: marcar como **superada** pela nova seção 13. Título sugerido: "## 8. Repositório público obrigatório (Vercel Hobby Plan) — *superada pela seção 13*". Não apagar o histórico.
-- [ ] **docs/DECISIONS.md, nova seção 13** (após a §12): "## 13. Hospedagem migrada da Vercel para Cloudflare Workers". Texto sugerido: situação (Hobby da Vercel é de uso não comercial e o site vira loja); decisão (Worker com static assets, `not_found_handling = single-page-application`, DNS na Cloudflare, `www` canônico com raiz em 301, painel permanece na Vercel); consequências (links diretos de produto passam a dar 200; URLs inexistentes também; repositório continua público por causa das miniaturas do painel; pagamento com cartão só por checkout hospedado, cláusula 2.2.1(h)); data da virada.
-- [ ] **docs/TODO.md:13 (item 4)**: marcar `[x]` com nota "resolvido pela migração para a Cloudflare em <data>; confirmar condições de uso comercial da Cloudflare (item NÃO VERIFICADO)".
-- [ ] **docs/TODO.md:56 (item 1)**: trocar "um rewrite para `/index.html` no `vercel.json`" por "o fallback de SPA do Worker (`not_found_handling`)"; registrar o resultado real dos testes de F2.2 (links diretos = 200; soft 404 aceito ou não).
-- [ ] **docs/TODO.md:66 (item 2)**: "uma função na Vercel" → "um Worker com script ou pré-renderização". Lembrar que o canonical depende deste item (D4).
-- [ ] **docs/TODO.md:112 (item 23)**: tirar "deploy da Vercel" dos pré-requisitos e acrescentar "e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO; relatos de falha no clone em 2026-10-27)". Itens 25 e 26 permanecem; o 26 passa a citar a Cloudflare no lugar de Vercel (abaixo). **Novo item sugerido:** "Instagram do rodapé: `Footer.jsx:51` aponta para `instagram.com/pettluxo_/` e o `AI_CONTEXT_PETLUXO.md:8` cita `@petluxostory`; o dono confirma qual é o correto".
-- [ ] **docs/CHECKOUT_ARCHITECTURE.md**: o plano inteiro assume Vercel (linhas 9, 22, 23, 26, 167-173 e 185 `vercel.json`, 339-341, 366, 392, 417, 421, 447, 454). Não editar linha a linha: o TODO 26 já manda reescrever o documento para InfinitePay + frete grátis. Na reescrita, trocar: hospedagem de funções (`/api/` da Vercel) → Worker com script na Cloudflare; banco (Neon via Marketplace Vercel) e e-mail (Resend via Marketplace) → decidir de novo, sem integração de Marketplace da Vercel; cron → Cron Triggers; o `vercel.json` de rewrite deixa de existir (o roteamento passa a ser `run_worker_first` para `/api/*` no `wrangler.jsonc`). Texto de aviso sugerido no topo, já: "**Atenção:** a hospedagem migrou para a Cloudflare; as referências à Vercel abaixo estão desatualizadas até a reescrita (TODO 26)."
+- [x] **README.md:9** badge `Deploy-Vercel` → badge Cloudflare, ex.: `[![Cloudflare](https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?style=flat-square&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)`.
+- [x] **README.md:33** "Deploy automático via GitHub + Vercel" → "Deploy automático via GitHub + Cloudflare Workers (static assets)".
+- [x] **README.md:68** linha da tabela `| **Vercel** | Hobby | ... |` → `| **Cloudflare Workers** | Free | Hospedagem estática e deploy automático via Git (Workers Builds) |`.
+- [x] **README.md:169-173** passo 2 "Vercel detecta o push e executa `npm run build`" → "A Cloudflare (Workers Builds) detecta o push e executa `npm run build`"; remover a nota da linha 173 sobre repositório público/Vercel Hobby e substituir por: "O repositório continua público porque as miniaturas do painel usam `raw.githubusercontent.com`."
+- [x] **docs/DEPLOY.md (arquivo inteiro)**: reescrever. Estrutura sugerida: (1) fluxo (`git push` → Workers Builds → `dist/` publicado); (2) configuração (`wrangler.jsonc`, `.nvmrc`, `public/_headers`); (3) domínio: DNS na Cloudflare, `www` canônico, regra 301 da raiz, registrador continua no Registro.br só apontando os nameservers; (4) checklist pós-deploy (manter a lista atual, incluindo `/robots.txt` e `/sitemap.xml`); (5) "Se o deploy parar": ver build no dashboard, rodar `npm run build` local, reconectar o app do GitHub. **Corrigir:** a seção "Arquivos atualizados com o domínio real" diz que `robots.txt` tem `Host:` e que o sitemap tem "todas as URLs" — ambos falsos (robots tem 4 linhas sem `Host:`; sitemap só tem a home). Remover o aviso "repositório deve permanecer público (Vercel Hobby)".
+- [x] **docs/DECISIONS.md:113** "Com o site em produção na Vercel, ..." → "Com o site em produção na Cloudflare, ...".
+- [x] **docs/DECISIONS.md §8 (159-170)**: marcar como **superada** pela nova seção 13. Título sugerido: "## 8. Repositório público obrigatório (Vercel Hobby Plan) — *superada pela seção 13*". Não apagar o histórico.
+- [x] **docs/DECISIONS.md, nova seção 13** (após a §12): "## 13. Hospedagem migrada da Vercel para Cloudflare Workers". Texto sugerido: situação (Hobby da Vercel é de uso não comercial e o site vira loja); decisão (Worker com static assets, `not_found_handling = single-page-application`, DNS na Cloudflare, `www` canônico com raiz em 301, painel permanece na Vercel); consequências (links diretos de produto passam a dar 200; URLs inexistentes também; repositório continua público por causa das miniaturas do painel; pagamento com cartão só por checkout hospedado, cláusula 2.2.1(h)); data da virada.
+- [x] **docs/TODO.md:13 (item 4; aplicado: `[x]` para o site, painel no item 32)**: marcar `[x]` com nota "resolvido pela migração para a Cloudflare em <data>; confirmar condições de uso comercial da Cloudflare (item NÃO VERIFICADO)".
+- [x] **docs/TODO.md:56 (item 1)**: trocar "um rewrite para `/index.html` no `vercel.json`" por "o fallback de SPA do Worker (`not_found_handling`)"; registrar o resultado real dos testes de F2.2 (links diretos = 200; soft 404 aceito ou não).
+- [x] **docs/TODO.md:66 (item 2)**: "uma função na Vercel" → "um Worker com script ou pré-renderização". Lembrar que o canonical depende deste item (D4).
+- [x] **docs/TODO.md:112 (item 23)**: tirar "deploy da Vercel" dos pré-requisitos e acrescentar "e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO; relatos de falha no clone em 2026-10-27)". Itens 25 e 26 permanecem; o 26 passa a citar a Cloudflare no lugar de Vercel (abaixo). **Novo item sugerido:** "Instagram do rodapé: `Footer.jsx:51` aponta para `instagram.com/pettluxo_/` e o `AI_CONTEXT_PETLUXO.md:8` cita `@petluxostory`; o dono confirma qual é o correto".
+- [x] **docs/CHECKOUT_ARCHITECTURE.md**: o plano inteiro assume Vercel (linhas 9, 22, 23, 26, 167-173 e 185 `vercel.json`, 339-341, 366, 392, 417, 421, 447, 454). Não editar linha a linha: o TODO 26 já manda reescrever o documento para InfinitePay + frete grátis. Na reescrita, trocar: hospedagem de funções (`/api/` da Vercel) → Worker com script na Cloudflare; banco (Neon via Marketplace Vercel) e e-mail (Resend via Marketplace) → decidir de novo, sem integração de Marketplace da Vercel; cron → Cron Triggers; o `vercel.json` de rewrite deixa de existir (o roteamento passa a ser `run_worker_first` para `/api/*` no `wrangler.jsonc`). Texto de aviso sugerido no topo, já: "**Atenção:** a hospedagem migrou para a Cloudflare; as referências à Vercel abaixo estão desatualizadas até a reescrita (TODO 26)."
 - [x] **AI_CONTEXT_PETLUXO.md**: reescrito em 2026-10-28 só com o estado atual (hospedagem na Cloudflare, modo SPA, DNS); histórico e rollback ficam neste documento.
-- [ ] **src/main.jsx:8** comentário: ver F1.8.
+- [x] **src/main.jsx:8** comentário: ver F1.8.
 
 ## 5. Impactos no painel `petluxo-admin` (só listar; não tocar)
 
@@ -285,10 +278,10 @@ A produção está no Worker `petluxo`. Enquanto o projeto Vercel do site existi
 11. **Domínio do painel `petluxo-admin`:** provavelmente um `*.vercel.app`, NÃO VERIFICADO.
 12. **Aba "Shared" das variáveis de ambiente da Vercel:** não conferida (opcional; o projeto não tem variáveis próprias).
 13. **Domínio configurado no stream do GA4** e eventuais filtros de hostname (F0.6).
-14. **Condições de uso comercial do plano gratuito da Cloudflare** além da cláusula 2.2.1(h) (TODO 4 equivalente).
+14. **Condições de uso comercial do plano gratuito da Cloudflare** além da cláusula 2.2.1(h) (equivalente ao TODO 4 da Vercel, resolvido para o site).
 15. **Nome do Worker vs. `name` do `wrangler.jsonc`** (efeito de divergência no Workers Builds) e **se `npx wrangler deploy` dispensa `wrangler` em `devDependencies`**.
 16. **Suporte a `Host:` e a hostnames no Playwright contra `workers.dev`:** não testado; os testes atuais apontam para `localhost:5173`.
-17. **Prévia no WhatsApp/Facebook após a virada**, comportamento de `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega` e `/termos-de-uso` em acesso direto na Vercel hoje e `og-image.jpg` por curl: só testáveis nas fases F2/F4.
+17. Comportamento de `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega` e `/termos-de-uso` em acesso direto na Vercel hoje e `og-image.jpg` por curl: só testáveis nas fases F2/F4 (a prévia no WhatsApp/Facebook está no item 27).
 18. **Instagram correto:** `Footer.jsx:51` aponta para `pettluxo_` e o `AI_CONTEXT_PETLUXO.md` cita `@petluxostory`; decisão do dono, ainda não resolvida.
 19. **Push e deploy da F1:** confirmados em 2026-10-27 (o robots.txt de produção já mostra o www).
 20. **Diferença 142 × 99 arquivos:** o log do Workers Builds leu 142 arquivos de `dist/` (98 novos subidos, 1 já existente) e o build local tem 99 arquivos únicos; provável diferença de contagem de arquivos × ativos únicos, NÃO VERIFICADO, sem alarme (limite grátis: 20.000).
@@ -296,11 +289,10 @@ A produção está no Worker `petluxo`. Enquanto o projeto Vercel do site existi
 22. **Hit do GA4 em Tempo Real a partir do `workers.dev`:** o dono relatou que o consentimento funciona, mas o hit explícito (e possível filtro de hostname, F0.6) não foi conferido.
 23. **Efeito de `workers_dev: false` e `preview_urls: false` sobre o acesso pelo domínio próprio:** as páginas oficiais consultadas não dizem (F4.8).
 24. **Registro `_domainconnect`:** a importação automática da Cloudflare trouxe um CNAME `_domainconnect` → `_domainconnect.vercel-dns.com` que não aparece na tabela de DNS do painel da Vercel; ficou na zona como DNS only. Para que serve e se pode ser removido: NÃO VERIFICADO.
-25. **Fotos trocadas pelo painel** (mesmo nome de arquivo) **e cache após a virada:** se uma foto substituída com o mesmo nome continua aparecendo antiga por causa do cache da Cloudflare/navegador (o padrão é `public, max-age=0, must-revalidate`): NÃO VERIFICADO; conferir em F4.9.
+25. **Fotos trocadas pelo painel** (mesmo nome de arquivo) **e cache após a virada:** se uma foto substituída com o mesmo nome continua aparecendo antiga por causa do cache da Cloudflare/navegador (o padrão é `public, max-age=0, must-revalidate`): NÃO VERIFICADO; conferir em F4.9 (`docs/TODO.md` item 31).
 26. **Alerta de segurança da conta no Registro.br** (recomendação de senha mais forte): pendência do titular do domínio, não bloqueia a migração.
-
-27. **Prévia no WhatsApp/Facebook após a virada:** não testada (F4.1).
-28. **Um commit real do painel dispara o deploy na Cloudflare:** não testado (F4.9). Junto com o item 25 (foto trocada com o mesmo nome mostra a nova).
+27. **Prévia no WhatsApp/Facebook após a virada:** não testada (F4.1; `docs/TODO.md` item 30).
+28. ~~Um commit real do painel dispara o deploy na Cloudflare~~ **RESOLVIDO em 2026-10-28 (F4.9):** um commit real do painel (troca de visibilidade) disparou o build, ficou Ready e a mudança apareceu no site. Segue pendente a foto trocada com o mesmo nome (item 25).
 29. **Alvos da Vercel não aparecem mais no painel de DNS da Vercel** (só os 3 CAA; os dois ALIAS sumiram depois da troca de nameservers): motivo NÃO VERIFICADO. O rollback usa os alvos registrados aqui (seção 7).
 30. **`referrer-policy` na verificação final:** não foi repetido no filtro do teste final (F3b.4); foi visto em F2.2 e F3a.6.
 31. **F4.8 (desligar `workers_dev` e `preview_urls`) segue pendente** (ver item 23 para o efeito sobre o domínio próprio).
@@ -333,3 +325,4 @@ A produção está no Worker `petluxo`. Enquanto o projeto Vercel do site existi
 - ~09:24 a ~09:47, a virada: `www` como Custom Domain (< 2 min); CNAME da raiz apagado e Custom Domain da raiz (~2 min sem resposta); regra "raiz para www" (301); descoberta de que o HTTP não redirecionava para HTTPS e regra "http para https" (301).
 - Verificação final: `curl -sIL` HTTP da raiz com query → 301 → 301 → 200 (`server: cloudflare`); rotas, sitemap, robots e og-image ok no `www`; navegador testado pelo dono sem problemas.
 - Estado ao fim: a produção é servida pelo Worker `petluxo` na Cloudflare; projeto Vercel do site intacto como plano B; painel admin segue na Vercel; F4 em andamento.
+- F5 (documentação) concluída: README, DEPLOY, DECISIONS (§8 superada; nova §13), TODO, aviso no CHECKOUT_ARCHITECTURE e AI_CONTEXT atualizados. Um commit real do painel (troca de visibilidade de produto) disparou o build na Cloudflare e a mudança apareceu no site; seguem pendentes a foto trocada com o mesmo nome, a prévia do WhatsApp, o GA4 (F0.6) e a F4.8.

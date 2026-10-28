@@ -6,11 +6,11 @@
 
 [![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-6.4.2-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev)
-[![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com)
+[![Cloudflare](https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?style=flat-square&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![CSS Modules](https://img.shields.io/badge/CSS-Modules-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
-**[→ Ver em produção](https://petluxostory.com.br)**
+**[→ Ver em produção](https://www.petluxostory.com.br)**
 
 </div>
 
@@ -18,7 +18,7 @@
 
 ## Preview
 
-> Screenshots e demo em: **[petluxostory.com.br](https://petluxostory.com.br)**
+> Screenshots e demo em: **[www.petluxostory.com.br](https://www.petluxostory.com.br)**
 
 O PetLuxo é um site institucional de e-commerce construído com foco em identidade visual premium, experiência de compra fluida e performance. A estética remete ao universo de marcas de luxo — tipografia serifada, paleta em tons terrosos (vinho, dourado, caramelo) e layout minimalista com atenção a cada detalhe.
 
@@ -30,7 +30,7 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 
 **Destaques:**
 - Site 100% estático — zero backend, zero banco de dados
-- Deploy automático via GitHub + Vercel
+- Deploy automático via GitHub + Cloudflare Workers (static assets)
 - Performance otimizada: bundle JS ~342KB (105KB gzip), CSS ~55KB (11KB gzip)
 - Arquitetura baseada em componentes React com CSS puro e design system próprio
 
@@ -65,7 +65,7 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 | **yet-another-react-lightbox** | ^3.32.2 | Lightbox com zoom, carregado sob demanda em dispositivos touch |
 | **Google Analytics** | GA4 | `gtag.js` carregado por `src/lib/analytics.js` somente depois do consentimento do visitante |
 | **Playwright** | ^1.49.0 (devDependency) | Testes de consentimento do GA4 em `tests/` |
-| **Vercel** | Hobby | Hospedagem e deploy automático via Git |
+| **Cloudflare Workers** | Free | Hospedagem estática e deploy automático via Git (Workers Builds) |
 
 ---
 
@@ -166,11 +166,11 @@ npm run preview
 O deploy é automático a cada `git push` para a branch `main`:
 
 1. Push para `main` no GitHub
-2. Vercel detecta o push e executa `npm run build`
+2. A Cloudflare (Workers Builds) detecta o push e executa `npm run build`
 3. Arquivos da pasta `dist/` são publicados
-4. Site atualizado em ~1 minuto em **[petluxostory.com.br](https://petluxostory.com.br)**
+4. Site atualizado em ~1 minuto em **[www.petluxostory.com.br](https://www.petluxostory.com.br)**
 
-> O repositório deve permanecer **público** — o Vercel Hobby Plan não faz deploy de repositórios privados.
+> O repositório continua **público** porque as miniaturas do painel usam `raw.githubusercontent.com`.
 
 ---
 

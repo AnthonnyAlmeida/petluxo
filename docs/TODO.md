@@ -10,8 +10,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 ## Quick wins e correções imediatas
 
-- [ ] **4. Conferir o plano da Vercel** 🟢 **(urgente)**
-      O projeto é uma loja, ou seja, uso comercial. Verificar nos termos e na documentação atuais da Vercel se o plano Hobby permite isso; pelas condições vigentes, uso comercial é direcionado aos planos Pro ou Enterprise. Decidir o plano antes de qualquer outra mudança de infraestrutura. Depende deste item: privatizar o repositório (item 23) e o checkout próprio.
+- [x] **4. Conferir o plano da Vercel** 🟢
+      Resolvido para o SITE: migrado para a Cloudflare em 2026-10-28 (`docs/DECISIONS.md` §13). A questão do plano da Vercel para o PAINEL ADMIN ficou no item 32.
 
 - [x] **15. Corrigir `buyLink` do id 31** 🟢
       Tem espaço no final: `'https://pag.ae/81QtMgE9m '`.
@@ -53,7 +53,9 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [ ] **1. Rotas de produto e tratamento de 404** 🟡
       Hoje as rotas dependem de `public/404.html` (redireciona via JavaScript) e de `main.jsx`. Verificar e documentar o comportamento real de `/produto/:id` em acesso direto (status HTTP recebido, e como Google e apps de mensagem tratam) antes de presumir a causa.
 
-  Um _rewrite_ para `/index.html` no `vercel.json` pode resolver o carregamento direto, mas também faz URLs inexistentes devolverem a home com status 200 (soft 404).
+  O fallback de SPA do Worker (`not_found_handling`) resolve o carregamento direto, mas também faz URLs inexistentes devolverem o app com status 200 (soft 404).
+
+  Resultado real (2026-10-28): acesso direto a `/produto/:id` de produto visível carrega a ficha (200); produto inexistente, oculto ou rota inválida também devolvem 200 com o `NotFound` do app (soft 404). Decidir se isso basta ou se vale pré-renderização; o status HTTP correto depende do item 2.
 
   Critérios de conclusão:
   - acesso direto a `/produto/:id` de produto visível carrega a ficha;
@@ -63,7 +65,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
   Não remover `public/404.html` nem a restauração de path em `main.jsx` antes de validar a nova configuração.
 
 - [ ] **2. Meta tags por produto** 🔴
-      `/produto/:id` herda título, descrição e imagem da home. Resolver com pré-renderização das rotas de produto ou com uma função na Vercel; escolher pelo resultado real, não pela sofisticação.
+      `/produto/:id` herda título, descrição e imagem da home. Resolver com pré-renderização das rotas de produto ou com um Worker com script ou pré-renderização; escolher pelo resultado real, não pela sofisticação.
 
   Critérios de aceite:
   - cada produto gera título, descrição, URL canônica e imagem próprios;
@@ -109,7 +111,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Os links do PagBank provavelmente não voltam (`docs/DECISIONS.md` §12). Hoje citam o PagBank como gateway ativo: `src/components/sections/FAQ.jsx:39`; `src/components/layout/Footer.jsx:63` e `:68`; `src/components/pages/PrivacyPage.jsx:48`, `:58`, `:64` e `:84`; `src/components/pages/ShippingPolicyPage.jsx:60`; `src/components/pages/TermsPage.jsx:87`. A nova redação depende de decisão do dono; não escrever a redação neste item.
 
 - [ ] **23. Decidir sobre privatizar o repositório** 🟡
-      Pré-requisitos: item 4; corrigir as miniaturas do painel `petluxo-admin` que usam `raw.githubusercontent.com` (`ProductsPage.jsx:351` e `CategoriesPage.jsx:399` e, no modo edição, `Step3Photo.jsx:21`); testar um commit do painel com o repositório privado (autor do commit e deploy da Vercel); conferir o escopo do token. A documentação do projeto (`README.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md` §8) afirma que o repositório deve ser público; isso não foi verificado na conta.
+      Pré-requisitos: corrigir as miniaturas do painel `petluxo-admin` que usam `raw.githubusercontent.com` (`ProductsPage.jsx:351` e `CategoriesPage.jsx:399` e, no modo edição, `Step3Photo.jsx:21`); testar um commit do painel com o repositório privado (autor do commit e o build na Cloudflare) e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO); conferir o escopo do token. A documentação do projeto (`README.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md` §8) afirma que o repositório deve ser público; isso não foi verificado na conta.
 
 - [ ] **24. Conferir PNG com extensão `.webp` nas fotos de galeria** 🟢
       Rodar `file public/images/products/*/*.webp | grep PNG` e verificar no painel (`petluxo-admin/src/lib/imageConverter.js`) como as fotos são convertidas, para evitar que o problema volte a cada produto novo. Causa não verificada.
@@ -118,19 +120,9 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       O token atual (fine-grained, só o repositório `petluxo`, permissão Contents em leitura e escrita) não tem vencimento. Definir uma rotina de troca (sugestão: a cada 6 a 12 meses). Última troca: 2026-10-26. Não registrar o valor do token em nenhum arquivo.
 
 - [ ] **26. Reescrever `docs/CHECKOUT_ARCHITECTURE.md` para InfinitePay com frete grátis** 🟡
-      Saem Mercado Pago e Melhor Envio. Continuam servidor (funções) e banco. Pagamento por redirecionamento para checkout hospedado. Confirmação de pagamento pela API (retorno ao site e webhook não bastam como prova). Débito a confirmar.
+      Saem Mercado Pago e Melhor Envio. Continuam servidor (funções, agora Worker com script na Cloudflare) e banco. Pagamento por redirecionamento para checkout hospedado. Confirmação de pagamento pela API (retorno ao site e webhook não bastam como prova). Débito a confirmar.
 
 - [ ] **27. Resíduos de código de baixa prioridade** 🟢 - A exceção de `shortName` para os ids 3, 4 e 10 em `scripts/validate-catalog.js` não é mais necessária: todos os 37 produtos têm `shortName`. - `:global(.price)` em `ProductModal.module.css:66` está fora da lista permitida em `docs/CSS_MIGRATION.md`. - `<a href="/">` na Navbar (`Navbar.jsx:30`) recarrega a página; trocar por `Link` mudaria o comportamento do clique no logo na home, então avaliar antes.
-
----
-
-## Concluídos recentemente
-
-- [x] Limpeza de dados e código morto (2026-10-26)
-- [x] Fotos de produto convertidas para WebP de verdade e arquivo solto organizado (2026-10-26)
-- [x] og-image em JPEG 1200×630 com tags de tamanho (2026-10-26)
-- [x] Troca do token de acesso do painel (2026-10-26)
-- [x] Sincronização dos READMEs e docs (2026-10-26)
 
 ---
 
@@ -141,3 +133,28 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 - [ ] **29. Pasta de imagem órfã** 🟢
       `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`) não é referenciada por nenhum produto atual. Decidir se remove.
+
+- [ ] **30. Prévia do link no WhatsApp/Facebook após a virada** 🟢
+      Colar `https://www.petluxostory.com.br/` e a raiz no WhatsApp e no depurador do Facebook (limpar o cache de prévia) e conferir a imagem `og-image.jpg`.
+
+- [ ] **31. Teste de foto trocada pelo painel com o mesmo nome (cache)** 🟢
+      Trocar uma foto mantendo o nome do arquivo e conferir que o site mostra a nova (cache padrão `public, max-age=0, must-revalidate`).
+
+- [ ] **32. Conferir o plano da Vercel para o painel admin** 🟢
+      O painel admin (`petluxo-admin`, outro repositório) continua na Vercel (Hobby). Decisão do dono: manter lá, por considerar que o painel não é de uso comercial (afirmação do dono; NÃO VERIFICADO nos termos da Vercel, e o painel edita o catálogo da loja). Decidir se mantém, paga ou migra o painel (3 funções em `api/`: auth, github e ai). Ver `docs/CLOUDFLARE_MIGRATION.md` seção 5.
+
+- [ ] **33. Renovar o domínio no Registro.br** 🟢
+      O domínio `petluxostory.com.br` vence em 2027-05-07. Renovar antes dessa data (a ação é do titular do domínio).
+
+- [ ] **34. Painel admin: achados da auditoria** 🟡
+      A auditoria do painel de 2026-10-27 está no `AI_CONTEXT.md` do repositório `petluxo-admin` (fora deste repositório). Inclui: textos "Vercel" na interface (`usePublish.js`, `ProductsPage.jsx`), polling de 5 s na listagem, validação de `path` em `api/github.js` e imagem plana (`public/images/products/<slug>.webp`) × pasta por produto (`<slug>/principal.webp`). Tratar a partir desse arquivo.
+
+---
+
+## Concluídos recentemente
+
+- [x] Limpeza de dados e código morto (2026-10-26)
+- [x] Fotos de produto convertidas para WebP de verdade e arquivo solto organizado (2026-10-26)
+- [x] og-image em JPEG 1200×630 com tags de tamanho (2026-10-26)
+- [x] Troca do token de acesso do painel (2026-10-26)
+- [x] Sincronização dos READMEs e docs (2026-10-26)

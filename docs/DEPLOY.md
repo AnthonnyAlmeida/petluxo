@@ -1,72 +1,49 @@
-# Deploy na Vercel
+# Deploy na Cloudflare
 
-O PetLuxo é um site 100% estático — não tem backend, banco de dados nem servidor. O deploy é automático: a cada `git push` para a branch `main`, a Vercel executa `npm run build` e publica os arquivos da pasta `dist/`.
+O PetLuxo é um site 100% estático — não tem backend, banco de dados nem servidor. O deploy é automático: a cada `git push` para a branch `main`, o Workers Builds (Cloudflare) roda `npm run build` e `npx wrangler deploy`, que publica a pasta `dist/` no Worker `petluxo`.
 
-**Site em produção:** https://petluxostory.com.br
+**Site em produção:** https://www.petluxostory.com.br
 
-> ⚠️ O repositório deve permanecer **público**. O Vercel Hobby Plan não faz deploy de repositórios privados. Se o deploy parar de funcionar, verifique a visibilidade do repositório no GitHub primeiro.
+Os commits do painel admin (`petluxo-admin`, outro repositório, hospedado na Vercel) também vão para `main` e disparam o build.
 
-## Como funciona
-
-O repositório `github.com/AnthonnyAlmeida/petluxo` está conectado à Vercel. O fluxo é:
+## Fluxo
 
 1. Editar arquivos localmente
-2. `npm run build` (verificar que compila sem erros)
+2. `npm run build` (verificar que compila sem erros; o validador de catálogo roda antes do Vite)
 3. `git add -A && git commit -m "..." && git push`
-4. A Vercel detecta o push e faz o deploy automaticamente em ~1 minuto
+4. O Workers Builds detecta o push em `main`, executa `npm run build` e `npx wrangler deploy` e publica `dist/` (cerca de 40 s)
 
-## Pré-requisitos para um novo ambiente
+## Configuração
 
-- Conta na [Vercel](https://vercel.com) (gratuita para projetos pessoais)
-- Node.js instalado na sua máquina
-- Acesso ao repositório: `github.com/AnthonnyAlmeida/petluxo`
+- **`wrangler.jsonc`:** `name` `petluxo`, `assets.directory` `./dist`, `assets.not_found_handling` `single-page-application`. Sem script de Worker (só assets). O nome precisa ser o do Worker no dashboard.
+- **`.nvmrc`:** `22` (Node usado no build; sem ele o padrão do Workers Builds seria outra versão).
+- **`public/_headers`:** `Strict-Transport-Security: max-age=63072000`, `X-Content-Type-Options: nosniff` e `Referrer-Policy: strict-origin-when-cross-origin` para `/*`. Sem CSP e sem regras de cache (o padrão dos assets é `public, max-age=0, must-revalidate`).
+- **Modo SPA:** acesso direto a `/produto/2`, às políticas e a qualquer URL inexistente devolve HTTP 200 com o `index.html` (soft 404); o app mostra o `NotFound`. `public/404.html` e a restauração de path em `src/main.jsx` ficam inertes.
+- **Variáveis de ambiente:** nenhuma. `VITE_WHATSAPP_PHONE` é opcional; sem ela vale o número padrão do código.
+- O `wrangler` não está no `package.json`: o `npx` baixa a versão do momento. `workers.dev` e as Preview URLs continuam ligados.
 
----
+## Domínio
 
-## Setup inicial (já feito — documentação para referência)
+O domínio `petluxostory.com.br` é registrado no Registro.br e usa os dois nameservers atribuídos pela Cloudflare; o DNS é gerenciado na Cloudflare (plano Free).
 
-### Pela interface da Vercel
+- **`www` é o canônico:** Custom Domain do Worker.
+- **A raiz** também é Custom Domain do Worker e redireciona com 301 para o `www`, preservando caminho e query (regra "raiz para www").
+- **HTTP → HTTPS:** regra "http para https" (301). A Cloudflare não faz esse redirecionamento por padrão.
+- **Zona:** 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`), `_domainconnect` (DNS only), CNAME `*` → Vercel (DNS only; subdomínios que não sejam `www` caem na Vercel com 404) e as linhas "Worker" do `www` e da raiz. Sem MX nem TXT. DNSSEC desativado.
 
-1. Acesse [vercel.com](https://vercel.com) e faça login
-2. Clique em **"Add New Project"**
-3. Selecione o repositório `petluxo` do GitHub
-4. Confirme as configurações:
-   - **Framework Preset:** Vite (detectado automaticamente)
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `dist`
-5. Clique em **Deploy**
+**Criar um Custom Domain:** Worker → aba Domains → Add domain, com o subdomínio na frente de `.petluxostory.com.br`.
 
-### Pela linha de comando (Vercel CLI)
+- Campo de subdomínio **vazio** liga a **raiz**.
+- Para uma raiz (ou outro hostname) que tem CNAME próprio, apagar o CNAME em DNS → Records antes; do contrário a Cloudflare recusa.
+- Um hostname coberto só pelo CNAME `*` é aceito direto.
 
-```bash
-npm install -g vercel
-vercel login
-cd /home/anthonnyalmeida/petluxo
-vercel --prod
-```
+## Arquivos que carregam o domínio
 
----
+- `index.html` — `og:url`, `og:image`, `twitter:image` (todos com `https://www.petluxostory.com.br`; sem `canonical`)
+- `public/robots.txt` — 4 linhas, com `Sitemap:`; não tem `Host:`
+- `public/sitemap.xml` — só a home
 
-## Domínio customizado (já configurado)
-
-O site usa o domínio próprio `petluxostory.com.br`, registrado no Registro.br.
-
-**Como foi configurado:**
-1. No painel da Vercel → projeto → **Settings → Domains** → adicionado `petluxostory.com.br`
-2. No Registro.br → configurados os nameservers:
-   - `ns1.vercel-dns.com`
-   - `ns2.vercel-dns.com`
-3. A Vercel gerencia automaticamente os registros DNS e o HTTPS via Let's Encrypt
-
-**Arquivos atualizados com o domínio real:**
-- `index.html` — `og:url`, `og:image`, `twitter:image`
-- `public/robots.txt` — `Sitemap:` e `Host:`
-- `public/sitemap.xml` — todas as URLs
-
-**Para trocar o domínio no futuro:**
-Atualizar as URLs em todos os arquivos acima e no painel da Vercel.
-
----
+Para trocar o domínio, atualizar esses arquivos e os Custom Domains do Worker.
 
 ## Verificar se o deploy está correto
 
@@ -79,9 +56,10 @@ Após cada deploy, cheque:
 - [ ] Imagens carregam (hero, logo, produtos)
 - [ ] Favicon aparece na aba do navegador
 - [ ] Acessar `/robots.txt` e `/sitemap.xml` retorna os arquivos corretos
-- [ ] Google Analytics recebe eventos (verificar em GA4 → Tempo Real) — os eventos só chegam depois de o visitante aceitar o consentimento no banner
-
----
+- [ ] Google Analytics recebe eventos (GA4 → Tempo Real) — só depois de o visitante aceitar o consentimento no banner
+- [ ] Abrir `/produto/2` direto e uma URL inexistente: ambas dão 200 (modo SPA)
+- [ ] `curl -sI https://www.petluxostory.com.br/` e `curl -sI https://petluxostory.com.br/`: o `www` dá 200 e a raiz dá 301 para o `www`, ambos com `server: cloudflare`
+- [ ] `curl -sI http://www.petluxostory.com.br/`: 301 para `https://`
 
 ---
 
@@ -89,13 +67,10 @@ Após cada deploy, cheque:
 
 Verificar nesta ordem:
 
-1. **Repositório privado?** — O Vercel Hobby Plan não faz deploy de repos privados. Tornar público no GitHub e forçar redeploy:
-   ```bash
-   git commit --allow-empty -m "fix: force redeploy after repo visibility change"
-   git push
-   ```
+1. **Build com erros?** — Ver os Deployments/Builds do Worker `petluxo` no dashboard da Cloudflare e rodar `npm run build` localmente.
+2. **App do GitHub desconectado?** — Reconectar o app "Cloudflare Workers and Pages" ao repositório `petluxo`.
+3. **Build na fila?** — O plano Free roda um build por vez; builds seguidos (por exemplo, vários commits do painel) esperam na fila.
 
-2. **Build com erros?** — Rodar `npm run build` localmente e corrigir antes do push
+## Rollback e histórico
 
-3. **Vercel desconectado do GitHub?** — Reconectar no painel: Settings → Git → Reconnect
-
+Rollback para a Vercel, decisões e registro da migração: `docs/CLOUDFLARE_MIGRATION.md` (seção 7).

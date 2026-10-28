@@ -1,5 +1,7 @@
 # Arquitetura do Checkout Completo
 
+**Atenção:** a hospedagem migrou para a Cloudflare Workers (2026-10-28); as referências à Vercel e às Vercel Functions abaixo estão desatualizadas até a reescrita (TODO 26).
+
 Carrinho de compras, pagamento embutido no site, cálculo real de frete e gestão de pedidos — substituindo o modelo atual de links avulsos de pagamento PagBank por produto.
 
 **Status:** plano aprovado, implementação não iniciada. Nenhum código deste documento existe ainda.

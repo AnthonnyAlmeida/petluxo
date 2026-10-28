@@ -12,11 +12,11 @@ Site estático (sem backend, sem banco, sem API) de produtos premium para pets. 
 ## Hospedagem, deploy e domínio
 
 - **Hospedagem:** Cloudflare Workers com static assets (plano Free). Worker `petluxo`, configurado em `wrangler.jsonc` (`assets.directory` `./dist`, `not_found_handling` `single-page-application`). Versão do Node em `.nvmrc` (`22`). Cabeçalhos de segurança em `public/_headers` (HSTS `max-age=63072000`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`; sem CSP, sem regras de cache).
-- **Deploy:** Workers Builds a cada push em `main` (`npm run build`, depois `npx wrangler deploy`); o `wrangler` não está no `package.json`. Os commits do painel admin também vão para `main` e disparam o build. `workers.dev` e as Preview URLs continuam ligados (desligar é a pendência F4.8).
+- **Deploy:** Workers Builds a cada push em `main` (`npm run build`, depois `npx wrangler deploy`); o `wrangler` não está no `package.json`. Os commits do painel admin também vão para `main` e disparam o build (confirmado com um commit real). `workers.dev` e as Preview URLs continuam ligados (desligar é a pendência F4.8).
 - **Modo SPA:** acesso direto a rotas (`/produto/2`, políticas) e URLs inexistentes (inclusive `/xyz.png`) devolvem HTTP 200 com o `index.html` (soft 404); a rota `*` do app mostra o `NotFound`. `public/404.html` e a restauração de path em `src/main.jsx` ficam inertes (remoção é a pendência F4.5).
 - **Domínio e DNS:** `petluxostory.com.br`, registrado no Registro.br (vence em 2027-05-07). Nameservers: os dois atribuídos pela Cloudflare. `www` é o canônico (Custom Domain do Worker); a raiz também é Custom Domain do Worker e redireciona para o `www` com 301 (regra "raiz para www"); HTTP redireciona para HTTPS com 301 (regra "http para https"); as duas regras preservam caminho e query. Zona: 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`), `_domainconnect` (DNS only), CNAME `*` → Vercel (DNS only; subdomínios que não sejam `www` caem na Vercel com 404) e as linhas "Worker" do `www` e da raiz. Sem MX, TXT nem AAAA. DNSSEC não está ativo (não ativar por ora).
 - **Vercel:** o painel admin (`petluxo-admin`, fora deste repositório) continua na Vercel. O projeto Vercel do site existe, intacto, como plano B durante a janela de rollback: não mexer. Rollback e histórico: ver `docs/CLOUDFLARE_MIGRATION.md` (seção 7).
-- **Build:** `npm run build` gera `dist/` (validador de catálogo + Vite). `docs/DEPLOY.md` e partes de `README.md` ainda descrevem a Vercel (reescrita é a F5 do documento de migração).
+- **Build:** `npm run build` gera `dist/` (validador de catálogo + Vite). `docs/DEPLOY.md` descreve o deploy, a configuração, o domínio e o checklist pós-deploy na Cloudflare; `README.md` e `docs/README.md` seguem a mesma hospedagem.
 - **Metadados:** `index.html` (og:url, og:image, twitter:image), `public/sitemap.xml` (só a home) e `public/robots.txt` (4 linhas, sem `Host:`) usam `https://www.petluxostory.com.br`. Não há `<link rel="canonical">` (decisão D4 do documento de migração: só junto com meta tags por rota). Meta tags são únicas; `/produto/:id` herda as da home.
 
 ## Estado por área (LIVE × EM DESENVOLVIMENTO × PLANEJADO)
@@ -180,21 +180,21 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 
 ## Documentação do repositório
 
-`docs/CHECKOUT_ARCHITECTURE.md` (plano, não iniciado; precisa ser reescrito para InfinitePay com frete grátis: TODO 26), `docs/CLOUDFLARE_MIGRATION.md` (migração, estado por fase, rollback, registro de execução), `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md` (ainda descreve a Vercel), `docs/PRODUCT_EXPANSION.md`, `docs/README.md` e `README.md`, `docs/DECISIONS.md` (seções 10 e 11 superadas pela 12: atendimento só por WhatsApp, PagBank provavelmente não volta, intenção de checkout próprio com InfinitePay e frete grátis, ainda não definitivo), `docs/TODO.md` (lista de pendências).
+`docs/CHECKOUT_ARCHITECTURE.md` (plano, não iniciado; precisa ser reescrito para InfinitePay com frete grátis: TODO 26), `docs/CLOUDFLARE_MIGRATION.md` (migração, estado por fase, rollback, registro de execução), `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md` (deploy e domínio na Cloudflare), `docs/PRODUCT_EXPANSION.md`, `docs/README.md` e `README.md`, `docs/DECISIONS.md` (seções 10 e 11 superadas pela 12: atendimento só por WhatsApp, PagBank provavelmente não volta, intenção de checkout próprio com InfinitePay e frete grátis, ainda não definitivo; seção 8 superada pela 13: hospedagem na Cloudflare, repositório público por causa das miniaturas do painel, cartão só por checkout hospedado), `docs/TODO.md` (lista de pendências).
 
 ## Dívidas e pendências abertas
 
 - Sem script de lint; sem script npm para os testes Playwright (`docs/CLOUDFLARE_MIGRATION.md` F2.6).
-- Migração: restam F0.6 (GA4), F4 (pós-virada, janela de rollback, desligar `workers.dev`/Preview URLs, remover `404.html`) e F5 (documentação final). Ver `docs/CLOUDFLARE_MIGRATION.md`.
+- Migração: restam F0.6 (GA4) e F4 (janela de rollback com o projeto Vercel do site intacto, desligar `workers.dev`/Preview URLs, remover `404.html`); documentação (F5) concluída. Pendem os testes de foto trocada com o mesmo nome (`docs/TODO.md` item 31) e da prévia do WhatsApp/Facebook (item 30). Ver `docs/CLOUDFLARE_MIGRATION.md`.
 - Textos do site que citam o PagBank como gateway ativo: `docs/TODO.md` item 22.
 - Checkout próprio (InfinitePay, frete grátis) e reescrita de `docs/CHECKOUT_ARCHITECTURE.md`: `docs/TODO.md` itens 21 e 26.
 - Eventos GA4 de clique no WhatsApp: `docs/TODO.md` item 6.
 - Meta tags por produto, status 404 real, sitemap com produtos, JSON-LD: `docs/TODO.md` itens 1, 2 e 10.
 - `supplierLink` no catálogo público e ids 9 e 17 incorretos: `docs/TODO.md` item 3/18.
 - Fichas dos 9 produtos visíveis sem ficha e campo de prazo de entrega: `docs/TODO.md` itens 7 e 8.
-- Prévia de compartilhamento (`og-image.jpg`) e commit real do painel na Cloudflare: `docs/CLOUDFLARE_MIGRATION.md` (F4.1, F4.9).
 - Privatizar o repositório e rotacionar o token do painel: `docs/TODO.md` itens 23 e 25.
 - PNG com extensão `.webp` nas galerias: `docs/TODO.md` item 24.
 - Bloqueio de pinch-zoom (acessibilidade): `docs/TODO.md` item 12.
 - Resíduos: exceção de `shortName` (ids 3, 4, 10) no validador, `:global(.price)` em `ProductModal.module.css:66`, `<a href="/">` na Navbar (`Navbar.jsx:30`), `Footer.jsx:63` com `<a>` sem `href`, `import React` não usado em vários arquivos: `docs/TODO.md` item 27.
 - Instagram do rodapé e pasta de imagem órfã: `docs/TODO.md` itens 28 e 29.
+- Plano da Vercel para o painel admin (item 32), renovação do domínio (item 33) e achados da auditoria do painel (item 34): `docs/TODO.md`.

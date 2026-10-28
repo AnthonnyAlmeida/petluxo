@@ -110,7 +110,7 @@ O container de expansão de categorias usa `overflow: hidden` para a animação 
 - Apenas `public/images/image-hero.png` permanece gitignored (imagem de 2,1MB processada pelo Vite via `assets/`)
 
 **Motivação:**
-Com o site em produção na Vercel, as imagens precisam estar no repositório para o deploy funcionar automaticamente a cada `git push`.
+Com o site em produção na Cloudflare, as imagens precisam estar no repositório para o deploy funcionar automaticamente a cada `git push`.
 
 ---
 
@@ -156,7 +156,7 @@ Todos os elementos interativos têm área mínima de 44×44px (recomendação de
 
 ---
 
-## 8. Repositório público obrigatório (Vercel Hobby Plan)
+## 8. Repositório público obrigatório (Vercel Hobby Plan) — superada pela seção 13
 
 **Situação:**
 O repositório foi tornado privado em algum momento, causando falha silenciosa no deploy automático da Vercel.
@@ -238,3 +238,23 @@ Os links do PagBank provavelmente não voltam. A intenção é um checkout próp
 - Se o checkout integrado aceita débito.
 - Custo do cartão parcelado e do recebimento na hora.
 - Prazos de liberação por forma de pagamento.
+
+---
+
+## 13. Hospedagem migrada da Vercel para a Cloudflare Workers
+
+**Situação:**
+O plano Hobby da Vercel é de uso não comercial e o site é uma loja. O painel admin (`petluxo-admin`, outro repositório) continua na Vercel.
+
+**Decisão (2026-10-28):**
+- O site é servido por um Worker (`petluxo`) da Cloudflare com static assets e `not_found_handling = single-page-application`.
+- O DNS fica na Cloudflare; o `www` é o domínio canônico e a raiz redireciona para ele com 301.
+- HTTP redireciona para HTTPS com 301.
+- O painel admin permanece na Vercel.
+
+**Consequências:**
+- Acesso direto a `/produto/:id` e a URLs inexistentes devolve HTTP 200 (soft 404; `docs/TODO.md` itens 1 e 2).
+- O repositório continua público por causa das miniaturas do painel (`raw.githubusercontent.com`); esta decisão supera a §8.
+- Pagamento com cartão só por checkout hospedado: a cláusula 2.2.1(h) do contrato da Cloudflare proíbe coletar dados de cartão em propriedade que use serviços gratuitos.
+
+**Detalhes e rollback:** `docs/CLOUDFLARE_MIGRATION.md`.
