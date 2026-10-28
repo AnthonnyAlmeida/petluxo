@@ -67,6 +67,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [ ] **2. Meta tags por produto** 🔴
       `/produto/:id` herda título, descrição e imagem da home. Resolver com pré-renderização das rotas de produto ou com um Worker com script ou pré-renderização; escolher pelo resultado real, não pela sofisticação.
 
+  Confirmado em 2026-10-28: um link de produto compartilhado no WhatsApp mostra a prévia da home. Não é prioridade agora; fazer depois da migração.
+
   Critérios de aceite:
   - cada produto gera título, descrição, URL canônica e imagem próprios;
   - o HTML inicial contém os metadados (crawlers sociais não executam JavaScript);
@@ -134,11 +136,13 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [ ] **29. Pasta de imagem órfã** 🟢
       `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`) não é referenciada por nenhum produto atual. Decidir se remove.
 
-- [ ] **30. Prévia do link no WhatsApp/Facebook após a virada** 🟢
-      Colar `https://www.petluxostory.com.br/` e a raiz no WhatsApp e no depurador do Facebook (limpar o cache de prévia) e conferir a imagem `og-image.jpg`.
+- [x] **30. Prévia do link no WhatsApp/Facebook após a virada** 🟢
+      Fechada em 2026-10-28 para a home e a raiz: `https://www.petluxostory.com.br/?teste=1` mostrou logo, título e descrição, acima da caixa de texto e na mensagem enviada, e `https://petluxostory.com.br/?teste=2` (raiz) mostrou a mesma prévia (o WhatsApp seguiu o 301 para o `www`). Com o user-agent do WhatsApp, o HTML traz `og:url`, `og:image` (+ type, width 1200, height 630, alt), `og:title` e `og:description`, todos com `www`; `/og-image.jpg` responde 200, `image/jpeg`. Um link de produto (`/produto/8`) mostra a prévia da home: limitação conhecida (todas as rotas servem o mesmo `index.html`; item 2).
+      Pendente (opcional): link limpo (cache do WhatsApp), depurador do Facebook, prévia por produto (item 2).
 
 - [ ] **31. Teste de foto trocada pelo painel com o mesmo nome (cache)** 🟢
-      Trocar uma foto mantendo o nome do arquivo e conferir que o site mostra a nova (cache padrão `public, max-age=0, must-revalidate`).
+      Parte A feita (2026-10-28): `/images/products/refugio-cozy/principal.webp` responde 200, `image/webp`, `cache-control: public, max-age=0, must-revalidate` e tem `etag`; isso indica que uma foto nova com o mesmo nome deveria aparecer.
+      Parte B pendente: (i) conferir no GitHub qual caminho o painel grava ao trocar uma foto (plana `public/images/products/<slug>.webp` × pasta por produto `<slug>/principal.webp`; ver item 34) e se o site mostra a nova; (ii) fazer a troca em um produto de baixo risco e conferir em aba anônima. Não é prioridade.
 
 - [ ] **32. Conferir o plano da Vercel para o painel admin** 🟢
       O painel admin (`petluxo-admin`, outro repositório) continua na Vercel (Hobby). Decisão do dono: manter lá, por considerar que o painel não é de uso comercial (afirmação do dono; NÃO VERIFICADO nos termos da Vercel, e o painel edita o catálogo da loja). Decidir se mantém, paga ou migra o painel (3 funções em `api/`: auth, github e ai). Ver `docs/CLOUDFLARE_MIGRATION.md` seção 5.
@@ -148,6 +152,19 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 - [ ] **34. Painel admin: achados da auditoria** 🟡
       A auditoria do painel de 2026-10-27 está no `AI_CONTEXT.md` do repositório `petluxo-admin` (fora deste repositório). Inclui: textos "Vercel" na interface (`usePublish.js`, `ProductsPage.jsx`), polling de 5 s na listagem, validação de `path` em `api/github.js` e imagem plana (`public/images/products/<slug>.webp`) × pasta por produto (`<slug>/principal.webp`). Tratar a partir desse arquivo.
+
+- [ ] **35. Desativar o projeto Vercel do site (prazo: 2026-11-11)** 🟡
+      Janela de rollback de 14 dias a partir de 2026-10-28; prazo máximo 2026-11-11; pode ser a partir de 2026-11-04 se tudo estiver estável. Checklist:
+  1. Antes de desativar: GA4 conferido (item 36), a parte B da foto (item 31) feita ou decidida como adiada, Worker estável (Deployments sem falhas; conferir o site e os redirecionamentos por `curl`).
+  2. F4.8: desligar `workers_dev` e `preview_urls` no `wrangler.jsonc` (conferir antes na documentação oficial o efeito sobre o domínio próprio).
+  3. F4.5: remover `public/404.html` e o bloco de `src/main.jsx` (D7).
+  4. F4.4: desconectar o repositório do projeto Vercel do site e depois excluir o projeto.
+  5. Revisar o rollback com o Claude no chat ANTES de excluir.
+  6. Depois da exclusão, o rollback para a Vercel deixa de existir sem recriar o projeto e o domínio (`docs/CLOUDFLARE_MIGRATION.md`, seção 7), e os certificados da Vercel expiram em 2026-12-10.
+  Lembrete: o painel admin NÃO é afetado (continua na Vercel, item 32).
+
+- [ ] **36. Testar o GA4 em Tempo Real (F0.6)** 🟢
+      Roteiro: abrir GA4 → Tempo real; em aba anônima, abrir o site, aceitar o banner de consentimento, navegar em uma ou duas páginas e ver o usuário ativo. Conferir o domínio do stream (pode estar com o domínio antigo, sem `www`) e filtros de hostname. Sem consentimento o `gtag` não carrega (esperado). Pendente; o dono avisa quando fizer.
 
 ---
 
