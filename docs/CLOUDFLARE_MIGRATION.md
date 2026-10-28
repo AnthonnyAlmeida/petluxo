@@ -1,6 +1,6 @@
 # Migração do site: Vercel (Hobby) → Cloudflare Workers com static assets
 
-> **Status:** F1 (código), F2 (Worker de teste em `*.workers.dev`) e F3a/F3a.6 (zona na Cloudflare, nameservers trocados, ensaio) executadas em 2026-10-27. **A produção continua servida pela Vercel**; falta a virada (F3b), a F4 e a F5. Levantamento feito em 2026-10-27 (curl, dig, `npm run build`, painéis da Vercel e da Cloudflare; documentação oficial consultada na mesma data). Tudo que não foi confirmado está em "NÃO VERIFICADO" (seção 8).
+> **Status (2026-10-28):** **F3b CONCLUÍDA: a produção é servida pelo Worker `petluxo` na Cloudflare** (`www` canônico; raiz → `www` 301; HTTP → HTTPS 301). **F4 EM ANDAMENTO** (janela de rollback de 7 a 14 dias; o projeto Vercel do site fica intacto como plano B). Restam F0.6, F4 e F5. F1, F2 e F3a/F3a.6 foram executadas em 2026-10-27; a virada (F3b) em 2026-10-28. Levantamento feito em 2026-10-27 (curl, dig, `npm run build`, painéis da Vercel e da Cloudflare; documentação oficial consultada na mesma data). Tudo que não foi confirmado está em "NÃO VERIFICADO" (seção 8).
 > Convenção: **[Dono]** = só a pessoa dona do negócio consegue (contas, painéis, Registro.br). **[Claude Code]** = mudança no repositório.
 
 Revisão de 2026-10-27: 3 ajustes combinados (.nvmrc com a versão principal; _headers só com segurança; ensaio F3a.6).
@@ -11,6 +11,8 @@ Revisão de 2026-10-27: F2 executada (Worker de teste); `_headers` confirmado no
 
 Revisão de 2026-10-27: F2 e F3a/F3a.6 executadas; nameservers na Cloudflare; ensaio concluído; F3b pronta.
 
+Revisão de 2026-10-28: virada executada (F3b concluída; produção na Cloudflare); nova F3b.5 (regra HTTP → HTTPS); F0.5, F2.5 e F2.8 fechadas; rollback (seção 7) reescrito para o estado atual; os alvos da Vercel não aparecem mais no painel dela; F4 em andamento.
+
 ## 1. Objetivo e escopo
 
 - **Migra:** a hospedagem do site `petluxo` (build `npm run build` → `dist/`, 99 arquivos, 14 MB) para um Worker da Cloudflare com static assets, servido em `www.petluxostory.com.br`, com a raiz redirecionando para o `www`.
@@ -18,24 +20,24 @@ Revisão de 2026-10-27: F2 e F3a/F3a.6 executadas; nameservers na Cloudflare; en
 - **Fora do escopo desta migração:** venda direta (carrinho, endereço, pagamento), meta tags por produto (TODO 2), privatizar o repositório (TODO 23). A seção 6 só registra requisitos para quando a venda direta vier.
 - **Natureza do site:** 100% estático, sem `api/`, sem `vercel.json`, sem `.github/` (verificado). Não há função a portar. A migração é: arquivos estáticos + roteamento de SPA + cabeçalhos + DNS.
 
-## Estado atual (2026-10-27)
+## Estado atual (2026-10-28)
 
 | Fase | Estado | O que bloqueia / observação |
 |---|---|---|
-| F0 | **praticamente concluída** | F0.1 a F0.5 prontas (F0.3: DNSSEC não está ativo). Pendentes: F0.6 (GA4) e a conferência explícita do número do WhatsApp (F0.5/F2.5). |
-| F1 | **pronta** | F1.1 a F1.9 aplicadas e commitadas (`abc65e9` código; `6b80883` docs). `git status`: limpo e "up to date" com `origin/main` pela referência local; push e deploy confirmados em 2026-10-27 (robots.txt de produção com www). F1.10 e F1.11 seguem como estão. |
-| F2 | **praticamente concluída** | F2.1 a F2.3 ok (2026-10-27); F2.4, F2.5 e F2.7 relatados pelo dono sem detalhe; pendências: número do WhatsApp igual ao da produção e hit do GA4 em Tempo Real. F2.6 (Playwright) pendente. |
-| F3a e F3a.6 | **concluídas (2026-10-27)** | Zona `Free` na Cloudflare com 6 registros DNS only apontando para a Vercel; nameservers trocados no Registro.br; ensaio com `teste1`/`teste2` feito e limpo. **A produção continua na Vercel.** |
-| F3b | **pronta para executar, sem dependências externas** | Virada (Custom Domains `www` e raiz + regra raiz → `www`). Data a combinar; o ensaio tornou desnecessária a madrugada. |
-| F4 | **pendente** | Depende de F3b. |
-| F5 | **pendente (parcial pode andar)** | Texto final de DEPLOY/README só depois da virada. |
+| F0 | **praticamente concluída** | F0.1 a F0.5 prontas (F0.3: DNSSEC não está ativo; F0.5 fechada em 2026-10-28). Pendente: F0.6 (GA4). |
+| F1 | **pronta** | F1.1 a F1.9 aplicadas e commitadas (`abc65e9` código; `6b80883` docs); push e deploy confirmados em 2026-10-27. F1.10 e F1.11 seguem como estão. |
+| F2 | **concluída, com pendências menores** | F2.1 a F2.3, F2.5 e F2.8 ok; F2.4 e F2.7 relatados pelo dono sem detalhe; pendências: hit do GA4 em Tempo Real (F0.6) e F2.6 (Playwright). Modo SPA confirmado pelo dono em 2026-10-28. |
+| F3a e F3a.6 | **concluídas (2026-10-27)** | Zona `Free` na Cloudflare; nameservers trocados no Registro.br; ensaio com `teste1`/`teste2` feito e limpo. |
+| F3b | **CONCLUÍDA (2026-10-28)** | Custom Domains `www` e raiz no Worker; regras "raiz para www" e "http para https" (301). Produção na Cloudflare. |
+| F4 | **EM ANDAMENTO** | Janela de 2026-10-28 → 2026-11-04 a 2026-11-11. Projeto Vercel do site intacto (não mexer). Ver F4.1 a F4.9. |
+| F5 | **pendente (pode andar agora)** | Texto final de DEPLOY/README/DECISIONS/TODO; a virada já ocorreu. `AI_CONTEXT_PETLUXO.md` reescrito em 2026-10-28. |
 
 ## 2. Decisões pendentes
 
 | # | Decisão | Recomendação | Impacto |
 |---|---|---|---|
 | D1 | Domínio canônico | **Manter o `www`** (é o que responde hoje: `www` dá 200 e a raiz dá 307 → `www`, conferido por curl em 2026-10-27). Raiz → `www` com 301. Metadados alinhados ao `www`. | Muda `index.html:13,14,29`, `public/sitemap.xml:4`, `public/robots.txt:4` e a doc. Prévias já compartilhadas apontam para a raiz e seguem funcionando pelo redirecionamento. |
-| D2 | Modo 404 do Worker | **`single-page-application`**: `/produto/2` e `/politica-de-privacidade` em acesso direto passam a dar 200 e abrir o app. | Hoje dão 404 (corpo do `404.html`). Contrapartida: URLs inexistentes (inclusive `/xyz.png` e `/assets/qualquer.js`) também devolvem o `index.html` com 200 (soft 404). O app já tem rota `*` com `NotFound` (`src/app/page.jsx:83`), mas o status HTTP continua 200 (TODO 1). **Validado em workers.dev em 2026-10-27** (links diretos = 200; soft 404 observado); decisão final de manter o modo SPA a confirmar pelo dono. |
+| D2 | Modo 404 do Worker | **`single-page-application`**: `/produto/2` e `/politica-de-privacidade` em acesso direto passam a dar 200 e abrir o app. | Hoje dão 404 (corpo do `404.html`). Contrapartida: URLs inexistentes (inclusive `/xyz.png` e `/assets/qualquer.js`) também devolvem o `index.html` com 200 (soft 404). O app já tem rota `*` com `NotFound` (`src/app/page.jsx:83`), mas o status HTTP continua 200 (TODO 1). **Validado em workers.dev em 2026-10-27** (links diretos = 200; soft 404 observado); decisão de manter o modo SPA **confirmada pelo dono em 2026-10-28** ao concluir a virada. |
 | D3 | Privatizar o repositório | **Não agora.** | Miniaturas do painel dependem de `raw.githubusercontent.com` público; a documentação consultada não afirma suporte a repositório privado no Workers Builds (seção 8, item 2). |
 | D4 | `canonical` | **Não colocar `<link rel="canonical">` estático no `index.html`.** | Como `/produto/:id` herda o `index.html` da home (TODO 2), um canonical fixo na home diria ao Google que todas as fichas são cópias da home. Fazer só junto com meta tags por rota. |
 | D5 | Fixar `wrangler` em `devDependencies` | Recomendado (fixa a versão usada no deploy e permite `wrangler dev` local). | A doc do Workers Builds diz que usa o Wrangler do `package.json`; sem ele usa o padrão do build. Não instalar nesta tarefa. |
@@ -45,15 +47,13 @@ Revisão de 2026-10-27: F2 e F3a/F3a.6 executadas; nameservers na Cloudflare; en
 
 ## 3. Caminho crítico (ordem mínima até a virada)
 
-1. **Já feito (2026-10-27):** F0.1 a F0.5, F1 (commitada), F2 (praticamente concluída), F3a (zona na Cloudflare, registros recriados em DNS only, nameservers trocados no Registro.br) e F3a.6 (ensaio, limpo). A produção segue na Vercel.
+1. **Já feito:** F0.1 a F0.5; F1 (commitada); F2; F3a e F3a.6 (2026-10-27); **F3b, a virada (2026-10-28): CONCLUÍDA**. A produção é servida pelo Worker `petluxo` na Cloudflare.
 2. **Pendente, sem dependências externas:**
-   - **[Dono] F0.6** – conferir o domínio do stream do GA4 e filtros de hostname (antes da virada, para não perder hits).
-   - **[Dono] Conferências de F2.4/F2.5** – hit do GA4 em Tempo Real e número do WhatsApp igual ao da produção.
-   - **[Claude Code] F5 parcial** – o que não depende da virada.
-3. **[Dono] F3b (virada)** – www primeiro (Custom Domain direto), depois apagar o CNAME da raiz e criar o Custom Domain da raiz, depois a regra 301 raiz → `www`. 1 a 2 minutos por hostname (medido no ensaio). Horário: decisão do dono.
-4. **[Dono + Claude Code] F4** – monitorar, manter a Vercel viva 7 a 14 dias (sem mexer no projeto Vercel do site), depois remover.
-5. **[Claude Code] F5** – documentação final (texto de DEPLOY/README só depois da virada).
-6. **O acesso ao Registro.br não bloqueia mais.** Só será necessário para um rollback extremo (devolver os nameservers à Vercel; exige o titular do domínio).
+   - **[Dono] F0.6** – conferir o domínio do stream do GA4 e filtros de hostname (e o hit em Tempo Real; ver F2.4).
+   - **[Claude Code] F5** – documentação final (DEPLOY/README/DECISIONS/TODO); a virada já ocorreu.
+3. **[Dono + Claude Code] F4 (EM ANDAMENTO)** – prévias, monitorar 7 a 14 dias (2026-11-04 a 2026-11-11), manter o projeto Vercel do site intacto (plano B), depois removê-lo. Ver F4.1 a F4.9.
+4. **[Claude Code] F5** – documentação final.
+5. **O acesso ao Registro.br** só será necessário para um rollback extremo (devolver os nameservers à Vercel; exige o titular do domínio).
 
 ## 4. Checklist por fase
 
@@ -80,7 +80,7 @@ Formato de cada item: descrição · **Resp.** · arquivo:linha · **Dep.** · *
   - Certificados da Vercel: wildcard + raiz e `www`, renovação automática, expiram em 2026-12-10 (relevante só se o rollback para a Vercel for necessário depois dessa data).
 - [x] **F0.3 Verificar DNSSEC no Registro.br.** Concluída em 2026-10-27: `dig DS` e `dig DNSKEY` voltaram vazios e a tela de DNS do Registro.br não mostra nenhuma seção de DNSSEC: **não está ativo**. Resp.: Dono. Risco que existia (SERVFAIL após a troca de NS): não se aplicou. **Registro.br:** o domínio consta como "Publicado" e vence em 2027-05-07. O painel mostra um alerta de segurança da conta recomendando senha mais forte: pendência do titular do domínio, a fazer sem pressa e sem mexer na conta durante a virada.
 - [x] **F0.4 Instalar o app do GitHub "Cloudflare Workers and Pages"** apenas no repositório `petluxo`. **Feita dentro da F2.1 em 2026-10-27** (ao importar o repositório). Resp.: Dono. Dep.: F0.1. Verificar: repositório aparece na lista ao criar o Worker. Risco: baixo. Rollback: desinstalar o app no GitHub.
-- [x] **F0.5 `VITE_WHATSAPP_PHONE`.** Resolvido em 2026-10-27: o projeto Vercel do site **não tem nenhuma variável de ambiente** (lista vazia no painel); a produção usa o número padrão do código (`src/lib/whatsapp.js:3-4`). Nada a cadastrar na Cloudflare. A aba "Shared" das variáveis não foi conferida (opcional, seção 8). Resp.: Dono. Risco: baixo; para cobrir o resto, **depois da F2.5 conferir que o número que abre nos botões do site de teste é igual ao da produção** (pendente). Rollback: n/a.
+- [x] **F0.5 `VITE_WHATSAPP_PHONE`.** Resolvido em 2026-10-27: o projeto Vercel do site **não tem nenhuma variável de ambiente** (lista vazia no painel); a produção usa o número padrão do código (`src/lib/whatsapp.js:3-4`). Nada a cadastrar na Cloudflare. A aba "Shared" das variáveis não foi conferida (opcional, seção 8). Resp.: Dono. Risco: baixo; para cobrir o resto, **depois da F2.5 conferir que o número que abre nos botões do site de teste é igual ao da produção** (**conferido em 2026-10-28**: produção e Worker serviam o mesmo `assets/index-Ch6Q2MER.js`, código idêntico, logo o mesmo número; ver F3b.0). Rollback: n/a.
 - [ ] **F0.6 Conferir o domínio do stream do GA4** (Admin → Data streams) e se há filtro de hostname. **Pendente (2026-10-27).** Resp.: Dono. Risco: baixo. NÃO VERIFICADO no código.
 
 ### F1 – Mudanças no repositório (aplicada e commitada em 2026-10-27)
@@ -126,7 +126,7 @@ Formato de cada item: descrição · **Resp.** · arquivo:linha · **Dep.** · *
 
 ### F2 – Deploy de teste em `*.workers.dev` e aceitação
 
-- [x] **F2.1 Criar o Worker** (dashboard → Workers & Pages → Create → Import a repository → `petluxo`). Feito em 2026-10-27. Build command: `npm run build`. Deploy command: padrão `npx wrangler deploy`. Production branch: `main`. Resp.: Dono. Dep.: F0.1 e F1.1–F1.3. Verificar: build verde; URL `https://petluxo.<subdomínio-da-conta>.workers.dev` abre. Risco: baixo; a Vercel continua produção. Rollback: excluir o Worker. **Dados do log do Workers Builds (2026-10-27):**
+- [x] **F2.1 Criar o Worker** (dashboard → Workers & Pages → Create → Import a repository → `petluxo`). Feito em 2026-10-27. Build command: `npm run build`. Deploy command: padrão `npx wrangler deploy`. Production branch: `main`. Resp.: Dono. Dep.: F0.1 e F1.1–F1.3. Verificar: build verde; URL `https://petluxo.<subdomínio-da-conta>.workers.dev` abre. Risco: baixo; em 2026-10-27 a Vercel ainda era a produção. Rollback: excluir o Worker. **Dados do log do Workers Builds (2026-10-27):**
   - Worker `petluxo` criado por importação do repositório GitHub, com o app do GitHub instalado só no repositório `petluxo` (F0.4). Sem variáveis de build (ver F0.5).
   - Node detectado: **22.23.4** (o `.nvmrc` `22` funcionou); npm 10.9.2; instalação por `npm clean-install` (74 pacotes, ~2 s); `npm run build` ok (validador do catálogo com 0 avisos; Vite 6.4.2 em ~1,8 s).
   - O `wrangler` 4.154.0 foi instalado na hora pelo `npx`, pois não está no `package.json` (ver F1.10/D5: a versão pode variar entre builds).
@@ -152,19 +152,19 @@ Formato de cada item: descrição · **Resp.** · arquivo:linha · **Dep.** · *
   | `/assets/index-*.js` (nome do build) | 200 com o mesmo cache padrão de hoje, `Cache-Control: public, max-age=0, must-revalidate`, sem `immutable` | `public, max-age=0, must-revalidate` | cache padrão `public, max-age=0, must-revalidate` informado em todas as respostas; esta URL específica não foi detalhada |
 
   Em **todas** as respostas, inclusive nas de fallback de SPA (`/produto/2` etc.), vieram `strict-transport-security: max-age=63072000`, `x-content-type-options: nosniff` e `referrer-policy: strict-origin-when-cross-origin`. Os metadados do HTML (`og:url`, `og:image`) já apontam para `www.petluxostory.com.br`. Comparar com a Vercel, que também envia `access-control-allow-origin: *` e `content-disposition: inline` nos estáticos (visto em 2026-10-27); o site não depende de CORS (fontes e GA4 são de terceiros), e o dono relatou que nada quebrou no navegador (F2.7). **`_headers` no fallback de SPA: RESOLVIDO em 2026-10-27**: o arquivo se aplica ao `index.html` servido pelo fallback.
-- [x] **F2.3 Prévia de compartilhamento no WhatsApp.** A URL `workers.dev` tem `og:image` apontando para `www.petluxostory.com.br` (produção ainda na Vercel); portanto o teste real de prévia é **depois** da F3b (F4.1). Confirmado em 2026-10-27 que os metadados do HTML apontam para o `www`. Resp.: Claude Code.
+- [x] **F2.3 Prévia de compartilhamento no WhatsApp.** A URL `workers.dev` tem `og:image` apontando para `www.petluxostory.com.br` (em 2026-10-27 a produção ainda estava na Vercel); portanto o teste real de prévia é **depois** da F3b (F4.1). Confirmado em 2026-10-27 que os metadados do HTML apontam para o `www`. Resp.: Claude Code.
 - [ ] **F2.4 GA4 com consentimento.** Em `<workers.dev>`, abrir a home, aceitar o banner, ver o hit em GA4 → Tempo Real; recusar e confirmar que `gtag.js` não carrega (o fluxo está coberto por `tests/analytics-consent.spec.js`). Atenção: filtro de hostname no GA4 pode descartar hits de `workers.dev` (F0.6). Resp.: Dono. **Relatado pelo dono em 2026-10-27 (consentimento do GA4 "tudo certo"), sem evidência detalhada. Pendente só a conferência explícita do hit em GA4 → Tempo Real (F0.6).**
-- [ ] **F2.5 Links do WhatsApp.** Clicar nos CTAs da home, do card e da ficha; conferir que abrem `wa.me/<número esperado>` com a mensagem (`src/lib/whatsapp.js:6`). Resp.: Dono. **Relatado pelo dono em 2026-10-27 (botões de WhatsApp "tudo certo"), sem evidência detalhada. Pendente só a conferência explícita de que o número que abre é o mesmo da produção (F0.5).**
+- [x] **F2.5 Links do WhatsApp.** Clicar nos CTAs da home, do card e da ficha; conferir que abrem `wa.me/<número esperado>` com a mensagem (`src/lib/whatsapp.js:6`). Resp.: Dono. **Relatado pelo dono em 2026-10-27 (botões de WhatsApp "tudo certo"). Fechada em 2026-10-28: antes da virada, a produção (Vercel) e o Worker de teste serviam o mesmo arquivo JS `assets/index-Ch6Q2MER.js` (código idêntico, logo o mesmo número de WhatsApp).**
 - [ ] **F2.6 Playwright.** `tests/analytics-consent.spec.js:3` fixa `BASE_URL = 'http://localhost:5173'` e `playwright.config.js` sobe `npm run dev`. Eles testam o código local, não a URL publicada. Rodar o conjunto localmente como regressão; para rodar contra o `workers.dev` seria preciso parametrizar `BASE_URL` (mudança opcional, fora do necessário). Resp.: Claude Code. Risco: baixo. **Segue pendente.**
 - [ ] **F2.7 Navegação real no celular/iPad** (menu hambúrguer, galeria, lightbox sob demanda — o chunk `ProductLightbox-*.js` é carregado só em touch). Resp.: Dono. **Relatado pelo dono em 2026-10-27 ("testei e está tudo certo": acesso direto a `/produto/2`, política e URL inexistente, navegação), sem evidência detalhada por item; celular/iPad e lightbox não detalhados.**
-- [ ] **F2.8 Critério para seguir:** todas as linhas acima conferidas e a decisão D2 fechada (falta o dono confirmar o modo SPA e as duas conferências de F2.4/F2.5). Rollback: nada mudou em produção.
+- [x] **F2.8 Critério para seguir:** todas as linhas acima conferidas e a decisão D2 fechada. **Fechada em 2026-10-28: o dono confirmou o modo SPA ao concluir a virada** (F2.5 também fechada; o hit do GA4 em Tempo Real de F2.4 segue em F0.6). Rollback: ver seção 7.
 
 ### F3 – DNS em duas etapas
 
 **F3a – zona na Cloudflare, tudo ainda apontando para a Vercel (CONCLUÍDA em 2026-10-27)**
 
 - [x] **F3a.1 Adicionar `petluxostory.com.br` à Cloudflare** (plano Free, "Full setup"). Feita em 2026-10-27. Opção "Import DNS records: Automatic"; Bot Preference Sync desligado; todas as opções de bots em "Allow". A importação automática trouxe: 6 registros A (com IPs fixos da Vercel, para `*`, raiz e `www`, todos **proxied**), os 3 CAA e um CNAME `_domainconnect` → `_domainconnect.vercel-dns.com` (proxied) que não está na exportação da Vercel. Resp.: Dono.
-- [x] **F3a.2 Recriar na zona os registros exportados em F0.2, todos DNS only (nuvem cinza).** Feita em 2026-10-27. Correção sobre o importado: os 6 A foram **apagados**; criados CNAME raiz → `81d99fac47f9cbab.vercel-dns-017.com` e CNAME `*` → `cname.vercel-dns-017.com`, ambos DNS only; `_domainconnect` passou para DNS only; os 3 CAA ficaram como estavam. **Estado final da zona: 6 registros (3 CAA, `_domainconnect`, `*`, raiz), todos DNS only.** Os alvos dos ALIAS da Vercel devem ser relidos no painel da Vercel antes de recriar em qualquer rollback (a Vercel avisa que podem mudar sem aviso). Resultados dos pontos da documentação:
+- [x] **F3a.2 Recriar na zona os registros exportados em F0.2, todos DNS only (nuvem cinza).** Feita em 2026-10-27. Correção sobre o importado: os 6 A foram **apagados**; criados CNAME raiz → `81d99fac47f9cbab.vercel-dns-017.com` e CNAME `*` → `cname.vercel-dns-017.com`, ambos DNS only; `_domainconnect` passou para DNS only; os 3 CAA ficaram como estavam. **Estado final da zona: 6 registros (3 CAA, `_domainconnect`, `*`, raiz), todos DNS only.** Para qualquer rollback, usar os alvos registrados aqui e conferi-los com `dig` (último: 2026-10-28); a Vercel avisa que os alvos podem mudar sem aviso, e os ALIAS não aparecem mais no painel dela (seção 8, item 29). Resultados dos pontos da documentação:
   - (a) **CNAME na raiz (flattening) no plano Free: RESOLVIDO.** A Cloudflare aceitou o CNAME na raiz no plano Free e mostrou o aviso informativo de que usa CNAME flattening ("CNAME records normally can not be on the zone apex. We use CNAME flattening to make it possible"). Fonte da doc: https://developers.cloudflare.com/dns/cname-flattening/.
   - (b) **CAA × certificados da Cloudflare: RESOLVIDO.** Os 3 CAA existentes (`pki.goog`, `sectigo.com`, `letsencrypt.org`) bastaram para emitir os certificados dos dois hostnames de teste; **não** foi preciso acrescentar `ssl.com`. Doc: https://developers.cloudflare.com/ssl/edge-certificates/caa-records/.
   - (c) **CNAME curinga × Custom Domain de hostname exato: RESOLVIDO** pelo ensaio F3a.6: hostname coberto só pelo curinga é aceito direto; hostname com CNAME próprio é recusado até o CNAME ser apagado.
@@ -179,28 +179,35 @@ Formato de cada item: descrição · **Resp.** · arquivo:linha · **Dep.** · *
   - O Custom Domain cria na lista de DNS uma linha do tipo "Worker" (proxied), sem botões Edit/Delete; some quando o Custom Domain é removido do Worker.
   - **Regra de redirecionamento** (Rules → Redirect Rules → Create rule, modelo "Wildcard pattern"): requisição `https://teste2.petluxostory.com.br/*`, destino `https://www.petluxostory.com.br/${1}`, 301, "Preserve query string" marcado. Teste: `curl -sI "https://teste2.petluxostory.com.br/produto/2?x=1"` → 301 e `location: https://www.petluxostory.com.br/produto/2?x=1`. O formulário tem também "Redirect POST requests" (só relevante para POST). O plano Free mostrou "0 of 10" regras antes e depois. O teste (d) do plano foi feito só no `teste2` (hostname com Custom Domain proxied), não no `teste1`.
   - **Limpeza:** regra apagada (0 of 10), Custom Domains `teste1` e `teste2` removidos do Worker, DNS de volta às 6 linhas. `dig @<ns da Cloudflare> teste2...` devolveu o CNAME da Vercel; o resolver local demorou alguns minutos a esquecer (caches), e o painel de DNS ainda mostrou por um tempo a linha "Worker" do `teste1` (resíduo de exibição). Nota: depois da limpeza o CNAME próprio do `teste2` também foi apagado/removido (DNS de volta às 6 linhas).
-  - **Não respondido pelo ensaio (NÃO VERIFICADO):** se "Always Use HTTPS" está ligado por padrão na zona e como se comporta o HTTP→HTTPS (conferir em F3b.3). Não foi rodado o subconjunto completo da tabela F2.2 (itens `/404.html`, `/sitemap.xml`, `/robots.txt`) nos hostnames de teste: só `/produto/2` foi registrado.
+  - **Não respondido pelo ensaio (NÃO VERIFICADO):** se "Always Use HTTPS" está ligado por padrão na zona e como se comporta o HTTP→HTTPS (respondido na virada: a Cloudflare não redirecionou HTTP→HTTPS por padrão; ver F3b.5). Não foi rodado o subconjunto completo da tabela F2.2 (itens `/404.html`, `/sitemap.xml`, `/robots.txt`) nos hostnames de teste: só `/produto/2` foi registrado.
 
   Risco: nenhum para produção (hostnames separados). Rollback: apagar os recursos de teste (já feito).
 
-**F3b – hostname para o Worker + redirecionamento raiz/www (PRONTA PARA EXECUTAR; produção ainda na Vercel)**
+**F3b – hostname para o Worker + redirecionamento raiz/www (CONCLUÍDA em 2026-10-28, ~09:24 a ~09:47, horário de Brasília)**
 
-Ordem confirmada pelo ensaio F3a.6. Duração esperada (medida): 1 a 2 minutos por hostname; **a raiz fica sem resposta entre apagar o CNAME e o Custom Domain ficar ativo**; caches de resolver podem levar alguns minutos a refletir. O horário é decisão do dono: o ensaio tornou desnecessária a madrugada.
+Ordem confirmada pelo ensaio F3a.6. Duração medida: 1 a 2 minutos por hostname; a raiz ficou sem resposta por ~2 minutos entre apagar o CNAME e o Custom Domain ficar ativo.
 
-- [ ] **F3b.0 Pré-checagem.** Zona **Active** (Overview) e registrar o estado atual com `curl -sI` no `www` e na raiz (esperado: `www` 200, raiz 307 → `www`, ambos `server: Vercel`; conferido em 2026-10-27 no registro de execução).
-- [ ] **F3b.1 Passo 1 (`www`).** Worker → aba Domains → Add domain, subdomínio `www`. Aceito direto (caso 1 do ensaio; o CNAME `*` e os 3 CAA ficam). Verificar: `dig @<ns da Cloudflare> www.petluxostory.com.br +short` e `curl -sI https://www.petluxostory.com.br/produto/2` (200, `server: cloudflare`, 3 cabeçalhos) e no navegador. **Só seguir se estiver certo.** Risco: médio. Rollback: remover o Custom Domain do Worker (o curinga devolve o `www` à Vercel em 1 a 2 minutos).
-- [ ] **F3b.2 Passo 2 (raiz).** Em DNS → Records, **apagar o CNAME da raiz**; logo depois Worker → Domains → Add domain com o campo de subdomínio **VAZIO** (vazio liga a raiz). Risco: **médio/alto** (a raiz fica sem resposta por 1 a 2 minutos). Rollback: remover o Custom Domain da raiz e recriar o CNAME da raiz → alvo ALIAS da raiz da Vercel (reler no painel da Vercel), DNS only.
-- [ ] **F3b.3 Passo 3 (regra raiz → `www`).** Rules → Redirect Rules → Create rule, "Wildcard pattern": requisição `https://petluxostory.com.br/*`, destino `https://www.petluxostory.com.br/${1}`, **301**, "Preserve query string" marcado. Plano Free: 10 regras (ensaio mostrou "0 of 10"). A regra exige tráfego proxied no hostname (o Custom Domain da raiz cria registro proxied). `_redirects` **não** serve (https://developers.cloudflare.com/workers/static-assets/redirects/). Risco: médio (laço se mal configurada). Rollback: desativar a regra.
-- [ ] **F3b.4 Passo 4 (verificar).** `curl -sI "https://petluxostory.com.br/produto/2?x=1"` (301 → `www` com query); `curl -sI http://petluxostory.com.br/` e `curl -sI http://www.petluxostory.com.br/` (HTTP→HTTPS: **NÃO VERIFICADO**; se não redirecionar, ativar "Always Use HTTPS" em SSL/TLS → Edge Certificates; nome/local da opção: NÃO VERIFICADO na doc consultada); e reexecutar a tabela de F2.2 contra `https://www.petluxostory.com.br`. Rollback do conjunto: ver seção 7.
+- [x] **F3b.0 Pré-checagem (2026-10-28, antes da virada).** O site abria (Vercel); o último deploy do Worker `petluxo` estava Ready; o número do WhatsApp é o mesmo na produção e no Worker de teste (os dois serviam o mesmo arquivo JS `assets/index-Ch6Q2MER.js`: código idêntico; fecha F0.5 e F2.5); os dois alvos da Vercel (`81d99fac47f9cbab.vercel-dns-017.com` e `cname.vercel-dns-017.com`) ainda resolviam (216.198.79.1 e 64.29.17.1). **Descoberta:** no painel de DNS da Vercel, depois da troca de nameservers, só os 3 CAA aparecem; os dois ALIAS sumiram (motivo NÃO VERIFICADO). Logo, "reler os alvos no painel da Vercel antes do rollback" não é mais possível: valem os alvos registrados neste documento, conferidos por `dig` (último: 2026-10-28).
+- [x] **F3b.1 Passo 1 (`www`).** Worker → Domains → Add domain, subdomínio `www`; aceito direto (o CNAME `*` e os 3 CAA ficaram). Em menos de 2 minutos `dig @<ns da Cloudflare>` devolveu IPs da Cloudflare; `curl -I /produto/2` deu 200, `server: cloudflare`, com os 3 cabeçalhos de segurança; navegador (aba anônima) ok. Rollback: remover o Custom Domain do Worker (o curinga devolve o `www` à Vercel em 1 a 2 minutos).
+- [x] **F3b.2 Passo 2 (raiz).** Em DNS → Records, o CNAME da raiz foi apagado; logo depois Worker → Add domain com subdomínio **VAZIO**; aceito. Em ~2 minutos a raiz respondia pela Cloudflare (200, `server: cloudflare`). A raiz ficou sem resposta ~2 minutos nesse intervalo. O CNAME `*` e os 3 CAA ficaram. Rollback: seção 7.
+- [x] **F3b.3 Passo 3 (regra "raiz para www").** Rules → Redirect Rules, modelo "Wildcard pattern": requisição `https://petluxostory.com.br/*`, destino `https://www.petluxostory.com.br/${1}`, **301**, "Preserve query string" marcado. Teste: `https://petluxostory.com.br/produto/2?x=1` → 301 com `location: https://www.petluxostory.com.br/produto/2?x=1`; o `www` segue 200, `server: cloudflare`. `_redirects` **não** serve (https://developers.cloudflare.com/workers/static-assets/redirects/).
+- [x] **F3b.4 Passo 4 (verificação final).** `curl -sIL "http://petluxostory.com.br/produto/2?x=1"` → 301 → 301 (`www`, query preservada) → 200, tudo `server: cloudflare`. No `www`: 200 em `/`, `/produto/2`, `/produto/9999`, `/politica-de-privacidade`, `/qualquer-coisa` (soft 404), `/sitemap.xml` (`application/xml`), `/robots.txt` (`text/plain`) e `/og-image.jpg` (`image/jpeg`); HSTS e `x-content-type-options` presentes em todas (o `referrer-policy` não foi repetido no filtro do teste final; seção 8, item 30). Navegador: o dono testou home, raiz → `www` e produtos ("tudo ok, nada de estranho", relatado sem detalhe por item).
+- [x] **F3b.5 Regra HTTP → HTTPS.** A Cloudflare **não** redirecionou HTTP→HTTPS por padrão (`http://www...` e `http://` da raiz davam 200; a Vercel fazia 308). "Always Use HTTPS" não foi consultada nem alterada. Solução: regra pelo modelo "Redirect from HTTP to HTTPS" (Wildcard pattern, Request URL `http://*`, Target URL `https://${1}`, 301, Preserve query string, Place at: Last). Testes: `http://www.petluxostory.com.br/produto/2` → 301 para `https://www.petluxostory.com.br/produto/2`; `http://petluxostory.com.br/produto/2?x=1` → 301 para `https://petluxostory.com.br/produto/2?x=1` (que a regra da raiz leva ao `www`). Plano Free: 2 de 10 regras usadas.
+
+**Estado ao fim da virada:** a produção é servida pelo Worker `petluxo`; o projeto Vercel do site fica intacto como plano B (janela de 7 a 14 dias; não mexer); o painel admin continua na Vercel. Zona: 3 CAA, `_domainconnect` (DNS only), CNAME `*` → Vercel (DNS only; subdomínios que não sejam `www` continuam caindo na Vercel com 404), mais as linhas "Worker" do `www` e da raiz. A raiz não tem mais o CNAME para a Vercel. Regras: "raiz para www" e "http para https" (301).
 
 ### Notas operacionais (interface da Cloudflare, aprendidas em 2026-10-27)
 
 - **Custom Domain no Worker:** Worker → aba Domains → "Add domain" → campo de subdomínio na frente de `.petluxostory.com.br`; "Leave empty for root domain" (**vazio liga a RAIZ, que é a virada: cuidado**). A caixa de busca só lista zonas, não hostnames.
 - A tela "Overview" da zona diz "Your domain is now protected by Cloudflare / proxying": é texto padrão; com os registros em DNS only o tráfego **não** passa pela Cloudflare. A recomendação "Only allow Cloudflare IP addresses at your origin" não se aplica. Os avisos de DNS "Visitors cannot reach..." e de MX são automáticos e podem ser ignorados (o domínio não tem e-mail).
 - **Não ativar** Bot Fight Mode, proxy nem DNSSEC por ora.
-- Depois da virada, **não alterar o projeto Vercel do site** durante a janela de rollback (seção 7).
+- **Não alterar o projeto Vercel do site** durante a janela de rollback (seção 7).
+- **Modelo "Redirect from HTTP to HTTPS"** (Rules → Redirect Rules): Wildcard pattern, Request URL `http://*`, Target URL `https://${1}`, 301, Preserve query string, Place at: Last. É o que faz HTTP → HTTPS nesta zona (a Cloudflare não redireciona por padrão; F3b.5).
+- **Fluxo para uma raiz com CNAME próprio:** primeiro apagar o CNAME em DNS → Records, depois Worker → Add domain com o subdomínio vazio. Com o CNAME existente a Cloudflare recusa ("already has externally managed DNS records"). A raiz fica sem resposta ~2 minutos entre os dois passos.
+- **Aviso "Leave empty for root domain"** no campo de subdomínio do Add domain: deixar vazio liga a RAIZ. Com o campo preenchido liga só aquele subdomínio.
+- **Os dois ALIAS sumiram do painel de DNS da Vercel** depois da troca de nameservers (só os 3 CAA aparecem; motivo NÃO VERIFICADO). Por isso o rollback usa os alvos registrados neste documento, conferidos por `dig`.
 
-### F4 – Pós-virada
+### F4 – Pós-virada (EM ANDAMENTO; janela de 2026-10-28 → 2026-11-04 a 2026-11-11)
 
 - [ ] **F4.1 Prévias:** colar `https://www.petluxostory.com.br/` e `https://petluxostory.com.br/` no WhatsApp e no depurador do Facebook (limpar cache de prévia); conferir imagem `og-image.jpg`. Resp.: Dono.
 - [ ] **F4.2 Monitorar por 7 a 14 dias:** build verde a cada push (dashboard → Workers → Builds); GA4 Tempo Real e relatório diário; Search Console (cobertura e sitemap com `www`: reenviar `https://www.petluxostory.com.br/sitemap.xml`); um commit de teste pelo painel e conferir que o build dispara. Resp.: Dono.
@@ -209,7 +216,9 @@ Ordem confirmada pelo ensaio F3a.6. Duração esperada (medida): 1 a 2 minutos p
 - [ ] **F4.5 Limpeza de código (D7):** remover `public/404.html` e `main.jsx:9-13`; reexecutar a tabela de F2.2. Resp.: Claude Code. Rollback: reverter.
 - [ ] **F4.6 Plano Vercel (TODO 4):** a migração resolve a pendência de uso comercial no Hobby; verificar se a Cloudflare tem restrição equivalente para uso comercial no plano gratuito além da cláusula 2.2.1(h) (seção 6): NÃO VERIFICADO.
 - [ ] **F4.7 Cache longo (opcional):** depois de a virada estar estável, avaliar adicionar `Cache-Control` immutable para `/assets/*` (nomes com hash do Vite) e cache moderado para `/images/*`; só depois de conferir como o fallback de SPA trata `/assets/*` inexistentes. Não fazer antes.
-- [ ] **F4.8 Desligar o endereço `workers.dev` e as Preview URLs** depois de a virada estar estável: acrescentar `"workers_dev": false` e `"preview_urls": false` ao `wrangler.jsonc` (conforme os avisos do deploy) e fazer novo deploy. Doc oficial: https://developers.cloudflare.com/workers/configuration/routing/workers-dev/ (`"workers_dev": false` desliga a rota `workers.dev` no próximo deploy; diz que isso **não** desliga Version/Preview/Deployment URLs; se a rota for desligada só no dashboard, o `wrangler deploy` a religa) e https://developers.cloudflare.com/workers/configuration/previews/ (`"preview_urls": false` desliga as Version URLs; o padrão acompanha o `workers.dev`; é preciso defini-lo explicitamente). **Efeito sobre o acesso pelo domínio próprio: NÃO VERIFICADO** (nenhuma das páginas diz). Só fazer depois de F3b e dos testes na produção, porque o `workers.dev` é usado nos testes até lá. Resp.: Claude Code. Rollback: reverter o commit e fazer novo deploy.
+- [ ] **F4.8 (pendente) Desligar o endereço `workers.dev` e as Preview URLs** depois de a virada estar estável: acrescentar `"workers_dev": false` e `"preview_urls": false` ao `wrangler.jsonc` (conforme os avisos do deploy) e fazer novo deploy. Doc oficial: https://developers.cloudflare.com/workers/configuration/routing/workers-dev/ (`"workers_dev": false` desliga a rota `workers.dev` no próximo deploy; diz que isso **não** desliga Version/Preview/Deployment URLs; se a rota for desligada só no dashboard, o `wrangler deploy` a religa) e https://developers.cloudflare.com/workers/configuration/previews/ (`"preview_urls": false` desliga as Version URLs; o padrão acompanha o `workers.dev`; é preciso defini-lo explicitamente). **Efeito sobre o acesso pelo domínio próprio: NÃO VERIFICADO** (nenhuma das páginas diz). Só fazer depois de F3b e dos testes na produção, porque o `workers.dev` é usado nos testes até lá. Resp.: Claude Code. Rollback: reverter o commit e fazer novo deploy.
+
+- [ ] **F4.9 Monitorar 7 a 14 dias** (Worker/Deployments, Analytics, Search Console, um commit real do painel). Inclui conferir que o commit do painel dispara o deploy na Cloudflare e que uma foto trocada com o mesmo nome mostra a nova (seção 8, itens 25 e 28). Janela: 2026-10-28 → 2026-11-04 a 2026-11-11. Resp.: Dono.
 
 ### F5 – Documentação (o que mudar, onde, texto sugerido)
 
@@ -228,7 +237,7 @@ Fazer após a virada confirmada, em um commit só.
 - [ ] **docs/TODO.md:66 (item 2)**: "uma função na Vercel" → "um Worker com script ou pré-renderização". Lembrar que o canonical depende deste item (D4).
 - [ ] **docs/TODO.md:112 (item 23)**: tirar "deploy da Vercel" dos pré-requisitos e acrescentar "e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO; relatos de falha no clone em 2026-10-27)". Itens 25 e 26 permanecem; o 26 passa a citar a Cloudflare no lugar de Vercel (abaixo). **Novo item sugerido:** "Instagram do rodapé: `Footer.jsx:51` aponta para `instagram.com/pettluxo_/` e o `AI_CONTEXT_PETLUXO.md:8` cita `@petluxostory`; o dono confirma qual é o correto".
 - [ ] **docs/CHECKOUT_ARCHITECTURE.md**: o plano inteiro assume Vercel (linhas 9, 22, 23, 26, 167-173 e 185 `vercel.json`, 339-341, 366, 392, 417, 421, 447, 454). Não editar linha a linha: o TODO 26 já manda reescrever o documento para InfinitePay + frete grátis. Na reescrita, trocar: hospedagem de funções (`/api/` da Vercel) → Worker com script na Cloudflare; banco (Neon via Marketplace Vercel) e e-mail (Resend via Marketplace) → decidir de novo, sem integração de Marketplace da Vercel; cron → Cron Triggers; o `vercel.json` de rewrite deixa de existir (o roteamento passa a ser `run_worker_first` para `/api/*` no `wrangler.jsonc`). Texto de aviso sugerido no topo, já: "**Atenção:** a hospedagem migrou para a Cloudflare; as referências à Vercel abaixo estão desatualizadas até a reescrita (TODO 26)."
-- [ ] **AI_CONTEXT_PETLUXO.md** (linhas 9, 24, 65, 73, 178, 198, 201, 205): trocar "Hospedagem: Vercel (Hobby)" por Cloudflare Workers (com a data), remover `vercel.json`/`.vercel` das menções que deixem de valer, atualizar a linha 73 (acesso direto a rotas passa a depender do fallback de SPA), e as pendências 9 e 12. Fazer após a virada.
+- [x] **AI_CONTEXT_PETLUXO.md**: reescrito em 2026-10-28 só com o estado atual (hospedagem na Cloudflare, modo SPA, DNS); histórico e rollback ficam neste documento.
 - [ ] **src/main.jsx:8** comentário: ver F1.8.
 
 ## 5. Impactos no painel `petluxo-admin` (só listar; não tocar)
@@ -248,16 +257,17 @@ Fazer após a virada confirmada, em um commit só.
 - **Roteamento:** `run_worker_first: ["/api/*"]` no `wrangler.jsonc` quando o primeiro script entrar; lembrar que `_headers` não vale para respostas do Worker (headers dessas rotas vão no código).
 - **Limites do plano grátis** (requisições por dia, CPU por invocação, subrequests): conferir na documentação vigente antes do desenho; não calculados aqui.
 
-## 7. Rollback (voltar para a Vercel)
+## 7. Rollback (voltar para a Vercel) — estado ATUAL (2026-10-28)
+
+A produção está no Worker `petluxo`. Enquanto o projeto Vercel do site existir e estiver ligado ao domínio, o rollback é só DNS. Os alvos da Vercel **não aparecem mais no painel dela** (seção 8, item 29): usar os alvos registrados neste documento e conferi-los com `dig` (último: 2026-10-28).
 
 | Fase | Como voltar | Observação |
 |---|---|---|
-| F1 | Reverter o commit (ou apagar `wrangler.jsonc`, `public/_headers`, `.nvmrc`). A Vercel ignora esses arquivos. | Sem efeito em produção. |
-| F2 | Excluir o Worker no dashboard. | Produção nunca saiu da Vercel. |
-| F3a | **Rollback comum:** mexer nos registros da zona na Cloudflare (sem o Registro.br). **Extremo:** no Registro.br, devolver os nameservers para `ns1.vercel-dns.com` e `ns2.vercel-dns.com` (exige o titular do domínio). | Só funciona se o domínio ainda estiver configurado no projeto Vercel. Os certificados da Vercel expiram em 2026-12-10 e o wildcard depende dos nameservers da Vercel para renovar: depois dessa data a Vercel precisa reemitir. |
-| F3a.6 (ensaio) | Já limpo em 2026-10-27 (regra, Custom Domains e CNAME de teste removidos). | Hostnames separados; produção não foi afetada. |
-| F3b | **Remover os Custom Domains** do Worker (o curinga devolve o `www` à Vercel em 1 a 2 minutos); **apagar a regra** de redirecionamento; **recriar o CNAME da raiz** → alvo ALIAS da raiz da Vercel (reler no painel da Vercel, pois pode mudar), DNS only. | Depois da virada, **não alterar o projeto Vercel do site** durante a janela. Os certificados da Vercel expiram em 2026-12-10; depois disso o rollback exige que a Vercel reemita. |
-| F4 | Até excluir o projeto Vercel, qualquer rollback acima vale. Depois de excluído, é preciso recriar o projeto e o domínio na Vercel (≈ o setup descrito no `docs/DEPLOY.md` atual). | Por isso a janela de 7 a 14 dias. |
+| F3b (o rollback que importa) | 1) **Remover os Custom Domains `www` e raiz** do Worker (o curinga `*` devolve o `www` à Vercel em 1 a 2 minutos); 2) **apagar as duas regras** de redirecionamento ("raiz para www" e "http para https"); 3) **recriar o CNAME da raiz** (`@`) → `81d99fac47f9cbab.vercel-dns-017.com`, DNS only (o `*` → `cname.vercel-dns-017.com` já existe). Conferir com `dig` e `curl -sI`. | Não alterar o projeto Vercel do site durante a janela. Os certificados da Vercel expiram em 2026-12-10 e o wildcard depende dos nameservers da Vercel para renovar: depois dessa data a Vercel precisa reemitir. |
+| F3a | **Rollback comum:** mexer nos registros da zona na Cloudflare (sem o Registro.br). **Extremo:** no Registro.br, devolver os nameservers para `ns1.vercel-dns.com` e `ns2.vercel-dns.com` (exige o titular do domínio). | Só funciona se o domínio ainda estiver configurado no projeto Vercel. Mesma observação dos certificados (2026-12-10). |
+| F2 | **Não excluir o Worker isoladamente:** ele é a produção. Só depois do rollback F3b completo. | Antes da virada bastava excluir o Worker. |
+| F1 | Reverter o commit (ou apagar `wrangler.jsonc`, `public/_headers`, `.nvmrc`); a Vercel ignora esses arquivos. | Só depois do rollback F3b: sem esses arquivos o deploy do Worker deixa de funcionar. |
+| F4 | Até excluir o projeto Vercel, o rollback F3b vale. Depois de excluído, é preciso recriar o projeto e o domínio na Vercel (≈ o setup descrito no `docs/DEPLOY.md` atual). | Por isso a janela de 7 a 14 dias. |
 | DNSSEC | Se for ativado na Cloudflare (D8), voltar os NS exige antes remover o DS no Registro.br e esperar o TTL. | Motivo para não ativar agora. |
 
 ## 8. NÃO VERIFICADO
@@ -267,7 +277,7 @@ Fazer após a virada confirmada, em um commit só.
 3. **Limite de arquivos e tamanho por arquivo em Workers assets:** confirmado na página de limites (https://developers.cloudflare.com/workers/platform/limits/): **20.000 arquivos por versão no Free** (100.000 no Paid; requer Wrangler ≥ 4.34.0 para os limites maiores) e **25 MiB por arquivo**. O site tem 99 arquivos e o maior é `og-image.png` (1.837.059 B): folga ampla. *Não verificado:* se as requisições de assets contam na cota diária do plano grátis; a página de billing diz só que são "free and unlimited".
 4. ~~Prazo de propagação da troca de NS no Registro.br~~ **RESOLVIDO em 2026-10-27:** os nameservers da Cloudflare apareceram no servidor do `.br` em menos de 5 minutos. **TTL do NS:** não medido.
 5. ~~Prazo de emissão do certificado e comportamento do Custom Domain com curinga e com CNAME próprio~~ **RESOLVIDO em 2026-10-27 (F3a.6):** domínio/certificado ativos em 1 a 2 minutos, sem falhas de emissão; hostname coberto só pelo curinga é aceito direto; com CNAME próprio é recusado até o CNAME ser apagado.
-6. **"Always Use HTTPS"** (nome/local da opção e se está ligada por padrão numa zona nova) e o comportamento de HTTP→HTTPS: **o ensaio não respondeu**; conferir em F3b.4.
+6. ~~"Always Use HTTPS" / HTTP→HTTPS~~ **RESOLVIDO em 2026-10-28 (F3b.5):** a Cloudflare não redirecionou HTTP→HTTPS por padrão; resolvido com a regra "http para https" (301). A opção "Always Use HTTPS" não foi consultada nem alterada.
 7. ~~CNAME na raiz (flattening) no plano Free~~ **RESOLVIDO em 2026-10-27:** a Cloudflare aceitou o CNAME na raiz no plano Free e avisou que usa CNAME flattening.
 8. ~~Se os 3 CAA atuais bastam~~ **RESOLVIDO em 2026-10-27:** bastaram para os certificados dos dois hostnames de teste; `ssl.com` não foi necessário.
 9. ~~Como um CNAME curinga interage com um Custom Domain de hostname exato~~ **RESOLVIDO em 2026-10-27 (F3a.6):** ver F3a.6.
@@ -282,13 +292,18 @@ Fazer após a virada confirmada, em um commit só.
 18. **Instagram correto:** `Footer.jsx:51` aponta para `pettluxo_` e o `AI_CONTEXT_PETLUXO.md` cita `@petluxostory`; decisão do dono, ainda não resolvida.
 19. **Push e deploy da F1:** confirmados em 2026-10-27 (o robots.txt de produção já mostra o www).
 20. **Diferença 142 × 99 arquivos:** o log do Workers Builds leu 142 arquivos de `dist/` (98 novos subidos, 1 já existente) e o build local tem 99 arquivos únicos; provável diferença de contagem de arquivos × ativos únicos, NÃO VERIFICADO, sem alarme (limite grátis: 20.000).
-21. **Número do WhatsApp do site de teste × produção:** o dono relatou que os botões funcionam, mas a conferência explícita do número (F0.5/F2.5) está pendente.
+21. ~~Número do WhatsApp do site de teste × produção~~ **RESOLVIDO em 2026-10-28 (F3b.0):** os dois serviam o mesmo `assets/index-Ch6Q2MER.js` (código idêntico).
 22. **Hit do GA4 em Tempo Real a partir do `workers.dev`:** o dono relatou que o consentimento funciona, mas o hit explícito (e possível filtro de hostname, F0.6) não foi conferido.
 23. **Efeito de `workers_dev: false` e `preview_urls: false` sobre o acesso pelo domínio próprio:** as páginas oficiais consultadas não dizem (F4.8).
 24. **Registro `_domainconnect`:** a importação automática da Cloudflare trouxe um CNAME `_domainconnect` → `_domainconnect.vercel-dns.com` que não aparece na tabela de DNS do painel da Vercel; ficou na zona como DNS only. Para que serve e se pode ser removido: NÃO VERIFICADO.
-25. **Fotos trocadas pelo painel** (mesmo nome de arquivo) **e cache após a virada:** se uma foto substituída com o mesmo nome continua aparecendo antiga por causa do cache da Cloudflare/navegador (o padrão é `public, max-age=0, must-revalidate`): NÃO VERIFICADO.
+25. **Fotos trocadas pelo painel** (mesmo nome de arquivo) **e cache após a virada:** se uma foto substituída com o mesmo nome continua aparecendo antiga por causa do cache da Cloudflare/navegador (o padrão é `public, max-age=0, must-revalidate`): NÃO VERIFICADO; conferir em F4.9.
 26. **Alerta de segurança da conta no Registro.br** (recomendação de senha mais forte): pendência do titular do domínio, não bloqueia a migração.
 
+27. **Prévia no WhatsApp/Facebook após a virada:** não testada (F4.1).
+28. **Um commit real do painel dispara o deploy na Cloudflare:** não testado (F4.9). Junto com o item 25 (foto trocada com o mesmo nome mostra a nova).
+29. **Alvos da Vercel não aparecem mais no painel de DNS da Vercel** (só os 3 CAA; os dois ALIAS sumiram depois da troca de nameservers): motivo NÃO VERIFICADO. O rollback usa os alvos registrados aqui (seção 7).
+30. **`referrer-policy` na verificação final:** não foi repetido no filtro do teste final (F3b.4); foi visto em F2.2 e F3a.6.
+31. **F4.8 (desligar `workers_dev` e `preview_urls`) segue pendente** (ver item 23 para o efeito sobre o domínio próprio).
 ### Correções ao que já se sabia (conferido nesta data)
 
 - Node padrão do Workers Builds: a doc atual diz **24.22.1**, com **22.23.4** também pré-instalado (não 24.18.0).
@@ -298,7 +313,9 @@ Fazer após a virada confirmada, em um commit só.
 - Fontes da documentação consultada: https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/ · https://developers.cloudflare.com/workers/static-assets/routing/static-site-generation/ · https://developers.cloudflare.com/workers/static-assets/headers/ · https://developers.cloudflare.com/workers/static-assets/redirects/ · https://developers.cloudflare.com/workers/configuration/routing/custom-domains/ · https://developers.cloudflare.com/dns/dnssec/ · https://developers.cloudflare.com/workers/ci-cd/builds/build-image/ · https://developers.cloudflare.com/workers/ci-cd/builds/limits-and-pricing/ · https://developers.cloudflare.com/workers/platform/limits/ · https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/ · https://developers.cloudflare.com/rules/url-forwarding/ · https://www.cloudflare.com/terms/
 
 
-## 9. Registro de execução (2026-10-27, horário de Brasília)
+## 9. Registro de execução (horário de Brasília)
+
+### 2026-10-27
 
 - Conta Cloudflare criada com 2FA (F0.1).
 - DNS da Vercel exportado (F0.2) e DNSSEC conferido: não ativo (F0.3).
@@ -309,3 +326,10 @@ Fazer após a virada confirmada, em um commit só.
 - Nameservers trocados no Registro.br pelo titular do domínio; no servidor do `.br` em menos de 5 minutos (F3a.4). Site sem alteração visível.
 - Ensaio com `teste1` e `teste2` e regra de redirecionamento de teste (F3a.6), depois limpeza completa.
 - Estado ao fim do dia: `www` 200 e raiz 307 → `www`, ambos `server: Vercel`; **a produção ainda é servida pela Vercel**; F3b pronta.
+
+### 2026-10-28
+
+- Pré-checagem (F3b.0): site abria (Vercel); último deploy do Worker Ready; mesmo `assets/index-Ch6Q2MER.js` na produção e no Worker (WhatsApp igual: fecha F0.5 e F2.5); alvos da Vercel ainda resolviam; no painel da Vercel só os 3 CAA (ALIAS sumiram).
+- ~09:24 a ~09:47, a virada: `www` como Custom Domain (< 2 min); CNAME da raiz apagado e Custom Domain da raiz (~2 min sem resposta); regra "raiz para www" (301); descoberta de que o HTTP não redirecionava para HTTPS e regra "http para https" (301).
+- Verificação final: `curl -sIL` HTTP da raiz com query → 301 → 301 → 200 (`server: cloudflare`); rotas, sitemap, robots e og-image ok no `www`; navegador testado pelo dono sem problemas.
+- Estado ao fim: a produção é servida pelo Worker `petluxo` na Cloudflare; projeto Vercel do site intacto como plano B; painel admin segue na Vercel; F4 em andamento.

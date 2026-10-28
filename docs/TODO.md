@@ -131,3 +131,13 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [x] og-image em JPEG 1200×630 com tags de tamanho (2026-10-26)
 - [x] Troca do token de acesso do painel (2026-10-26)
 - [x] Sincronização dos READMEs e docs (2026-10-26)
+
+---
+
+## Adicionados em 2026-10-28
+
+- [ ] **28. Conferir o Instagram correto** 🟢
+      `Footer.jsx:51` aponta para `instagram.com/pettluxo_/`, enquanto o contexto do projeto cita `@petluxostory`. O dono confirma qual é o correto e o site/documentação são alinhados (também em `docs/CLOUDFLARE_MIGRATION.md`, seção 8, item 18).
+
+- [ ] **29. Pasta de imagem órfã** 🟢
+      `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`) não é referenciada por nenhum produto atual. Decidir se remove.
