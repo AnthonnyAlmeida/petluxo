@@ -27,11 +27,12 @@ export const PRODUCTS = [
     originalPrice: 'R$ 179,90',
     category: ['brinquedos'],
     order: 1,
-    categoryOrder: { 'brinquedos': 100 },
+    categoryOrder: {"brinquedos":100},
     image: '/images/products/brinquedo-interativo-de-pelucia/principal.webp',
     badge: 'ESGOTADO',
     buyLink: 'https://pag.ae/81K6Dbu-q',
     tags: ['pelúcia', 'rena', 'natal', 'boneco', 'diversão', 'enriquecimento'],
+    visible: false,
   },
   {
     id: 2,
