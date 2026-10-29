@@ -209,6 +209,7 @@ export const PRODUCT_DETAILS = {
       '/images/products/elan-couro/elan-couro-2.webp',
       '/images/products/elan-couro/elan-couro-3.webp',
       '/images/products/elan-couro/elan-couro-4.webp',
+      '/images/products/elan-couro/elan-couro-5.webp',
     ],
     specs: {
       material: 'Couro caramelo',
