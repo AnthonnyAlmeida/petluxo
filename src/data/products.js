@@ -246,7 +246,7 @@ export const PRODUCTS = [
     name: 'Sofá Ortopédico Lounge PetLuxo™',
     shortName: 'Sofá Lounge PetLuxo™',
     subtitle: 'Conforto sofisticado para pets que merecem o extraordinário.',
-    description: 'Transforme os momentos de descanso do seu pet em uma verdadeira experiência de conforto premium. O Sofá Ortopédico Lounge PetLuxo™ foi desenvolvido para unir elegância, aconchego e funcionalidade em um design moderno e sofisticado que harmoniza perfeitamente com ambientes refinados. Seu acabamento premium em tons neutros transmite exclusividade e sofisticação, enquanto a estrutura ortopédica proporciona suporte confortável para o descanso diário do seu melhor amigo.',
+    description: 'Transforme -- os momentos de descanso do seu pet em uma verdadeira experiência de conforto premium. O Sofá Ortopédico Lounge PetLuxo™ foi desenvolvido para unir elegância, aconchego e funcionalidade em um design moderno e sofisticado que harmoniza perfeitamente com ambientes refinados. Seu acabamento premium em tons neutros transmite exclusividade e sofisticação, enquanto a estrutura ortopédica proporciona suporte confortável para o descanso diário do seu melhor amigo.',
     bullets: ['Design moderno estilo sofá boutique', 'Base confortável com suporte ortopédico', 'Material premium resistente e sofisticado', 'Fácil de limpar', 'Base antiderrapante', 'Perfeita para ambientes elegantes e minimalistas'],
     price: 'R$ 469,00',
     originalPrice: null,
@@ -258,8 +258,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81VR7uoS1',
     tags: ['sofá', 'cama', 'ortopédico', 'descanso'],
-    supplierLink: 'https://pt.aliexpress.com/item/1005012110217817.html?spm=a2g0o.home.pcJustForYou.1.31c83f401X3Q76&gps-id=pcJustForYou&scm=1007.13562.416251.0&scm_id=1007.13562.416251.0&scm-url=1007.13562.416251.0&pvid=68e35ce3-eb73-441c-8892-c9e37a2e4e85&_t=gps-id%3ApcJustForYou%2Cscm-url%3A1007.13562.416251.0%2Cpvid%3A68e35ce3-eb73-441c-8892-c9e37a2e4e85%2Ctpp_buckets%3A668%232846%238114%231999&pdp_ext_f=%7B%22order%22%3A%222%22%2C%22eval%22%3A%221%22%2C%22sceneId%22%3A%223562%22%2C%22fromPage%22%3A%22recommend%22%7D&pdp_npi=6%40dis%21BRL%21332.99%21332.99%21%21%21404.56%21404.56%21%402101e80317824941076255599ed585%2112000057538247850%21rec%21BR%21%21ABXZ%211%210%21n_tag%3A-29910%3Bd%3A6a0a19aa%3Bm03_new_user%3A-29895&utparam-url=scene%3ApcJustForYou%7Cquery_from%3A%7Cx_object_id%3A1005012110217817%7C_p_origin_prod%3A',
-    visible: false,
   },
   {
     id: 14,
