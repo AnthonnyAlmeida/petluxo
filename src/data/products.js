@@ -746,5 +746,23 @@ export const PRODUCTS = [
       { size: 'M', link: 'https://pag.ae/82djpRrEm' },
     ],
     tags: ['mochila', 'bolsa', 'transporte', 'viagem', 'passeio', 'azul marinho'],
+  },
+  {
+    id: 43,
+    name: 'Cama Redonda Macia para Cães e Gatos Pequeno Porte',
+    shortName: 'Cama Redonda Macia',
+    subtitle: 'Conforto e maciez para seus pequenos companheiros',
+    description: 'Cama redonda em tecido suave com enchimento confortável, especialmente desenvolvida para cães e gatos de pequeno porte. Oferece o refúgio perfeito para momentos de descanso e sono tranquilo. Fácil de lavar, combina funcionalidade com elegância sofisticada em tom bege neutro.',
+    bullets: ['Tecido suave e acolhedor para máximo conforto', 'Enchimento confortável que oferece suporte ideal', 'Design redondo minimalista e elegante', 'Fácil de lavar e manter impecável', 'Ideal para cães e gatos de pequeno porte'],
+    price: 'R$ 99,00',
+    originalPrice: null,
+    category: ['sono-refugio'],
+    order: 58,
+    categoryOrder: {"sono-refugio":1600},
+    featured: false,
+    image: '/images/products/cama-redonda-macia-para-caes-e-gatos-pequeno-porte/principal.webp',
+    badge: null,
+    buyLink: null,
+    tags: ['cama redonda', 'conforto', 'pets pequenos', 'sono', 'tecido suave', 'lavavel'],
   }
 ];
