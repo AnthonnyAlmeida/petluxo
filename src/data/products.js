@@ -296,6 +296,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81LHbyHKp',
     tags: ['coleira', 'couro', 'passeio'],
+    visible: false,
   },
   {
     id: 17,
