@@ -33,7 +33,7 @@ export default function ShippingPolicyPage() {
             borderBottom: '1px solid var(--bege)',
             paddingBottom: '1.5rem',
           }}>
-            Última atualização: maio de 2025
+            Última atualização: novembro de 2026
           </p>
 
           <p style={{ lineHeight: 1.8, marginBottom: '2rem' }}>
@@ -57,8 +57,8 @@ export default function ShippingPolicyPage() {
 
           <Section title="Frete">
             <p>
-              O valor do frete é calculado automaticamente pelo PagBank no momento da compra, com
-              base no endereço de entrega informado.
+              O valor e as condições do frete são informados durante o atendimento pelo WhatsApp,
+              antes da confirmação do pedido, com base no endereço de entrega informado.
             </p>
           </Section>
 

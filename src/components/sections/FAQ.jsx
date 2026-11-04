@@ -34,10 +34,6 @@ const FAQS = [
     q: 'Como sei qual tamanho de cama escolher para o meu pet?',
     a: 'Recomendamos medir o comprimento do seu pet de focinho a cauda e adicionar cerca de 20cm para garantir conforto total. Nossos produtos com variação de tamanho indicam as medidas de cada opção. Em caso de dúvida, fale com a gente pelo WhatsApp — adoramos ajudar!',
   },
-  {
-    q: 'A compra é segura?',
-    a: 'Sim! Os pagamentos são processados pelo PagBank, plataforma segura e certificada. Não armazenamos nenhuma informação de pagamento.',
-  },
 ];
 
 const TROCA_ANSWER = (

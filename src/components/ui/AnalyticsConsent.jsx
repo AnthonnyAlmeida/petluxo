@@ -32,6 +32,13 @@ export default function AnalyticsConsent() {
     }
   }, [show]);
 
+  // Permite reabrir o banner por fora (link "Preferências de cookies" no rodapé)
+  useEffect(() => {
+    const open = () => setShow(true);
+    window.addEventListener('petluxo:open-consent', open);
+    return () => window.removeEventListener('petluxo:open-consent', open);
+  }, []);
+
   const handleAccept = () => {
     setConsent('granted');
     setShow(false);
@@ -41,7 +48,11 @@ export default function AnalyticsConsent() {
   };
 
   const handleDeny = () => {
-    setConsent('denied');
+    if (getConsent() === 'granted') {
+      revokeConsent();
+    } else {
+      setConsent('denied');
+    }
     setShow(false);
     if (document.body) document.body.focus();
   };

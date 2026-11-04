@@ -35,6 +35,15 @@ export function Footer() {
               <li><Link to="/politica-de-troca-e-devolucao">Troca e Devolução</Link></li>
               <li><Link to="/politica-de-frete-e-entrega">Frete e Entrega</Link></li>
               <li><Link to="/termos-de-uso">Termos de Uso</Link></li>
+              <li>
+                <button
+                  type="button"
+                  className={styles.linkButton}
+                  onClick={() => window.dispatchEvent(new CustomEvent('petluxo:open-consent'))}
+                >
+                  Preferências de cookies
+                </button>
+              </li>
             </ul>
           </div>
           <div>
@@ -59,13 +68,6 @@ export function Footer() {
               <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
             </svg>
             Instagram
-          </a>
-          <a className={styles.footSocialLink} aria-label="PagBank Pagamento Seguro">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16" aria-hidden="true">
-              <rect x="3" y="10" width="18" height="11" rx="2" ry="2"/>
-              <path d="M7 10V7a5 5 0 0 1 10 0v3"/>
-            </svg>
-            PagBank
           </a>
         </div>
 

@@ -33,7 +33,7 @@ export default function PrivacyPage() {
             borderBottom: '1px solid var(--bege)',
             paddingBottom: '1.5rem',
           }}>
-            Última atualização: maio de 2025
+            Última atualização: novembro de 2026
           </p>
 
           <p style={{ lineHeight: 1.8, marginBottom: '2rem' }}>
@@ -44,26 +44,15 @@ export default function PrivacyPage() {
 
           <Section title="Coleta de Informações">
             <p>
-              Não coletamos dados pessoais diretamente pelo site. Após a conclusão de uma compra
-              pelo PagBank, recebemos as seguintes informações necessárias para o processamento e
-              entrega do pedido:
+              Não coletamos dados pessoais diretamente pelo site, que não possui formulários nem
+              pagamento. O atendimento e o pedido são combinados pelo WhatsApp. Os dados que você
+              informar na conversa são usados para processar e entregar o pedido:
             </p>
             <ul>
               <li>Nome completo</li>
               <li>Endereço de entrega</li>
               <li>Telefone de contato</li>
             </ul>
-            <p>
-              Dados financeiros como cartão, CPF e informações de pagamento são coletados e
-              processados exclusivamente pelo PagBank, sujeitos à{' '}
-              <a
-                href="https://pagseguro.uol.com.br/sobre/politica-de-privacidade"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Política de Privacidade do PagBank
-              </a>.
-            </p>
           </Section>
 
           <Section title="Como Usamos Seus Dados">
@@ -81,7 +70,8 @@ export default function PrivacyPage() {
               para a entrega do pedido:
             </p>
             <ul>
-              <li><strong>PagBank</strong> — processamento do pagamento</li>
+              <li><strong>WhatsApp (Meta)</strong> — canal de atendimento e combinação do pedido</li>
+              <li><strong>Cloudflare</strong> — hospedagem do site</li>
               <li><strong>Distribuidor parceiro</strong> — recebe nome e endereço para realizar o envio direto ao cliente</li>
               <li><strong>Autoridades competentes</strong> — quando exigido por lei</li>
             </ul>
@@ -100,9 +90,13 @@ export default function PrivacyPage() {
               Não afirmamos que os dados coletados pelo Google Analytics são
               anônimos, nem garantimos a eficácia de ferramentas externas de
               desativação (como o link de opt-out do Google) para o GA4. Se
-              desejar revisar ou revogar sua escolha de analytics, use o link
-              <strong>Gerenciar preferências de analytics</strong> no banner do
+              desejar revisar ou revogar sua escolha de analytics, use o link{' '}
+              <strong>Preferências de cookies</strong> no rodapé do
               site ou entre em contato pelo e-mail abaixo.
+            </p>
+            <p>
+              Independentemente do banner de consentimento, o site carrega fontes do Google
+              Fonts, o que envia o endereço IP do visitante ao Google.
             </p>
             <p>
               Para controlar cookies de forma geral, utilize as configurações

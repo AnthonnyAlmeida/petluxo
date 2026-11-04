@@ -79,6 +79,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       O `products.js` inteiro vai para o navegador, então a origem dos produtos fica legível nas ferramentas de desenvolvedor. Esses links não são necessários para o cliente comprar.
   - Remover `supplierLink` do catálogo público e mantê-lo apenas em fonte administrativa privada, com acesso restrito (mover para um arquivo fora do Git não basta se o painel ou o navegador continuar recebendo o conteúdo).
   - Ajustar o painel administrativo externo, que reescreve `products.js`.
+  - Plano: mover os links para um arquivo privado mantido pelo painel admin (repositório privado, ligado ao produto pelo id); ajustar o painel para ler e gravar de lá; só então remover o campo de `products.js`. O histórico do git já contém os links: decidir se isso importa.
   - Ao migrar, corrigir os ids 9 (aponta para `kit-milano-camelo`, nome antigo) e 17 (aponta para um comedouro dobrável que não corresponde ao produto).
 
 ---
@@ -110,7 +111,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       A confirmar com a InfinitePay: se o checkout integrado aceita débito; taxas do cartão à vista e parcelado; custo e condições do recebimento na hora (há relatos de plano com permanência mínima); prazo de liberação por forma de pagamento.
 
 - [ ] **22. Alinhar os textos que citam o PagBank ao atendimento por WhatsApp** 🟡
-      Os links do PagBank provavelmente não voltam (`docs/DECISIONS.md` §12). Hoje citam o PagBank como gateway ativo: `src/components/sections/FAQ.jsx:39`; `src/components/layout/Footer.jsx:63` e `:68`; `src/components/pages/PrivacyPage.jsx:48`, `:58`, `:64` e `:84`; `src/components/pages/ShippingPolicyPage.jsx:60`; `src/components/pages/TermsPage.jsx:87`. A nova redação depende de decisão do dono; não escrever a redação neste item.
+      Feito (2026-11-01): removidos o selo "PagBank" do rodapé e o item "A compra é segura?" do FAQ; Privacidade, Frete e Entrega e Termos de Uso reescritos sem o PagBank como pagamento ativo, com redação neutra (pedido, dados e frete combinados pelo WhatsApp). O PagBank só resta em comentários de código sobre `HIDE_BUY_CTA` e nos links `pag.ae` de `products.js`.
+      Resta: o dono decidir a redação definitiva (como o pagamento e o frete são feitos hoje, prazos, quem despacha) e a revisão jurídica (item 37). `ReturnPolicyPage.jsx` não foi alterada.
 
 - [ ] **23. Decidir sobre privatizar o repositório** 🟡
       Pré-requisitos: corrigir as miniaturas do painel `petluxo-admin` que usam `raw.githubusercontent.com` (`ProductsPage.jsx:351` e `CategoriesPage.jsx:399` e, no modo edição, `Step3Photo.jsx:21`); testar um commit do painel com o repositório privado (autor do commit e o build na Cloudflare) e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO); conferir o escopo do token. A documentação do projeto (`README.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md` §8) afirma que o repositório deve ser público; isso não foi verificado na conta.
@@ -131,7 +133,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 ## Adicionados em 2026-10-28
 
 - [ ] **28. Conferir o Instagram correto** 🟢
-      `Footer.jsx:51` aponta para `instagram.com/pettluxo_/`, enquanto o contexto do projeto cita `@petluxostory`. O dono confirma qual é o correto e o site/documentação são alinhados (também em `docs/CLOUDFLARE_MIGRATION.md`, seção 8, item 18).
+      `Footer.jsx:60` aponta para `instagram.com/pettluxo_/`, enquanto o contexto do projeto cita `@petluxostory`. O dono confirma qual é o correto e o site/documentação são alinhados (também em `docs/CLOUDFLARE_MIGRATION.md`, seção 8, item 18).
 
 - [ ] **29. Pasta de imagem órfã** 🟢
       `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`) não é referenciada por nenhum produto atual. Decidir se remove.
@@ -165,6 +167,9 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 - [ ] **36. Testar o GA4 em Tempo Real (F0.6)** 🟢
       Roteiro: abrir GA4 → Tempo real; em aba anônima, abrir o site, aceitar o banner de consentimento, navegar em uma ou duas páginas e ver o usuário ativo. Conferir o domínio do stream (pode estar com o domínio antigo, sem `www`) e filtros de hostname. Sem consentimento o `gtag` não carrega (esperado). Pendente; o dono avisa quando fizer.
+
+- [ ] **37. Revisão jurídica dos textos legais e da base legal do GA4 (Consent Mode, Google Fonts, transferência internacional)** 🔴
+      Revisar Privacidade, Frete e Entrega e Termos de Uso após a mudança para o atendimento só por WhatsApp; definir a base legal do GA4 (consentimento × legítimo interesse) e se o Consent Mode se aplica; avaliar o envio do IP ao Google pelo Google Fonts em toda visita e a transferência internacional de dados (Google, Meta, Cloudflare). Hoje as políticas não tratam de transferência internacional.
 
 ---
 

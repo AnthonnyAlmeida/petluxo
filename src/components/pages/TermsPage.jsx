@@ -33,7 +33,7 @@ export default function TermsPage() {
             borderBottom: '1px solid var(--bege)',
             paddingBottom: '1.5rem',
           }}>
-            Última atualização: maio de 2025
+            Última atualização: novembro de 2026
           </p>
 
           <p style={{ lineHeight: 1.8, marginBottom: '2rem' }}>
@@ -84,7 +84,7 @@ export default function TermsPage() {
 
           <Section title="Links Externos">
             <p>
-              O site pode conter redirecionamentos para plataformas externas como PagBank e
+              O site pode conter redirecionamentos para plataformas externas, como o
               WhatsApp. A PetLuxo não se responsabiliza pelo conteúdo, políticas ou práticas
               dessas plataformas, que possuem seus próprios termos de uso.
             </p>

@@ -2,11 +2,11 @@
 
 Este arquivo descreve o estado ATUAL do projeto para orientar o Claude Code. Não é histórico: a migração para a Cloudflare, rollback e resultados de testes ficam em `docs/CLOUDFLARE_MIGRATION.md`. Em qualquer divergência, o código é a verdade.
 
-Última atualização: 2026-10-28
+Última atualização: 2026-11-01
 
 Site estático (sem backend, sem banco, sem API) de produtos premium para pets. Catálogo, busca, filtro, ficha de produto e consentimento de analytics são resolvidos no front-end. Todo o contato de compra é por WhatsApp.
 
-- **Produção:** https://www.petluxostory.com.br (canônico). **Instagram:** @petluxostory (o `Footer.jsx:51` aponta para outro perfil: `docs/TODO.md` item 28).
+- **Produção:** https://www.petluxostory.com.br (canônico). **Instagram:** @petluxostory (o `Footer.jsx:60` aponta para outro perfil: `docs/TODO.md` item 28).
 - **Repositório:** público. `AI_CONTEXT_PETLUXO.md` está no `.gitignore`, mas continua tracked.
 
 ## Hospedagem, deploy e domínio
@@ -88,15 +88,15 @@ Pastas/arquivos locais ignorados ou não tracked: `.kilo/` (só um `.gitignore`)
 - Com `buyLinks` ou `buyLink`: só o WhatsApp (`btn btn-primary btn-full`); com a constante `false` voltaria "COMPRAR AGORA" e o WhatsApp deveria voltar para `styles.waLink`.
 - Sem link: WhatsApp.
 - `ProductCard` mostra sempre o texto fixo "VIA WHATSAPP" sob o preço. `Featured` não usa `buyLink`/`buyLinks` (CTAs: WhatsApp e "VER TODOS OS PRODUTOS").
-- Textos que ainda citam o PagBank como gateway ativo: `FAQ.jsx:39`, `Footer.jsx:63-68`, `PrivacyPage.jsx` (linhas 48, 58, 64, 84), `ShippingPolicyPage.jsx:60`, `TermsPage.jsx:87`. Não alterar sem decisão do dono (`docs/TODO.md` item 22).
+- Nenhum texto visível do site cita o PagBank como meio de pagamento (FAQ, Footer e as políticas foram alinhados ao atendimento só por WhatsApp). O PagBank só aparece em comentários de código sobre `HIDE_BUY_CTA` (`ProductBuyButton.jsx`, `Featured.jsx`, `ProductCard.jsx`) e nos links `pag.ae` de `products.js`. A redação definitiva e a revisão jurídica dependem do dono (`docs/TODO.md` item 22).
 
 WhatsApp (`src/lib/whatsapp.js`): número de `VITE_WHATSAPP_PHONE` com fallback hardcoded (é o que a produção usa); único export é `wa(texto)`, que monta `wa.me`. O número também está hardcoded em `products.js` (id 2) e nas 3 páginas de política. Não existe botão flutuante (FAB) de WhatsApp.
 
 ## Analytics (GA4 + consentimento)
 
 - `src/lib/analytics.js`: ID `G-KKMV5VHR48` hardcoded (não é segredo); consentimento em `localStorage` (`petluxo_analytics_consent`: `granted`/`denied`); `gtag.js` só é injetado depois de `granted`; `config` com `send_page_view: false`; `page_view` explícito por rota via `trackPageView` (fila de page_views pendentes e retry após falha de carregamento).
-- `AnalyticsConsent.jsx`: banner com aceitar/recusar e revogação. Revogar não remove o `gtag.js` já carregado (limitação documentada no arquivo); apaga cookies `_ga*`/`_gid` quando possível. O domínio `.petluxostory.com.br` cobre raiz e `www`.
-- `PrivacyPage.jsx` tem seção "Cookies e Google Analytics"; linha ~134 diz que a base legal "depende de confirmação jurídica".
+- `AnalyticsConsent.jsx`: banner com aceitar/recusar e revogação. O consentimento é reabrível pelo botão "Preferências de cookies" na coluna "Políticas" do `Footer.jsx`, que dispara o evento `petluxo:open-consent` (escutado pelo banner). Recusar depois de um `granted` chama `revokeConsent()`; recusar sem consentimento anterior só grava `denied`. Revogar não remove o `gtag.js` já carregado (limitação documentada no arquivo); apaga cookies `_ga*`/`_gid` quando possível. O domínio `.petluxostory.com.br` cobre raiz e `www`.
+- `PrivacyPage.jsx` tem seção "Cookies e Google Analytics" (manda usar "Preferências de cookies" no rodapé e informa que o Google Fonts, carregado em `index.html` em toda visita, envia o IP do visitante ao Google independentemente do banner); a seção "Base Legal (LGPD)" diz que a base legal do analytics "depende de confirmação jurídica".
 - `tests/analytics-consent.spec.js` testa o código local (`BASE_URL` `http://localhost:5173`; o config sobe `npm run dev`).
 
 ## Catálogo (`src/data/products.js`)
@@ -163,7 +163,9 @@ Convenção: `public/images/products/<slug>/principal.webp` + `<slug>-2.webp`, `
 - **`main.jsx`:** bloqueio de `gesture*` do WebKit (exceto `.yarl__portal`) e reset de escala por `maximum-scale=1.0` temporário em `gestureend`/`visualViewport resize`.
 - **`icons.jsx`:** só exporta `Icon` com `Search`, `Wa`, `ArrowR`, `ArrowUp`, `Plus`, `Chevron` (todos em uso; sem acesso dinâmico `Icon[...]`).
 - **`DevTweaks`:** `React.lazy` só em `import.meta.env.DEV`; controla tom de acento e textura de grão.
-- Páginas de política usam estilos inline (sem `.module.css`).
+- Páginas de política usam estilos inline (sem `.module.css`). "Última atualização": novembro de 2026 em Privacidade, Frete e Entrega e Termos de Uso; maio de 2025 em Troca e Devolução. A Privacidade descreve atendimento e pedido combinados por WhatsApp (sem pagamento nem formulário no site) e lista WhatsApp (Meta), Cloudflare e o distribuidor parceiro no compartilhamento; Frete e Entrega diz que o frete é informado no atendimento pelo WhatsApp antes da confirmação do pedido.
+- `Footer.jsx`: coluna "Políticas" com as 4 políticas e o botão "Preferências de cookies" (classe `linkButton` em `Footer.module.css`); Instagram e CNPJ na base; sem selo de pagamento.
+- `FAQ.jsx`: 7 itens em `FAQS` (o item "Posso trocar o produto?" usa `a: null` e renderiza `TROCA_ANSWER`).
 - Tokens z-index em `variables.css`: `--z-base`, `--z-dropdown`, `--z-navbar`, `--z-overlay`, `--z-modal`, `--z-above-modal`. Cor: `--vinho` #6B1E2B, `--caramelo` #B08968, `--ink` #2A2522. Fontes: Cormorant Garamond, Inter, JetBrains Mono.
 
 ## Convenções CSS (de `docs/CSS_MIGRATION.md`)
@@ -186,7 +188,7 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 
 - Sem script de lint; sem script npm para os testes Playwright (`docs/CLOUDFLARE_MIGRATION.md` F2.6).
 - Migração: restam o GA4 em Tempo Real (F0.6, `docs/TODO.md` item 36), a troca de foto pelo painel (item 31), meta tags por produto (item 2, não prioritário) e, até 2026-11-11, o desligamento de `workers.dev`/Preview URLs, a remoção do `404.html` e a exclusão do projeto Vercel do site (item 35). Documentação (F5) concluída. Ver `docs/CLOUDFLARE_MIGRATION.md`.
-- Textos do site que citam o PagBank como gateway ativo: `docs/TODO.md` item 22.
+- Redação definitiva dos textos legais sobre o atendimento por WhatsApp e revisão jurídica: `docs/TODO.md` itens 22 e 37.
 - Checkout próprio (InfinitePay, frete grátis) e reescrita de `docs/CHECKOUT_ARCHITECTURE.md`: `docs/TODO.md` itens 21 e 26.
 - Eventos GA4 de clique no WhatsApp: `docs/TODO.md` item 6.
 - Meta tags por produto, status 404 real, sitemap com produtos, JSON-LD: `docs/TODO.md` itens 1, 2 e 10.
@@ -195,6 +197,6 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 - Privatizar o repositório e rotacionar o token do painel: `docs/TODO.md` itens 23 e 25.
 - PNG com extensão `.webp` nas galerias: `docs/TODO.md` item 24.
 - Bloqueio de pinch-zoom (acessibilidade): `docs/TODO.md` item 12.
-- Resíduos: exceção de `shortName` (ids 3, 4, 10) no validador, `:global(.price)` em `ProductModal.module.css:66`, `<a href="/">` na Navbar (`Navbar.jsx:30`), `Footer.jsx:63` com `<a>` sem `href`, `import React` não usado em vários arquivos: `docs/TODO.md` item 27.
+- Resíduos: exceção de `shortName` (ids 3, 4, 10) no validador, `:global(.price)` em `ProductModal.module.css:66`, `<a href="/">` na Navbar (`Navbar.jsx:30`), `import React` não usado em vários arquivos: `docs/TODO.md` item 27.
 - Instagram do rodapé e pasta de imagem órfã: `docs/TODO.md` itens 28 e 29.
 - Plano da Vercel para o painel admin (item 32), renovação do domínio (item 33) e achados da auditoria do painel (item 34): `docs/TODO.md`.
