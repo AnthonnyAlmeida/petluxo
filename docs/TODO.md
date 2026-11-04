@@ -112,7 +112,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 - [ ] **22. Alinhar os textos que citam o PagBank ao atendimento por WhatsApp** 🟡
       Feito (2026-11-01): removidos o selo "PagBank" do rodapé e o item "A compra é segura?" do FAQ; Privacidade, Frete e Entrega e Termos de Uso reescritos sem o PagBank como pagamento ativo, com redação neutra (pedido, dados e frete combinados pelo WhatsApp). O PagBank só resta em comentários de código sobre `HIDE_BUY_CTA` e nos links `pag.ae` de `products.js`.
-      Resta: o dono decidir a redação definitiva (como o pagamento e o frete são feitos hoje, prazos, quem despacha) e a revisão jurídica (item 37). `ReturnPolicyPage.jsx` não foi alterada.
+      Feito (2026-11-04): Privacidade cita o PagBank como operador do link de cartão e o pagamento por Pix ou link; Frete e Entrega, Termos de Uso e FAQ sem prazos fixos (prazo variável por produto e fornecedor, informado no atendimento) e sem "no momento da compra".
+      Resta: o dono decidir a redação definitiva (como o pagamento e o frete são feitos hoje, prazos, quem despacha) e a revisão jurídica (item 37), inclusive do PagBank como operador na Privacidade. `ReturnPolicyPage.jsx` não foi alterada.
 
 - [ ] **23. Decidir sobre privatizar o repositório** 🟡
       Pré-requisitos: corrigir as miniaturas do painel `petluxo-admin` que usam `raw.githubusercontent.com` (`ProductsPage.jsx:351` e `CategoriesPage.jsx:399` e, no modo edição, `Step3Photo.jsx:21`); testar um commit do painel com o repositório privado (autor do commit e o build na Cloudflare) e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO); conferir o escopo do token. A documentação do projeto (`README.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md` §8) afirma que o repositório deve ser público; isso não foi verificado na conta.

@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     q: 'Como acompanho meu pedido?',
-    a: 'Quando disponível, enviaremos o código de rastreamento por e-mail após o despacho. Em caso de dúvida, entre em contato pelo WhatsApp.',
+    a: 'Quando existir, enviaremos o código de rastreamento pelo WhatsApp após o despacho. Em caso de dúvida, entre em contato pelo WhatsApp.',
   },
   {
     q: 'Os produtos podem ser lavados?',
@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: 'Quanto tempo leva a entrega?',
-    a: 'O pedido é processado em até 5 dias úteis. Após o despacho, o prazo estimado é de 7 a 15 dias úteis conforme a região.',
+    a: 'O prazo varia conforme o produto e o fornecedor e é informado no atendimento, antes da confirmação do pedido.',
   },
   {
     q: 'Posso trocar o produto?',

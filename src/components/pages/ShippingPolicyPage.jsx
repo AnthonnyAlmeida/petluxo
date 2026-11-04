@@ -42,16 +42,16 @@ export default function ShippingPolicyPage() {
 
           <Section title="Processamento do Pedido">
             <p>
-              Os pedidos são processados em até 5 dias úteis após a confirmação do pagamento.
-              Durante esse período, realizamos a verificação do pedido e o repasse ao distribuidor
-              responsável pelo envio.
+              Após a confirmação do pedido e do pagamento, realizamos a verificação do pedido e o
+              repasse ao distribuidor responsável pelo envio. O prazo varia conforme o produto e o
+              fornecedor e é informado no atendimento, antes da confirmação do pedido.
             </p>
           </Section>
 
           <Section title="Prazo de Entrega">
             <p>
-              Após o despacho, o prazo estimado de entrega é de 7 a 15 dias úteis, podendo variar
-              conforme a região de destino e a modalidade de frete disponível para o pedido.
+              O prazo varia conforme o produto e o fornecedor e é informado no atendimento, antes
+              da confirmação do pedido.
             </p>
           </Section>
 
@@ -64,7 +64,7 @@ export default function ShippingPolicyPage() {
 
           <Section title="Rastreamento">
             <p>
-              Quando disponível, o código de rastreamento será enviado por e-mail assim que o
+              Quando existir, o código de rastreamento será enviado pelo WhatsApp assim que o
               pedido for despachado pelo distribuidor. Em caso de dúvida sobre o status do seu
               pedido, entre em contato pelo e-mail ou WhatsApp informados abaixo.
             </p>
@@ -80,9 +80,10 @@ export default function ShippingPolicyPage() {
 
           <Section title="Endereço de Entrega">
             <p>
-              É responsabilidade do cliente preencher corretamente os dados de entrega no momento
-              da compra. Caso perceba algum erro após a finalização, entre em contato o mais
-              rápido possível pelos canais abaixo — antes do despacho, podemos tentar corrigir.
+              É responsabilidade do cliente informar corretamente os dados de entrega durante o
+              atendimento pelo WhatsApp. Caso perceba algum erro após a finalização, entre em
+              contato o mais rápido possível pelos canais abaixo — antes do despacho, podemos
+              tentar corrigir.
             </p>
           </Section>
 

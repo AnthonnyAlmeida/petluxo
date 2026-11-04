@@ -45,7 +45,8 @@ export default function PrivacyPage() {
           <Section title="Coleta de Informações">
             <p>
               Não coletamos dados pessoais diretamente pelo site, que não possui formulários nem
-              pagamento. O atendimento e o pedido são combinados pelo WhatsApp. Os dados que você
+              pagamento. O atendimento e o pedido são combinados pelo WhatsApp, e o pagamento é
+              feito por Pix ou por link de pagamento combinado no atendimento. Os dados que você
               informar na conversa são usados para processar e entregar o pedido:
             </p>
             <ul>
@@ -71,6 +72,7 @@ export default function PrivacyPage() {
             </p>
             <ul>
               <li><strong>WhatsApp (Meta)</strong> — canal de atendimento e combinação do pedido</li>
+              <li><strong>PagBank</strong> — operador do link de pagamento por cartão, gerado no atendimento quando o cliente escolhe essa forma; os dados do cartão são tratados pelo PagBank, não pelo site nem pela PetLuxo</li>
               <li><strong>Cloudflare</strong> — hospedagem do site</li>
               <li><strong>Distribuidor parceiro</strong> — recebe nome e endereço para realizar o envio direto ao cliente</li>
               <li><strong>Autoridades competentes</strong> — quando exigido por lei</li>
@@ -108,8 +110,8 @@ export default function PrivacyPage() {
             <p>
               Adotamos medidas razoáveis de segurança técnica e organizacional para proteger as
               informações recebidas. Os dados de entrega são utilizados exclusivamente para a
-              finalidade descrita nesta política e não são armazenados em sistemas além do e-mail
-              institucional da PetLuxo.
+              finalidade descrita nesta política. Os dados que você informa no atendimento são
+              recebidos e ficam na conversa do WhatsApp.
             </p>
           </Section>
 

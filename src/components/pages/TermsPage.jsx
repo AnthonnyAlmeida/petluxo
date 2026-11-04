@@ -55,8 +55,8 @@ export default function TermsPage() {
           <Section title="Produtos e Informações">
             <p>
               A PetLuxo reserva-se o direito de alterar preços, descrições e disponibilidade dos
-              produtos a qualquer momento. Alterações não afetam pedidos já confirmados e pagos,
-              que serão processados conforme as condições vigentes no momento da compra.
+              produtos a qualquer momento. Alterações não afetam pedidos já confirmados,
+              que serão processados conforme as condições vigentes no momento da confirmação.
             </p>
           </Section>
 
