@@ -51,7 +51,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Desbloqueado: o item 13 está concluído. O evento deve identificar produto e origem do clique (Navbar, Featured, CTA, FAQ, Footer, busca sem resultado em `Products.jsx`, ficha e modal de produto via `ProductBuyButton`), sem enviar dados pessoais em parâmetros ou URL, e respeitar o consentimento adotado.
 
 - [ ] **1. Rotas de produto e tratamento de 404** 🟡
-      Hoje as rotas dependem de `public/404.html` (redireciona via JavaScript) e de `main.jsx`. Verificar e documentar o comportamento real de `/produto/:id` em acesso direto (status HTTP recebido, e como Google e apps de mensagem tratam) antes de presumir a causa.
+      As rotas dependem do fallback de SPA do Worker (`public/404.html` e a restauração em `main.jsx` foram removidos). Verificar e documentar o comportamento real de `/produto/:id` em acesso direto (status HTTP recebido, e como Google e apps de mensagem tratam) antes de presumir a causa.
 
   O fallback de SPA do Worker (`not_found_handling`) resolve o carregamento direto, mas também faz URLs inexistentes devolverem o app com status 200 (soft 404).
 
@@ -61,8 +61,6 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
   - acesso direto a `/produto/:id` de produto visível carrega a ficha;
   - produto inexistente ou `visible: false` e rotas inválidas são tratados como inexistentes, com o status adequado;
   - o status HTTP foi validado no deploy de preview.
-
-  Não remover `public/404.html` nem a restauração de path em `main.jsx` antes de validar a nova configuração.
 
 - [ ] **2. Meta tags por produto** 🔴
       `/produto/:id` herda título, descrição e imagem da home. Resolver com pré-renderização das rotas de produto ou com um Worker com script ou pré-renderização; escolher pelo resultado real, não pela sofisticação.
@@ -160,7 +158,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Janela de rollback de 14 dias a partir de 2026-10-28; prazo máximo 2026-11-11; pode ser a partir de 2026-11-04 se tudo estiver estável. Checklist:
   1. Antes de desativar: GA4 conferido (item 36), a parte B da foto (item 31) feita ou decidida como adiada, Worker estável (Deployments sem falhas; conferir o site e os redirecionamentos por `curl`).
   2. F4.8 (parcial): `workers_dev` desligado no `wrangler.jsonc`; falta decidir e desligar `preview_urls`. O efeito sobre o domínio próprio é conferido por `curl` depois do deploy.
-  3. F4.5: remover `public/404.html` e o bloco de `src/main.jsx` (D7).
+  3. F4.5 (feito): `public/404.html` e o bloco de restauração de path de `src/main.jsx` removidos (D7).
   4. F4.4: desconectar o repositório do projeto Vercel do site e depois excluir o projeto.
   5. Revisar o rollback com o Claude no chat ANTES de excluir.
   6. Depois da exclusão, o rollback para a Vercel deixa de existir sem recriar o projeto e o domínio (`docs/CLOUDFLARE_MIGRATION.md`, seção 7), e os certificados da Vercel expiram em 2026-12-10.

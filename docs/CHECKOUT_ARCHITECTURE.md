@@ -179,7 +179,7 @@ A única mudança é criar um `vercel.json` (o projeto hoje não tem nenhum) com
 }
 ```
 
-Sem a negação `(?!api/)`, a rewrite engoliria as chamadas de API e devolveria o HTML da SPA. O hack atual do `public/404.html` (que guarda o pathname em `sessionStorage` e é restaurado em `main.jsx`) continua funcionando e pode ser mantido — a rewrite apenas o torna desnecessário.
+Sem a negação `(?!api/)`, a rewrite engoliria as chamadas de API e devolveria o HTML da SPA. O site não usa mais o hack do `public/404.html` (removido); o fallback de SPA é o do Worker.
 
 ## Estrutura de arquivos a criar
 

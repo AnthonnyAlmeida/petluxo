@@ -13,7 +13,7 @@ Site estático (sem backend, sem banco, sem API) de produtos premium para pets. 
 
 - **Hospedagem:** Cloudflare Workers com static assets (plano Free). Worker `petluxo`, configurado em `wrangler.jsonc` (`assets.directory` `./dist`, `not_found_handling` `single-page-application`). Versão do Node em `.nvmrc` (`22`). Cabeçalhos de segurança em `public/_headers` (HSTS `max-age=63072000`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`; sem CSP, sem regras de cache).
 - **Deploy:** Workers Builds a cada push em `main` (`npm run build`, depois `npx wrangler deploy`); o `wrangler` não está no `package.json`. Os commits do painel admin também vão para `main` e disparam o build. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`); as Preview URLs seguem como estão (`preview_urls` não definido no arquivo; desligá-las é a pendência F4.8).
-- **Modo SPA:** acesso direto a rotas (`/produto/2`, políticas) e URLs inexistentes (inclusive `/xyz.png`) devolvem HTTP 200 com o `index.html` (soft 404); a rota `*` do app mostra o `NotFound`. `public/404.html` e a restauração de path em `src/main.jsx` ficam inertes (remoção é a pendência F4.5).
+- **Modo SPA:** acesso direto a rotas (`/produto/2`, políticas) e URLs inexistentes (inclusive `/xyz.png`) devolvem HTTP 200 com o `index.html` (soft 404); a rota `*` do app mostra o `NotFound`. Não existe `public/404.html` nem restauração de path em `src/main.jsx`: o fallback de SPA é só o do Worker.
 - **Domínio e DNS:** `petluxostory.com.br`, registrado no Registro.br (vence em 2027-05-07). Nameservers: os dois atribuídos pela Cloudflare. `www` é o canônico (Custom Domain do Worker); a raiz também é Custom Domain do Worker e redireciona para o `www` com 301 (regra "raiz para www"); HTTP redireciona para HTTPS com 301 (regra "http para https"); as duas regras preservam caminho e query. Zona: 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`), `_domainconnect` (DNS only), CNAME `*` → Vercel (DNS only; subdomínios que não sejam `www` caem na Vercel com 404) e as linhas "Worker" do `www` e da raiz. Sem MX, TXT nem AAAA. DNSSEC não está ativo (não ativar por ora).
 - **Vercel:** o painel admin (`petluxo-admin`, fora deste repositório) continua na Vercel. O projeto Vercel do site existe, intacto, como plano B até o prazo de 2026-11-11 (`docs/TODO.md` item 35): não mexer. Rollback e histórico: ver `docs/CLOUDFLARE_MIGRATION.md` (seção 7).
 - **Build:** `npm run build` gera `dist/` (validador de catálogo + Vite). `docs/DEPLOY.md` descreve o deploy, a configuração, o domínio e o checklist pós-deploy na Cloudflare; `README.md` e `docs/README.md` seguem a mesma hospedagem.
@@ -49,13 +49,13 @@ petluxo/
 ├── index.html                 # meta tags, OG, Twitter; sem gtag (GA4 carrega por src/lib/analytics.js)
 ├── wrangler.jsonc, .nvmrc     # Worker "petluxo" (assets de ./dist, modo SPA) e Node 22
 ├── assets/                    # logo.webp, hero/image-hero.webp, sobre_nos/*.webp (importados pelo Vite)
-├── public/                    # favicon, og-image.png, og-image.jpg, robots.txt, sitemap.xml (só a home), 404.html, _headers, images/products/<slug>/
+├── public/                    # favicon, og-image.png, og-image.jpg, robots.txt, sitemap.xml (só a home), _headers, images/products/<slug>/
 ├── scripts/validate-catalog.js
 ├── tests/analytics-consent.spec.js
 ├── playwright.config.js
 ├── docs/                      # CHECKOUT_ARCHITECTURE, CLOUDFLARE_MIGRATION, CSS_MIGRATION, DECISIONS, DEPLOY, PRODUCT_EXPANSION, README, TODO
 └── src/
-    ├── main.jsx               # monta <App/>, restaura path do 404.html (inerte), bloqueio/reset de pinch-zoom (WebKit)
+    ├── main.jsx               # monta <App/>, bloqueio/reset de pinch-zoom (WebKit)
     ├── app/                   # page.jsx (rotas + HomePage), ScrollToTop.jsx, DevTweaks.jsx (só dev)
     ├── components/
     │   ├── layout/            # Navbar, MinimalNavbar, Footer
@@ -187,7 +187,7 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 ## Dívidas e pendências abertas
 
 - Sem script de lint; sem script npm para os testes Playwright (`docs/CLOUDFLARE_MIGRATION.md` F2.6).
-- Migração: restam o GA4 em Tempo Real (F0.6, `docs/TODO.md` item 36), a troca de foto pelo painel (item 31), meta tags por produto (item 2, não prioritário) e, até 2026-11-11, o desligamento das Preview URLs, a remoção do `404.html` e a exclusão do projeto Vercel do site (item 35). Documentação (F5) concluída. Ver `docs/CLOUDFLARE_MIGRATION.md`.
+- Migração: restam o GA4 em Tempo Real (F0.6, `docs/TODO.md` item 36), a troca de foto pelo painel (item 31), meta tags por produto (item 2, não prioritário) e, até 2026-11-11, o desligamento das Preview URLs e a exclusão do projeto Vercel do site (item 35). Documentação (F5) concluída. Ver `docs/CLOUDFLARE_MIGRATION.md`.
 - Redação definitiva dos textos legais sobre o atendimento por WhatsApp e revisão jurídica: `docs/TODO.md` itens 22 e 37.
 - Checkout próprio (InfinitePay, frete grátis) e reescrita de `docs/CHECKOUT_ARCHITECTURE.md`: `docs/TODO.md` itens 21 e 26.
 - Eventos GA4 de clique no WhatsApp: `docs/TODO.md` item 6.

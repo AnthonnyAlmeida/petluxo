@@ -31,7 +31,6 @@ petluxo/
 │   ├── favicon.svg      # Ícone da aba do navegador
 │   ├── robots.txt       # Instruções para robôs de busca
 │   ├── sitemap.xml      # Mapa do site para SEO
-│   ├── 404.html         # Página de erro para SPAs (redirect para /)
 │   ├── og-image.jpg     # Imagem de capa 1200×630 usada nas meta tags (og:image / twitter:image)
 │   ├── og-image.png     # Arte original 1536×1024, mantida (links e prévias antigas)
 │   ├── favicon.ico

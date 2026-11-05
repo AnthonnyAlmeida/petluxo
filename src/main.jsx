@@ -5,13 +5,6 @@ import App from './app/page.jsx';
 import './styles/variables.css';
 import './styles/globals.css';
 
-// Restaura pathname gravado pelo 404.html (legado do redirect SPA da Vercel; inerte com o fallback de SPA da Cloudflare)
-const redirectPath = sessionStorage.getItem('redirect');
-if (redirectPath) {
-  sessionStorage.removeItem('redirect');
-  window.history.replaceState(null, '', redirectPath);
-}
-
 // Bloqueia o pinch-zoom nativo do Safari/iOS fora do ProductLightbox.
 //
 // touch-action: pan-x pan-y (src/styles/globals.css) não é suficiente sozinho

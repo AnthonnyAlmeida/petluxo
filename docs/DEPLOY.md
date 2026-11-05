@@ -18,7 +18,7 @@ Os commits do painel admin (`petluxo-admin`, outro repositório, hospedado na Ve
 - **`wrangler.jsonc`:** `name` `petluxo`, `assets.directory` `./dist`, `assets.not_found_handling` `single-page-application`. Sem script de Worker (só assets). O nome precisa ser o do Worker no dashboard.
 - **`.nvmrc`:** `22` (Node usado no build; sem ele o padrão do Workers Builds seria outra versão).
 - **`public/_headers`:** `Strict-Transport-Security: max-age=63072000`, `X-Content-Type-Options: nosniff` e `Referrer-Policy: strict-origin-when-cross-origin` para `/*`. Sem CSP e sem regras de cache (o padrão dos assets é `public, max-age=0, must-revalidate`).
-- **Modo SPA:** acesso direto a `/produto/2`, às políticas e a qualquer URL inexistente devolve HTTP 200 com o `index.html` (soft 404); o app mostra o `NotFound`. `public/404.html` e a restauração de path em `src/main.jsx` ficam inertes.
+- **Modo SPA:** acesso direto a `/produto/2`, às políticas e a qualquer URL inexistente devolve HTTP 200 com o `index.html` (soft 404); o app mostra o `NotFound`. Não existe `public/404.html` nem restauração de path em `src/main.jsx`.
 - **Variáveis de ambiente:** nenhuma. `VITE_WHATSAPP_PHONE` é opcional; sem ela vale o número padrão do código.
 - O `wrangler` não está no `package.json`: o `npx` baixa a versão do momento. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`); as Preview URLs seguem como estão (`preview_urls` não definido no arquivo).
 
