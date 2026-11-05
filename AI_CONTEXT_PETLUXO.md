@@ -90,7 +90,7 @@ Pastas/arquivos locais ignorados ou não tracked (`_incoming/` está ignorada vi
 - `ProductCard` mostra sempre o texto fixo "VIA WHATSAPP" sob o preço. `Featured` não usa `buyLink`/`buyLinks` (CTAs: WhatsApp e "VER TODOS OS PRODUTOS").
 - Os pedidos são feitos só pelo WhatsApp; o pagamento é por Pix ou por link de pagamento do PagBank gerado no atendimento (cartão). A Privacidade cita o PagBank como operador desse link; FAQ, Footer e demais políticas seguem o atendimento por WhatsApp. O PagBank também aparece em comentários de código sobre `HIDE_BUY_CTA` (`ProductBuyButton.jsx`, `Featured.jsx`, `ProductCard.jsx`) e nos links `pag.ae` de `products.js`. A redação definitiva e a revisão jurídica dependem do dono (`docs/TODO.md` item 22).
 
-WhatsApp (`src/lib/whatsapp.js`): número de `VITE_WHATSAPP_PHONE` com fallback hardcoded (é o que a produção usa); único export é `wa(texto)`, que monta `wa.me`. O número também está hardcoded em `products.js` (id 2) e nas 3 páginas de política. Não existe botão flutuante (FAB) de WhatsApp.
+WhatsApp (`src/lib/whatsapp.js`): número de `VITE_WHATSAPP_PHONE` com fallback hardcoded (é o que a produção usa); único export é `wa(texto)`, que monta `wa.me`. O número também está hardcoded em `products.js` (ids 2 e 43) e nas 3 páginas de política. Não existe botão flutuante (FAB) de WhatsApp.
 
 ## Analytics (GA4 + consentimento)
 
@@ -103,11 +103,11 @@ WhatsApp (`src/lib/whatsapp.js`): número de `VITE_WHATSAPP_PHONE` com fallback 
 
 **9 categorias** (todas `visible: true`): `mais-vendidos`, `couro`, `conforto`, `a-mesa`, `colecao-cozy-luxo`, `brinquedos`, `colecao-passeio`, `sono-refugio`, `viagem-mobilidade`.
 
-**38 produtos**, ids de 1 a 43 (faltam 5, 6, 7, 11, 23), sem duplicados. **27 visíveis** (24 sem o campo `visible`, 3 com `true`) e **11 `visible: false`**: 1, 3, 4, 13, 15, 16, 19, 22, 27, 29, 32. 10 produtos estão em 2 ou mais categorias (8, 12, 13, 16, 18, 20, 21, 38, 39, 43).
+**38 produtos**, ids de 1 a 43 (faltam 5, 6, 7, 11, 23), sem duplicados. **27 visíveis** (24 sem o campo `visible`, 3 com `true`: ids 2, 14, 20) e **11 `visible: false`**: 1, 3, 4, 13, 15, 16, 19, 22, 27, 29, 32. 10 produtos estão em 2 ou mais categorias (8, 12, 13, 16, 18, 20, 21, 38, 39, 43).
 
 Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 3 (39, 8, 20); couro 7 (43, 42, 41, 8, 9, 10, 21); conforto 4 (38, 20, 12, 18); a-mesa 2 (24, 25); colecao-cozy-luxo 3 (31, 30, 33); brinquedos 2 (40, 39); colecao-passeio 4 (43, 34, 17, 26); sono-refugio 10 (2, 38, 18, 12, 37, 21, 20, 35, 28, 14); viagem-mobilidade 1 (36).
 
-**Links:** 27 produtos com `buyLink` único e 11 com `buyLinks` (ids 2, 8, 9, 14, 16, 17, 21, 28, 41, 42, 43). `prices` em 2, 8, 14, 16, 21, 28, 41, 42, 43; os ids 9 e 17 têm `buyLinks` sem `prices`. Nenhum produto sem link; multi-size com um link por tamanho. Os `buyLinks` dos ids 2 e 43 são `https://wa.me/5561994063917` sem texto (os demais são `pag.ae`). `variationType: 'cor'` só no id 17.
+**Links:** 27 produtos com `buyLink` único e 11 com `buyLinks` (ids 2, 8, 9, 14, 16, 17, 21, 28, 41, 42, 43). `prices` em 2, 8, 14, 16, 21, 28, 41, 42, 43; os ids 9 e 17 têm `buyLinks` sem `prices`. Nenhum produto sem link; multi-size com um link por tamanho. Os `buyLinks` dos ids 2 e 43 são `https://wa.me/5561994063917` sem texto (os demais são `pag.ae`). `variationType: 'cor'` só no id 17. A exigência de link é uma dívida aberta: `docs/TODO.md` item 38.
 
 **Próximos valores livres (do arquivo):** `id` 44; `order` 59 (máximo atual 58, id 43; sem `order` duplicado); `categoryOrder` — maior peso atual por categoria (incluindo ocultos) e próximo livre: mais-vendidos 1700 → 1800; couro 1800 → 1900; conforto 1600 → 1700; sono-refugio 1500 → 1600; a-mesa 1200 → 1300; colecao-cozy-luxo 800 → 900; brinquedos 500 → 600; colecao-passeio 600 → 700; viagem-mobilidade 200 → 300 (convenção: pesos em múltiplos de 100, maior aparece primeiro). Pesos de `mais-vendidos`: id 39 = 1700, id 8 = 1600, id 16 = 1400 (oculto), id 20 = 1300, id 28 não está na categoria.
 
@@ -130,7 +130,7 @@ Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 
 
 Sem ficha: 17 produtos (1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32, 33); 7 deles visíveis (14, 18, 24, 25, 30, 31, 33) e abrem só o modal rápido (`docs/TODO.md` item 8). Sem `gallery`: só o id 34.
 
-Schema (10 campos, todos opcionais): `gallery`, `specs{}`, `sizeChart[{size,height,length,width,weight}]`, `howToChooseSize`, `sizeGuideNote`, `whatsIncluded[]`, `careInstructions`, `airTravelNote`, `warranty`, `faq[{question,answer}]`. `sizeGuideNote` em uso nos ids 2, 9, 28, 34, 41, 42. `docs/PRODUCT_EXPANSION.md` documenta o schema.
+Schema (10 campos, todos opcionais): `gallery`, `specs{}`, `sizeChart[{size,height,length,width,weight}]`, `howToChooseSize`, `sizeGuideNote`, `whatsIncluded[]`, `careInstructions`, `airTravelNote`, `warranty`, `faq[{question,answer}]`. `sizeGuideNote` em uso nos ids 2, 9, 28, 34, 41, 42, 43. `docs/PRODUCT_EXPANSION.md` documenta o schema.
 
 - `ProductPage.jsx` define `SPEC_LABELS` (72 entradas); toda chave nova de `specs` exige label (hoje nenhuma está sem).
 - Toda linha de `sizeChart` precisa das 5 chaves (usar `'—'` quando não se aplica); hoje todas estão completas.
@@ -139,7 +139,7 @@ Schema (10 campos, todos opcionais): `gallery`, `specs{}`, `sizeChart[{size,heig
 
 Produtos citados:
 
-- **Élan Couro (9):** `buyLinks` PP/M/G, sem `prices`, galeria de 4 fotos; ficha com `specs` 4, `whatsIncluded` 3, `sizeGuideNote`; sem `sizeChart`.
+- **Élan Couro (9):** `buyLinks` PP/M/G, sem `prices`, galeria de 5 fotos; ficha com `specs` 4, `whatsIncluded` 3, `sizeGuideNote`; sem `sizeChart`.
 - **Refúgio Majestá (38)** (nome com "á"): R$ 999,90, `buyLink` único, badge `NOVO`, 2 fotos; ficha com `specs` 9, `whatsIncluded` 4, `careInstructions`.
 - **Refúgio Cozy (id 2):** P/M/G/GG de R$ 394 a R$ 697, links `wa.me`, `featured: true`, 2 fotos, ficha de 9 campos.
 - **Comedouro Maison Élevé (16):** `visible: false`; 800ml/1200ml/1800ml com preço e link; 4 fotos; ficha com `specs` 12 e `sizeChart` 3.
@@ -195,7 +195,8 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 - Eventos GA4 de clique no WhatsApp: `docs/TODO.md` item 6.
 - Meta tags por produto, status 404 real, sitemap com produtos, JSON-LD: `docs/TODO.md` itens 1, 2 e 10.
 - `supplierLink` no catálogo público e ids 9 e 17 incorretos: `docs/TODO.md` item 3/18.
-- Fichas dos 9 produtos visíveis sem ficha e campo de prazo de entrega: `docs/TODO.md` itens 7 e 8.
+- Fichas dos 7 produtos visíveis sem ficha e campo de prazo de entrega: `docs/TODO.md` itens 7 e 8.
+- Obrigatoriedade de `buyLink`/`buyLinks` no catálogo (validador, `useProductBuy`, seletor de tamanho, `ProductPage`, painel admin), não iniciada: `docs/TODO.md` item 38.
 - Privatizar o repositório e rotacionar o token do painel: `docs/TODO.md` itens 23 e 25.
 - PNG com extensão `.webp` nas galerias: `docs/TODO.md` item 24.
 - Bloqueio de pinch-zoom (acessibilidade): `docs/TODO.md` item 12.

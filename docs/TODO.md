@@ -170,6 +170,19 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [ ] **37. Revisão jurídica dos textos legais e da base legal do GA4 (Consent Mode, Google Fonts, transferência internacional)** 🔴
       Revisar Privacidade, Frete e Entrega e Termos de Uso após a mudança para o atendimento só por WhatsApp; definir a base legal do GA4 (consentimento × legítimo interesse) e se o Consent Mode se aplica; avaliar o envio do IP ao Google pelo Google Fonts em toda visita e a transferência internacional de dados (Google, Meta, Cloudflare). Hoje as políticas não tratam de transferência internacional.
 
+- [ ] **38. Remover a obrigatoriedade de buyLink/buyLinks no catálogo** 🟢
+      Não iniciado; o caminho abaixo é provável, não definitivo.
+  - Contexto: com `HIDE_BUY_CTA = true` nenhum link é renderizado e a venda é só por WhatsApp, mas o catálogo ainda exige `buyLink` ou `buyLinks` em todo produto.
+  - Onde a exigência vive:
+    - `scripts/validate-catalog.js`: falha o build sem `buyLink` nem `buyLinks` ("sem buyLink nem buyLinks"); também exige `size` em cada `buyLinks[]` e compara os tamanhos de `prices` e `buyLinks` (exceção: ids 9 e 17).
+    - `src/hooks/useProductBuy.js`: o tamanho inicial vem do primeiro `buyLinks[].size`; `activeBuyLink` sai de `buyLinks` e `activePrice` de `prices`, ambos por igualdade de `size`.
+    - `src/components/product/ProductSizeSelector.jsx`: recebe `buyLinks` (lista e rótulos dos tamanhos/cores, `color` de cada item) e não renderiza nada sem ele; `ProductModal.jsx` e `ProductPage.jsx` só o montam se houver `product.buyLinks`.
+    - `src/components/product/ProductBuyButton.jsx`: a mensagem do WhatsApp usa o tamanho/cor ativo (`selectedSize`, só se houver `product.buyLinks`) e o preço ativo (`activePrice`, com fallback para `product.price`); os ramos do botão também testam `buyLinks`/`buyLink`.
+    - `src/components/pages/ProductPage.jsx` (e `ProductModal.jsx`): usam `product.buyLinks && selectedSize` para escolher entre mostrar só o preço do tamanho ativo e a lista completa de `prices`.
+    - Painel admin externo `petluxo-admin`: `usePublish.js` (grava `buyLinks` a partir das variantes ou `buyLink`), `productEdit.js` (decide se o produto tem tamanhos por `prices`/`buyLinks` e lê os links) e `productTemplate.js` (`buyLink: ''`); também aparecem em `Step1Basics.jsx`, `Step4Review.jsx`, `ProductPreview.jsx` e `useProductForm.js`.
+  - Paliativo atual: produtos novos usam `buyLinks` com `https://wa.me/5561994063917` por tamanho (ids 2 e 43). O cliente não vê esses links.
+  - Caminho provável: o tamanho passa a vir de `prices` em vez de `buyLinks`; o validador deixa de exigir link; o painel é ajustado em paralelo (ordem a decidir, porque o painel reescreve `products.js`).
+
 ---
 
 ## Concluídos recentemente
