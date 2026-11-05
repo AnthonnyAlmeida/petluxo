@@ -13,3 +13,6 @@ test-results/
 AI_CONTEXT_PETLUXO.md
 .wrangler/
 .dev.vars
+
+# Entrada local de fotos de produto novo
+_incoming/

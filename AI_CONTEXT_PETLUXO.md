@@ -2,7 +2,7 @@
 
 Este arquivo descreve o estado ATUAL do projeto para orientar o Claude Code. Não é histórico: a migração para a Cloudflare, rollback e resultados de testes ficam em `docs/CLOUDFLARE_MIGRATION.md`. Em qualquer divergência, o código é a verdade.
 
-Última atualização: 2026-11-01
+Última atualização: 2026-11-05
 
 Site estático (sem backend, sem banco, sem API) de produtos premium para pets. Catálogo, busca, filtro, ficha de produto e consentimento de analytics são resolvidos no front-end. Todo o contato de compra é por WhatsApp.
 
@@ -72,7 +72,7 @@ petluxo/
     └── tweaks-panel.jsx
 ```
 
-Pastas/arquivos locais ignorados ou não tracked: `.kilo/` (só um `.gitignore`), `_incoming/` (vazia), `dist/`, `test-results/`, `.vercel/`, `.wrangler/`, `.dev.vars`, `.env.local`.
+Pastas/arquivos locais ignorados ou não tracked (`_incoming/` está ignorada via `.gitignore`; ver "Imagens"): `.kilo/` (só um `.gitignore`), `dist/`, `test-results/`, `.vercel/`, `.wrangler/`, `.dev.vars`, `.env.local`.
 
 ## Rotas
 
@@ -103,17 +103,17 @@ WhatsApp (`src/lib/whatsapp.js`): número de `VITE_WHATSAPP_PHONE` com fallback 
 
 **9 categorias** (todas `visible: true`): `mais-vendidos`, `couro`, `conforto`, `a-mesa`, `colecao-cozy-luxo`, `brinquedos`, `colecao-passeio`, `sono-refugio`, `viagem-mobilidade`.
 
-**37 produtos**, ids de 1 a 42 (faltam 5, 6, 7, 11, 23), sem duplicados. **28 visíveis** (25 sem o campo `visible`, 3 com `true`) e **9 `visible: false`**: 3, 4, 13, 16, 19, 22, 27, 29, 32. 11 produtos estão em 2 ou mais categorias.
+**38 produtos**, ids de 1 a 43 (faltam 5, 6, 7, 11, 23), sem duplicados. **27 visíveis** (24 sem o campo `visible`, 3 com `true`) e **11 `visible: false`**: 1, 3, 4, 13, 15, 16, 19, 22, 27, 29, 32. 10 produtos estão em 2 ou mais categorias (8, 12, 13, 16, 18, 20, 21, 38, 39, 43).
 
-Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 4 (39, 8, 20, 28); couro 7 (42, 41, 8, 9, 15, 10, 21); conforto 4 (38, 20, 12, 18); a-mesa 2 (24, 25); colecao-cozy-luxo 3 (31, 30, 33); brinquedos 3 (40, 39, 1); colecao-passeio 3 (34, 17, 26); sono-refugio 10 (2, 38, 18, 12, 37, 21, 20, 35, 28, 14); viagem-mobilidade 2 (37, 36).
+Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 3 (39, 8, 20); couro 7 (43, 42, 41, 8, 9, 10, 21); conforto 4 (38, 20, 12, 18); a-mesa 2 (24, 25); colecao-cozy-luxo 3 (31, 30, 33); brinquedos 2 (40, 39); colecao-passeio 4 (43, 34, 17, 26); sono-refugio 10 (2, 38, 18, 12, 37, 21, 20, 35, 28, 14); viagem-mobilidade 1 (36).
 
-**Links:** 27 produtos com `buyLink` único e 10 com `buyLinks` (ids 2, 8, 9, 14, 16, 17, 21, 28, 41, 42). `prices` em 2, 8, 14, 16, 21, 28, 41, 42; os ids 9 e 17 têm `buyLinks` sem `prices`. Nenhum produto sem link; multi-size com um link por tamanho. Os 4 links do id 2 são `wa.me` (os demais são `pag.ae`). `variationType: 'cor'` só no id 17.
+**Links:** 27 produtos com `buyLink` único e 11 com `buyLinks` (ids 2, 8, 9, 14, 16, 17, 21, 28, 41, 42, 43). `prices` em 2, 8, 14, 16, 21, 28, 41, 42, 43; os ids 9 e 17 têm `buyLinks` sem `prices`. Nenhum produto sem link; multi-size com um link por tamanho. Os `buyLinks` dos ids 2 e 43 são `https://wa.me/5561994063917` sem texto (os demais são `pag.ae`). `variationType: 'cor'` só no id 17.
 
-**Próximos valores livres (do arquivo):** `id` 43; `order` 58 (máximo atual 57, id 2; sem `order` duplicado); `categoryOrder` — maior peso atual por categoria: brinquedos 500, sono-refugio 1500, viagem-mobilidade 300, a-mesa 1200, mais-vendidos 1700, conforto 1600, couro 1700, colecao-passeio 500, colecao-cozy-luxo 800 (convenção: pesos em múltiplos de 100, maior aparece primeiro). Pesos de `mais-vendidos`: id 39 = 1700, id 8 = 1600, id 16 = 1400 (oculto), id 20 = 1300, id 28 = 1200.
+**Próximos valores livres (do arquivo):** `id` 44; `order` 59 (máximo atual 58, id 43; sem `order` duplicado); `categoryOrder` — maior peso atual por categoria (incluindo ocultos) e próximo livre: mais-vendidos 1700 → 1800; couro 1800 → 1900; conforto 1600 → 1700; sono-refugio 1500 → 1600; a-mesa 1200 → 1300; colecao-cozy-luxo 800 → 900; brinquedos 500 → 600; colecao-passeio 600 → 700; viagem-mobilidade 200 → 300 (convenção: pesos em múltiplos de 100, maior aparece primeiro). Pesos de `mais-vendidos`: id 39 = 1700, id 8 = 1600, id 16 = 1400 (oculto), id 20 = 1300, id 28 não está na categoria.
 
 **Campos** em uso: `id`, `name`, `shortName`, `subtitle`, `description`, `bullets`, `price`, `originalPrice`, `prices`, `category[]`, `order`, `categoryOrder{}`, `image`, `badge`, `buyLink`, `buyLinks`, `variationType`, `tags`, `supplierLink`, `visible`, `featured`, `cardNote`.
 
-- Todos têm `shortName`; só os ids 3, 4 e 10 não têm `subtitle`. Todos têm `tags`. `supplierLink` falta em 16 produtos e é enviado ao navegador.
+- Todos têm `shortName`; só os ids 3, 4 e 10 não têm `subtitle`. Todos têm `tags`. `supplierLink` existe em 20 produtos e falta em 18 (ids 1, 2, 14, 15, 16, 19, 20, 22, 24, 25, 27, 29, 30, 33, 37, 41, 42, 43); é opcional, não validado, e é enviado ao navegador.
 - `badge` em uso: `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, `ESGOTADO` (o validador aceita só esses).
 - `featured: true` só no id 2 (Refúgio Cozy). `Featured.jsx` mostra o primeiro produto com `featured === true` e visível. `featured: false` explícito nos ids 13, 37, 38, 39, 40.
 - `cardNote` só no id 20. `originalPrice` nos ids 1, 3, 40.
@@ -126,15 +126,15 @@ Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 
 
 ## Fichas (`src/data/productDetails.js`)
 
-`PRODUCT_DETAILS`, indexado por id, isolado de `products.js` (o painel admin não o toca). 20 chaves, todas com produto correspondente: 2, 8, 9, 10, 12, 16, 17, 20, 21, 26, 28, 34, 35, 36, 37, 38, 39, 40, 41, 42.
+`PRODUCT_DETAILS`, indexado por id, isolado de `products.js` (o painel admin não o toca). 21 chaves, todas com produto correspondente: 2, 8, 9, 10, 12, 16, 17, 20, 21, 26, 28, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43.
 
-Sem ficha: 17 produtos (1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32, 33); 9 deles visíveis (1, 14, 15, 18, 24, 25, 30, 31, 33) e abrem só o modal rápido (`docs/TODO.md` item 8). Sem `gallery`: só o id 34.
+Sem ficha: 17 produtos (1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32, 33); 7 deles visíveis (14, 18, 24, 25, 30, 31, 33) e abrem só o modal rápido (`docs/TODO.md` item 8). Sem `gallery`: só o id 34.
 
 Schema (10 campos, todos opcionais): `gallery`, `specs{}`, `sizeChart[{size,height,length,width,weight}]`, `howToChooseSize`, `sizeGuideNote`, `whatsIncluded[]`, `careInstructions`, `airTravelNote`, `warranty`, `faq[{question,answer}]`. `sizeGuideNote` em uso nos ids 2, 9, 28, 34, 41, 42. `docs/PRODUCT_EXPANSION.md` documenta o schema.
 
 - `ProductPage.jsx` define `SPEC_LABELS` (72 entradas); toda chave nova de `specs` exige label (hoje nenhuma está sem).
 - Toda linha de `sizeChart` precisa das 5 chaves (usar `'—'` quando não se aplica); hoje todas estão completas.
-- Fichas completas (10 campos): ids 41 e 42. Id 2 tem ficha com `sizeChart` vazio e orientação por peso.
+- Fichas completas (10 campos): ids 41 e 42. O id 43 tem ficha de 6 campos (`gallery`, `specs`, `sizeGuideNote`, `whatsIncluded`, `careInstructions`, `faq`; sem `sizeChart`, `howToChooseSize`, `airTravelNote`, `warranty`). Id 2 tem ficha com `sizeChart` vazio e orientação por peso.
 - Ordem dos `AccordionItem` fixa no JSX: specs → sizeChart → howToChooseSize → sizeGuideNote → whatsIncluded → careInstructions → airTravelNote → warranty → faq (todos fechados por padrão).
 
 Produtos citados:
@@ -146,7 +146,9 @@ Produtos citados:
 
 ## Imagens
 
-Convenção: `public/images/products/<slug>/principal.webp` + `<slug>-2.webp`, `-3`, ... Todos os 37 produtos usam `principal.webp`; todos os arquivos referenciados existem. `.gitkeep` em `products/` e `brand/` (`brand/` vazia). Fotos de produto devem ser WebP de verdade (não PNG com extensão `.webp`) e abaixo de ~150 KB; nenhum arquivo em `public/images` ou `assets` passa de 500 KB, exceto `public/og-image.png` (1,8 MB, PNG 1536×1024, mantido para links e prévias antigas). A prévia de compartilhamento usa `public/og-image.jpg` (JPEG sRGB 1200×630, 73 KB); `index.html` aponta `og:image` e `twitter:image` para `https://www.petluxostory.com.br/og-image.jpg` e tem `og:image:type`, `og:image:width`, `og:image:height` e `og:image:alt`. A pasta `arranhador-felino-sisal-ajustavel-4-niveis-portatil/` não é referenciada por nenhum produto (`docs/TODO.md` item 29). Como o painel converte as fotos: `docs/TODO.md` item 24.
+Convenção: `public/images/products/<slug>/principal.webp` + `<slug>-2.webp`, `-3`, ... Todos os 38 produtos usam `principal.webp`; todos os arquivos referenciados existem. O slug é o nome da pasta, normalmente derivado do `name` (ex.: `kit-elan-rosa`, `bolsa-aurea-voyage`); há pastas legadas fora do padrão (`espreguicadeira-madeira-dobravel/`, `cama-suspensa-rattan-aura/` com `01.webp`…, `manta-serenity-petluxo-premium/` com prefixo `manta-serenity-`). `.gitkeep` em `products/` e `brand/` (`brand/` vazia). Fotos de produto devem ser WebP de verdade (não PNG com extensão `.webp`) e ter ~150 KB no máximo, mas esse limite não é validado nem cumprido (22 dos 87 `.webp` de produto passam dele); nenhum arquivo em `public/images` ou `assets` passa de 500 KB, exceto `public/og-image.png` (1,8 MB, PNG 1536×1024, mantido para links e prévias antigas). A prévia de compartilhamento usa `public/og-image.jpg` (JPEG sRGB 1200×630, 73 KB); `index.html` aponta `og:image` e `twitter:image` para `https://www.petluxostory.com.br/og-image.jpg` e tem `og:image:type`, `og:image:width`, `og:image:height` e `og:image:alt`. A pasta `arranhador-felino-sisal-ajustavel-4-niveis-portatil/` não é referenciada por nenhum produto (`docs/TODO.md` item 29). Como o painel converte as fotos: `docs/TODO.md` item 24.
+
+**Entrada de fotos de produto novo:** `_incoming/` (na raiz, ignorada via `.gitignore`; a pasta existe só localmente) é a pasta onde as fotos chegam. Fluxo: criar `public/images/products/<slug>/`; converter com `cwebp -q 82 <entrada> -o <saida>` (sem redimensionar); a foto cujo nome começa com "principal" vira `principal.webp` e as demais viram `<slug>-2.webp`, `<slug>-3.webp`, … em ordem alfabética; conferir com `file` (deve dizer `Web/P image`). Depois da conversão e da conferência com `file`, os originais de `_incoming/` são apagados e a pasta fica vazia, pronta para o próximo produto. `cwebp` está instalado em `/usr/bin/cwebp`.
 
 ## Componentes
 
@@ -174,7 +176,7 @@ CSS Modules em camelCase; todos os `.module.css` são importados; nenhum bloco p
 
 ## Segurança
 
-Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `.vercel`, `.wrangler/` e `.dev.vars` estão no `.gitignore`; só `.env.example` (nome da variável) é tracked. Dados públicos intencionais: ID do GA4, telefone do WhatsApp, CNPJ no Footer. `supplierLink` (21 produtos) é exposto no bundle (`docs/TODO.md` item 3/18). O repositório é público porque as miniaturas do painel usam `raw.githubusercontent.com` (`docs/TODO.md` item 23).
+Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `.vercel`, `.wrangler/` e `.dev.vars` estão no `.gitignore`; só `.env.example` (nome da variável) é tracked. Dados públicos intencionais: ID do GA4, telefone do WhatsApp, CNPJ no Footer. `supplierLink` (20 produtos) é exposto no bundle (`docs/TODO.md` item 3/18). O repositório é público porque as miniaturas do painel usam `raw.githubusercontent.com` (`docs/TODO.md` item 23).
 
 ## Variáveis de ambiente
 

@@ -540,4 +540,38 @@ export const PRODUCT_DETAILS = {
       },
     ],
   },
+  43: {
+    gallery: [
+      '/images/products/kit-elan-rosa/principal.webp',
+      '/images/products/kit-elan-rosa/kit-elan-rosa-2.webp',
+      '/images/products/kit-elan-rosa/kit-elan-rosa-3.webp',
+      '/images/products/kit-elan-rosa/kit-elan-rosa-4.webp',
+    ],
+    specs: {
+      composicaoKit: 'Guia, coleira e porta-saquinhos',
+      cor: 'Rosa',
+      estilo: 'Luxo contemporâneo',
+      acabamento: 'Textura croco nos detalhes',
+      material: 'Guia em corda trançada',
+      ferragens: 'Metálicas prateadas',
+      tamanhosDisponiveis: 'PP, M e G',
+    },
+    sizeGuideNote: 'Guia de referência PetLuxo por porte do pet: PP de 2 a 4 kg, M de 4 a 15 kg e G de 15 a 23 kg.',
+    whatsIncluded: [
+      'Guia Élan, em corda trançada rosa, com mosquetões, argolas metálicas e charm de patinha',
+      'Coleira Élan, com textura croco, fivela metálica ajustável, argola para a guia e pingente de patinha',
+      'Porta-Saquinhos Élan, com mosquetão metálico e abertura frontal',
+    ],
+    careInstructions: 'Limpe com pano macio levemente umedecido. Evite produtos abrasivos, imersão em água e exposição prolongada ao sol ou à umidade.',
+    faq: [
+      { question: 'O que acompanha o Kit Élan Rosa?', answer: 'Guia Élan, coleira Élan e porta-saquinhos Élan.' },
+      { question: 'Qual a cor do kit?', answer: 'Rosa.' },
+      { question: 'Como é a guia?', answer: 'Guia em corda trançada na tonalidade rosa, com detalhes texturizados, mosquetões e argolas metálicas e charm decorativo de patinha.' },
+      { question: 'Como é a coleira?', answer: 'Coleira com textura croco em rosa, fivela metálica ajustável, argola para fixação da guia e pingente decorativo de patinha.' },
+      { question: 'Como é o porta-saquinhos?', answer: 'Design compacto com acabamento texturizado combinando com o conjunto, mosquetão metálico para fixação e abertura frontal para retirada dos saquinhos.' },
+      { question: 'Quais tamanhos estão disponíveis?', answer: 'PP, M e G.' },
+      { question: 'Como escolher o tamanho ideal?', answer: 'Pela referência de peso do pet: PP de 2 a 4 kg, M de 4 a 15 kg e G de 15 a 23 kg.' },
+      { question: 'Como limpar o kit?', answer: 'Com pano macio levemente umedecido, evitando produtos abrasivos, imersão em água e exposição prolongada ao sol ou à umidade.' },
+    ],
+  },
 };

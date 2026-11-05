@@ -747,5 +747,38 @@ export const PRODUCTS = [
       { size: 'M', link: 'https://pag.ae/82djpRrEm' },
     ],
     tags: ['mochila', 'bolsa', 'transporte', 'viagem', 'passeio', 'azul marinho'],
+  },
+  {
+    id: 43,
+    name: 'Kit Élan Rosa | Elegância em Cada Passeio',
+    shortName: 'Kit Élan Rosa',
+    subtitle: 'Elegância em cada passeio',
+    description: 'O Kit Élan Rosa transforma o passeio em uma expressão de estilo. Guia em corda trançada, coleira com textura croco e porta-saquinhos combinam em um tom rosa marcante, com ferragens prateadas e detalhes de patinha que dão identidade ao conjunto. Três peças pensadas para valorizar a presença do seu pet em cada momento ao seu lado.',
+    bullets: [
+      'Conjunto com guia, coleira e porta-saquinhos',
+      'Guia em corda trançada na tonalidade rosa',
+      'Coleira com textura croco e fivela metálica ajustável',
+      'Porta-saquinhos compacto com mosquetão metálico',
+      'Ferragens metálicas prateadas',
+      'Charm e pingente decorativos de patinha',
+    ],
+    price: 'R$ 999,90',
+    prices: [
+      { size: 'PP', price: 'R$ 999,90' },
+      { size: 'M', price: 'R$ 999,90' },
+      { size: 'G', price: 'R$ 999,90' },
+    ],
+    originalPrice: null,
+    category: ['colecao-passeio', 'couro'],
+    order: 58,
+    categoryOrder: { 'colecao-passeio': 600, 'couro': 1800 },
+    image: '/images/products/kit-elan-rosa/principal.webp',
+    badge: null,
+    buyLinks: [
+      { size: 'PP', link: 'https://wa.me/5561994063917' },
+      { size: 'M', link: 'https://wa.me/5561994063917' },
+      { size: 'G', link: 'https://wa.me/5561994063917' },
+    ],
+    tags: ['kit', 'guia', 'coleira', 'porta-saquinhos', 'passeio', 'rosa', 'croco', 'luxo'],
   }
 ];
