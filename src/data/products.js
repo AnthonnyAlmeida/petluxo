@@ -753,11 +753,11 @@ export const PRODUCTS = [
     name: 'Kit Élan Rosa | Elegância em Cada Passeio',
     shortName: 'Kit Élan Rosa',
     subtitle: 'Elegância em cada passeio',
-    description: 'O Kit Élan Rosa transforma o passeio em uma expressão de estilo. Guia em corda trançada, coleira com textura croco e porta-saquinhos combinam em um tom rosa marcante, com ferragens prateadas e detalhes de patinha que dão identidade ao conjunto. Três peças pensadas para valorizar a presença do seu pet em cada momento ao seu lado.',
+    description: 'O Kit Élan Rosa transforma o passeio em uma expressão de estilo. Guia em corda trançada, coleira em couro e porta-saquinhos combinam em um tom rosa marcante, com ferragens prateadas e detalhes de patinha que dão identidade ao conjunto. Três peças pensadas para valorizar a presença do seu pet em cada momento ao seu lado.',
     bullets: [
       'Conjunto com guia, coleira e porta-saquinhos',
       'Guia em corda trançada na tonalidade rosa',
-      'Coleira com textura croco e fivela metálica ajustável',
+      'Coleira em couro com fivela metálica ajustável',
       'Porta-saquinhos compacto com mosquetão metálico',
       'Ferragens metálicas prateadas',
       'Charm e pingente decorativos de patinha',
@@ -779,6 +779,6 @@ export const PRODUCTS = [
       { size: 'M', link: 'https://wa.me/5561994063917' },
       { size: 'G', link: 'https://wa.me/5561994063917' },
     ],
-    tags: ['kit', 'guia', 'coleira', 'porta-saquinhos', 'passeio', 'rosa', 'croco', 'luxo'],
+    tags: ['kit', 'guia', 'coleira', 'porta-saquinhos', 'passeio', 'rosa', 'couro', 'luxo'],
   }
 ];
