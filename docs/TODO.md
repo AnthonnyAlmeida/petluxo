@@ -157,7 +157,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [ ] **35. Desativar o projeto Vercel do site (prazo: 2026-11-11)** 🟡
       Janela de rollback de 14 dias a partir de 2026-10-28; prazo máximo 2026-11-11; pode ser a partir de 2026-11-04 se tudo estiver estável. Checklist:
   1. Antes de desativar: GA4 conferido (item 36), a parte B da foto (item 31) feita ou decidida como adiada, Worker estável (Deployments sem falhas; conferir o site e os redirecionamentos por `curl`).
-  2. F4.8 (parcial): `workers_dev` desligado no `wrangler.jsonc`; falta decidir e desligar `preview_urls`. O efeito sobre o domínio próprio é conferido por `curl` depois do deploy.
+  2. F4.8 (parcial): `workers_dev` desligado no `wrangler.jsonc`. `preview_urls: false` definido no arquivo; falta deploy e conferir por `curl` que `www` responde 200, a raiz responde 301 e `/produto/43` responde 200. Efeito sobre o domínio próprio NÃO VERIFICADO.
   3. F4.5 (feito): `public/404.html` e o bloco de restauração de path de `src/main.jsx` removidos (D7).
   4. F4.4: desconectar o repositório do projeto Vercel do site e depois excluir o projeto.
   5. Revisar o rollback com o Claude no chat ANTES de excluir.
