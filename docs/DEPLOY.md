@@ -20,7 +20,7 @@ Os commits do painel admin (`petluxo-admin`, outro repositório, hospedado na Ve
 - **`public/_headers`:** `Strict-Transport-Security: max-age=63072000`, `X-Content-Type-Options: nosniff` e `Referrer-Policy: strict-origin-when-cross-origin` para `/*`. Sem CSP e sem regras de cache (o padrão dos assets é `public, max-age=0, must-revalidate`).
 - **Modo SPA:** acesso direto a `/produto/2`, às políticas e a qualquer URL inexistente devolve HTTP 200 com o `index.html` (soft 404); o app mostra o `NotFound`. Não existe `public/404.html` nem restauração de path em `src/main.jsx`.
 - **Variáveis de ambiente:** nenhuma. `VITE_WHATSAPP_PHONE` é opcional; sem ela vale o número padrão do código.
-- O `wrangler` não está no `package.json`: o `npx` baixa a versão do momento. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`); `"preview_urls": false` também está definido no arquivo. A conferência por `curl` depois do deploy (o `www` responde 200, a raiz 301 e `/produto/43` 200) está PENDENTE: o efeito sobre o domínio próprio NÃO está verificado.
+- O `wrangler` não está no `package.json`: o `npx` baixa a versão do momento. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`) e verificado por `curl` (o endereço responde 404). `"preview_urls": false` está definido no arquivo; as Preview URLs NÃO têm confirmação direta por `curl` (só o estado "desligado" visto no painel). O domínio próprio segue respondendo (`www` 200, raiz 301, `/produto/43` 200).
 
 ## Domínio
 
@@ -29,13 +29,12 @@ O domínio `petluxostory.com.br` é registrado no Registro.br e usa os dois name
 - **`www` é o canônico:** Custom Domain do Worker.
 - **A raiz** também é Custom Domain do Worker e redireciona com 301 para o `www`, preservando caminho e query (regra "raiz para www").
 - **HTTP → HTTPS:** regra "http para https" (301). A Cloudflare não faz esse redirecionamento por padrão.
-- **Zona:** 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`), `_domainconnect` (DNS only), CNAME `*` → Vercel (DNS only; subdomínios que não sejam `www` caem na Vercel com 404) e as linhas "Worker" do `www` e da raiz. Sem MX nem TXT. DNSSEC desativado.
+- **Zona:** 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`) e as duas linhas "Worker" (raiz e `www`). Sem MX nem TXT. DNSSEC desativado.
 
 **Criar um Custom Domain:** Worker → aba Domains → Add domain, com o subdomínio na frente de `.petluxostory.com.br`.
 
 - Campo de subdomínio **vazio** liga a **raiz**.
 - Para uma raiz (ou outro hostname) que tem CNAME próprio, apagar o CNAME em DNS → Records antes; do contrário a Cloudflare recusa.
-- Um hostname coberto só pelo CNAME `*` é aceito direto.
 
 ## Arquivos que carregam o domínio
 
@@ -71,6 +70,6 @@ Verificar nesta ordem:
 2. **App do GitHub desconectado?** — Reconectar o app "Cloudflare Workers and Pages" ao repositório `petluxo`.
 3. **Build na fila?** — O plano Free roda um build por vez; builds seguidos (por exemplo, vários commits do painel) esperam na fila.
 
-## Rollback e histórico
+## Histórico
 
-Rollback para a Vercel, decisões e registro da migração: `docs/CLOUDFLARE_MIGRATION.md` (seção 7).
+Decisões e registro da migração: `docs/CLOUDFLARE_MIGRATION.md`. O rollback para a Vercel não existe mais (seção 7).

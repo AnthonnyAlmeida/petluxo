@@ -1,8 +1,8 @@
 # PetLuxo — Contexto do Projeto
 
-Este arquivo descreve o estado ATUAL do projeto para orientar o Claude Code. Não é histórico: a migração para a Cloudflare, rollback e resultados de testes ficam em `docs/CLOUDFLARE_MIGRATION.md`. Em qualquer divergência, o código é a verdade.
+Este arquivo descreve o estado ATUAL do projeto para orientar o Claude Code. Não é histórico: a migração para a Cloudflare e resultados de testes ficam em `docs/CLOUDFLARE_MIGRATION.md`. Em qualquer divergência, o código é a verdade.
 
-Última atualização: 2026-11-05
+Última atualização: 2026-11-11
 
 Site estático (sem backend, sem banco, sem API) de produtos premium para pets. Catálogo, busca, filtro, ficha de produto e consentimento de analytics são resolvidos no front-end. Todo o contato de compra é por WhatsApp.
 
@@ -12,10 +12,10 @@ Site estático (sem backend, sem banco, sem API) de produtos premium para pets. 
 ## Hospedagem, deploy e domínio
 
 - **Hospedagem:** Cloudflare Workers com static assets (plano Free). Worker `petluxo`, configurado em `wrangler.jsonc` (`assets.directory` `./dist`, `not_found_handling` `single-page-application`). Versão do Node em `.nvmrc` (`22`). Cabeçalhos de segurança em `public/_headers` (HSTS `max-age=63072000`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`; sem CSP, sem regras de cache).
-- **Deploy:** Workers Builds a cada push em `main` (`npm run build`, depois `npx wrangler deploy`); o `wrangler` não está no `package.json`. Os commits do painel admin também vão para `main` e disparam o build. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`); `"preview_urls": false` também está definido no arquivo, mas o efeito sobre o domínio próprio NÃO está verificado: falta o deploy e conferir por `curl` (`www` 200, raiz 301, `/produto/43` 200; pendência F4.8).
+- **Deploy:** Workers Builds a cada push em `main` (`npm run build`, depois `npx wrangler deploy`); o `wrangler` não está no `package.json`. Os commits do painel admin também vão para `main` e disparam o build. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`) e verificado por `curl` (o endereço e o formato de Preview respondem 404). `"preview_urls": false` também está definido no arquivo; as Preview URLs NÃO têm confirmação direta por `curl` (só o estado "desligado" visto no painel). O domínio próprio responde normalmente (`www` 200, raiz 301, `/produto/43` 200).
 - **Modo SPA:** acesso direto a rotas (`/produto/2`, políticas) e URLs inexistentes (inclusive `/xyz.png`) devolvem HTTP 200 com o `index.html` (soft 404); a rota `*` do app mostra o `NotFound`. Não existe `public/404.html` nem restauração de path em `src/main.jsx`: o fallback de SPA é só o do Worker.
-- **Domínio e DNS:** `petluxostory.com.br`, registrado no Registro.br (vence em 2027-05-07). Nameservers: os dois atribuídos pela Cloudflare. `www` é o canônico (Custom Domain do Worker); a raiz também é Custom Domain do Worker e redireciona para o `www` com 301 (regra "raiz para www"); HTTP redireciona para HTTPS com 301 (regra "http para https"); as duas regras preservam caminho e query. Zona: 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`), `_domainconnect` (DNS only), CNAME `*` → Vercel (DNS only; subdomínios que não sejam `www` caem na Vercel com 404) e as linhas "Worker" do `www` e da raiz. Sem MX, TXT nem AAAA. DNSSEC não está ativo (não ativar por ora).
-- **Vercel:** o painel admin (`petluxo-admin`, fora deste repositório) continua na Vercel. O projeto Vercel do site existe, intacto, como plano B até o prazo de 2026-11-11 (`docs/TODO.md` item 35): não mexer. Rollback e histórico: ver `docs/CLOUDFLARE_MIGRATION.md` (seção 7).
+- **Domínio e DNS:** `petluxostory.com.br`, registrado no Registro.br (vence em 2027-05-07). Nameservers: os dois atribuídos pela Cloudflare. `www` é o canônico (Custom Domain do Worker); a raiz também é Custom Domain do Worker e redireciona para o `www` com 301 (regra "raiz para www"); HTTP redireciona para HTTPS com 301 (regra "http para https"); as duas regras preservam caminho e query. Zona: 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`) e as duas linhas "Worker" (raiz e `www`); subdomínios inexistentes não resolvem. Sem MX, TXT nem AAAA. DNSSEC não está ativo (não ativar por ora).
+- **Vercel:** o painel admin (`petluxo-admin`, fora deste repositório) continua na Vercel; é a única coisa do projeto que está lá. O projeto Vercel do site não existe mais, e o rollback para a Vercel não existe (voltar exigiria recriar projeto e domínio na Vercel e refazer o DNS). Histórico: `docs/CLOUDFLARE_MIGRATION.md`.
 - **Build:** `npm run build` gera `dist/` (validador de catálogo + Vite). `docs/DEPLOY.md` descreve o deploy, a configuração, o domínio e o checklist pós-deploy na Cloudflare; `README.md` e `docs/README.md` seguem a mesma hospedagem.
 - **Metadados:** `index.html` (og:url, og:image, twitter:image), `public/sitemap.xml` (só a home) e `public/robots.txt` (4 linhas, sem `Host:`) usam `https://www.petluxostory.com.br`. Não há `<link rel="canonical">` (decisão D4 do documento de migração: só junto com meta tags por rota). Meta tags são únicas; `/produto/:id` herda as da home.
 
@@ -72,7 +72,7 @@ petluxo/
     └── tweaks-panel.jsx
 ```
 
-Pastas/arquivos locais ignorados ou não tracked (`_incoming/` está ignorada via `.gitignore`; ver "Imagens"): `.kilo/` (só um `.gitignore`), `dist/`, `test-results/`, `.vercel/`, `.wrangler/`, `.dev.vars`, `.env.local`.
+Pastas/arquivos locais ignorados ou não tracked (`_incoming/` está ignorada via `.gitignore`; ver "Imagens"): `.kilo/` (só um `.gitignore`), `dist/`, `test-results/`, `.wrangler/`, `.dev.vars`, `.env.local`. A pasta `.vercel/` não existe e não é mais ignorada.
 
 ## Rotas
 
@@ -176,7 +176,7 @@ CSS Modules em camelCase; todos os `.module.css` são importados; nenhum bloco p
 
 ## Segurança
 
-Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `.vercel`, `.wrangler/` e `.dev.vars` estão no `.gitignore`; só `.env.example` (nome da variável) é tracked. Dados públicos intencionais: ID do GA4, telefone do WhatsApp, CNPJ no Footer. `supplierLink` (20 produtos) é exposto no bundle (`docs/TODO.md` item 3/18). O repositório é público porque as miniaturas do painel usam `raw.githubusercontent.com` (`docs/TODO.md` item 23).
+Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `.wrangler/` e `.dev.vars` estão no `.gitignore`; só `.env.example` (nome da variável) é tracked. Dados públicos intencionais: ID do GA4, telefone do WhatsApp, CNPJ no Footer. `supplierLink` (20 produtos) é exposto no bundle (`docs/TODO.md` item 3/18). O repositório é público porque as miniaturas do painel usam `raw.githubusercontent.com` (`docs/TODO.md` item 23).
 
 ## Variáveis de ambiente
 
@@ -184,12 +184,12 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 
 ## Documentação do repositório
 
-`docs/CHECKOUT_ARCHITECTURE.md` (plano, não iniciado; precisa ser reescrito para InfinitePay com frete grátis: TODO 26), `docs/CLOUDFLARE_MIGRATION.md` (migração, estado por fase, rollback, registro de execução), `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md` (deploy e domínio na Cloudflare), `docs/PRODUCT_EXPANSION.md`, `docs/README.md` e `README.md`, `docs/DECISIONS.md` (seções 10 e 11 superadas pela 12: atendimento só por WhatsApp, PagBank provavelmente não volta, intenção de checkout próprio com InfinitePay e frete grátis, ainda não definitivo; seção 8 superada pela 13: hospedagem na Cloudflare, repositório público por causa das miniaturas do painel, cartão só por checkout hospedado), `docs/TODO.md` (lista de pendências).
+`docs/CHECKOUT_ARCHITECTURE.md` (plano, não iniciado; precisa ser reescrito para InfinitePay com frete grátis: TODO 26), `docs/CLOUDFLARE_MIGRATION.md` (migração, estado por fase, registro de execução), `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md` (deploy e domínio na Cloudflare), `docs/PRODUCT_EXPANSION.md`, `docs/README.md` e `README.md`, `docs/DECISIONS.md` (seções 10 e 11 superadas pela 12: atendimento só por WhatsApp, PagBank provavelmente não volta, intenção de checkout próprio com InfinitePay e frete grátis, ainda não definitivo; seção 8 superada pela 13: hospedagem na Cloudflare, repositório público por causa das miniaturas do painel, cartão só por checkout hospedado), `docs/TODO.md` (lista de pendências).
 
 ## Dívidas e pendências abertas
 
 - Sem script de lint; sem script npm para os testes Playwright (`docs/CLOUDFLARE_MIGRATION.md` F2.6).
-- Migração: restam o GA4 em Tempo Real (F0.6, `docs/TODO.md` item 36), a troca de foto pelo painel (item 31), meta tags por produto (item 2, não prioritário) e, até 2026-11-11, o deploy e a conferência por `curl` do `preview_urls: false` (F4.8) e a exclusão do projeto Vercel do site (item 35). Documentação (F5) concluída. Ver `docs/CLOUDFLARE_MIGRATION.md`.
+- Migração: restam o teste real de troca de foto pelo painel em aba anônima (`docs/TODO.md` item 31, parte B(ii)) e meta tags por produto (item 2, não prioritário). As Preview URLs seguem sem confirmação direta por `curl`. Ver `docs/CLOUDFLARE_MIGRATION.md`.
 - Redação definitiva dos textos legais sobre o atendimento por WhatsApp e revisão jurídica: `docs/TODO.md` itens 22 e 37.
 - Checkout próprio (InfinitePay, frete grátis) e reescrita de `docs/CHECKOUT_ARCHITECTURE.md`: `docs/TODO.md` itens 21 e 26.
 - Eventos GA4 de clique no WhatsApp: `docs/TODO.md` item 6.

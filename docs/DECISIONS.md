@@ -257,4 +257,4 @@ O plano Hobby da Vercel é de uso não comercial e o site é uma loja. O painel 
 - O repositório continua público por causa das miniaturas do painel (`raw.githubusercontent.com`); esta decisão supera a §8.
 - Pagamento com cartão só por checkout hospedado: a cláusula 2.2.1(h) do contrato da Cloudflare proíbe coletar dados de cartão em propriedade que use serviços gratuitos.
 
-**Detalhes e rollback:** `docs/CLOUDFLARE_MIGRATION.md`.
+**Detalhes e registro da migração:** `docs/CLOUDFLARE_MIGRATION.md`.

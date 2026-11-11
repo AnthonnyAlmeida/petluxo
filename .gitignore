@@ -6,7 +6,6 @@ dist
 .DS_Store
 *.log
 
-.vercel
 test-results/
 
 # Contexto para IA

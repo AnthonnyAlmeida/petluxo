@@ -143,7 +143,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 - [ ] **31. Teste de foto trocada pelo painel com o mesmo nome (cache)** 🟢
       Parte A feita (2026-10-28): `/images/products/refugio-cozy/principal.webp` responde 200, `image/webp`, `cache-control: public, max-age=0, must-revalidate` e tem `etag`; isso indica que uma foto nova com o mesmo nome deveria aparecer.
-      Parte B pendente: (i) conferir no GitHub qual caminho o painel grava ao trocar uma foto (plana `public/images/products/<slug>.webp` × pasta por produto `<slug>/principal.webp`; ver item 34) e se o site mostra a nova; (ii) fazer a troca em um produto de baixo risco e conferir em aba anônima. Não é prioridade.
+      Parte B(i) respondida pela auditoria do painel de 2026-11-10: na edição, o painel sobrescreve o mesmo arquivo `<pasta>/<arquivo>.webp` e o site serve com `max-age=0, must-revalidate`.
+      Parte B(ii) pendente: o teste real de troca de foto em um produto de baixo risco, conferindo em aba anônima. Não é prioridade.
 
 - [ ] **32. Conferir o plano da Vercel para o painel admin** 🟢
       O painel admin (`petluxo-admin`, outro repositório) continua na Vercel (Hobby). Decisão do dono: manter lá, por considerar que o painel não é de uso comercial (afirmação do dono; NÃO VERIFICADO nos termos da Vercel, e o painel edita o catálogo da loja). Decidir se mantém, paga ou migra o painel (3 funções em `api/`: auth, github e ai). Ver `docs/CLOUDFLARE_MIGRATION.md` seção 5.
@@ -154,18 +155,20 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [ ] **34. Painel admin: achados da auditoria** 🟡
       A auditoria do painel de 2026-10-27 está no `AI_CONTEXT.md` do repositório `petluxo-admin` (fora deste repositório). Inclui: textos "Vercel" na interface (`usePublish.js`, `ProductsPage.jsx`), polling de 5 s na listagem, validação de `path` em `api/github.js` e imagem plana (`public/images/products/<slug>.webp`) × pasta por produto (`<slug>/principal.webp`). Tratar a partir desse arquivo.
 
-- [ ] **35. Desativar o projeto Vercel do site (prazo: 2026-11-11)** 🟡
-      Janela de rollback de 14 dias a partir de 2026-10-28; prazo máximo 2026-11-11; pode ser a partir de 2026-11-04 se tudo estiver estável. Checklist:
-  1. Antes de desativar: GA4 conferido (item 36), a parte B da foto (item 31) feita ou decidida como adiada, Worker estável (Deployments sem falhas; conferir o site e os redirecionamentos por `curl`).
-  2. F4.8 (parcial): `workers_dev` desligado no `wrangler.jsonc`. `preview_urls: false` definido no arquivo; falta deploy e conferir por `curl` que `www` responde 200, a raiz responde 301 e `/produto/43` responde 200. Efeito sobre o domínio próprio NÃO VERIFICADO.
-  3. F4.5 (feito): `public/404.html` e o bloco de restauração de path de `src/main.jsx` removidos (D7).
-  4. F4.4: desconectar o repositório do projeto Vercel do site e depois excluir o projeto.
-  5. Revisar o rollback com o Claude no chat ANTES de excluir.
-  6. Depois da exclusão, o rollback para a Vercel deixa de existir sem recriar o projeto e o domínio (`docs/CLOUDFLARE_MIGRATION.md`, seção 7), e os certificados da Vercel expiram em 2026-12-10.
-  Lembrete: o painel admin NÃO é afetado (continua na Vercel, item 32).
+- [x] **35. Desativar o projeto Vercel do site (prazo: 2026-11-11)** 🟡
+      Concluído em 2026-11-11. Feito:
+  1. F4.4: o projeto Vercel do site foi desconectado do GitHub e excluído (o projeto do painel admin, `petluxo-admin`, não foi tocado). `.vercel` removido do `.gitignore` e pasta local `.vercel/` apagada.
+  2. Removidos da zona na Cloudflare o CNAME `*` (para a Vercel) e o `_domainconnect`. A zona tem agora 3 CAA e as duas linhas Worker (raiz e `www`).
+  3. F4.8: `"workers_dev": false` e `"preview_urls": false` definidos no `wrangler.jsonc`.
+  4. F4.5 (feito antes): `public/404.html` e o bloco de restauração de path de `src/main.jsx` removidos (D7).
+  Verificado por `curl` em 2026-11-11, depois das remoções: `www` 200, raiz 301 e `/produto/43` 200. `dig` (CNAME e A) de um subdomínio inexistente: sem resposta.
+  Subitens:
+  - `workers.dev`: verificado desligado por `curl` em 2026-11-10 (o endereço `workers.dev` e o endereço no formato de Preview respondem 404).
+  - Preview URLs: SEM confirmação direta por `curl`; só o estado "desligado" visto no painel. O `curl` do endereço no formato de Preview é compatível, mas não prova.
+  O rollback para a Vercel deixou de existir (`docs/CLOUDFLARE_MIGRATION.md`, seção 7): para voltar seria preciso recriar o projeto e o domínio na Vercel e refazer o DNS.
 
-- [ ] **36. Testar o GA4 em Tempo Real (F0.6)** 🟢
-      Roteiro: abrir GA4 → Tempo real; em aba anônima, abrir o site, aceitar o banner de consentimento, navegar em uma ou duas páginas e ver o usuário ativo. Conferir o domínio do stream (pode estar com o domínio antigo, sem `www`) e filtros de hostname. Sem consentimento o `gtag` não carrega (esperado). Pendente; o dono avisa quando fizer.
+- [x] **36. Testar o GA4 em Tempo Real (F0.6)** 🟢
+      Roteiro: abrir GA4 → Tempo real; em aba anônima, abrir o site, aceitar o banner de consentimento, navegar em uma ou duas páginas e ver o usuário ativo. Conferir o domínio do stream (pode estar com o domínio antigo, sem `www`) e filtros de hostname. Sem consentimento o `gtag` não carrega (esperado). Testado pelo dono antes (relatado em 2026-11-05) e funcionando; registrado como concluído em 2026-11-11.
 
 - [ ] **37. Revisão jurídica dos textos legais e da base legal do GA4 (Consent Mode, Google Fonts, transferência internacional)** 🔴
       Revisar Privacidade, Frete e Entrega e Termos de Uso após a mudança para o atendimento só por WhatsApp; definir a base legal do GA4 (consentimento × legítimo interesse) e se o Consent Mode se aplica; avaliar o envio do IP ao Google pelo Google Fonts em toda visita e a transferência internacional de dados (Google, Meta, Cloudflare). Hoje as políticas não tratam de transferência internacional.
