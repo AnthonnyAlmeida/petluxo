@@ -113,7 +113,7 @@ Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 
 
 **Campos** em uso: `id`, `name`, `shortName`, `subtitle`, `description`, `bullets`, `price`, `originalPrice`, `prices`, `category[]`, `order`, `categoryOrder{}`, `image`, `badge`, `buyLink`, `buyLinks`, `variationType`, `tags`, `visible`, `featured`, `cardNote`.
 
-- Todos têm `shortName`; só os ids 3, 4 e 10 não têm `subtitle`. Todos têm `tags`. O campo `supplierLink` não existe mais no catálogo público e não vai ao navegador: os links de fornecedor ficam numa fonte privada mantida pelo painel admin (outro repositório, privado), ligada ao produto pelo id. O histórico do git deste repositório público ainda contém os links antigos (decisão do dono: não reescrever o histórico por ora; tratá-los como já expostos).
+- Todos têm `shortName`; só os ids 1, 3, 4, 8, 10 e 12 não têm `subtitle` (nos ids 3, 4 e 10 o campo não existe; nos ids 1, 8 e 12 vale `null`). Todos têm `tags`. O campo `supplierLink` não existe mais no catálogo público e não vai ao navegador: os links de fornecedor ficam numa fonte privada mantida pelo painel admin (outro repositório, privado), ligada ao produto pelo id. O histórico do git deste repositório público ainda contém os links antigos (decisão do dono: não reescrever o histórico por ora; tratá-los como já expostos).
 - `badge` em uso: `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, `ESGOTADO` (o validador aceita só esses).
 - `featured: true` só no id 2 (Refúgio Cozy). `Featured.jsx` mostra o primeiro produto com `featured === true` e visível. `featured: false` explícito nos ids 13, 37, 38, 39, 40.
 - `cardNote` só no id 20. `originalPrice` nos ids 1, 3, 40.

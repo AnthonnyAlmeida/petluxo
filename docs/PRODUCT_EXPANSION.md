@@ -16,7 +16,7 @@ A ficha de produto atual (imagem única, descrição, bullets) é considerada ra
 
 Além disso, foi pedido um selo fixo "Por que escolher a PetLuxo?" com 6 diferenciais — esse **não é conteúdo por produto**, é um componente global reutilizável.
 
-Ponto central do pedido: o negócio ainda está levantando esse nível de detalhe produto por produto (37 produtos no catálogo hoje). A estrutura precisa suportar produtos com dados completos e produtos com dados parciais/ausentes ao mesmo tempo, sem quebrar nada.
+Ponto central do pedido: o negócio ainda está levantando esse nível de detalhe produto por produto (38 produtos no catálogo hoje). A estrutura precisa suportar produtos com dados completos e produtos com dados parciais/ausentes ao mesmo tempo, sem quebrar nada.
 
 ## Decisão de arquitetura
 

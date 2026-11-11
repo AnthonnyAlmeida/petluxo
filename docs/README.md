@@ -110,18 +110,16 @@ npm run preview
 
 ## Catálogo de produtos
 
-**37 produtos em 9 categorias. A tabela abaixo lista os 28 visíveis; os 9 com `visible: false` não aparecem no site:**
+**38 produtos em 9 categorias. A tabela abaixo lista os 27 visíveis; os 11 com `visible: false` não aparecem no site:**
 
 | ID  | Nome                                                          | Categorias                            |
 | --- | ------------------------------------------------------------- | ------------------------------------- |
-| 1   | Brinquedo Interativo de Pelúcia                               | brinquedos                            |
 | 2   | Refúgio Cozy — Cabana Personalizada PetLuxo                   | sono-refugio                          |
 | 8   | Bolsa Transporte PetLuxo                                      | mais-vendidos, couro                  |
 | 9   | Élan Couro \| Elegância em Cada Passeio                       | couro                                 |
 | 10  | Porta Saquinhos em Couro                                      | couro                                 |
 | 12  | Sofá PetLuxo Essence                                          | conforto, sono-refugio                |
 | 14  | Cama PetLuxo CloudNest™                                       | sono-refugio                          |
-| 15  | Coleira PetLuxo Atena™                                        | couro                                 |
 | 17  | Bolsa Voyage Signature™️ \| Transporte Luxury para Pets       | colecao-passeio                       |
 | 18  | Cama Suspensa Rattan Élysée                                   | conforto, sono-refugio                |
 | 20  | Refúgio Suspenso                                              | mais-vendidos, conforto, sono-refugio |
@@ -129,19 +127,20 @@ npm run preview
 | 24  | Fonte Automática Elegance \| Design Minimalista Premium       | a-mesa                                |
 | 25  | Mesa Gourmet Nordic™ \| Design Escandinavo com Slow Feeder    | a-mesa                                |
 | 26  | Kit Solenne                                                   | colecao-passeio                       |
-| 28  | Cabana Lumière                                                | sono-refugio, mais-vendidos           |
+| 28  | Cabana Lumière                                                | sono-refugio                          |
 | 30  | Cesto Organizador Personalizado para Pets — Coleção Cozy Luxo | colecao-cozy-luxo                     |
 | 31  | Estação de Passeio PetLuxo™ em Madeira Premium                | colecao-cozy-luxo                     |
 | 33  | Reservatório Hermético Cozy para Ração Pet                    | colecao-cozy-luxo                     |
 | 34  | Bolsa Térmica Signature Metalassê                             | colecao-passeio                       |
 | 35  | Manta Serenity™ PetLuxo Premium                               | sono-refugio                          |
 | 36  | Comedouro Nômade Premium™ Dobrável e Portátil                 | viagem-mobilidade                     |
-| 37  | Chaise Féline                                                 | viagem-mobilidade, sono-refugio       |
+| 37  | Chaise Féline                                                 | sono-refugio                          |
 | 38  | Refúgio Majestá - Caminha Premium em Madeira com Cortinas     | sono-refugio, conforto                |
 | 39  | Brinquedo PetLuxo Companhia para Brincar                      | brinquedos, mais-vendidos             |
 | 40  | Polvo Mimo™ Brinquedo Interativo com Som para Cães            | brinquedos                            |
 | 41  | Bolsa Auréa Voyage                                            | couro                                 |
 | 42  | Bolsa Majestic Travel                                         | couro                                 |
+| 43  | Kit Élan Rosa \| Elegância em Cada Passeio                    | colecao-passeio, couro                |
 
 **Categorias disponíveis:**
 
