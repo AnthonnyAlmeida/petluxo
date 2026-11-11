@@ -552,6 +552,7 @@ export const PRODUCTS = [
     badge: 'PREMIUM',
     buyLink: 'https://pag.ae/81QDtorTN',
     tags: ['racao', 'armazenamento', 'hermetico', 'organizacao', 'design', 'pet', 'premium'],
+    supplierLink: 'https://pt.aliexpress.com/item/1005007383029694.html?spm=a2g0o.productlist.main.3.570912f1OJbanV&algo_pvid=dbad3abf-8f34-492f-a5bf-26c1901e549f&algo_exp_id=dbad3abf-8f34-492f-a5bf-26c1901e549f-2&pdp_ext_f=%7B%22order%22%3A%22375%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21BRL%21230.88%2176.19%21%21%21256.28%2184.57%21%402101e7a317944004115648891e0cf7%2112000040517899758%21sea%21BR%213007305868%21X%211%210%21n_tag%3A-29919%3Bd%3Abc3081f4%3Bm03_new_user%3A-29895&curPageLogUid=ZmvtFJDvbmdH&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005007383029694%7C_p_origin_prod%3A',
   },
   {
     id: 34,
