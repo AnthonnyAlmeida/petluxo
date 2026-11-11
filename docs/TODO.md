@@ -74,11 +74,11 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
   - a solução não exige backend permanente se a pré-renderização atender ao catálogo.
 
 - [ ] **3 e 18. Remover e corrigir `supplierLink`** 🟡
-      O `products.js` inteiro vai para o navegador, então a origem dos produtos fica legível nas ferramentas de desenvolvedor. Esses links não são necessários para o cliente comprar.
-  - Remover `supplierLink` do catálogo público e mantê-lo apenas em fonte administrativa privada, com acesso restrito (mover para um arquivo fora do Git não basta se o painel ou o navegador continuar recebendo o conteúdo).
-  - Ajustar o painel administrativo externo, que reescreve `products.js`.
-  - Plano: mover os links para um arquivo privado mantido pelo painel admin (repositório privado, ligado ao produto pelo id); ajustar o painel para ler e gravar de lá; só então remover o campo de `products.js`. O histórico do git já contém os links: decidir se isso importa.
-  - Ao migrar, corrigir os ids 9 (aponta para `kit-milano-camelo`, nome antigo) e 17 (aponta para um comedouro dobrável que não corresponde ao produto).
+      Parte do campo feita (2026-11-11): `supplierLink` saiu do catálogo público (`src/data/products.js`) e não vai mais ao navegador. Resta só a correção dos ids 9 e 17.
+  - [x] Remover `supplierLink` do catálogo público (feito em 2026-11-11). Os links ficam numa fonte privada mantida pelo painel admin (repositório privado, ligado ao produto pelo id).
+  - [x] Ajustar o painel administrativo externo para ler e gravar os links da fonte privada (feito pelo dono).
+  - Decisão: só remover o campo por ora. O histórico do git deste repositório público ainda contém os links antigos; tratá-los como já expostos. Reescrever o histórico fica como decisão futura e aberta.
+  - [ ] Corrigir os ids 9 (aponta para `kit-milano-camelo`, nome antigo) e 17 (aponta para um comedouro dobrável que não corresponde ao produto): a mãe corrige pelo painel.
 
 ---
 

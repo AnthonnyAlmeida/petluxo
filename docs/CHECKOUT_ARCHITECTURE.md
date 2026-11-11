@@ -4,6 +4,8 @@
 
 Carrinho de compras, pagamento embutido no site, cálculo real de frete e gestão de pedidos — substituindo o modelo atual de links avulsos de pagamento PagBank por produto.
 
+**Nota:** o `supplierLink` não existe mais no catálogo público (`src/data/products.js`); onde este plano o cita, ele deve ler os links da fonte privada mantida pelo painel admin.
+
 **Status:** plano aprovado, implementação não iniciada. Nenhum código deste documento existe ainda.
 
 ## Contexto

@@ -85,7 +85,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81J8xDn2N',
     tags: ['água', 'passeio', 'hidratação', 'squeeze'],
-    supplierLink: 'Olha o que eu achei na Wish! https://dl.wish.com/BXrR9',
     visible: false,
   },
   {
@@ -103,7 +102,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81LGWC7X4',
     tags: ['tigela', 'pote', 'ração', 'alimentação', 'comida'],
-    supplierLink: 'Comedouro elevado segunda linha com pequenas manchas na madeira P para cachorro e gato porte mini e P Descobri produtos incríveis no SHEIN.com, venha conferir! https://api-shein.shein.com/h5/sharejump/appjump?link=RqJA5dSdJfb_8&localcountry=BR&shc=2_RqJA5dSdJfb&url_from=GM74796417825',
     visible: false,
   },
   {
@@ -160,7 +158,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81MuixsTN',
     tags: ['cama', 'suspensa', 'rattan', 'descanso'],
-    supplierLink: '1 Peça Rede Grande Artesanal para Gatos, Fácil de Montar, Cama de Cesto Tricotada à Mão para Gatos, Cama de Balanço para Gatos, Cama de Dormir para Gatos, Cama Confortável para Animais de Estimação Interna, Decoração Doméstica Estilosa, Rede com Suporte, Adequada para Gatos, Cachorros e Outros Pequenos Descobri produtos incríveis no SHEIN.com, venha conferir! https://api-shein.shein.com/h5/sharejump/appjump?link=RqJZQiNbXgR_8&localcountry=BR&shc=2_RqJZQiNbXgR&url_from=GM74796417825',
   },
   {
     id: 12,
@@ -178,7 +175,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81J1KU12M',
     tags: ['sofá', 'cama', 'descanso', 'conforto', 'sofa'],
-    supplierLink: 'Caminha Sofa Poltrona Pet Mais Travesseirinho Ideal Para Caes e Gatos de Pequeno a Medio Porte Em Veludo Descobri produtos incríveis no SHEIN.com, venha conferir! https://api-shein.shein.com/h5/sharejump/appjump?link=RqJAzeN655N_8&localcountry=BR&shc=2_RqJAzeN655N&url_from=GM74796417825',
   },
   {
     id: 8,
@@ -200,7 +196,6 @@ export const PRODUCTS = [
       { size: 'M', link: 'https://pag.ae/82djo9_po' },
     ],
     tags: ['mochila', 'bolsa', 'carregar', 'viagem', 'passeio'],
-    supplierLink: 'https://www.coutrebolsas.com.br/bolsa-de-transporte-pet-luxo-glamour-toffee',
   },
   {
     id: 9,
@@ -222,7 +217,6 @@ export const PRODUCTS = [
       { size: 'G', link: 'https://pag.ae/8294FiLYH' },
     ],
     tags: ['élan couro', 'coleira', 'guia', 'conjunto', 'couro caramelo', 'kit passeio'],
-    supplierLink: 'https://www.zampe.com.br/kit-milano-camelo',
   },
   {
     id: 10,
@@ -239,7 +233,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81K3Kjy9v',
     tags: ['higiene', 'passeio', 'limpeza', 'saquinho'],
-    supplierLink: 'https://ameacessoriospet.com.br/produtos/poop-bag-de-couro-porta-saquinhos-higienicos/',
   },
   {
     id: 13,
@@ -258,7 +251,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81VR7uoS1',
     tags: ['sofá', 'cama', 'ortopédico', 'descanso'],
-    supplierLink: 'https://pt.aliexpress.com/item/1005012110217817.html?spm=a2g0o.home.pcJustForYou.1.31c83f401X3Q76&gps-id=pcJustForYou&scm=1007.13562.416251.0&scm_id=1007.13562.416251.0&scm-url=1007.13562.416251.0&pvid=68e35ce3-eb73-441c-8892-c9e37a2e4e85&_t=gps-id%3ApcJustForYou%2Cscm-url%3A1007.13562.416251.0%2Cpvid%3A68e35ce3-eb73-441c-8892-c9e37a2e4e85%2Ctpp_buckets%3A668%232846%238114%231999&pdp_ext_f=%7B%22order%22%3A%222%22%2C%22eval%22%3A%221%22%2C%22sceneId%22%3A%223562%22%2C%22fromPage%22%3A%22recommend%22%7D&pdp_npi=6%40dis%21BRL%21332.99%21332.99%21%21%21404.56%21404.56%21%402101e80317824941076255599ed585%2112000057538247850%21rec%21BR%21%21ABXZ%211%210%21n_tag%3A-29910%3Bd%3A6a0a19aa%3Bm03_new_user%3A-29895&utparam-url=scene%3ApcJustForYou%7Cquery_from%3A%7Cx_object_id%3A1005012110217817%7C_p_origin_prod%3A',
     visible: false,
   },
   {
@@ -318,7 +310,6 @@ export const PRODUCTS = [
       { size: 'Rosa', link: 'https://pag.ae/82cLZ3jr1', color: '#B08A81' },
     ],
     tags: ['mochila', 'bolsa', 'viagem', 'transporte'],
-    supplierLink: 'Aproveite mais essa promoção no SuperApp Magalu - Comedouro dobrável https://m.magazineluiza.com.br/comedouro-dobravel-mr-toni/p/fj1c8d55hd/pe/ptbb/?partner_id=64853&utm_source=pdp_desk&utm_medium=share&seller_id=specialvetclinicaveterinaria',
   },
   {
     id: 19,
@@ -355,7 +346,6 @@ export const PRODUCTS = [
     badge: null,
     buyLinks: [{ size: 'Tam. M', link: 'https://pag.ae/81M-Zz4cL' }, { size: 'Tam. G', link: 'https://pag.ae/81M-QYczq' }],
     tags: ['cama', 'couro', 'sofá', 'descanso'],
-    supplierLink: 'https://www.luxuspet.com.br/produtos/cama-couro/',
   },
   {
     id: 22,
@@ -425,7 +415,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81P8FJPxM',
     tags: ['passeio', 'coleira', 'guia', 'conjunto', 'kit', 'couro', 'trançado', 'off white', 'branco', 'acessórios'],
-    supplierLink: 'https://www.zampe.com.br/kit-roma-off-white',
   },
   {
     id: 27,
@@ -462,7 +451,6 @@ export const PRODUCTS = [
     badge: null,
     buyLinks: [{ size: 'Tam. P (até 5kg)', link: 'https://pag.ae/81Phf6B9r' }, { size: 'Tam. M (até 12kg)', link: 'https://pag.ae/81Phkp8ba' }, { size: 'Tam. G (até 20kg)', link: 'https://pag.ae/81Phm65YM' }],
     tags: ['cabana', 'teepee', 'personalizado', 'toca', 'casinha', 'bordado', 'artesanal'],
-    supplierLink: 'https://franciscanosmodapet.com.br/produto/cama-teepee/?fbclid=PAVERFWAR7KZdleHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAad52Ym-aUvFjNNg4d160gLNIeC11d_UCM7bLw4xsPXWao_dyGqGrlPHYG_koA_aem_qwtj6L-svTqdDP3UNETqew',
   },
   {
     id: 29,
@@ -515,7 +503,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81QtMgE9m',
     tags: ['estacao passeio', 'organizador pet', 'madeira premium', 'design minimalista', 'acessorios passeio', 'decoracao pet', 'estilo escandinavo'],
-    supplierLink: 'https://www.entonadecor.com.br/prateleira-gancho-catumbao',
   },
   {
     id: 32,
@@ -533,7 +520,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81QuxvZm1',
     tags: ['quadro personalizado', 'decoracao pet', 'minimalista', 'presente premium', 'design escandinavo', 'home decor'],
-    supplierLink: 'https://gittdecor.com.br/produtos/quadro-pet-art-minimalista/',
     visible: false,
   },
   {
@@ -570,7 +556,6 @@ export const PRODUCTS = [
     badge: 'NOVO',
     buyLink: 'https://pag.ae/81QSpn4pr',
     tags: ['bolsa termica', 'passeio', 'pet', 'viagem', 'premium', 'matelasse', 'sofisticado'],
-    supplierLink: 'https://www.aliexpress.com/item/1005011653963283.html',
   },
   {
     id: 35,
@@ -588,7 +573,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81QSF8Xw6',
     tags: ['manta premium', 'conforto', 'sono', 'refugio', 'pet sofisticado', 'aconchego', 'viagem'],
-    supplierLink: 'PetAmi Cobertor impermeável para cachorro, cobertor à prova de vazamento para cães pequenos e médios, protetor de capa de sofá de sofá de lã, gato de pelúcia lavável reversível, 61 x 81 cm, bege https://a.co/d/06cNZHoj',
   },
   {
     id: 36,
@@ -606,7 +590,6 @@ export const PRODUCTS = [
     badge: 'PREMIUM',
     buyLink: 'https://pag.ae/81Rpy249r',
     tags: ['comedouro', 'portatil', 'dobravel', 'viagem', 'pet premium', 'nômade'],
-    supplierLink: 'https://m.magazineluiza.com.br/comedouro-dobravel-mr-toni/p/fj1c8d55hd/pe/ptbb/?partner_id=64853&utm_source=pdp_desk&utm_medium=share&seller_id=specialvetclinicaveterinaria',
   },
   {
     id: 37,
@@ -643,7 +626,6 @@ export const PRODUCTS = [
     badge: 'NOVO',
     buyLink: 'https://pag.ae/827Z5Q7YG',
     tags: ['caminha premium', 'madeira', 'refugio', 'conforto', 'design', 'pequeno porte', 'cortinas', 'aconchego'],
-    supplierLink: 'https://happypi.com.br/produtos/happy-dream/?variant=1107494305&pf=mc&gad_source=1&gad_campaignid=22839501351&gbraid=0AAAAAp306BLxLWdvOouVArXdw6hYwcTIu&gclid=CjwKCAjww-3VBhAcEiwAwUUIu0jbngGkVUqlRivStJUUZKPO9KGaU1uR06Wz4_Mgz9kU01YU-KWvyBoCVJ4QAvD_BwE',
   },
   {
     id: 39,
@@ -662,7 +644,6 @@ export const PRODUCTS = [
     badge: 'NOVO',
     buyLink: 'https://pag.ae/82amk1aTH',
     tags: ['brinquedo', 'peluca', 'interativo', 'estimulacao', 'premium', 'diversao', 'apito'],
-    supplierLink: 'https://share.temu.com/ahx9uW6N8uA',
   },
   {
     id: 40,
@@ -681,7 +662,6 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/82b7PF9Vo',
     tags: ['brinquedo interativo', 'som estimulante', 'polvo mimo', 'brincadeira caes', 'brinquedo macio', 'interacao pet'],
-    supplierLink: 'https://share.temu.com/Hn4oAOZ3RaA',
   },
   {
     id: 41,

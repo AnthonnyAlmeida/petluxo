@@ -111,9 +111,9 @@ Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 
 
 **Próximos valores livres (do arquivo):** `id` 44; `order` 59 (máximo atual 58, id 43; sem `order` duplicado); `categoryOrder` — maior peso atual por categoria (incluindo ocultos) e próximo livre: mais-vendidos 1700 → 1800; couro 1800 → 1900; conforto 1600 → 1700; sono-refugio 1500 → 1600; a-mesa 1200 → 1300; colecao-cozy-luxo 800 → 900; brinquedos 500 → 600; colecao-passeio 600 → 700; viagem-mobilidade 200 → 300 (convenção: pesos em múltiplos de 100, maior aparece primeiro). Pesos de `mais-vendidos`: id 39 = 1700, id 8 = 1600, id 16 = 1400 (oculto), id 20 = 1300, id 28 não está na categoria.
 
-**Campos** em uso: `id`, `name`, `shortName`, `subtitle`, `description`, `bullets`, `price`, `originalPrice`, `prices`, `category[]`, `order`, `categoryOrder{}`, `image`, `badge`, `buyLink`, `buyLinks`, `variationType`, `tags`, `supplierLink`, `visible`, `featured`, `cardNote`.
+**Campos** em uso: `id`, `name`, `shortName`, `subtitle`, `description`, `bullets`, `price`, `originalPrice`, `prices`, `category[]`, `order`, `categoryOrder{}`, `image`, `badge`, `buyLink`, `buyLinks`, `variationType`, `tags`, `visible`, `featured`, `cardNote`.
 
-- Todos têm `shortName`; só os ids 3, 4 e 10 não têm `subtitle`. Todos têm `tags`. `supplierLink` existe em 20 produtos e falta em 18 (ids 1, 2, 14, 15, 16, 19, 20, 22, 24, 25, 27, 29, 30, 33, 37, 41, 42, 43); é opcional, não validado, e é enviado ao navegador.
+- Todos têm `shortName`; só os ids 3, 4 e 10 não têm `subtitle`. Todos têm `tags`. O campo `supplierLink` não existe mais no catálogo público e não vai ao navegador: os links de fornecedor ficam numa fonte privada mantida pelo painel admin (outro repositório, privado), ligada ao produto pelo id. O histórico do git deste repositório público ainda contém os links antigos (decisão do dono: não reescrever o histórico por ora; tratá-los como já expostos).
 - `badge` em uso: `MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, `ESGOTADO` (o validador aceita só esses).
 - `featured: true` só no id 2 (Refúgio Cozy). `Featured.jsx` mostra o primeiro produto com `featured === true` e visível. `featured: false` explícito nos ids 13, 37, 38, 39, 40.
 - `cardNote` só no id 20. `originalPrice` nos ids 1, 3, 40.
@@ -176,7 +176,7 @@ CSS Modules em camelCase; todos os `.module.css` são importados; nenhum bloco p
 
 ## Segurança
 
-Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `.wrangler/` e `.dev.vars` estão no `.gitignore`; só `.env.example` (nome da variável) é tracked. Dados públicos intencionais: ID do GA4, telefone do WhatsApp, CNPJ no Footer. `supplierLink` (20 produtos) é exposto no bundle (`docs/TODO.md` item 3/18). O repositório é público porque as miniaturas do painel usam `raw.githubusercontent.com` (`docs/TODO.md` item 23).
+Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `.wrangler/` e `.dev.vars` estão no `.gitignore`; só `.env.example` (nome da variável) é tracked. Dados públicos intencionais: ID do GA4, telefone do WhatsApp, CNPJ no Footer. Os links de fornecedor não estão no repositório atual nem no bundle (ficam na fonte privada do painel admin), mas o histórico do git ainda os contém e devem ser tratados como já expostos (`docs/TODO.md` item 3/18). O repositório é público porque as miniaturas do painel usam `raw.githubusercontent.com` (`docs/TODO.md` item 23).
 
 ## Variáveis de ambiente
 
@@ -194,7 +194,7 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 - Checkout próprio (InfinitePay, frete grátis) e reescrita de `docs/CHECKOUT_ARCHITECTURE.md`: `docs/TODO.md` itens 21 e 26.
 - Eventos GA4 de clique no WhatsApp: `docs/TODO.md` item 6.
 - Meta tags por produto, status 404 real, sitemap com produtos, JSON-LD: `docs/TODO.md` itens 1, 2 e 10.
-- `supplierLink` no catálogo público e ids 9 e 17 incorretos: `docs/TODO.md` item 3/18.
+- Ids 9 e 17 com link de fornecedor errado herdado: a mãe corrige pelo painel; reescrita do histórico do git (links antigos) segue como decisão futura e aberta (`docs/TODO.md` item 3/18).
 - Fichas dos 7 produtos visíveis sem ficha e campo de prazo de entrega: `docs/TODO.md` itens 7 e 8.
 - Obrigatoriedade de `buyLink`/`buyLinks` no catálogo (validador, `useProductBuy`, seletor de tamanho, `ProductPage`, painel admin), não iniciada: `docs/TODO.md` item 38.
 - Privatizar o repositório e rotacionar o token do painel: `docs/TODO.md` itens 23 e 25.
