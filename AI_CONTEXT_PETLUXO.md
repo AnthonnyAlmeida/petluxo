@@ -134,7 +134,7 @@ Schema (10 campos, todos opcionais): `gallery`, `specs{}`, `sizeChart[{size,heig
 
 - `ProductPage.jsx` define `SPEC_LABELS` (72 entradas); toda chave nova de `specs` exige label (hoje nenhuma está sem).
 - Toda linha de `sizeChart` precisa das 5 chaves (usar `'—'` quando não se aplica); hoje todas estão completas.
-- Fichas completas (10 campos): ids 41 e 42. O id 43 tem ficha de 6 campos (`gallery`, `specs`, `sizeGuideNote`, `whatsIncluded`, `careInstructions`, `faq`; sem `sizeChart`, `howToChooseSize`, `airTravelNote`, `warranty`). O id 33 tem ficha de 5 campos (`gallery`, `specs`, `sizeChart`, `howToChooseSize`, `faq`; sem `whatsIncluded`, `careInstructions`, `airTravelNote`, `warranty`, `sizeGuideNote`). Id 2 tem ficha com `sizeChart` vazio e orientação por peso.
+- Fichas completas (10 campos): ids 41 e 42. O id 43 tem ficha de 6 campos (`gallery`, `specs`, `sizeGuideNote`, `whatsIncluded`, `careInstructions`, `faq`; sem `sizeChart`, `howToChooseSize`, `airTravelNote`, `warranty`). O id 33 tem ficha de 6 campos (`gallery`, `specs`, `sizeChart`, `howToChooseSize`, `whatsIncluded`, `faq`; sem `careInstructions`, `airTravelNote`, `warranty`, `sizeGuideNote`). Id 2 tem ficha com `sizeChart` vazio e orientação por peso.
 - Ordem dos `AccordionItem` fixa no JSX: specs → sizeChart → howToChooseSize → sizeGuideNote → whatsIncluded → careInstructions → airTravelNote → warranty → faq (todos fechados por padrão).
 
 Produtos citados:

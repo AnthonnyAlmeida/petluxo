@@ -89,7 +89,6 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 - [ ] **8. Completar fichas dos produtos sem `PRODUCT_DETAILS`** 🔴
       16 dos 38 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32). Dos 27 visíveis, 6 estão sem ficha e abrem só o modal rápido: ids 14, 18, 24, 25, 30, 31 (os outros 10 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
-      Pendência do id 33: confirmar com a mãe se o dessecante e o copo medidor acompanham o produto e se o reservatório é realmente hermético; se confirmado, atualizar ficha (`whatsIncluded`, FAQ) e nome.
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
       JSON-LD `Product` nas fichas e URLs dos produtos visíveis em `public/sitemap.xml`. Faz mais sentido depois do item 2.

@@ -590,20 +590,25 @@ export const PRODUCT_DETAILS = {
       cor: 'Marfim',
       acabamento: 'Puxador em cobre rosé',
       fechamento: 'Abertura manual',
-      caracteristicas: 'Visor transparente frontal; compartimento para dessecante integrado à tampa',
+      caracteristicas: 'Reservatório hermético; visor transparente frontal; compartimento na tampa para dessecante (dessecante não incluso)',
     },
     sizeChart: [
       { size: 'P', height: '18,5 cm', length: '21,5 cm', width: '21,5 cm', weight: '—' },
       { size: 'G', height: '25,5 cm', length: '27,2 cm', width: '27,2 cm', weight: '—' },
     ],
     howToChooseSize: 'O tamanho P tem capacidade anunciada de 5 kg e o G de 10 kg. Como a capacidade varia conforme a densidade da ração, considere também o espaço disponível, usando as dimensões da tabela de medidas.',
+    whatsIncluded: [
+      'Reservatório Hermético Cozy',
+    ],
     faq: [
       { question: 'Quais são os tamanhos?', answer: 'P (21,5 × 21,5 × 18,5 cm, capacidade anunciada de 5 kg) e G (27,2 × 27,2 × 25,5 cm, capacidade anunciada de 10 kg).' },
       { question: 'Para quais animais é indicado?', answer: 'Para ração de cães, gatos e pequenos animais.' },
       { question: 'Dá para ver a quantidade de ração?', answer: 'Sim. O visor transparente frontal permite ver a quantidade armazenada sem abrir o reservatório.' },
-      { question: 'Tem espaço para dessecante?', answer: 'Sim. A tampa tem um compartimento integrado para acomodar agente dessecante.' },
+      { question: 'Tem espaço para dessecante?', answer: 'Sim. A tampa tem um compartimento para acomodar agente dessecante. O dessecante não acompanha o produto.' },
       { question: 'Como é a abertura?', answer: 'A abertura é manual, com puxador em tom cobre rosé.' },
       { question: 'A capacidade é sempre a mesma?', answer: 'Não. A capacidade varia conforme o tamanho e a densidade dos grãos da ração.' },
+      { question: 'O reservatório é hermético?', answer: 'Sim.' },
+      { question: 'O que acompanha o reservatório?', answer: 'Apenas o reservatório. O dessecante e o copo medidor não acompanham o produto.' },
     ],
   },
 };

@@ -524,14 +524,15 @@ export const PRODUCTS = [
   },
   {
     id: 33,
-    name: 'Reservatório Cozy para Ração Pet',
-    shortName: 'Reservatório Cozy',
+    name: 'Reservatório Hermético Cozy para Ração Pet',
+    shortName: 'Reservatório Hermético Cozy',
     subtitle: 'Organização e cuidado em cada detalhe.',
-    description: 'O Reservatório Cozy foi pensado para armazenar a ração de maneira prática e elegante, mantendo o cantinho de alimentação organizado e harmonioso. Com design minimalista, acabamento em tom marfim e detalhes em cobre rosé, combina funcionalidade e sofisticação para integrar naturalmente os ambientes da sua casa.',
+    description: 'O Reservatório Hermético Cozy foi pensado para armazenar a ração de maneira prática e elegante, mantendo o cantinho de alimentação organizado e harmonioso. Com design minimalista, acabamento em tom marfim e detalhes em cobre rosé, combina funcionalidade e sofisticação para integrar naturalmente os ambientes da sua casa.',
     bullets: [
+      'Reservatório hermético para armazenar a ração',
       'Design contemporâneo, com linhas suaves e formato compacto',
       'Visor transparente para ver a quantidade de ração sem abrir',
-      'Compartimento para dessecante integrado à tampa',
+      'Compartimento na tampa para dessecante (não incluso)',
       'Abertura manual prática',
       'Puxador em cobre rosé',
     ],
@@ -550,7 +551,7 @@ export const PRODUCTS = [
       { size: 'P', link: 'https://wa.me/5561994063917' },
       { size: 'G', link: 'https://wa.me/5561994063917' },
     ],
-    tags: ['racao', 'armazenamento', 'reservatorio', 'organizacao', 'design', 'pet', 'premium'],
+    tags: ['racao', 'armazenamento', 'hermetico', 'reservatorio', 'organizacao', 'design', 'pet', 'premium'],
   },
   {
     id: 34,
