@@ -88,7 +88,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Informar com clareza as condições de entrega (fornecedor + frete), parte de apresentar a oferta com informação clara ao consumidor. O schema de `productDetails.js` não tem campo dedicado: criar `deliveryNote` (e renderizar no `ProductPage`) ou, provisoriamente, usar `faq`/`warranty`. O campo é uma decisão de implementação, não a obrigação em si.
 
 - [ ] **8. Completar fichas dos produtos sem `PRODUCT_DETAILS`** 🔴
-      17 dos 38 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32, 33). Dos 27 visíveis, 7 estão sem ficha e abrem só o modal rápido: ids 14, 18, 24, 25, 30, 31, 33 (os outros 10 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
+      16 dos 38 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32). Dos 27 visíveis, 6 estão sem ficha e abrem só o modal rápido: ids 14, 18, 24, 25, 30, 31 (os outros 10 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
+      Pendência do id 33: confirmar com a mãe se o dessecante e o copo medidor acompanham o produto e se o reservatório é realmente hermético; se confirmado, atualizar ficha (`whatsIncluded`, FAQ) e nome.
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
       JSON-LD `Product` nas fichas e URLs dos produtos visíveis em `public/sitemap.xml`. Faz mais sentido depois do item 2.
@@ -183,7 +184,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
     - `src/components/product/ProductBuyButton.jsx`: a mensagem do WhatsApp usa o tamanho/cor ativo (`selectedSize`, só se houver `product.buyLinks`) e o preço ativo (`activePrice`, com fallback para `product.price`); os ramos do botão também testam `buyLinks`/`buyLink`.
     - `src/components/pages/ProductPage.jsx` (e `ProductModal.jsx`): usam `product.buyLinks && selectedSize` para escolher entre mostrar só o preço do tamanho ativo e a lista completa de `prices`.
     - Painel admin externo `petluxo-admin`: `usePublish.js` (grava `buyLinks` a partir das variantes ou `buyLink`), `productEdit.js` (decide se o produto tem tamanhos por `prices`/`buyLinks` e lê os links) e `productTemplate.js` (`buyLink: ''`); também aparecem em `Step1Basics.jsx`, `Step4Review.jsx`, `ProductPreview.jsx` e `useProductForm.js`.
-  - Paliativo atual: produtos novos usam `buyLinks` com `https://wa.me/5561994063917` por tamanho (ids 2 e 43). O cliente não vê esses links.
+  - Paliativo atual: produtos novos usam `buyLinks` com `https://wa.me/5561994063917` por tamanho (ids 2, 33 e 43). O cliente não vê esses links.
   - Caminho provável: o tamanho passa a vir de `prices` em vez de `buyLinks`; o validador deixa de exigir link; o painel é ajustado em paralelo (ordem a decidir, porque o painel reescreve `products.js`).
 
 ---

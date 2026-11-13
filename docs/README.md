@@ -130,7 +130,7 @@ npm run preview
 | 28  | Cabana Lumière                                                | sono-refugio                          |
 | 30  | Cesto Organizador Personalizado para Pets — Coleção Cozy Luxo | colecao-cozy-luxo                     |
 | 31  | Estação de Passeio PetLuxo™ em Madeira Premium                | colecao-cozy-luxo                     |
-| 33  | Reservatório Hermético Cozy para Ração Pet                    | colecao-cozy-luxo                     |
+| 33  | Reservatório Cozy para Ração Pet                              | colecao-cozy-luxo                     |
 | 34  | Bolsa Térmica Signature Metalassê                             | colecao-passeio                       |
 | 35  | Manta Serenity™ PetLuxo Premium                               | sono-refugio                          |
 | 36  | Comedouro Nômade Premium™ Dobrável e Portátil                 | viagem-mobilidade                     |
