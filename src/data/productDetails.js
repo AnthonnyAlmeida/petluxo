@@ -574,4 +574,36 @@ export const PRODUCT_DETAILS = {
       { question: 'Como limpar o kit?', answer: 'Com pano macio levemente umedecido, evitando produtos abrasivos, imersão em água e exposição prolongada ao sol ou à umidade.' },
     ],
   },
+  33: {
+    gallery: [
+      '/images/products/reservatorio-cozy/principal.webp',
+      '/images/products/reservatorio-cozy/reservatorio-cozy-2.webp',
+    ],
+    specs: {
+      produto: 'Reservatório para armazenamento de ração',
+      tamanho: 'P ou G',
+      dimensoes: 'P: 21,5 cm × 21,5 cm × 18,5 cm | G: 27,2 cm × 27,2 cm × 25,5 cm (largura × profundidade × altura)',
+      capacidade: 'P: 5 kg | G: 10 kg (varia conforme o tamanho e a densidade dos grãos da ração)',
+      indicacao: 'Cães, gatos e pequenos animais',
+      formato: 'Retangular',
+      estilo: 'Moderno e minimalista',
+      cor: 'Marfim',
+      acabamento: 'Puxador em cobre rosé',
+      fechamento: 'Abertura manual',
+      caracteristicas: 'Visor transparente frontal; compartimento para dessecante integrado à tampa',
+    },
+    sizeChart: [
+      { size: 'P', height: '18,5 cm', length: '21,5 cm', width: '21,5 cm', weight: '—' },
+      { size: 'G', height: '25,5 cm', length: '27,2 cm', width: '27,2 cm', weight: '—' },
+    ],
+    howToChooseSize: 'O tamanho P tem capacidade anunciada de 5 kg e o G de 10 kg. Como a capacidade varia conforme a densidade da ração, considere também o espaço disponível, usando as dimensões da tabela de medidas.',
+    faq: [
+      { question: 'Quais são os tamanhos?', answer: 'P (21,5 × 21,5 × 18,5 cm, capacidade anunciada de 5 kg) e G (27,2 × 27,2 × 25,5 cm, capacidade anunciada de 10 kg).' },
+      { question: 'Para quais animais é indicado?', answer: 'Para ração de cães, gatos e pequenos animais.' },
+      { question: 'Dá para ver a quantidade de ração?', answer: 'Sim. O visor transparente frontal permite ver a quantidade armazenada sem abrir o reservatório.' },
+      { question: 'Tem espaço para dessecante?', answer: 'Sim. A tampa tem um compartimento integrado para acomodar agente dessecante.' },
+      { question: 'Como é a abertura?', answer: 'A abertura é manual, com puxador em tom cobre rosé.' },
+      { question: 'A capacidade é sempre a mesma?', answer: 'Não. A capacidade varia conforme o tamanho e a densidade dos grãos da ração.' },
+    ],
+  },
 };
