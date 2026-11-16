@@ -186,15 +186,12 @@ export const PRODUCTS = [
     price: 'a partir de R$ 1.197,00',
     prices: [{ size: 'P', price: 'R$ 1.197,00' }, { size: 'M', price: 'R$ 1.297,00' }],
     originalPrice: null,
-    category: ['mais-vendidos', 'couro'],
+    category: ['mais-vendidos', 'viagem-mobilidade'],
     order: 33,
-    categoryOrder: {"mais-vendidos":1600,"couro":1500},
+    categoryOrder: {"mais-vendidos":1600,"viagem-mobilidade":500},
     image: '/images/products/bolsa-transporte-petluxo/principal.webp',
     badge: 'MAIS VENDIDOS',
-    buyLinks: [
-      { size: 'P', link: 'https://pag.ae/82da2EVxG' },
-      { size: 'M', link: 'https://pag.ae/82djo9_po' },
-    ],
+    buyLinks: [{ size: 'P', link: 'https://pag.ae/82da2EVxG' }, { size: 'M', link: 'https://pag.ae/82djo9_po' }],
     tags: ['mochila', 'bolsa', 'carregar', 'viagem', 'passeio'],
   },
   {
