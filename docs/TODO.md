@@ -120,7 +120,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Rodar `file public/images/products/*/*.webp | grep PNG` e verificar no painel (`petluxo-admin/src/lib/imageConverter.js`) como as fotos são convertidas, para evitar que o problema volte a cada produto novo. Causa não verificada.
 
 - [ ] **25. Rotacionar periodicamente o token de acesso do painel ao GitHub** 🟢
-      O token atual (fine-grained, só o repositório `petluxo`, permissão Contents em leitura e escrita) não tem vencimento. Definir uma rotina de troca (sugestão: a cada 6 a 12 meses). Última troca: 2026-10-26. Não registrar o valor do token em nenhum arquivo.
+      O token atual (`petluxo-admin-v2`, fine-grained) cobre dois repositórios, `petluxo` e `petluxo-admin`, com as permissões Contents em leitura e escrita e Metadata em leitura. Foi criado em 2026-10-26 e não tem vencimento. Ação planejada: trocar o token entre 2027-04-26 e 2027-10-26 (6 a 12 meses após a criação), já definindo data de validade na nova versão. Não registrar o valor do token em nenhum arquivo.
 
 - [ ] **26. Reescrever `docs/CHECKOUT_ARCHITECTURE.md` para InfinitePay com frete grátis** 🟡
       Saem Mercado Pago e Melhor Envio. Continuam servidor (funções, agora Worker com script na Cloudflare) e banco. Pagamento por redirecionamento para checkout hospedado. Confirmação de pagamento pela API (retorno ao site e webhook não bastam como prova). Débito a confirmar.
