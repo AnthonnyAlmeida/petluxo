@@ -90,6 +90,8 @@ const SPEC_LABELS = {
   conteudo: 'Conteúdo da embalagem',
   tamanhos: 'Tamanhos',
   frete: 'Frete',
+  construcao: 'Construção',
+  cores: 'Cores',
 };
 
 export default function ProductPage() {

@@ -611,4 +611,33 @@ export const PRODUCT_DETAILS = {
       { question: 'O que acompanha o reservatório?', answer: 'Apenas o reservatório. O dessecante e o copo medidor não acompanham o produto.' },
     ],
   },
+  44: {
+    gallery: [
+      '/images/products/peitoral-elan-signature/principal.webp',
+      '/images/products/peitoral-elan-signature/peitoral-elan-signature-2.webp',
+      '/images/products/peitoral-elan-signature/peitoral-elan-signature-3.webp',
+      '/images/products/peitoral-elan-signature/peitoral-elan-signature-4.webp',
+      '/images/products/peitoral-elan-signature/peitoral-elan-signature-5.webp',
+    ],
+    specs: {
+      material: 'Couro bovino de flor integral (anunciado pelo fornecedor)',
+      construcao: 'Camada dupla',
+      cores: 'Preto com detalhes marrons; Branco com detalhes pretos',
+      tamanhos: 'M (Médio) e G (Grande)',
+      indicacao: 'Cães de porte médio e grande (indicado pelo fornecedor)',
+      ferragens: 'Metálicas',
+    },
+    howToChooseSize: 'Consulte as medidas do seu pet para escolher o tamanho adequado. A escolha deve considerar as medidas corporais, não apenas o peso ou a raça. Em caso de dúvida, confirme conosco pelo WhatsApp antes de comprar.',
+    whatsIncluded: [
+      '1 Peitoral Élan Signature, no tamanho e na cor escolhidos',
+    ],
+    careInstructions: 'Limpar delicadamente com pano macio e seco. Evitar exposição prolongada à umidade e armazenar em local arejado.',
+    faq: [
+      { question: 'Para quais cães é indicado?', answer: 'O fornecedor indica o modelo para cães de porte médio e grande.' },
+      { question: 'Quais tamanhos e cores existem?', answer: 'Tamanhos M (Médio) e G (Grande); cores preto com detalhes marrons e branco com detalhes pretos. A cor é combinada pelo WhatsApp.' },
+      { question: 'Como escolho o tamanho?', answer: 'Pelas medidas corporais do pet, não só peso ou raça. Em caso de dúvida, fale conosco pelo WhatsApp.' },
+      { question: 'Qual é o material?', answer: 'O fornecedor anuncia couro bovino de flor integral, com construção em camada dupla.' },
+      { question: 'Como cuidar da peça?', answer: 'Limpar delicadamente com pano macio e seco, evitar exposição prolongada à umidade e armazenar em local arejado.' },
+    ],
+  },
 };

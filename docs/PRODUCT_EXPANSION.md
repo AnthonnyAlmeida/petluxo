@@ -16,7 +16,7 @@ A ficha de produto atual (imagem única, descrição, bullets) é considerada ra
 
 Além disso, foi pedido um selo fixo "Por que escolher a PetLuxo?" com 6 diferenciais — esse **não é conteúdo por produto**, é um componente global reutilizável.
 
-Ponto central do pedido: o negócio ainda está levantando esse nível de detalhe produto por produto (38 produtos no catálogo hoje). A estrutura precisa suportar produtos com dados completos e produtos com dados parciais/ausentes ao mesmo tempo, sem quebrar nada.
+Ponto central do pedido: o negócio ainda está levantando esse nível de detalhe produto por produto (39 produtos no catálogo hoje). A estrutura precisa suportar produtos com dados completos e produtos com dados parciais/ausentes ao mesmo tempo, sem quebrar nada.
 
 ## Decisão de arquitetura
 
@@ -99,7 +99,7 @@ Dentro da pasta:
 - `principal.webp` — imagem de capa, a mesma referenciada em `product.image` (usada no card, no modal e como imagem principal da `ProductPage`)
 - `<slug-da-pasta>-2.webp`, `<slug-da-pasta>-3.webp`, ... — fotos adicionais, com o slug da pasta como prefixo seguido de número sequencial (ex.: `bolsa-transporte-petluxo-2.webp`, `bolsa-transporte-petluxo-3.webp`), referenciadas em `PRODUCT_DETAILS[id].gallery`. Numeração começa em `2` (o `1` conceitual é o próprio `principal.webp`), ordenada pela ordem cronológica em que as fotos foram tiradas/recebidas. Substitui a convenção anterior de numeração simples sem prefixo (`2.webp`, `3.webp`), abandonada por ficar ambígua fora do contexto da pasta (ex.: ao arrastar o arquivo para fora, ou em qualquer listagem que misture arquivos de produtos diferentes).
 
-**Migração completa, não mais gradual.** A ideia original era migrar produto por produto, só quando cada um ganhasse galeria própria (decisão registrada na primeira versão deste documento). Essa decisão foi revertida: os **32 produtos do catálogo** foram migrados de uma vez para a pasta própria, para manter o padrão consistente em todo o site desde já, independentemente de já terem ou não fotos adicionais — a maioria ainda tem só `principal.webp` na pasta, aguardando galeria. Produtos novos que entrarem no catálogo devem seguir a mesma convenção desde o cadastro.
+**Migração completa, não mais gradual.** A ideia original era migrar produto por produto, só quando cada um ganhasse galeria própria (decisão registrada na primeira versão deste documento). Essa decisão foi revertida: os **32 produtos que o catálogo tinha na época** foram migrados de uma vez para a pasta própria, para manter o padrão consistente em todo o site desde já, independentemente de já terem ou não fotos adicionais — a maioria ainda tem só `principal.webp` na pasta, aguardando galeria. Produtos novos que entrarem no catálogo devem seguir a mesma convenção desde o cadastro.
 
 **Formato dos arquivos.** Os arquivos `.webp` devem ser WebP de verdade, convertidos com `cwebp -q 82` (sem alterar as dimensões). Para conferir, rodar `file <arquivo>`: um WebP real aparece como `Web/P image`; `PNG image data` indica um PNG com extensão `.webp`, que deve ser reconvertido.
 

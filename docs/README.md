@@ -110,7 +110,7 @@ npm run preview
 
 ## Catálogo de produtos
 
-**38 produtos em 9 categorias. A tabela abaixo lista os 27 visíveis; os 11 com `visible: false` não aparecem no site:**
+**39 produtos em 9 categorias. A tabela abaixo lista os 28 visíveis; os 11 com `visible: false` não aparecem no site:**
 
 | ID  | Nome                                                          | Categorias                            |
 | --- | ------------------------------------------------------------- | ------------------------------------- |
@@ -140,7 +140,8 @@ npm run preview
 | 40  | Polvo Mimo™ Brinquedo Interativo com Som para Cães            | brinquedos                            |
 | 41  | Bolsa Auréa Voyage                                            | couro                                 |
 | 42  | Bolsa Majestic Travel                                         | couro                                 |
-| 43  | Kit Élan Rosa \| Elegância em Cada Passeio                    | colecao-passeio, couro                |
+| 43  | Kit Élan Rosa \| Elegância em Cada Passeio                    | couro                                 |
+| 44  | Peitoral Élan Signature                                       | couro                                 |
 
 **Categorias disponíveis:**
 

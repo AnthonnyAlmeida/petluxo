@@ -726,5 +726,37 @@ export const PRODUCTS = [
     badge: null,
     buyLinks: [{ size: 'PP', link: 'https://wa.me/5561994063917' }, { size: 'M', link: 'https://wa.me/5561994063917' }, { size: 'G', link: 'https://wa.me/5561994063917' }],
     tags: ['kit', 'guia', 'coleira', 'porta-saquinhos', 'passeio', 'rosa', 'couro', 'luxo'],
+  },
+  {
+    id: 44,
+    name: 'Peitoral Élan Signature',
+    shortName: 'Peitoral Élan Signature',
+    subtitle: 'Elegância que acompanha cada passo.',
+    description: 'O Peitoral Élan Signature combina uma estética clássica com um acabamento sofisticado. Seu design apresenta tiras estruturadas, detalhes sobrepostos e ferragens metálicas, criando uma peça de personalidade para os passeios. Desenvolvido para cães de porte médio e grande, é uma opção para quem valoriza acessórios com presença, estilo e funcionalidade. Mais do que um acessório, um detalhe de personalidade na jornada do seu pet.',
+    bullets: [
+      'Material anunciado: couro bovino de flor integral',
+      'Construção com camada dupla',
+      'Design com detalhes em blocos de cores',
+      'Tiras ajustáveis',
+      'Ferragens e pontos de fixação metálicos',
+      'Modelo indicado pelo fornecedor para cães de porte médio e grande',
+    ],
+    price: 'R$ 379,90',
+    prices: [
+      { size: 'M', price: 'R$ 379,90' },
+      { size: 'G', price: 'R$ 379,90' },
+    ],
+    originalPrice: null,
+    category: ['couro'],
+    order: 59,
+    categoryOrder: {"couro":1900},
+    image: '/images/products/peitoral-elan-signature/principal.webp',
+    badge: null,
+    buyLinks: [
+      { size: 'M', link: 'https://wa.me/5561994063917' },
+      { size: 'G', link: 'https://wa.me/5561994063917' },
+    ],
+    tags: ['peitoral', 'élan', 'élan signature', 'couro', 'passeio', 'cães médios', 'cães grandes'],
+    visible: true,
   }
 ];
