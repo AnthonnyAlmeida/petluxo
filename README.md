@@ -60,7 +60,7 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 | **Vite** | 6.4.2 | Bundler ultrarrápido e servidor de desenvolvimento |
 | **JavaScript** | ES2022 | Lógica de negócio, estado e interatividade |
 | **CSS Modules** | — | Design system proprietário, sem frameworks de UI; estilos scoped por componente |
-| **Google Fonts** | — | Cormorant Garamond · Inter · JetBrains Mono |
+| **@fontsource** | ^5.3.0 | Cormorant Garamond · Inter · JetBrains Mono hospedadas no próprio site (subset latin, importadas em `src/main.jsx`); sem requisição ao Google Fonts |
 | **React Router** | ^7.15.0 | Rotas da home, fichas `/produto/:id` e páginas de política |
 | **yet-another-react-lightbox** | ^3.32.2 | Lightbox com zoom, carregado sob demanda em dispositivos touch |
 | **Google Analytics** | GA4 | `gtag.js` carregado por `src/lib/analytics.js` somente depois do consentimento do visitante |

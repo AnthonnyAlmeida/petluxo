@@ -154,22 +154,26 @@ test.describe('Consentimento GA4 (LGPD)', () => {
     expect(gtagTags).toBe(0);
   });
 
-  test('revogacao por Gerenciar preferencias: bloqueia tracking', async ({ page }) => {
+  test('revogacao: reabrir pelo rodape e recusar recarrega a pagina sem gtag.js', async ({ page }) => {
     await resetConsent(page);
 
-    // Garantir que o dialog esta visível
+    // Aceitar primeiro (gtag.js carregado)
+    await page.getByRole('button', { name: /Aceitar analytics/ }).click();
+    await page.waitForSelector(GTAG_SCRIPT_SELECTOR, { state: 'attached', timeout: 10000 });
+
+    // Reabrir pelo botao do rodape e recusar: a pagina recarrega
+    await page.getByRole('button', { name: 'Preferências de cookies' }).click();
     await expect(page.locator(DIALOG_SELECTOR)).toBeVisible();
-    await page.waitForTimeout(500);
+    await Promise.all([
+      page.waitForEvent('load'),
+      page.getByRole('button', { name: /Recusar analytics/ }).click(),
+    ]);
 
-    // Clicar diretamente em Gerenciar preferencias (banner ainda esta visível)
-    await page.locator('button', { hasText: 'Gerenciar preferências' }).click();
-
-    // Consentimento negado apos revogacao
+    // Consentimento negado, banner fechado e nenhum gtag.js na pagina nova
     const consent = await page.evaluate(() => localStorage.getItem('petluxo_analytics_consent'));
     expect(consent).toBe('denied');
-
-    // Banner reaparece (setShow(true) em handleRevoke)
-    await expect(page.locator(DIALOG_SELECTOR)).toBeVisible();
+    await expect(page.locator(DIALOG_SELECTOR)).toHaveCount(0);
+    expect(await page.locator(GTAG_SCRIPT_SELECTOR).count()).toBe(0);
   });
 
   test('falha inicial de gtag.js e retry: sem duplicacao de scripts nem page_view', async ({ page }) => {
@@ -224,7 +228,6 @@ test.describe('Consentimento GA4 (LGPD)', () => {
     // Botoes presentes
     await expect(page.getByRole('button', { name: /Aceitar analytics/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /Recusar analytics/ })).toBeVisible();
-    await expect(page.locator('button', { hasText: 'Gerenciar preferências' })).toBeVisible();
   });
 
   test('banner mobile: layout responsivo e botoes', async ({ page }) => {
@@ -237,6 +240,5 @@ test.describe('Consentimento GA4 (LGPD)', () => {
 
     await expect(page.getByRole('button', { name: /Aceitar analytics/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /Recusar analytics/ })).toBeVisible();
-    await expect(page.locator('button', { hasText: 'Gerenciar preferências' })).toBeVisible();
   });
 });

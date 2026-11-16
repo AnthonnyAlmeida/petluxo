@@ -8,15 +8,13 @@
  * permanece hardcoded aqui (sem justificativa para mover a variável de
  * ambiente). Ele só é enviado ao navegador depois do consentimento.
  *
- * Limitações conhecidas (documentadas, não corrigidas aqui):
- * - Revogar o consentimento não remove o script gtag.js já executado no
- *   navegador. Uma vez carregado, o GA4 pode continuar operando por conta
- *   própria (ex.: Enhanced Measurement configurado na propriedade). Todas as
- *   funções de rastreamento deste módulo verificam isConsentGranted() antes
- *   de enviar qualquer evento.
- * - O Enhanced Measurement do GA4 pode enviar eventos independentemente do
- *   código do site. Isso exige Consent Mode ou ajuste direto na propriedade
- *   GA4; não é implementado automaticamente neste arquivo.
+ * Revogação: um script já executado não pode ser descarregado. Por isso, ao
+ * revogar um consentimento antes concedido, o banner (AnalyticsConsent.jsx)
+ * chama revokeConsent() e recarrega a página; na página nova, sem
+ * consentimento, o gtag.js não é carregado (nem o Enhanced Measurement da
+ * propriedade GA4, que depende desse script). Todas as funções de
+ * rastreamento deste módulo também verificam isConsentGranted() antes de
+ * enviar qualquer evento. Este módulo não implementa Consent Mode.
  */
 
 const GA4_MEASUREMENT_ID = 'G-KKMV5VHR48';
@@ -51,11 +49,11 @@ export function isConsentGranted() {
   return getConsent() === GRANTED;
 }
 
-/* Revoga o consentimento: nega analytics e impede novos eventos via nossas
- * funções de rastreamento. Não remove o script gtag.js já executado — uma
- * vez carregado, o GA4 pode continuar operando por conta própria. Todas as
- * funções de rastreamento deste módulo verificam isConsentGranted() antes
- * de agir. Cookies _ga/_gid são expirados quando sob controle do site.
+/* Revoga o consentimento: grava 'denied', impede novos eventos via nossas
+ * funções de rastreamento e expira os cookies _ga/_gid quando sob controle do
+ * site. Esta função não descarrega o gtag.js já executado: quem a chama a
+ * partir do banner recarrega a página em seguida (ver AnalyticsConsent.jsx),
+ * e é o recarregamento que faz o script deixar de rodar.
  */
 export function revokeConsent() {
   setConsent(DENIED);

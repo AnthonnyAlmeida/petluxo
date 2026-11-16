@@ -97,10 +97,6 @@ export default function PrivacyPage() {
               site ou entre em contato pelo e-mail abaixo.
             </p>
             <p>
-              Independentemente do banner de consentimento, o site carrega fontes do Google
-              Fonts, o que envia o endereço IP do visitante ao Google.
-            </p>
-            <p>
               Para controlar cookies de forma geral, utilize as configurações
               do seu navegador.
             </p>

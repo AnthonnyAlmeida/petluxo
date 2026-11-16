@@ -18,8 +18,8 @@ PetLuxo é um site institucional de e-commerce de produtos premium para pets (c�
 | React Router               | ^7.15.0      | Rotas: home, `/produto/:id` e páginas de política                                                                          |
 | yet-another-react-lightbox | ^3.32.2      | Lightbox com zoom, carregado sob demanda em dispositivos touch                                                             |
 | CSS Modules                | —            | Estilização por componente, sem frameworks de UI; globais em `src/styles/`                                                 |
-| Google Fonts               | —            | Cormorant Garamond (serif) + Inter (sans) + JetBrains Mono                                                                 |
-| Google Analytics           | G-KKMV5VHR48 | GA4: `gtag.js` só é carregado por `src/lib/analytics.js` depois do consentimento do visitante (`AnalyticsConsent`)         |
+| @fontsource                | ^5.3.0       | Cormorant Garamond (serif) + Inter (sans) + JetBrains Mono, hospedadas no site (subset latin, importadas em `src/main.jsx`)  |
+| Google Analytics           | G-KKMV5VHR48 | GA4: `gtag.js` só é carregado por `src/lib/analytics.js` depois do consentimento do visitante (`AnalyticsConsent`). Revogar um consentimento antes concedido recarrega a página; o banner não tem mais o botão "Gerenciar preferências" |
 | PagBank                    | —            | Links de pagamento cadastrados em `buyLink` / `buyLinks`; o botão está oculto por `HIDE_BUY_CTA` em `ProductBuyButton.jsx` |
 | Playwright                 | ^1.49.0      | devDependency; testes de consentimento do GA4 em `tests/`                                                                  |
 

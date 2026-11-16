@@ -37,6 +37,7 @@ Não existem `api/`, `functions/`, `db/`, `vercel.json` nem `src/data/shipping.j
 
 - React ^18.3.1, React Router DOM ^7.15.0 (`BrowserRouter` em `main.jsx`, rotas em `src/app/page.jsx`), Vite ^6.3.3, `@vitejs/plugin-react` ^4.3.4.
 - CSS Modules por componente, sem framework de UI. JavaScript puro (sem TypeScript).
+- `@fontsource/cormorant-garamond`, `@fontsource/inter` e `@fontsource/jetbrains-mono` ^5.3.0: fontes hospedadas no site (subset latin; imports em `src/main.jsx` antes de `variables.css`; `index.html` não carrega mais o Google Fonts).
 - `yet-another-react-lightbox` ^3.32.2 com plugin `Zoom`, carregado via `React.lazy` só em dispositivo touch.
 - devDependencies de teste: `@playwright/test` e `playwright` ^1.49.0.
 - Scripts: `dev`, `build` (`node scripts/validate-catalog.js && vite build`), `preview`, `validate:catalog`. Não há script de lint nem de teste.
@@ -95,8 +96,8 @@ WhatsApp (`src/lib/whatsapp.js`): número de `VITE_WHATSAPP_PHONE` com fallback 
 ## Analytics (GA4 + consentimento)
 
 - `src/lib/analytics.js`: ID `G-KKMV5VHR48` hardcoded (não é segredo); consentimento em `localStorage` (`petluxo_analytics_consent`: `granted`/`denied`); `gtag.js` só é injetado depois de `granted`; `config` com `send_page_view: false`; `page_view` explícito por rota via `trackPageView` (fila de page_views pendentes e retry após falha de carregamento).
-- `AnalyticsConsent.jsx`: banner com aceitar/recusar e revogação. O consentimento é reabrível pelo botão "Preferências de cookies" na coluna "Políticas" do `Footer.jsx`, que dispara o evento `petluxo:open-consent` (escutado pelo banner). Recusar depois de um `granted` chama `revokeConsent()`; recusar sem consentimento anterior só grava `denied`. Revogar não remove o `gtag.js` já carregado (limitação documentada no arquivo); apaga cookies `_ga*`/`_gid` quando possível. O domínio `.petluxostory.com.br` cobre raiz e `www`.
-- `PrivacyPage.jsx` tem seção "Cookies e Google Analytics" (manda usar "Preferências de cookies" no rodapé e informa que o Google Fonts, carregado em `index.html` em toda visita, envia o IP do visitante ao Google independentemente do banner); a seção "Base Legal (LGPD)" diz que a base legal do analytics "depende de confirmação jurídica".
+- `AnalyticsConsent.jsx`: banner com "Aceitar analytics" e "Recusar analytics" (o botão "Gerenciar preferências" foi removido). O consentimento é reabrível pelo botão "Preferências de cookies" na coluna "Políticas" do `Footer.jsx`, que dispara o evento `petluxo:open-consent` (escutado pelo banner). Recusar depois de um `granted` chama `revokeConsent()` (grava `denied` e apaga cookies `_ga*`/`_gid` quando possível) e em seguida `window.location.reload()`, o que encerra o `gtag.js` já carregado; recusar sem consentimento anterior só grava `denied` e fecha o banner. O domínio `.petluxostory.com.br` cobre raiz e `www`.
+- `PrivacyPage.jsx` tem seção "Cookies e Google Analytics" (manda usar "Preferências de cookies" no rodapé; o parágrafo sobre o Google Fonts foi removido porque as fontes agora são hospedadas no site); a seção "Base Legal (LGPD)" diz que a base legal do analytics "depende de confirmação jurídica".
 - `tests/analytics-consent.spec.js` testa o código local (`BASE_URL` `http://localhost:5173`; o config sobe `npm run dev`).
 
 ## Catálogo (`src/data/products.js`)

@@ -49,17 +49,14 @@ export default function AnalyticsConsent() {
 
   const handleDeny = () => {
     if (getConsent() === 'granted') {
+      // O gtag.js já está em execução na página: só recarregar o encerra.
       revokeConsent();
-    } else {
-      setConsent('denied');
+      window.location.reload();
+      return;
     }
+    setConsent('denied');
     setShow(false);
     if (document.body) document.body.focus();
-  };
-
-  const handleRevoke = () => {
-    revokeConsent();
-    setShow(true);
   };
 
   if (!show) return null;
@@ -97,13 +94,6 @@ export default function AnalyticsConsent() {
             onClick={handleDeny}
           >
             Recusar analytics
-          </button>
-          <button
-            type="button"
-            className={styles.btnRevise}
-            onClick={handleRevoke}
-          >
-            Gerenciar preferências
           </button>
         </div>
       </div>
