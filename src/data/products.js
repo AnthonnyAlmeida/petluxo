@@ -737,7 +737,7 @@ export const PRODUCTS = [
     bullets: [
       'Material anunciado: couro bovino de flor integral',
       'Construção com camada dupla',
-      'Design com detalhes em blocos de cores',
+      'Costuras aparentes em tom contrastante',
       'Tiras ajustáveis',
       'Ferragens e pontos de fixação metálicos',
       'Modelo indicado pelo fornecedor para cães de porte médio e grande',

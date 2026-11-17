@@ -92,6 +92,7 @@ const SPEC_LABELS = {
   frete: 'Frete',
   construcao: 'Construção',
   cores: 'Cores',
+  medidas: 'Medidas',
 };
 
 export default function ProductPage() {
