@@ -5,7 +5,7 @@
  * revisar e revogar a escolha a qualquer momento.
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   getConsent,
   setConsent,

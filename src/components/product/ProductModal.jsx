@@ -1,6 +1,5 @@
 /* PetLuxo — ProductModal (Quick View) */
 
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { TrustBadges } from '../ui/TrustBadges.jsx';
 import { PRODUCT_DETAILS } from '../../data/productDetails.js';

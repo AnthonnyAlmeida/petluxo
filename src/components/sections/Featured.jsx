@@ -1,6 +1,5 @@
 /* PetLuxo — Featured */
 
-import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { PRODUCTS } from '../../data/products.js';
 import { wa } from '../../lib/whatsapp.js';

@@ -10,7 +10,6 @@ const PROJECT_ROOT = resolve(__dirname, '..');
 const VALID_BADGES = ['MAIS VENDIDOS', 'PREMIUM', 'NOVO', 'EXCLUSIVO', 'ESGOTADO'];
 const VALID_CATEGORIES = new Set(CATEGORIES.map(c => c.id));
 const PRODUCTS_WITH_BUYLINKS_NO_PRICES = new Set([9, 17]);
-const PRODUCTS_WITHOUT_SHORTNAME = new Set([3, 4, 10]);
 
 const errors = [];
 const warnings = [];
@@ -160,11 +159,8 @@ function validateRequiredFields(product) {
     addError(`Produto ${id}: price ausente ou vazio`);
   }
 
-  if (PRODUCTS_WITHOUT_SHORTNAME.has(id)) {
-    return;
-  }
   if (!product.shortName || typeof product.shortName !== 'string' || product.shortName.trim() === '') {
-    addError(`Produto ${id}: shortName ausente (exceto IDs 3, 4, 10)`);
+    addError(`Produto ${id}: shortName ausente`);
   }
 }
 

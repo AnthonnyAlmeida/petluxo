@@ -9,7 +9,6 @@
  * sem prefixo de "Tam." para cor.
  */
 
-import React from 'react';
 import styles from './ProductSizeSelector.module.css';
 
 export function ProductSizeSelector({ buyLinks, selectedSize, onSelect, variationType }) {

@@ -1,6 +1,5 @@
 /* PetLuxo — Hero */
 
-import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { TrustBadges } from '../ui/TrustBadges.jsx';
 import heroImg from '../../../assets/hero/image-hero.webp';

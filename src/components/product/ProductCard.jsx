@@ -1,6 +1,5 @@
 /* PetLuxo — ProductCard */
 
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '../../icons.jsx';
 import { PRODUCT_DETAILS } from '../../data/productDetails.js';

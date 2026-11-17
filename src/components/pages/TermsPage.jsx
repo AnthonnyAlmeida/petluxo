@@ -1,6 +1,5 @@
 /* PetLuxo — Termos de Uso */
 
-import React from 'react';
 import { Navbar } from '../layout/Navbar.jsx';
 import { Footer } from '../layout/Footer.jsx';
 

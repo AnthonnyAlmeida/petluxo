@@ -4,7 +4,7 @@
  * tempo (nenhum estado compartilhado no Accordion pai).
  */
 
-import React, { useId, useState } from 'react';
+import { useId, useState } from 'react';
 import { Icon } from '../../icons.jsx';
 import styles from './Accordion.module.css';
 

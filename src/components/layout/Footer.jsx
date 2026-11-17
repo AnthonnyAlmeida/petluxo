@@ -1,6 +1,5 @@
 /* PetLuxo — Footer */
 
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { wa } from '../../lib/whatsapp.js';
 import styles from './Footer.module.css';

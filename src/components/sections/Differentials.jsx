@@ -1,6 +1,5 @@
 /* PetLuxo — Differentials */
 
-import React from 'react';
 import { Icon } from '../../icons.jsx';
 import styles from './Differentials.module.css';
 

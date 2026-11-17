@@ -7,7 +7,6 @@
  * fixos, pensado para caber dentro da ficha de um produto (ProductPage).
  */
 
-import React from 'react';
 import styles from './BrandSeal.module.css';
 
 const SEAL_ITEMS = [

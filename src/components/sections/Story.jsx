@@ -1,6 +1,5 @@
 /* PetLuxo — Story */
 
-import React from 'react';
 import sobreImg from '../../../assets/sobre_nos/sobre_nos.webp';
 import styles from './Story.module.css';
 

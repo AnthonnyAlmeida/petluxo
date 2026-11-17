@@ -17,7 +17,6 @@
  */
 const HIDE_BUY_CTA = true;
 
-import React from 'react';
 import { Icon } from '../../icons.jsx';
 import { wa } from '../../lib/whatsapp.js';
 import '../../styles/buttons.css';

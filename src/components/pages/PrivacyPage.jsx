@@ -1,6 +1,5 @@
 /* PetLuxo — Política de Privacidade */
 
-import React from 'react';
 import { Navbar } from '../layout/Navbar.jsx';
 import { Footer } from '../layout/Footer.jsx';
 
