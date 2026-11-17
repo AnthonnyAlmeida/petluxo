@@ -759,5 +759,28 @@ export const PRODUCTS = [
     ],
     tags: ['peitoral', 'élan', 'élan signature', 'couro', 'passeio', 'cães médios', 'cães grandes'],
     visible: true,
+  },
+  {
+    id: 45,
+    name: 'Porta-Saquinhos Premium Élan',
+    shortName: 'Porta-Saquinhos Élan',
+    subtitle: 'Os pequenos detalhes fazem toda a diferença.',
+    description: 'O Porta-Saquinhos Premium Élan combina a sofisticação do couro genuíno com a praticidade necessária para os passeios com seu pet. Com acabamento texturizado, fechamento por botão de pressão e mosquetão metálico, oferece uma maneira elegante e funcional de transportar os saquinhos de higiene. Um acessório essencial para quem valoriza beleza, funcionalidade e cuidado em cada momento.',
+    bullets: [
+      'Material anunciado: couro genuíno, na cor avelã',
+      'Acabamento texturizado, com a textura natural do couro',
+      'Fechamento por botão de pressão metálico',
+      'Mosquetão metálico para prender à guia, bolsa ou acessório compatível',
+    ],
+    price: 'R$ 159,90',
+    originalPrice: null,
+    category: ['couro'],
+    order: 60,
+    categoryOrder: {"couro":2000},
+    image: '/images/products/porta-saquinhos-premium-elan/principal.webp',
+    badge: null,
+    buyLink: 'https://wa.me/5561994063917',
+    tags: ['porta-saquinhos', 'saquinhos', 'passeio', 'élan', 'família élan', 'couro', 'avelã', 'premium'],
+    visible: true,
   }
 ];

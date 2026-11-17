@@ -639,4 +639,34 @@ export const PRODUCT_DETAILS = {
       { question: 'Como cuidar da peça?', answer: 'Limpar delicadamente com pano macio e seco, evitar exposição prolongada à umidade e armazenar em local arejado.' },
     ],
   },
+  45: {
+    gallery: [
+      '/images/products/porta-saquinhos-premium-elan/principal.webp',
+      '/images/products/porta-saquinhos-premium-elan/porta-saquinhos-premium-elan-2.webp',
+      '/images/products/porta-saquinhos-premium-elan/porta-saquinhos-premium-elan-3.webp',
+      '/images/products/porta-saquinhos-premium-elan/porta-saquinhos-premium-elan-4.webp',
+    ],
+    specs: {
+      material: 'Couro genuíno (conforme especificação do fornecedor)',
+      cor: 'Avelã',
+      acabamento: 'Textura natural do couro',
+      fechamento: 'Botão de pressão metálico',
+      aberturaDispensadora: 'Ilhós metálico para retirada dos saquinhos',
+      fixacao: 'Mosquetão metálico, para prender à guia, bolsa ou acessório compatível',
+      design: 'Compacto, elegante e funcional',
+    },
+    whatsIncluded: [
+      '1 Porta-Saquinhos Premium Élan',
+      'O rolo de saquinhos das fotografias é ilustrativo e NÃO acompanha o produto.',
+    ],
+    careInstructions: 'Limpar delicadamente com pano macio e seco. Evitar exposição prolongada à umidade e armazenar em local arejado.',
+    faq: [
+      { question: 'O que acompanha o produto?', answer: 'Acompanha o Porta-Saquinhos Premium Élan. O rolo de saquinhos das fotografias é ilustrativo e não acompanha o produto.' },
+      { question: 'Como retiro os saquinhos?', answer: 'Os saquinhos são retirados pela abertura frontal, com ilhós metálico. O fechamento por botão de pressão facilita a reposição.' },
+      { question: 'Onde posso prender o porta-saquinhos?', answer: 'Ele tem mosquetão metálico, que permite prender à guia, bolsa ou acessório compatível.' },
+      { question: 'Qual é a cor?', answer: 'Avelã.' },
+      { question: 'Qual é o material?', answer: 'Couro genuíno, conforme especificação do fornecedor.' },
+      { question: 'Como fazer a limpeza?', answer: 'Limpar delicadamente com pano macio e seco. Evitar exposição prolongada à umidade e armazenar em local arejado.' },
+    ],
+  },
 };

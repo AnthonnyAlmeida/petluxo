@@ -75,6 +75,7 @@ const SPEC_LABELS = {
   tapeteInterno: 'Tapete interno',
   alcaTransversal: 'Alça transversal',
   fixacao: 'Fixação',
+  aberturaDispensadora: 'Abertura dispensadora',
   producao: 'Produção',
   tecido: 'Tecido',
   confeccao: 'Confecção',

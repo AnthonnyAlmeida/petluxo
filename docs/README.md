@@ -113,7 +113,7 @@ npm run preview
 
 ## Catálogo de produtos
 
-**39 produtos em 9 categorias. A tabela abaixo lista os 28 visíveis; os 11 com `visible: false` não aparecem no site:**
+**40 produtos em 9 categorias. A tabela abaixo lista os 29 visíveis; os 11 com `visible: false` não aparecem no site:**
 
 | ID  | Nome                                                          | Categorias                            |
 | --- | ------------------------------------------------------------- | ------------------------------------- |
@@ -145,6 +145,7 @@ npm run preview
 | 42  | Bolsa Majestic Travel                                         | couro                                 |
 | 43  | Kit Élan Rosa \| Elegância em Cada Passeio                    | couro                                 |
 | 44  | Peitoral Élan Signature                                       | couro                                 |
+| 45  | Porta-Saquinhos Premium Élan                                  | couro                                 |
 
 **Categorias disponíveis:**
 
