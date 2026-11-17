@@ -30,7 +30,7 @@ petluxo/
 ├── public/              # Arquivos copiados diretamente para o build
 │   ├── favicon.svg      # Ícone da aba do navegador
 │   ├── robots.txt       # Instruções para robôs de busca
-│   ├── sitemap.xml      # Mapa do site para SEO
+│   ├── sitemap.xml      # Só a home (obsoleto: o build gera dist/sitemap.xml com os produtos)
 │   ├── og-image.jpg     # Imagem de capa 1200×630 usada nas meta tags (og:image / twitter:image)
 │   ├── og-image.png     # Arte original 1536×1024, mantida (links e prévias antigas)
 │   ├── favicon.ico
@@ -67,7 +67,10 @@ petluxo/
 │   └── main.jsx           # Entry point: monta o React no DOM
 ├── index.html           # Shell HTML principal com as meta tags (sem gtag fixo)
 ├── scripts/
-│   └── validate-catalog.js # Validador do catálogo, roda antes do build
+│   ├── validate-catalog.js # Validador do catálogo, roda antes do build
+│   ├── generate-sitemap.js # Gera dist/sitemap.xml depois do vite build
+│   └── check-seo.js        # Checagens de SEO (npm run test:seo)
+├── worker/              # Worker de SEO de /produto/* (index.js, seo.js)
 ├── tests/
 │   └── analytics-consent.spec.js # 9 testes Playwright do consentimento GA4
 ├── playwright.config.js
@@ -102,7 +105,7 @@ npm run dev -- --host
 npm run build
 ```
 
-O build roda antes o validador de catálogo (`scripts/validate-catalog.js`); se houver erro no catálogo, o build falha. Para rodar só o validador: `npm run validate:catalog`. Os arquivos finais são gerados na pasta `dist/`. Tamanho atual: JS principal ~342 kB (~105 kB gzip) e CSS ~55 kB (~11 kB gzip). Para visualizar o build localmente antes de subir:
+O build roda antes o validador de catálogo (`scripts/validate-catalog.js`); se houver erro no catálogo, o build falha. Depois do Vite, `scripts/generate-sitemap.js` grava `dist/sitemap.xml`. Para rodar só o validador: `npm run validate:catalog`. Os arquivos finais são gerados na pasta `dist/`. Tamanho atual: JS principal ~342 kB (~105 kB gzip) e CSS ~55 kB (~11 kB gzip). Para visualizar o build localmente antes de subir:
 
 ```bash
 npm run preview

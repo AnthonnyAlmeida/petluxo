@@ -55,17 +55,15 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
   O fallback de SPA do Worker (`not_found_handling`) resolve o carregamento direto, mas também faz URLs inexistentes devolverem o app com status 200 (soft 404).
 
-  Resultado real (2026-10-28): acesso direto a `/produto/:id` de produto visível carrega a ficha (200); produto inexistente, oculto ou rota inválida também devolvem 200 com o `NotFound` do app (soft 404). Decidir se isso basta ou se vale pré-renderização; o status HTTP correto depende do item 2.
+  Estado atual: `/produto/*` passa pelo Worker (`worker/index.js`): produto inexistente, oculto ou formato inválido devolve o shell com HTTP 404 e `noindex`; produto visível carrega a ficha (200). Falta: o soft 404 continua fora de `/produto/*` (qualquer outra URL inexistente devolve 200 com o `NotFound` do app, sem `noindex`), porque o fallback de SPA do Worker de assets responde antes. Pendente validar o status no domínio real depois do deploy (só testado em `wrangler dev` local).
 
   Critérios de conclusão:
   - acesso direto a `/produto/:id` de produto visível carrega a ficha;
   - produto inexistente ou `visible: false` e rotas inválidas são tratados como inexistentes, com o status adequado;
   - o status HTTP foi validado no deploy de preview.
 
-- [ ] **2. Meta tags por produto** 🔴
-      `/produto/:id` herda título, descrição e imagem da home. Resolver com pré-renderização das rotas de produto ou com um Worker com script ou pré-renderização; escolher pelo resultado real, não pela sofisticação.
-
-  Confirmado em 2026-10-28: um link de produto compartilhado no WhatsApp mostra a prévia da home. Não é prioridade agora; fazer depois da migração.
+- [ ] **2. Meta tags por produto** 🟡
+      Feito no código: o Worker (`worker/index.js`) reescreve `title`, `description`, `og:*`, `twitter:*` e insere o canonical em `/produto/<id>` de produto visível; produto inexistente/oculto recebe 404 + `noindex`. Falta: (a) validar no domínio real após o deploy (`curl` e prévia no WhatsApp/depurador do Facebook); (b) `og:image` por produto usa o `principal.webp` vertical/quadrado (sem 1200×630): ponto a testar no WhatsApp e no Facebook, e talvez gerar JPG 1200×630 por produto; (c) a descrição é o início de `description` truncado em ~155 caracteres; (d) em navegação interna (clique de card) o `<title>` não muda, porque só o HTML inicial é reescrito; (e) as políticas herdam title/description da home.
 
   Critérios de aceite:
   - cada produto gera título, descrição, URL canônica e imagem próprios;
@@ -91,7 +89,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       16 dos 39 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32). Dos 28 visíveis, 6 estão sem ficha e abrem só o modal rápido: ids 14, 18, 24, 25, 30, 31 (os outros 10 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
-      JSON-LD `Product` nas fichas e URLs dos produtos visíveis em `public/sitemap.xml`. Faz mais sentido depois do item 2.
+      Sitemap feito: `scripts/generate-sitemap.js` gera `dist/sitemap.xml` no build (home + produtos visíveis, sem `lastmod`). Pendente: JSON-LD `Product` nas fichas (o preço é texto livre, como `'R$ 379,90'`, e precisaria de conversão) e remover `public/sitemap.xml` (obsoleto) com `git rm`.
 
 ---
 

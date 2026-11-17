@@ -2,22 +2,24 @@
 
 Este arquivo descreve o estado ATUAL do projeto para orientar o Claude Code. Não é histórico: a migração para a Cloudflare e resultados de testes ficam em `docs/CLOUDFLARE_MIGRATION.md`. Em qualquer divergência, o código é a verdade.
 
-Última atualização: 2026-11-16
+Última atualização: 2026-11-17
 
-Site estático (sem backend, sem banco, sem API) de produtos premium para pets. Catálogo, busca, filtro, ficha de produto e consentimento de analytics são resolvidos no front-end. Todo o contato de compra é por WhatsApp.
+Site estático (sem backend, sem banco, sem API) de produtos premium para pets, com um Worker pequeno só para SEO de `/produto/*`. Catálogo, busca, filtro, ficha de produto e consentimento de analytics são resolvidos no front-end. Todo o contato de compra é por WhatsApp.
 
 - **Produção:** https://www.petluxostory.com.br (canônico). **Instagram:** @petluxostory (o `Footer.jsx:60` aponta para outro perfil: `docs/TODO.md` item 28).
 - **Repositório:** público. `AI_CONTEXT_PETLUXO.md` está no `.gitignore`, mas continua tracked.
 
 ## Hospedagem, deploy e domínio
 
-- **Hospedagem:** Cloudflare Workers com static assets (plano Free). Worker `petluxo`, configurado em `wrangler.jsonc` (`assets.directory` `./dist`, `not_found_handling` `single-page-application`). Versão do Node em `.nvmrc` (`22`). Cabeçalhos de segurança em `public/_headers` (HSTS `max-age=63072000`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`; sem CSP, sem regras de cache).
-- **Deploy:** Workers Builds a cada push em `main` (`npm run build`, depois `npx wrangler deploy`); o `wrangler` não está no `package.json`. Os commits do painel admin também vão para `main` e disparam o build. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`) e verificado por `curl` (o endereço e o formato de Preview respondem 404). `"preview_urls": false` também está definido no arquivo; as Preview URLs NÃO têm confirmação direta por `curl` (só o estado "desligado" visto no painel). O domínio próprio responde normalmente (`www` 200, raiz 301, `/produto/43` 200).
-- **Modo SPA:** acesso direto a rotas (`/produto/2`, políticas) e URLs inexistentes (inclusive `/xyz.png`) devolvem HTTP 200 com o `index.html` (soft 404); a rota `*` do app mostra o `NotFound`. Não existe `public/404.html` nem restauração de path em `src/main.jsx`: o fallback de SPA é só o do Worker.
+- **Hospedagem:** Cloudflare Workers com static assets e script (plano Free). Worker `petluxo`, configurado em `wrangler.jsonc` (`main` `worker/index.js`, `assets.directory` `./dist`, `assets.binding` `ASSETS`, `not_found_handling` `single-page-application`, `run_worker_first` `["/produto/*"]`). Versão do Node em `.nvmrc` (`22`). Cabeçalhos de segurança em `public/_headers` (HSTS `max-age=63072000`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`; sem CSP, sem regras de cache); o `_headers` NÃO vale para respostas do Worker, que repete esses 3 headers e `Cache-Control: public, max-age=0, must-revalidate` no código.
+- **Deploy:** Workers Builds a cada push em `main` (`npm run build`, depois `npx wrangler deploy`); o `wrangler` está em `devDependencies` (versão no `package-lock.json`). Os commits do painel admin também vão para `main` e disparam o build. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`) e verificado por `curl` (o endereço e o formato de Preview respondem 404). `"preview_urls": false` também está definido no arquivo; as Preview URLs NÃO têm confirmação direta por `curl` (só o estado "desligado" visto no painel). O domínio próprio responde normalmente (`www` 200, raiz 301, `/produto/43` 200).
+- **Modo SPA:** fora de `/produto/*`, acesso direto a rotas (políticas) e URLs inexistentes (inclusive `/xyz.png`) devolvem HTTP 200 com o `index.html` (soft 404, sem `noindex`); a rota `*` do app mostra o `NotFound`. Não existe `public/404.html` nem restauração de path em `src/main.jsx`.
+- **Worker de SEO (`worker/index.js`, `worker/seo.js`):** só em `/produto/*` e só GET/HEAD (outros métodos vão para `env.ASSETS.fetch`). Busca o shell (`/` via `env.ASSETS`, sem headers condicionais). Produto visível e canônico: `HTMLRewriter` troca `title`, `meta description`, `og:title/description/url/image/image:alt`, `twitter:title/description/image`, remove `og:image:width/height/type` e insere `<link rel="canonical">`. Produto inexistente, oculto ou formato inválido (`/produto/abc`, `/produto/44/x`, `/produto/`): shell com 404, `X-Robots-Tag: noindex` e `meta robots noindex`. `/produto/044` e `/produto/44/`: 301 para `/produto/44` com a query. `seo.js` são funções puras (`parseProductPath`, `findVisibleProduct`, `buildProductMeta`; `SITE` = domínio `www`) que importam `src/data/products.js`; o Wrangler empacota o catálogo no Worker. A descrição vem de `description` (fallback `subtitle`) truncada em ~155 caracteres no limite de palavra. Testado só em `wrangler dev` local; o domínio real não foi verificado depois deste Worker.
 - **Domínio e DNS:** `petluxostory.com.br`, registrado no Registro.br (vence em 2027-05-07). Nameservers: os dois atribuídos pela Cloudflare. `www` é o canônico (Custom Domain do Worker); a raiz também é Custom Domain do Worker e redireciona para o `www` com 301 (regra "raiz para www"); HTTP redireciona para HTTPS com 301 (regra "http para https"); as duas regras preservam caminho e query. Zona: 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`) e as duas linhas "Worker" (raiz e `www`); subdomínios inexistentes não resolvem. Sem MX, TXT nem AAAA. DNSSEC não está ativo (não ativar por ora).
 - **Vercel:** o painel admin (`petluxo-admin`, fora deste repositório) continua na Vercel; é a única coisa do projeto que está lá. O projeto Vercel do site não existe mais, e o rollback para a Vercel não existe (voltar exigiria recriar projeto e domínio na Vercel e refazer o DNS). Histórico: `docs/CLOUDFLARE_MIGRATION.md`.
 - **Build:** `npm run build` gera `dist/` (validador de catálogo + Vite). `docs/DEPLOY.md` descreve o deploy, a configuração, o domínio e o checklist pós-deploy na Cloudflare; `README.md` e `docs/README.md` seguem a mesma hospedagem.
-- **Metadados:** `index.html` (og:url, og:image, twitter:image), `public/sitemap.xml` (só a home) e `public/robots.txt` (4 linhas, sem `Host:`) usam `https://www.petluxostory.com.br`. Não há `<link rel="canonical">` (decisão D4 do documento de migração: só junto com meta tags por rota). Meta tags são únicas; `/produto/:id` herda as da home.
+- **Metadados:** `index.html` (og:url, og:image, twitter:image), `public/robots.txt` (4 linhas, sem `Host:`) e o Worker/sitemap usam `https://www.petluxostory.com.br`. Título da home: "PetLuxo — Camas, coleiras de couro e acessórios premium" (title, og:title, twitter:title). Não há canonical estático no `index.html` (D4): o canonical de produto vem do Worker; home e políticas seguem sem canonical e com as meta tags do `index.html`. Sem JSON-LD; sem `google-site-verification`.
+- **Sitemap:** `scripts/generate-sitemap.js` roda no fim do `npm run build` e grava `dist/sitemap.xml` (home + produtos `visible !== false`, ordem de id, sem `lastmod`/`changefreq`/`priority`; falha se `dist/` não existir ou se houver menos de 2 URLs). `public/sitemap.xml` (só a home) é sobrescrito no `dist/` e está obsoleto (remover com `git rm`).
 
 ## Estado por área (LIVE × EM DESENVOLVIMENTO × PLANEJADO)
 
@@ -40,7 +42,8 @@ Não existem `api/`, `functions/`, `db/`, `vercel.json` nem `src/data/shipping.j
 - `@fontsource/cormorant-garamond`, `@fontsource/inter` e `@fontsource/jetbrains-mono` ^5.3.0: fontes hospedadas no site (subset latin; imports em `src/main.jsx` antes de `variables.css`; `index.html` não carrega mais o Google Fonts).
 - `yet-another-react-lightbox` ^3.32.2 com plugin `Zoom`, carregado via `React.lazy` só em dispositivo touch.
 - devDependencies de teste: `@playwright/test` e `playwright` ^1.49.0.
-- Scripts: `dev`, `build` (`node scripts/validate-catalog.js && vite build`), `preview`, `validate:catalog`. Não há script de lint nem de teste.
+- Scripts: `dev`, `build` (`node scripts/validate-catalog.js && vite build && node scripts/generate-sitemap.js`), `preview`, `validate:catalog`, `test:seo` (`node scripts/check-seo.js`; exige o build feito; asserts do Node, nome sem `.test.js`/`.spec.js` para o Playwright não pegar). Não há script de lint nem script npm para os testes Playwright. `wrangler` em `devDependencies`.
+- **Regra para comandos de build/teste novos:** atualizar `package.json`, `docs/DEPLOY.md`, `README.md`, `docs/README.md` e este arquivo; qualquer passo novo no `build` roda também no Workers Builds, então só pode depender do repositório e do `npm install`.
 - `vite.config.js`: `react()`, host `0.0.0.0`, porta 5173.
 
 ## Estrutura
@@ -48,10 +51,11 @@ Não existem `api/`, `functions/`, `db/`, `vercel.json` nem `src/data/shipping.j
 ```
 petluxo/
 ├── index.html                 # meta tags, OG, Twitter; sem gtag (GA4 carrega por src/lib/analytics.js)
-├── wrangler.jsonc, .nvmrc     # Worker "petluxo" (assets de ./dist, modo SPA) e Node 22
+├── wrangler.jsonc, .nvmrc     # Worker "petluxo" (main worker/index.js, assets de ./dist, modo SPA, run_worker_first /produto/*) e Node 22
 ├── assets/                    # logo.webp, hero/image-hero.webp, sobre_nos/*.webp (importados pelo Vite)
-├── public/                    # favicon, og-image.png, og-image.jpg, robots.txt, sitemap.xml (só a home), _headers, images/products/<slug>/
-├── scripts/validate-catalog.js
+├── public/                    # favicon, og-image.png, og-image.jpg, robots.txt, sitemap.xml (só a home, obsoleto), _headers, images/products/<slug>/
+├── worker/                    # index.js (Worker de SEO de /produto/*) e seo.js (funções puras)
+├── scripts/                   # validate-catalog.js, generate-sitemap.js, check-seo.js
 ├── tests/analytics-consent.spec.js
 ├── playwright.config.js
 ├── docs/                      # CHECKOUT_ARCHITECTURE, CLOUDFLARE_MIGRATION, CSS_MIGRATION, DECISIONS, DEPLOY, PRODUCT_EXPANSION, README, TODO
@@ -79,7 +83,7 @@ Pastas/arquivos locais ignorados ou não tracked (`_incoming/` está ignorada vi
 
 `/` (Navbar, Hero, Featured, Products, Story, Differentials, CTA, FAQ, Footer, ProductModal), `/produto/:id`, `/politica-de-privacidade`, `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega`, `/termos-de-uso` e `*` (NotFound no layout padrão). `ScrollToTop` e `AnalyticsConsent` ficam fora do `<Routes>`.
 
-`/produto/:id` com id inexistente ou `visible === false` renderiza Navbar + NotFound + Footer (com HTTP 200, ver "Modo SPA"). Produto existente usa `MinimalNavbar` (só a marca, link para `/`).
+`/produto/:id` com id inexistente ou `visible === false` renderiza Navbar + NotFound + Footer; o Worker já responde esse HTML com HTTP 404 + `noindex` (ver "Worker de SEO"). Produto visível sem ficha (ids 14, 18, 24, 25, 30, 31) renderiza a página normalmente, sem os acordeões. Nada no front muda `document.title` nem meta (só o viewport em `main.jsx`): em navegação interna o `<title>` não muda; só o HTML inicial é reescrito pelo Worker. Produto existente usa `MinimalNavbar` (só a marca, link para `/`).
 
 ## Compra: `HIDE_BUY_CTA`
 
@@ -190,11 +194,11 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 ## Dívidas e pendências abertas
 
 - Sem script de lint; sem script npm para os testes Playwright (`docs/CLOUDFLARE_MIGRATION.md` F2.6).
-- Migração: restam o teste real de troca de foto pelo painel em aba anônima (`docs/TODO.md` item 31, parte B(ii)) e meta tags por produto (item 2, não prioritário). As Preview URLs seguem sem confirmação direta por `curl`. Ver `docs/CLOUDFLARE_MIGRATION.md`.
+- Migração: resta o teste real de troca de foto pelo painel em aba anônima (`docs/TODO.md` item 31, parte B(ii)). As Preview URLs seguem sem confirmação direta por `curl`. Ver `docs/CLOUDFLARE_MIGRATION.md`.
 - Redação definitiva dos textos legais sobre o atendimento por WhatsApp e revisão jurídica: `docs/TODO.md` itens 22 e 37.
 - Checkout próprio (InfinitePay, frete grátis) e reescrita de `docs/CHECKOUT_ARCHITECTURE.md`: `docs/TODO.md` itens 21 e 26.
 - Eventos GA4 de clique no WhatsApp: `docs/TODO.md` item 6.
-- Meta tags por produto, status 404 real, sitemap com produtos, JSON-LD: `docs/TODO.md` itens 1, 2 e 10.
+- SEO por produto: falta validar o Worker no domínio real (`curl`, prévia WhatsApp/Facebook), testar `og:image` em WebP vertical, soft 404 fora de `/produto/*`, JSON-LD e remover `public/sitemap.xml` (`docs/TODO.md` itens 1, 2 e 10).
 - Ids 9 e 17 com link de fornecedor errado herdado: a mãe corrige pelo painel; reescrita do histórico do git (links antigos) segue como decisão futura e aberta (`docs/TODO.md` item 3/18).
 - Fichas dos 6 produtos visíveis sem ficha e campo de prazo de entrega: `docs/TODO.md` itens 7 e 8.
 - Obrigatoriedade de `buyLink`/`buyLinks` no catálogo (validador, `useProductBuy`, seletor de tamanho, `ProductPage`, painel admin), não iniciada: `docs/TODO.md` item 38.

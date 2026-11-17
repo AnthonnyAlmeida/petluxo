@@ -47,7 +47,7 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 | 💬 **Consulta via WhatsApp** | CTA ativo "Consultar via WhatsApp", com mensagem pré-preenchida (nome, variação, preço e link da ficha) |
 | 📱 **Totalmente responsivo** | Layout adaptado para desktop (≥980px), tablet (≤980px) e mobile (≤768px / ≤480px) |
 | ✨ **Animações de scroll** | Reveal de elementos com `IntersectionObserver` e efeito parallax no logo da navbar |
-| 🔎 **SEO básico** | Open Graph completo, Twitter Card, sitemap.xml, robots.txt, GA4 com consentimento |
+| 🔎 **SEO básico** | Open Graph completo, Twitter Card, sitemap.xml gerado no build, meta tags por produto via Worker, robots.txt, GA4 com consentimento |
 | ⚡ **Performance** | Build em ~5s, hot reload instantâneo, DevTweaks excluído do bundle de produção |
 
 ---
@@ -77,7 +77,7 @@ petluxo/
 ├── public/
 │   ├── og-image.jpg         # Capa 1200×630 usada nas meta tags (og:image / twitter:image)
 │   ├── og-image.png         # Arte original 1536×1024, mantida (links e prévias antigas)
-│   ├── robots.txt / sitemap.xml
+│   ├── robots.txt / sitemap.xml (o build gera o sitemap final em dist/)
 │   └── images/products/     # Fotos dos produtos
 ├── src/
 │   ├── app/
@@ -101,7 +101,10 @@ petluxo/
 │       ├── variables.css    # Design tokens (cores, tipografia, espaçamentos)
 │       ├── globals.css      # Reset, utilitárias globais, tipografia e .reveal (166 linhas)
 │       └── buttons.css      # Estilos globais de botões (.btn e variantes)
+├── worker/                      # Worker de SEO de /produto/* (index.js, seo.js)
 ├── scripts/validate-catalog.js  # Validador do catálogo (roda antes do build)
+├── scripts/generate-sitemap.js  # Gera dist/sitemap.xml (roda depois do vite build)
+├── scripts/check-seo.js         # Checagens de SEO (npm run test:seo, depois do build)
 ├── tests/analytics-consent.spec.js  # Testes Playwright (9 testes)
 ├── playwright.config.js
 └── docs/                    # Documentação técnica detalhada
@@ -147,8 +150,11 @@ npm run dev -- --host
 ```
 
 ```bash
-# Build de produção (roda o validador de catálogo antes do vite build)
+# Build de produção (validador de catálogo, vite build e geração do sitemap)
 npm run build
+
+# Checagens de SEO (exigem o build feito)
+npm run test:seo
 
 # Só validar o catálogo
 npm run validate:catalog
