@@ -29,9 +29,17 @@ function normalizeSpaces(text) {
   return String(text ?? '').replace(/\s+/g, ' ').trim();
 }
 
-/* Trunca no limite de palavra, com "…". */
+const MIN_SENTENCE = 60;
+
+/* Cabe inteiro: usa inteiro. Senão, corta no último fim de frase dentro de `max`
+   (se tiver pelo menos MIN_SENTENCE caracteres); senão, corta por palavra com "…".
+   Fim de frase: ".", "!" ou "?" seguido de espaço no texto original (assim "2.0" e "3.5 kg" não cortam). */
 function truncate(text, max) {
   if (text.length <= max) return text;
+  for (let i = max - 1; i + 1 >= MIN_SENTENCE; i -= 1) {
+    const c = text[i];
+    if ((c === '.' || c === '!' || c === '?') && text[i + 1] === ' ') return text.slice(0, i + 1);
+  }
   const slice = text.slice(0, max + 1);
   const lastSpace = slice.lastIndexOf(' ');
   const cut = lastSpace > 0 ? slice.slice(0, lastSpace) : text.slice(0, max);

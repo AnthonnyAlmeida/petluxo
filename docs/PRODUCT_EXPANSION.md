@@ -111,7 +111,7 @@ Dentro da pasta:
 |---|---|
 | Painel admin externo escreve direto em `products.js` e não tem como preencher os campos novos | Conteúdo expandido isolado em `productDetails.js`, arquivo que o painel nunca toca |
 | SEO / preview de link (WhatsApp, redes sociais) por produto | Site é CSR puro, sem gerenciamento de `<head>` por rota — `/produto/:id` herda as meta tags genéricas de `index.html`. Aceitável nesta fase; requer solução server-side (prerender/edge) para ter OG por produto, fora de escopo agora |
-| `public/sitemap.xml` é manual | Novas páginas de produto não entram automaticamente no sitemap por ora — já era uma pendência pré-existente (ver `docs/TODO.md`) |
+| Sitemap | Gerado no build (`dist/sitemap.xml`) com os produtos visíveis; não há `public/sitemap.xml` |
 
 ## Plano de implementação
 

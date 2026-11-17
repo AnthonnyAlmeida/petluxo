@@ -55,7 +55,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
   O fallback de SPA do Worker (`not_found_handling`) resolve o carregamento direto, mas também faz URLs inexistentes devolverem o app com status 200 (soft 404).
 
-  Estado atual: `/produto/*` passa pelo Worker (`worker/index.js`): produto inexistente, oculto ou formato inválido devolve o shell com HTTP 404 e `noindex`; produto visível carrega a ficha (200). Falta: o soft 404 continua fora de `/produto/*` (qualquer outra URL inexistente devolve 200 com o `NotFound` do app, sem `noindex`), porque o fallback de SPA do Worker de assets responde antes. Pendente validar o status no domínio real depois do deploy (só testado em `wrangler dev` local).
+  Estado atual: `/produto/*` passa pelo Worker (`worker/index.js`): produto inexistente, oculto ou formato inválido devolve o shell com HTTP 404 e `noindex`; produto visível carrega a ficha (200). Falta: o soft 404 continua fora de `/produto/*` (qualquer outra URL inexistente devolve 200 com o `NotFound` do app, sem `noindex`), porque o fallback de SPA do Worker de assets responde antes. Status validado no domínio real em 2026-11-17 por `curl` (item 2).
 
   Critérios de conclusão:
   - acesso direto a `/produto/:id` de produto visível carrega a ficha;
@@ -63,7 +63,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
   - o status HTTP foi validado no deploy de preview.
 
 - [ ] **2. Meta tags por produto** 🟡
-      Feito no código: o Worker (`worker/index.js`) reescreve `title`, `description`, `og:*`, `twitter:*` e insere o canonical em `/produto/<id>` de produto visível; produto inexistente/oculto recebe 404 + `noindex`. Falta: (a) validar no domínio real após o deploy (`curl` e prévia no WhatsApp/depurador do Facebook); (b) `og:image` por produto usa o `principal.webp` vertical/quadrado (sem 1200×630): ponto a testar no WhatsApp e no Facebook, e talvez gerar JPG 1200×630 por produto; (c) a descrição é o início de `description` truncado em ~155 caracteres; (d) em navegação interna (clique de card) o `<title>` não muda, porque só o HTML inicial é reescrito; (e) as políticas herdam title/description da home.
+      Feito e validado em produção em 2026-11-17 por `curl`: `/produto/44` devolve título, canonical e `og:image` próprios; produto oculto ou inexistente devolve 404 + `noindex`; formatos alternativos da URL recebem 301; o sitemap tem 29 URLs. A prévia do WhatsApp de `/produto/44` foi validada (foto, título e descrição), então o `og:image` em WebP vertical funciona e o JPG 1200×630 por produto não é mais pendência. A descrição é o início de `description`, cortado no fim de frase dentro de 155 caracteres (se o trecho tiver ao menos 60 caracteres; senão, corte por palavra com "…"). Pendências: (a) soft 404 fora de `/produto/*` (item 1); (b) em navegação interna (clique de card) o `<title>` não muda, porque só o HTML inicial é reescrito; (c) as políticas herdam title/description da home.
 
   Critérios de aceite:
   - cada produto gera título, descrição, URL canônica e imagem próprios;
@@ -89,7 +89,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       16 dos 39 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32). Dos 28 visíveis, 6 estão sem ficha e abrem só o modal rápido: ids 14, 18, 24, 25, 30, 31 (os outros 10 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
-      Sitemap feito: `scripts/generate-sitemap.js` gera `dist/sitemap.xml` no build (home + produtos visíveis, sem `lastmod`). Pendente: JSON-LD `Product` nas fichas (o preço é texto livre, como `'R$ 379,90'`, e precisaria de conversão) e remover `public/sitemap.xml` (obsoleto) com `git rm`.
+      Sitemap feito: `scripts/generate-sitemap.js` gera `dist/sitemap.xml` no build (home + produtos visíveis, sem `lastmod`). `public/sitemap.xml` não existe mais no repositório. Pendente: JSON-LD `Product` nas fichas (o preço é texto livre, como `'R$ 379,90'`, e precisaria de conversão).
 
 ---
 

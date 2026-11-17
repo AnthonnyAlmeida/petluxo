@@ -77,7 +77,7 @@ petluxo/
 ├── public/
 │   ├── og-image.jpg         # Capa 1200×630 usada nas meta tags (og:image / twitter:image)
 │   ├── og-image.png         # Arte original 1536×1024, mantida (links e prévias antigas)
-│   ├── robots.txt / sitemap.xml (o build gera o sitemap final em dist/)
+│   ├── robots.txt (o sitemap.xml é gerado pelo build em dist/)
 │   └── images/products/     # Fotos dos produtos
 ├── src/
 │   ├── app/

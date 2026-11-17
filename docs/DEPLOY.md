@@ -21,7 +21,7 @@ Os commits do painel admin (`petluxo-admin`, outro repositório, hospedado na Ve
 - **`public/_headers`:** `Strict-Transport-Security: max-age=63072000`, `X-Content-Type-Options: nosniff` e `Referrer-Policy: strict-origin-when-cross-origin` para `/*`. Sem CSP e sem regras de cache (o padrão dos assets é `public, max-age=0, must-revalidate`).
 - **`public/_headers` não vale para respostas do Worker:** por isso o Worker repete HSTS, `nosniff`, `Referrer-Policy` e `Cache-Control: public, max-age=0, must-revalidate` em todas as suas respostas.
 - **Modo SPA:** fora de `/produto/*`, acesso direto às políticas e a qualquer URL inexistente devolve HTTP 200 com o `index.html` (soft 404); o app mostra o `NotFound`. Não existe `public/404.html` nem restauração de path em `src/main.jsx`.
-- **Sitemap:** `scripts/generate-sitemap.js` roda no fim do `npm run build` e grava `dist/sitemap.xml` com a home e os produtos visíveis (`visible !== false`), em ordem de id, sem `lastmod`, `changefreq` nem `priority`; falha o build se `dist/` não existir ou se houver menos de 2 URLs. `public/sitemap.xml` (só a home) é sobrescrito no `dist/` e fica obsoleto.
+- **Sitemap:** `scripts/generate-sitemap.js` roda no fim do `npm run build` e grava `dist/sitemap.xml` com a home e os produtos visíveis (`visible !== false`), em ordem de id, sem `lastmod`, `changefreq` nem `priority`; falha o build se `dist/` não existir ou se houver menos de 2 URLs. `public/sitemap.xml` foi removido do repositório: o sitemap só existe no `dist/`.
 - **Variáveis de ambiente:** nenhuma. `VITE_WHATSAPP_PHONE` é opcional; sem ela vale o número padrão do código.
 - **Wrangler:** está em `devDependencies` (versão resolvida pelo `package-lock.json`); o `npx wrangler deploy` do Workers Builds usa a versão instalada. `workers.dev` está desligado (`"workers_dev": false` no `wrangler.jsonc`) e verificado por `curl` (o endereço responde 404). `"preview_urls": false` está definido no arquivo; as Preview URLs NÃO têm confirmação direta por `curl` (só o estado "desligado" visto no painel). O domínio próprio segue respondendo (`www` 200, raiz 301, `/produto/43` 200).
 
@@ -32,7 +32,9 @@ O domínio `petluxostory.com.br` é registrado no Registro.br e usa os dois name
 - **`www` é o canônico:** Custom Domain do Worker.
 - **A raiz** também é Custom Domain do Worker e redireciona com 301 para o `www`, preservando caminho e query (regra "raiz para www").
 - **HTTP → HTTPS:** regra "http para https" (301). A Cloudflare não faz esse redirecionamento por padrão.
-- **Zona:** 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`) e as duas linhas "Worker" (raiz e `www`). Sem MX nem TXT. DNSSEC desativado.
+- **Zona:** 3 CAA (`pki.goog`, `sectigo.com`, `letsencrypt.org`) e as duas linhas "Worker" (raiz e `www`). 1 TXT de verificação do Google Search Console (não apagar). Sem MX. DNSSEC desativado.
+
+- **Search Console:** propriedade de domínio verificada em 2026-11-17 por registro TXT no DNS da Cloudflare (não apagar esse TXT); sitemap `https://www.petluxostory.com.br/sitemap.xml` enviado.
 
 **Criar um Custom Domain:** Worker → aba Domains → Add domain, com o subdomínio na frente de `.petluxostory.com.br`.
 
@@ -44,7 +46,6 @@ O domínio `petluxostory.com.br` é registrado no Registro.br e usa os dois name
 - `index.html` — `og:url`, `og:image`, `twitter:image` (todos com `https://www.petluxostory.com.br`; sem `canonical` estático: o canonical de produto vem do Worker)
 - `public/robots.txt` — 4 linhas, com `Sitemap:`; não tem `Host:`
 - `worker/seo.js` e `scripts/generate-sitemap.js` — constante `SITE` com o domínio
-- `public/sitemap.xml` — só a home (obsoleto: o build gera `dist/sitemap.xml`)
 
 Para trocar o domínio, atualizar esses arquivos e os Custom Domains do Worker.
 
