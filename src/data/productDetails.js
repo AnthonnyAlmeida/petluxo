@@ -543,6 +543,7 @@ export const PRODUCT_DETAILS = {
       '/images/products/kit-elan-rosa/kit-elan-rosa-2.webp',
       '/images/products/kit-elan-rosa/kit-elan-rosa-3.webp',
       '/images/products/kit-elan-rosa/kit-elan-rosa-4.webp',
+      '/images/products/kit-elan-rosa/kit-elan-rosa-5.webp',
     ],
     specs: {
       composicaoKit: 'Guia, coleira e porta-saquinhos',
