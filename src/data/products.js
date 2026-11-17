@@ -690,6 +690,7 @@ export const PRODUCTS = [
     badge: null,
     buyLinks: [{ size: 'P', link: 'https://pag.ae/82daAZYS1' }, { size: 'M', link: 'https://pag.ae/82djrGDVo' }],
     tags: ['bolsa', 'transporte', 'mochila', 'viagem', 'couro rosé', 'ouro rosa', 'passeio'],
+    supplierLink: 'https://www.coutrebolsas.com.br/bolsa-de-transporte-pet-luxo-glamour-linho-rosa-coutre-bolsas',
   },
   {
     id: 42,
