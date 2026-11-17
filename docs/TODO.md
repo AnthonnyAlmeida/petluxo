@@ -87,7 +87,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 - [ ] **8. Completar fichas dos produtos sem `PRODUCT_DETAILS`** 🔴
       16 dos 39 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32). Dos 28 visíveis, 6 estão sem ficha e abrem só o modal rápido: ids 14, 18, 24, 25, 30, 31 (os outros 10 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
-      Estado do id 44: ficha de 6 campos; falta a medida do tamanho M para `sizeChart`/`howToChooseSize` e falta definir a garantia. O fornecedor não informa nenhuma das duas e a dona do negócio não conseguiu obter. A garantia precisa de UM texto único da loja antes do preenchimento em lote (hoje há 4 textos diferentes nas fichas).
+      Estado do id 44: ficha de 6 campos; falta a medida do tamanho M para `sizeChart`/`howToChooseSize` e falta definir a garantia. O fornecedor não informa nenhuma das duas e a dona do negócio não conseguiu obter. A garantia precisa de UM texto único da loja antes do preenchimento em lote (eram 4 textos diferentes nas fichas; restam 2 após a retirada abaixo).
+      Em 2026-11-17, as linhas de garantia de 2 e 3 meses dos ids 20, 41 e 42 foram retiradas temporariamente (campo `warranty` removido) por recomendação do advogado. O texto padronizado de garantia legal (90 dias para produto durável) entra depois do parecer, previsto para 24 a 25/11/2026.
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
       Sitemap feito: `scripts/generate-sitemap.js` gera `dist/sitemap.xml` no build (home + produtos visíveis, sem `lastmod`). `public/sitemap.xml` não existe mais no repositório. Pendente: JSON-LD `Product` nas fichas (o preço é texto livre, como `'R$ 379,90'`, e precisaria de conversão).

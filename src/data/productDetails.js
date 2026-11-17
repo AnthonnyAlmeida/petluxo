@@ -391,7 +391,6 @@ export const PRODUCT_DETAILS = {
     ],
     careInstructions: 'O forro impermeável facilita a higienização e praticidade no uso.',
     airTravelNote: 'Apta para cabine de avião, sempre sujeita às regras, dimensões e condições da companhia aérea.',
-    warranty: 'Garantia de fábrica de 2 meses.',
     faq: [
       { question: 'Quais tamanhos estão disponíveis?', answer: 'P e M.' },
       { question: 'Qual a diferença entre os tamanhos?', answer: 'P: 40 × 20 × 27 cm, com suporte para até 5 kg. M: 40 × 25 × 27 cm, com suporte para até 6 kg. A principal diferença dimensional entre os tamanhos está na largura.' },
@@ -434,7 +433,6 @@ export const PRODUCT_DETAILS = {
     ],
     careInstructions: 'O forro impermeável facilita a higienização e a praticidade no uso.',
     airTravelNote: 'Apta para cabine de avião, sempre sujeita às regras, dimensões e condições da companhia aérea.',
-    warranty: 'Garantia de fábrica de 2 meses.',
     faq: [
       { question: 'Qual a diferença entre os tamanhos P e M?', answer: 'O tamanho M tem 5 cm a mais de largura que o P e comporta pets de 5 a 6 kg, enquanto o P comporta pets de até 5 kg. Os dois têm a mesma altura (27 cm) e o mesmo comprimento (40 cm).' },
       { question: 'Qual o limite de peso de cada tamanho?', answer: 'O tamanho P suporta pets de até 5 kg e o tamanho M suporta pets de 5 a 6 kg.' },
@@ -512,7 +510,6 @@ export const PRODUCT_DETAILS = {
       '1 Refúgio Suspenso',
     ],
     careInstructions: 'Lavável e fácil de limpar. O produto não é à prova d’água e deve ser protegido de chuva e exposição prolongada à água.',
-    warranty: 'Garantia de 3 meses do vendedor.',
     faq: [
       {
         question: 'Para quais pets o Refúgio Suspenso é indicado?',
