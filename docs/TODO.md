@@ -29,7 +29,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       O painel administrativo externo (`petluxo-admin`) usa `order` para ordenar a listagem de produtos (`ProductsPage.jsx`) e calcular o próximo valor a partir do maior existente (`AdminPage.jsx`). O serializador preserva o campo ao publicar `products.js`. O frontend não o usa (a ordenação de exibição é via `categoryOrder`), mas a remoção quebraria o fluxo do painel. Decisão: manter enquanto o painel depender dele.
 
 - [x] **9. Melhorar título e descrição da home** 🟢
-      Título: "PetLuxo — Camas de luxo, coleiras de couro e acessórios premium" (63 chars). Meta description: "PetLuxo: camas de luxo, coleiras de couro e acessórios premium para cães e gatos. Design sofisticado, materiais nobres. Compre via WhatsApp." (140 chars). Open Graph e Twitter Card atualizados consistentemente.
+      Título: "PetLuxo — Camas, coleiras de couro e acessórios premium" (55 chars). Meta description: "PetLuxo: camas de luxo, coleiras de couro e acessórios premium para cães e gatos. Design sofisticado, materiais nobres. Compre via WhatsApp." (140 chars). Open Graph e Twitter Card atualizados consistentemente.
 
 - [x] **11. Padronizar o nome da marca** 🟢
       Decisão: marca oficial é **PetLuxo**; domínio permanece **petluxostory.com.br**. Não há necessidade de alinhar domínio ao nome comercial. Configuração atual mantida sem alterações no site, metadados, textos, URLs ou domínio.
@@ -87,6 +87,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 - [ ] **8. Completar fichas dos produtos sem `PRODUCT_DETAILS`** 🔴
       16 dos 39 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32). Dos 28 visíveis, 6 estão sem ficha e abrem só o modal rápido: ids 14, 18, 24, 25, 30, 31 (os outros 10 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
+      Estado do id 44: ficha de 6 campos; falta a medida do tamanho M para `sizeChart`/`howToChooseSize` e falta definir a garantia. O fornecedor não informa nenhuma das duas e a dona do negócio não conseguiu obter. A garantia precisa de UM texto único da loja antes do preenchimento em lote (hoje há 4 textos diferentes nas fichas).
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
       Sitemap feito: `scripts/generate-sitemap.js` gera `dist/sitemap.xml` no build (home + produtos visíveis, sem `lastmod`). `public/sitemap.xml` não existe mais no repositório. Pendente: JSON-LD `Product` nas fichas (o preço é texto livre, como `'R$ 379,90'`, e precisaria de conversão).
@@ -115,7 +116,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Pré-requisitos: corrigir as miniaturas do painel `petluxo-admin` que usam `raw.githubusercontent.com` (`ProductsPage.jsx:351` e `CategoriesPage.jsx:399` e, no modo edição, `Step3Photo.jsx:21`); testar um commit do painel com o repositório privado (autor do commit e o build na Cloudflare) e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO); conferir o escopo do token. A documentação do projeto (`README.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md` §8) afirma que o repositório deve ser público; isso não foi verificado na conta.
 
 - [ ] **24. Conferir PNG com extensão `.webp` nas fotos de galeria** 🟢
-      Rodar `file public/images/products/*/*.webp | grep PNG` e verificar no painel (`petluxo-admin/src/lib/imageConverter.js`) como as fotos são convertidas, para evitar que o problema volte a cada produto novo. Causa não verificada.
+      Checagem no repositório do site em 2026-11-17: `file public/images/products/*/*.webp | grep -v "Web/P"` não listou nenhum arquivo (todos os `.webp` de produto são WebP de verdade). Pendente: verificar no painel (`petluxo-admin/src/lib/imageConverter.js`, outro repositório, não tocado) como as fotos são convertidas, para evitar que o problema volte a cada produto novo. Causa do caso antigo não verificada.
 
 - [ ] **25. Rotacionar periodicamente o token de acesso do painel ao GitHub** 🟢
       O token atual (`petluxo-admin-v2`, fine-grained) cobre dois repositórios, `petluxo` e `petluxo-admin`, com as permissões Contents em leitura e escrita e Metadata em leitura. Foi criado em 2026-10-26 e não tem vencimento. Ação planejada: trocar o token entre 2027-04-26 e 2027-10-26 (6 a 12 meses após a criação), já definindo data de validade na nova versão. Não registrar o valor do token em nenhum arquivo.
@@ -123,21 +124,21 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [ ] **26. Reescrever `docs/CHECKOUT_ARCHITECTURE.md` para InfinitePay com frete grátis** 🟡
       Saem Mercado Pago e Melhor Envio. Continuam servidor (funções, agora Worker com script na Cloudflare) e banco. Pagamento por redirecionamento para checkout hospedado. Confirmação de pagamento pela API (retorno ao site e webhook não bastam como prova). Débito a confirmar.
 
-- [ ] **27. Resíduos de código de baixa prioridade** 🟢 - A exceção de `shortName` para os ids 3, 4 e 10 em `scripts/validate-catalog.js` não é mais necessária: todos os 39 produtos têm `shortName`. - `:global(.price)` em `ProductModal.module.css:66` está fora da lista permitida em `docs/CSS_MIGRATION.md`. - `<a href="/">` na Navbar (`Navbar.jsx:30`) recarrega a página; trocar por `Link` mudaria o comportamento do clique no logo na home, então avaliar antes.
+- [ ] **27. Resíduos de código de baixa prioridade** 🟢 - Feito em 2026-11-17: removida a exceção de `shortName` (ids 3, 4, 10) em `scripts/validate-catalog.js` e o `import React` sem uso em 18 arquivos de `src/` (o Vite usa o runtime JSX automático); `import React` continua onde há `React.` (hooks, `Fragment`, `lazy`, `Suspense`). Pendente: - `:global(.price)` em `ProductModal.module.css:66` está fora da lista permitida em `docs/CSS_MIGRATION.md`. - `<a href="/">` na Navbar (`Navbar.jsx:30`) recarrega a página; trocar por `Link` mudaria o comportamento do clique no logo na home, então avaliar antes.
 
 ---
 
 ## Adicionados em 2026-10-28
 
-- [ ] **28. Conferir o Instagram correto** 🟢
-      `Footer.jsx:60` aponta para `instagram.com/pettluxo_/`, enquanto o contexto do projeto cita `@petluxostory`. O dono confirma qual é o correto e o site/documentação são alinhados (também em `docs/CLOUDFLARE_MIGRATION.md`, seção 8, item 18).
+- [x] **28. Conferir o Instagram correto** 🟢
+      Concluído em 2026-11-17. Perfil oficial do Instagram: pettluxo_; rodapé e docs alinhados.
 
-- [ ] **29. Pasta de imagem órfã** 🟢
-      `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`) não é referenciada por nenhum produto atual. Decidir se remove.
+- [x] **29. Pasta de imagem órfã** 🟢
+      Concluído em 2026-11-17: `public/images/products/arranhador-felino-sisal-ajustavel-4-niveis-portatil/` (só `principal.webp`) não tinha nenhuma referência em `src/`, `worker/`, `scripts/`, catálogo ou docs (além deste item e do contexto do projeto) e foi removida com `git rm -r`; o build passa.
 
 - [x] **30. Prévia do link no WhatsApp/Facebook após a virada** 🟢
       Fechada em 2026-10-28 para a home e a raiz: `https://www.petluxostory.com.br/?teste=1` mostrou logo, título e descrição, acima da caixa de texto e na mensagem enviada, e `https://petluxostory.com.br/?teste=2` (raiz) mostrou a mesma prévia (o WhatsApp seguiu o 301 para o `www`). Com o user-agent do WhatsApp, o HTML traz `og:url`, `og:image` (+ type, width 1200, height 630, alt), `og:title` e `og:description`, todos com `www`; `/og-image.jpg` responde 200, `image/jpeg`. Um link de produto (`/produto/8`) mostra a prévia da home: limitação conhecida (todas as rotas servem o mesmo `index.html`; item 2).
-      Pendente (opcional): link limpo (cache do WhatsApp), depurador do Facebook, prévia por produto (item 2).
+      Prévia por produto resolvida pelo Worker de SEO e validada em 2026-11-17 (prévia do WhatsApp de `/produto/44`). Pendente (opcional): link limpo (cache do WhatsApp) e depurador do Facebook.
 
 - [ ] **31. Teste de foto trocada pelo painel com o mesmo nome (cache)** 🟢
       Parte A feita (2026-10-28): `/images/products/refugio-cozy/principal.webp` responde 200, `image/webp`, `cache-control: public, max-age=0, must-revalidate` e tem `etag`; isso indica que uma foto nova com o mesmo nome deveria aparecer.

@@ -219,7 +219,7 @@ Decisão do dono (2026-10-28): a janela com o projeto Vercel do site intacto dur
 
 ### F5 – Documentação (CONCLUÍDA em 2026-10-28; o texto sugerido abaixo é o plano original)
 
-Executada em 2026-10-28, depois da virada. Todos os itens abaixo estão aplicados (o item de `docs/TODO.md:112` virou o item 23 atual; o item de Instagram virou o TODO 28; o item 4 do TODO ficou `[x]` para o site e a questão do painel admin virou o item 32).
+Executada em 2026-10-28, depois da virada. Todos os itens abaixo estão aplicados (o item de `docs/TODO.md:112` virou o item 23 atual; o item de Instagram virou o TODO 28 (concluído); o item 4 do TODO ficou `[x]` para o site e a questão do painel admin virou o item 32).
 
 - [x] **README.md:9** badge `Deploy-Vercel` → badge Cloudflare, ex.: `[![Cloudflare](https://img.shields.io/badge/Deploy-Cloudflare%20Workers-F38020?style=flat-square&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)`.
 - [x] **README.md:33** "Deploy automático via GitHub + Vercel" → "Deploy automático via GitHub + Cloudflare Workers (static assets)".
@@ -232,7 +232,7 @@ Executada em 2026-10-28, depois da virada. Todos os itens abaixo estão aplicado
 - [x] **docs/TODO.md:13 (item 4; aplicado: `[x]` para o site, painel no item 32)**: marcar `[x]` com nota "resolvido pela migração para a Cloudflare em <data>; confirmar condições de uso comercial da Cloudflare (item NÃO VERIFICADO)".
 - [x] **docs/TODO.md:56 (item 1)**: trocar "um rewrite para `/index.html` no `vercel.json`" por "o fallback de SPA do Worker (`not_found_handling`)"; registrar o resultado real dos testes de F2.2 (links diretos = 200; soft 404 aceito ou não).
 - [x] **docs/TODO.md:66 (item 2)**: "uma função na Vercel" → "um Worker com script ou pré-renderização". Lembrar que o canonical depende deste item (D4).
-- [x] **docs/TODO.md:112 (item 23)**: tirar "deploy da Vercel" dos pré-requisitos e acrescentar "e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO; relatos de falha no clone em 2026-10-27)". Itens 25 e 26 permanecem; o 26 passa a citar a Cloudflare no lugar de Vercel (abaixo). **Novo item sugerido:** "Instagram do rodapé: `Footer.jsx:51` aponta para `instagram.com/pettluxo_/` e o `AI_CONTEXT_PETLUXO.md:8` cita `@petluxostory`; o dono confirma qual é o correto".
+- [x] **docs/TODO.md:112 (item 23)**: tirar "deploy da Vercel" dos pré-requisitos e acrescentar "e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO; relatos de falha no clone em 2026-10-27)". Itens 25 e 26 permanecem; o 26 passa a citar a Cloudflare no lugar de Vercel (abaixo). **Novo item sugerido:** "Instagram do rodapé: conferir que `Footer.jsx` e a documentação apontam para o perfil oficial, `instagram.com/pettluxo_/`".
 - [x] **docs/CHECKOUT_ARCHITECTURE.md**: o plano inteiro assume Vercel (linhas 9, 22, 23, 26, 167-173 e 185 `vercel.json`, 339-341, 366, 392, 417, 421, 447, 454). Não editar linha a linha: o TODO 26 já manda reescrever o documento para InfinitePay + frete grátis. Na reescrita, trocar: hospedagem de funções (`/api/` da Vercel) → Worker com script na Cloudflare; banco (Neon via Marketplace Vercel) e e-mail (Resend via Marketplace) → decidir de novo, sem integração de Marketplace da Vercel; cron → Cron Triggers; o `vercel.json` de rewrite deixa de existir (o roteamento passa a ser `run_worker_first` para `/api/*` no `wrangler.jsonc`). Texto de aviso sugerido no topo, já: "**Atenção:** a hospedagem migrou para a Cloudflare; as referências à Vercel abaixo estão desatualizadas até a reescrita (TODO 26)."
 - [x] **AI_CONTEXT_PETLUXO.md**: reescrito em 2026-10-28 só com o estado atual (hospedagem na Cloudflare, modo SPA, DNS); histórico e rollback ficam neste documento.
 - [x] **src/main.jsx:8** comentário: ver F1.8.
@@ -288,7 +288,7 @@ A produção está no Worker `petluxo`. Enquanto o projeto Vercel do site existi
 15. **Nome do Worker vs. `name` do `wrangler.jsonc`** (efeito de divergência no Workers Builds) e **se `npx wrangler deploy` dispensa `wrangler` em `devDependencies`**.
 16. **Suporte a `Host:` e a hostnames no Playwright contra `workers.dev`:** não testado; os testes atuais apontam para `localhost:5173`.
 17. Comportamento de `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega` e `/termos-de-uso` em acesso direto na Vercel hoje e `og-image.jpg` por curl: só testáveis nas fases F2/F4 (a prévia no WhatsApp/Facebook está no item 27).
-18. **Instagram correto:** `Footer.jsx:51` aponta para `pettluxo_` e o `AI_CONTEXT_PETLUXO.md` cita `@petluxostory`; decisão do dono, ainda não resolvida.
+18. **Instagram:** o perfil oficial é `instagram.com/pettluxo_/` (`Footer.jsx`); rodapé e docs alinhados.
 19. **Push e deploy da F1:** confirmados em 2026-10-27 (o robots.txt de produção já mostra o www).
 20. **Diferença 142 × 99 arquivos:** o log do Workers Builds leu 142 arquivos de `dist/` (98 novos subidos, 1 já existente) e o build local tem 99 arquivos únicos; provável diferença de contagem de arquivos × ativos únicos, NÃO VERIFICADO, sem alarme (limite grátis: 20.000).
 21. ~~Número do WhatsApp do site de teste × produção~~ **RESOLVIDO em 2026-10-28 (F3b.0):** os dois serviam o mesmo `assets/index-Ch6Q2MER.js` (código idêntico).
