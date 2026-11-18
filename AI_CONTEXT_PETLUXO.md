@@ -26,6 +26,7 @@ Site estático (sem backend, sem banco, sem API) de produtos premium para pets, 
 | Área                                                                                                  | Estado                                                                                      |
 | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | Catálogo, busca, filtro por categoria, carrosséis, ficha `/produto/:id`, galeria, lightbox            | LIVE                                                                                        |
+| Layout mobile (< 768px): home em cenas, catálogo `/produtos`, busca `/buscar`, ficha, políticas, 404, cookies | No código; abaixo de 768px o site usa componentes próprios (`src/components/mobile/`) |
 | CTA "CONSULTAR VIA WHATSAPP" com mensagem dinâmica (nome, variação, preço, link da ficha)             | LIVE                                                                                        |
 | Consentimento GA4 (LGPD) e `page_view` por rota                                                       | LIVE                                                                                        |
 | Validação de catálogo no build (`scripts/validate-catalog.js`)                                        | LIVE no build                                                                               |
@@ -38,7 +39,7 @@ Não existem `api/`, `functions/`, `db/`, `vercel.json` nem `src/data/shipping.j
 ## Stack e scripts
 
 - React ^18.3.1, React Router DOM ^7.15.0 (`BrowserRouter` em `main.jsx`, rotas em `src/app/page.jsx`), Vite ^6.3.3, `@vitejs/plugin-react` ^4.3.4.
-- CSS Modules por componente, sem framework de UI. JavaScript puro (sem TypeScript).
+- CSS Modules por componente, sem framework de UI. JavaScript puro (sem TypeScript). Todas as animações são CSS (sem biblioteca de animação).
 - `@fontsource/cormorant-garamond`, `@fontsource/inter` e `@fontsource/jetbrains-mono` ^5.3.0: fontes hospedadas no site (subset latin; imports em `src/main.jsx` antes de `variables.css`; `index.html` não carrega mais o Google Fonts).
 - `yet-another-react-lightbox` ^3.32.2 com plugin `Zoom`, carregado via `React.lazy` só em dispositivo touch.
 - devDependencies de teste: `@playwright/test` e `playwright` ^1.49.0.
@@ -58,20 +59,30 @@ petluxo/
 ├── scripts/                   # validate-catalog.js, generate-sitemap.js, check-seo.js
 ├── tests/analytics-consent.spec.js
 ├── playwright.config.js
-├── docs/                      # CHECKOUT_ARCHITECTURE, CLOUDFLARE_MIGRATION, CSS_MIGRATION, DECISIONS, DEPLOY, PRODUCT_EXPANSION, README, TODO
+├── docs/                      # CHECKOUT_ARCHITECTURE, CLOUDFLARE_MIGRATION, CSS_MIGRATION, DECISIONS, DEPLOY, DESIGN_SYSTEM, PRODUCT_EXPANSION, README, TODO (+ desing/, referência do redesign mobile)
 └── src/
-    ├── main.jsx               # monta <App/>, bloqueio/reset de pinch-zoom (WebKit)
-    ├── app/                   # page.jsx (rotas + HomePage), ScrollToTop.jsx, DevTweaks.jsx (só dev)
+    ├── main.jsx               # monta <App/>
+    ├── app/                   # page.jsx (rotas, HomePage, CatalogPage, SearchPage), ScrollToTop.jsx, DevTweaks.jsx (só dev)
     ├── components/
     │   ├── layout/            # Navbar, MinimalNavbar, Footer
-    │   ├── product/           # ProductCard, ProductGrid, ProductModal, ProductGallery, ProductLightbox,
+    │   ├── product/           # ProductCard, ProductGrid, ProductGallery, ProductLightbox,
     │   │                      # ProductSizeSelector, ProductBuyButton
     │   ├── sections/          # Hero, Featured, Products, Story, Differentials, CTA, FAQ, NotFound
-    │   ├── pages/             # ProductPage, PrivacyPage, ReturnPolicyPage, ShippingPolicyPage, TermsPage
-    │   └── ui/                # Accordion, AnalyticsConsent, BrandSeal, CategorySelector, TrustBadges
-    ├── data/                  # products.js, productDetails.js
-    ├── hooks/                 # useScroll.js, useProductBuy.js
-    ├── lib/                   # whatsapp.js, analytics.js
+    │   ├── pages/             # ProductPage, PolicyLayout, PrivacyPage, ReturnPolicyPage, ShippingPolicyPage, TermsPage
+    │   ├── ui/                # Accordion, AnalyticsConsent, BrandSeal, CategorySelector, TrustBadges
+    │   └── mobile/            # layout mobile (< 768px): MobileIcons.jsx e
+    │       ├── ui/            #   MobileUI.module.css, BottomSheet, ProductBadge, Paw
+    │       ├── layout/        #   MobileHeader, MobileTabBar, MobileFooter, MobileChrome
+    │       ├── home/          #   MobileHome (trilha dourada), MobileHero, FeaturedScene, AboutScene, DifferentialsScene, FaqScene
+    │       ├── catalog/       #   MobileCatalog
+    │       ├── search/        #   MobileSearch
+    │       ├── product/       #   MobileProductFull, MobileProductSimple, MobileProductParts, ImageViewer
+    │       ├── policy/        #   MobilePolicyLayout
+    │       └── notfound/      #   MobileNotFound
+    ├── data/                  # products.js, productDetails.js, siteContent.js (textos institucionais), specLabels.js
+    ├── hooks/                 # useScroll, useProductBuy, useMediaQuery (useIsMobile), useHiddenUntilFound,
+    │                          # useReserveBottomBar, useModalFocus, useDocumentHead
+    ├── lib/                   # whatsapp.js, analytics.js, catalog.js (consultas ao catálogo), productMessage.js
     ├── styles/                # variables.css, globals.css, buttons.css
     ├── icons.jsx
     └── tweaks-panel.jsx
@@ -81,9 +92,13 @@ Pastas/arquivos locais ignorados ou não tracked (`_incoming/` está ignorada vi
 
 ## Rotas
 
-`/` (Navbar, Hero, Featured, Products, Story, Differentials, CTA, FAQ, Footer, ProductModal), `/produto/:id`, `/politica-de-privacidade`, `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega`, `/termos-de-uso` e `*` (NotFound no layout padrão). `ScrollToTop` e `AnalyticsConsent` ficam fora do `<Routes>`.
+`/` (desktop: Navbar, Hero, Featured, Products, Story, Differentials, CTA, FAQ, Footer; mobile: `MobileHome`), `/produtos` (catálogo: desktop = a seção Products como página, com h1; mobile = `MobileCatalog`, categoria em `?categoria=<id>`), `/buscar` (só mobile, `MobileSearch`; no desktop redireciona para `/produtos`), `/produto/:id`, `/politica-de-privacidade`, `/politica-de-troca-e-devolucao`, `/politica-de-frete-e-entrega`, `/termos-de-uso` e `*` (`NotFoundPage`). `ScrollToTop` e `AnalyticsConsent` ficam fora do `<Routes>`.
 
-`/produto/:id` com id inexistente ou `visible === false` renderiza Navbar + NotFound + Footer; o Worker já responde esse HTML com HTTP 404 + `noindex` (ver "Worker de SEO"). Produto visível sem ficha (ids 14, 18, 24, 25, 30, 31) renderiza a página normalmente, sem os acordeões. Nada no front muda `document.title` nem meta (só o viewport em `main.jsx`): em navegação interna o `<title>` não muda; só o HTML inicial é reescrito pelo Worker. Produto existente usa `MinimalNavbar` (só a marca, link para `/`).
+**Breakpoint:** `useIsMobile()` (`(max-width: 767.98px)`) escolhe, na mesma rota, o componente mobile ou o desktop; a partir de 768px o layout desktop é o mesmo de sempre. Os dados e as regras vêm dos mesmos módulos (`lib/catalog.js`, `lib/productMessage.js`, `data/siteContent.js`, `data/specLabels.js`).
+
+`/produto/:id` com id inexistente ou `visible === false` renderiza `NotFoundPage` (mobile: `MobileNotFound`; desktop: Navbar + NotFound + Footer); o Worker já responde esse HTML com HTTP 404 + `noindex` (ver "Worker de SEO"). Produto visível sem ficha (ids 14, 18, 24, 25, 30, 31) renderiza a página normalmente (mobile: `MobileProductSimple`; com ficha: `MobileProductFull`), sem os acordeões. Produto existente usa `MinimalNavbar` no desktop (só a marca, `Link` para `/`).
+
+**Meta por rota no cliente (`useDocumentHead`):** `/produtos` define título, meta description, canonical e `og:*` próprios; `/buscar` define `noindex, follow`; os valores anteriores voltam ao sair da rota. Só vale para quem executa JavaScript (o Worker só reescreve `/produto/*`). Fora essas duas rotas, nada no front muda `document.title` nem meta: em navegação interna o `<title>` das demais rotas não muda; só o HTML inicial é reescrito pelo Worker. O sitemap (`scripts/generate-sitemap.js`) tem a home, `/produtos` e os produtos visíveis; `/buscar` fica fora.
 
 ## Compra: `HIDE_BUY_CTA`
 
@@ -133,11 +148,11 @@ Visíveis por categoria (ordem por `categoryOrder` da categoria): mais-vendidos 
 
 `PRODUCT_DETAILS`, indexado por id, isolado de `products.js` (o painel admin não o toca). 24 chaves, todas com produto correspondente: 2, 8, 9, 10, 12, 16, 17, 20, 21, 26, 28, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45.
 
-Sem ficha: 16 produtos (1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32); 6 deles visíveis (14, 18, 24, 25, 30, 31) e abrem só o modal rápido (`docs/TODO.md` item 8). Sem `gallery`: só o id 34.
+Sem ficha: 16 produtos (1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32); 6 deles visíveis (14, 18, 24, 25, 30, 31) e abrem a ficha simples (`docs/TODO.md` item 8). Sem `gallery`: só o id 34.
 
 Schema (10 campos, todos opcionais): `gallery`, `specs{}`, `sizeChart[{size,height,length,width,weight}]`, `howToChooseSize`, `sizeGuideNote`, `whatsIncluded[]`, `careInstructions`, `airTravelNote`, `warranty`, `faq[{question,answer}]`. `sizeGuideNote` em uso nos ids 2, 9, 28, 34, 41, 42, 43. `docs/PRODUCT_EXPANSION.md` documenta o schema.
 
-- `ProductPage.jsx` define `SPEC_LABELS` (75 entradas); toda chave nova de `specs` exige label (hoje nenhuma está sem).
+- `src/data/specLabels.js` define `SPEC_LABELS` (75 entradas, usado pela ficha desktop e pela mobile); toda chave nova de `specs` exige label (hoje nenhuma está sem).
 - Toda linha de `sizeChart` precisa das 5 chaves (usar `'—'` quando não se aplica); hoje todas estão completas.
 - Fichas completas (9 campos, sem `warranty`): ids 41 e 42. O id 43 tem ficha de 6 campos (`gallery` de 5 fotos, trocadas em 2026-11-17; `specs`, `sizeGuideNote`, `whatsIncluded`, `careInstructions`, `faq`; sem `sizeChart`, `howToChooseSize`, `airTravelNote`, `warranty`). O id 33 tem ficha de 6 campos (`gallery`, `specs`, `sizeChart`, `howToChooseSize`, `whatsIncluded`, `faq`; sem `careInstructions`, `airTravelNote`, `warranty`, `sizeGuideNote`). O id 44 (Peitoral Élan Signature) tem ficha de 6 campos (`gallery` de 5 fotos, `specs` com `cor` única (marrom escuro, costuras caramelo), `medidas` (só o G: tórax 70 cm, informado pelo fornecedor) e `ferragens` douradas, `howToChooseSize`, `whatsIncluded`, `careInstructions`, `faq`; sem `sizeChart` por falta da medida do M e sem `warranty` porque o texto padrão de garantia não foi definido (restam 2 textos diferentes nas fichas após a retirada temporária dos ids 20, 41 e 42)). Fotos `-2` e `-4` com ferragens douradas (fotos finais). Id 2 tem ficha com `sizeChart` vazio e orientação por peso. O id 45 (Porta-Saquinhos Premium Élan) tem ficha de 5 campos (`gallery` de 4 fotos, `specs` com 7 chaves, incluindo `aberturaDispensadora`, `whatsIncluded` (o rolo de saquinhos das fotos é ilustrativo e não acompanha), `careInstructions`, `faq` de 6 perguntas; sem `warranty`, `sizeChart`, `howToChooseSize`, `airTravelNote` e `sizeGuideNote` por falta de dados: sem medidas, garantia ou prazo informados).
 - Ordem dos `AccordionItem` fixa no JSX: specs → sizeChart → howToChooseSize → sizeGuideNote → whatsIncluded → careInstructions → airTravelNote → warranty → faq (todos fechados por padrão).
@@ -158,27 +173,28 @@ Convenção: `public/images/products/<slug>/principal.webp` + `<slug>-2.webp`, `
 
 ## Componentes
 
-- **`ProductCard`:** com `PRODUCT_DETAILS[id]` navega para `/produto/:id` (`useNavigate`); sem ficha chama `onQuick` e abre `ProductModal`.
+- **`ProductCard`:** sempre navega para `/produto/:id` (desktop: `navigate` no clique do card; mobile: `Link`); não existe modal de produto.
 - **`ProductGrid`:** carrossel próprio; `perView` 1 (<640px), 2 (<1024px), 3; swipe com limiar de 50px.
 - **`ProductGallery`:** `useIsMobile(640)` define o layout; `usePointerCoarse` define o lightbox; `ProductLightbox` via `React.lazy`; lupa (`zoomEnabled`) alternável; swipe mobile com limiar de 50px.
 - **`ProductLightbox`:** `yet-another-react-lightbox` + plugin `Zoom`, `maxZoomPixelRatio: 2`, `scrollToZoom: false`.
 - **`useProductBuy`:** `selectedSize` inicial = primeiro `buyLinks[].size`; deriva `activeBuyLink` e `activePrice` por igualdade de `size`.
 - **`ProductSizeSelector`:** tamanho ou cor (`variationType === 'cor'`, swatch via `color`).
-- **`Products.jsx`:** carrossel "Mais Vendidos" + expansão por categoria; modo filtro com grid; `IntersectionObserver` local para `.reveal`; `CategorySelector` (bottom sheet mobile, `Escape`, congela o body com `position: fixed`).
+- **`Products.jsx`** (prop `asPage` na rota `/produtos`: título vira h1)**:** carrossel "Mais Vendidos" + expansão por categoria; modo filtro com grid; `IntersectionObserver` local para `.reveal`; `CategorySelector` (bottom sheet mobile, `Escape`, congela o body com `position: fixed`).
 - **`Accordion`:** `aria-expanded`, cada item com estado próprio.
 - **`ScrollToTop`:** `scrollTo` instantâneo imediato + `requestAnimationFrame`.
-- **`globals.css`:** `scroll-behavior: smooth`, `overflow-anchor: none`, `touch-action: pan-x pan-y` (bloqueia pinch-zoom; ressalva de acessibilidade, WCAG 1.4.4, `docs/TODO.md` item 12).
-- **`main.jsx`:** bloqueio de `gesture*` do WebKit (exceto `.yarl__portal`) e reset de escala por `maximum-scale=1.0` temporário em `gestureend`/`visualViewport resize`.
+- **`globals.css`:** `scroll-behavior: smooth`, `overflow-anchor: none`; o pinch-zoom é livre (sem `touch-action: pan-x pan-y` nem bloqueio de `gesture*`; `index.html` usa `viewport-fit=cover`). Carrosséis e galeria usam `touch-action: pan-y pinch-zoom`. `html.m-bottom-bar body` reserva `--m-bar-h` para as barras fixas do mobile.
+- **Mobile (`src/components/mobile/`):** ver `docs/DESIGN_SYSTEM.md` §14. Home em um único contêiner com `scroll-snap` e trilha dourada; folhas e visualizador usam `useModalFocus` (`#app` inerte, foco preso, Esc); conteúdo de FAQ/acordeões fica no DOM com `hidden="until-found"` (`useHiddenUntilFound`); `useReserveBottomBar` reserva o espaço da barra inferior; animações infinitas e o avanço automático das histórias param com `prefers-reduced-motion`.
+- **`lib/catalog.js`:** regras compartilhadas de visibilidade, ordem (`categoryOrder`), mais vendidos, destaque, busca e preço. **`data/siteContent.js`:** fonte única dos textos institucionais (hero, história, diferenciais, FAQ, rodapé, políticas); **`data/specLabels.js`:** `SPEC_LABELS`. **`lib/productMessage.js`:** mensagem do WhatsApp por produto.
 - **`icons.jsx`:** só exporta `Icon` com `Search`, `Wa`, `ArrowR`, `ArrowUp`, `Plus`, `Chevron` (todos em uso; sem acesso dinâmico `Icon[...]`).
 - **`DevTweaks`:** `React.lazy` só em `import.meta.env.DEV`; controla tom de acento e textura de grão.
-- Páginas de política usam estilos inline (sem `.module.css`). "Última atualização": novembro de 2026 em Privacidade, Frete e Entrega e Termos de Uso; maio de 2025 em Troca e Devolução. A Privacidade descreve atendimento e pedido combinados por WhatsApp (sem pagamento nem formulário no site) e lista WhatsApp (Meta), PagBank (operador do link de cartão), Cloudflare e o distribuidor parceiro no compartilhamento; Frete e Entrega e o FAQ dizem que o prazo varia conforme o produto e o fornecedor e é informado no atendimento, e que o frete é informado no atendimento pelo WhatsApp antes da confirmação do pedido; o código de rastreio, quando existe, é enviado pelo WhatsApp (Frete e Entrega e FAQ), e a Privacidade diz que os dados do cliente ficam na conversa do WhatsApp.
-- `Footer.jsx`: coluna "Políticas" com as 4 políticas e o botão "Preferências de cookies" (classe `linkButton` em `Footer.module.css`); Instagram e CNPJ na base; sem selo de pagamento.
-- `FAQ.jsx`: 7 itens em `FAQS` (o item "Posso trocar o produto?" usa `a: null` e renderiza `TROCA_ANSWER`).
+- Páginas de política usam `PolicyLayout` (desktop: estilos inline idênticos aos de antes; mobile: `MobilePolicyLayout` com chips entre as 4 políticas). O corpo de cada texto fica na própria página. Em `ReturnPolicyPage.jsx`, a constante `HIGHLIGHTS` (cartões "7" e "90" do mobile) copia prazos do texto e precisa ser atualizada junto com ele após a revisão jurídica (`docs/TODO.md` item 39). "Última atualização": novembro de 2026 em Privacidade, Frete e Entrega e Termos de Uso; maio de 2025 em Troca e Devolução. A Privacidade descreve atendimento e pedido combinados por WhatsApp (sem pagamento nem formulário no site) e lista WhatsApp (Meta), PagBank (operador do link de cartão), Cloudflare e o distribuidor parceiro no compartilhamento; Frete e Entrega e o FAQ dizem que o prazo varia conforme o produto e o fornecedor e é informado no atendimento, e que o frete é informado no atendimento pelo WhatsApp antes da confirmação do pedido; o código de rastreio, quando existe, é enviado pelo WhatsApp (Frete e Entrega e FAQ), e a Privacidade diz que os dados do cliente ficam na conversa do WhatsApp.
+- `Footer.jsx` (e `MobileFooter`): coluna "Políticas" com as 4 políticas e o botão "Preferências de cookies" (classe `linkButton` em `Footer.module.css`); Instagram e CNPJ na base; sem selo de pagamento.
+- `FAQ.jsx` (e `FaqScene` no mobile): 7 itens em `FAQS` (`data/siteContent.js`) (o item "Posso trocar o produto?" usa `a: null` e renderiza `TROCA_ANSWER`).
 - Tokens z-index em `variables.css`: `--z-base`, `--z-dropdown`, `--z-navbar`, `--z-overlay`, `--z-modal`, `--z-above-modal`. Cor: `--vinho` #6B1E2B, `--caramelo` #B08968, `--ink` #2A2522. Fontes: Cormorant Garamond, Inter, JetBrains Mono.
 
 ## Convenções CSS (de `docs/CSS_MIGRATION.md`)
 
-CSS Modules em camelCase; todos os `.module.css` são importados; nenhum bloco passa de 2 níveis. `@keyframes` usados por módulo estão declarados no próprio módulo (`Hero.module.css`, `Products.module.css`); não existe arquivo global de keyframes. `.btn` e variantes ficam em `buttons.css` (importado por quem usa botões). `:global()` aparece em 8 pontos, só `:global(.btn)`, `:global(.reveal)`, `:global(.section-tag)` e `:global(.gold)` (o `.price` do `ProductModal` virou classe local do módulo em 2026-11-18).
+CSS Modules em camelCase; todos os `.module.css` são importados; nenhum bloco passa de 2 níveis. `@keyframes` usados por módulo estão declarados no próprio módulo (`Hero.module.css`, `Products.module.css`); não existe arquivo global de keyframes. `.btn` e variantes ficam em `buttons.css` (importado por quem usa botões). `:global()` aparece em 8 pontos, só `:global(.btn)`, `:global(.reveal)`, `:global(.section-tag)` e `:global(.gold)` .
 
 ## Segurança
 
@@ -190,21 +206,20 @@ Nenhum segredo no repositório. `.env`, `.env.local`, `dist`, `test-results/`, `
 
 ## Documentação do repositório
 
-`docs/DESIGN_SYSTEM.md` (retrato do estado ATUAL do design: cores, tipografia, breakpoints, componentes, acessibilidade e inconsistências; não é uma especificação, serve de entrada ao redesign mobile; em divergência, o código vale), `docs/CHECKOUT_ARCHITECTURE.md` (plano, não iniciado; precisa ser reescrito para InfinitePay com frete grátis: TODO 26), `docs/CLOUDFLARE_MIGRATION.md` (migração, estado por fase, registro de execução), `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md` (deploy e domínio na Cloudflare), `docs/PRODUCT_EXPANSION.md`, `docs/README.md` e `README.md`, `docs/DECISIONS.md` (seções 10 e 11 superadas pela 12: atendimento só por WhatsApp, PagBank provavelmente não volta, intenção de checkout próprio com InfinitePay e frete grátis, ainda não definitivo; seção 8 superada pela 13: hospedagem na Cloudflare, repositório público por causa das miniaturas do painel, cartão só por checkout hospedado), `docs/TODO.md` (lista de pendências).
+`docs/DESIGN_SYSTEM.md` (retrato do design: tokens, componentes, padrões do layout mobile, medalha/gatinho/cachorro/trilha, regras de movimento, acessibilidade e inconsistências do desktop; em divergência, o código vale), `docs/CHECKOUT_ARCHITECTURE.md` (plano, não iniciado; precisa ser reescrito para InfinitePay com frete grátis: TODO 26), `docs/CLOUDFLARE_MIGRATION.md` (migração, estado por fase, registro de execução), `docs/CSS_MIGRATION.md`, `docs/DEPLOY.md` (deploy e domínio na Cloudflare), `docs/PRODUCT_EXPANSION.md`, `docs/README.md` e `README.md`, `docs/DECISIONS.md` (seções 10 e 11 superadas pela 12: atendimento só por WhatsApp, PagBank provavelmente não volta, intenção de checkout próprio com InfinitePay e frete grátis, ainda não definitivo; seção 8 superada pela 13: hospedagem na Cloudflare, repositório público por causa das miniaturas do painel, cartão só por checkout hospedado), `docs/TODO.md` (lista de pendências).
 
 ## Dívidas e pendências abertas
 
-- Sem script de lint; sem script npm para os testes Playwright (`docs/CLOUDFLARE_MIGRATION.md` F2.6).
+- Sem script de lint (ESLint não está instalado); sem script npm para os testes Playwright (`docs/CLOUDFLARE_MIGRATION.md` F2.6).
 - Migração: resta o teste real de troca de foto pelo painel em aba anônima (`docs/TODO.md` item 31, parte B(ii)). As Preview URLs seguem sem confirmação direta por `curl`. Ver `docs/CLOUDFLARE_MIGRATION.md`.
 - Redação definitiva dos textos legais sobre o atendimento por WhatsApp e revisão jurídica: `docs/TODO.md` itens 22 e 37.
 - Checkout próprio (InfinitePay, frete grátis) e reescrita de `docs/CHECKOUT_ARCHITECTURE.md`: `docs/TODO.md` itens 21 e 26.
 - Eventos GA4 de clique no WhatsApp: `docs/TODO.md` item 6.
-- SEO por produto: Worker validado em produção em 2026-11-17 (`curl` e prévia do WhatsApp; `og:image` WebP vertical funciona). Pendem: soft 404 fora de `/produto/*`, título que não muda na navegação interna, políticas sem meta própria e JSON-LD (`docs/TODO.md` itens 1, 2 e 10).
+- SEO por produto: Worker validado em produção em 2026-11-17 (`curl` e prévia do WhatsApp; `og:image` WebP vertical funciona). Pendem: soft 404 fora de `/produto/*`, título que não muda na navegação interna, políticas sem meta própria, `/buscar` com `noindex` só no cliente e JSON-LD (`docs/TODO.md` itens 1, 2 e 10).
 - Ids 9 e 17 com link de fornecedor errado herdado: a mãe corrige pelo painel; reescrita do histórico do git (links antigos) segue como decisão futura e aberta (`docs/TODO.md` item 3/18).
 - Fichas dos 6 produtos visíveis sem ficha e campo de prazo de entrega: `docs/TODO.md` itens 7 e 8.
 - Obrigatoriedade de `buyLink`/`buyLinks` no catálogo (validador, `useProductBuy`, seletor de tamanho, `ProductPage`, painel admin), não iniciada: `docs/TODO.md` item 38.
 - Privatizar o repositório e rotacionar o token do painel: `docs/TODO.md` itens 23 e 25.
 - PNG com extensão `.webp` nas galerias: `docs/TODO.md` item 24.
-- Bloqueio de pinch-zoom (acessibilidade): `docs/TODO.md` item 12.
-- Resíduos: `<a href="/">` ainda existe no `MinimalNavbar.jsx` (ficha de produto) e no botão do `NotFound.jsx`, e recarregam a página; o logo da `Navbar` já usa `Link` (2026-11-18): `docs/TODO.md` item 27. A exceção de `shortName` e os `import React` sem uso foram removidos em 2026-11-17.
+- Versão desktop nova (o layout desktop é o anterior ao redesign mobile) e CTA final só no desktop: `docs/TODO.md` item 40.
 - Plano da Vercel para o painel admin (item 32), renovação do domínio (item 33) e achados da auditoria do painel (item 34): `docs/TODO.md`.

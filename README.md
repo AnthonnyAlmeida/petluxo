@@ -42,7 +42,7 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 |---|---|
 | 🛍️ **Catálogo dinâmico** | 40 produtos em 9 categorias (29 visíveis), carregados de um arquivo `products.js` centralizado |
 | 🎠 **Carrosséis por categoria** | Um carrossel por categoria com setas laterais, dots de paginação e swipe touch |
-| 🔍 **Modal interativo** | Quick view com seletor de tamanho, preço dinâmico e mensagem de WhatsApp por variação |
+| 📱 **Layout mobile próprio** | Abaixo de 768px o site usa componentes próprios (home em cenas, catálogo, busca, ficha); a partir de 768px o layout desktop segue igual |
 | 💳 **Links PagBank** | Cada produto mantém `buyLink` / `buyLinks`, mas o botão "Comprar Agora" está oculto por `HIDE_BUY_CTA` em `ProductBuyButton.jsx` |
 | 💬 **Consulta via WhatsApp** | CTA ativo "Consultar via WhatsApp", com mensagem pré-preenchida (nome, variação, preço e link da ficha) |
 | 📱 **Totalmente responsivo** | Layout adaptado para desktop (≥980px), tablet (≤980px) e mobile (≤768px / ≤480px) |
@@ -86,7 +86,7 @@ petluxo/
 │   │   └── DevTweaks.jsx    # Painel de ajustes (só em dev)
 │   ├── components/
 │   │   ├── layout/          # Navbar (hambúrguer mobile) · MinimalNavbar · Footer
-│   │   ├── product/         # ProductCard · ProductGrid · ProductModal · ProductGallery · ProductLightbox · ProductSizeSelector · ProductBuyButton
+│   │   ├── product/         # ProductCard · ProductGrid · ProductGallery · ProductLightbox · ProductSizeSelector · ProductBuyButton
 │   │   ├── sections/        # Hero · Featured · Products · Story · Differentials · CTA · FAQ · NotFound
 │   │   ├── pages/           # ProductPage · PrivacyPage · ReturnPolicyPage · ShippingPolicyPage · TermsPage
 │   │   └── ui/              # Accordion · AnalyticsConsent · BrandSeal · CategorySelector · TrustBadges
@@ -120,8 +120,8 @@ Controle total sobre o design, bundle enxuto e identidade visual 100% proprietá
 **Carrossel sem biblioteca externa**
 Implementado com React state + `transform: translateX`. Setas laterais usam flexbox (não `position: absolute`) para evitar clipping em containers com `overflow: hidden`. Suporte a swipe touch com detecção de direção e limiar de 50px.
 
-**Modal mobile sem manipular o body**
-Scroll interno via `min-height: 0` + `overflow-y: auto` + `overscroll-behavior: contain`. Cabeçalho e botões fixos, apenas o conteúdo rola. Evita bugs de scroll em iOS.
+**Folhas e visualizador mobile acessíveis**
+A folha de resposta do FAQ e o visualizador de imagem usam `useModalFocus` (`#app` inerte, foco preso, Esc, foco devolvido), sem manipular o body.
 
 **Campo `category` como array**
 Cada produto pode pertencer a múltiplas categorias — os filtros usam `.includes(id)`. Isso permite que um produto apareça em "Mais Vendidos" e "Conforto & Estilo" simultaneamente.

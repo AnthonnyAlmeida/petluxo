@@ -2,10 +2,9 @@
 
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Navbar } from '../layout/Navbar.jsx';
 import { MinimalNavbar } from '../layout/MinimalNavbar.jsx';
 import { Footer } from '../layout/Footer.jsx';
-import { NotFound } from '../sections/NotFound.jsx';
+import { NotFoundPage } from '../sections/NotFound.jsx';
 import { TrustBadges } from '../ui/TrustBadges.jsx';
 import { BrandSeal } from '../ui/BrandSeal.jsx';
 import { Accordion, AccordionItem } from '../ui/Accordion.jsx';
@@ -27,13 +26,7 @@ export default function ProductPage() {
   const isMobile = useIsMobile();
 
   if (!product || product.visible === false) {
-    return (
-      <>
-        <Navbar/>
-        <main><NotFound/></main>
-        <Footer/>
-      </>
-    );
+    return <NotFoundPage/>;
   }
 
   /* Abaixo de 768px: ficha mobile (com ficha em productDetails.js ou simples). */

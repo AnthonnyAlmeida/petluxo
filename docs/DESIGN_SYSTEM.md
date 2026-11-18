@@ -1,8 +1,8 @@
-# Design System do PetLuxo — retrato do estado atual
+# Design System do PetLuxo
 
-> **Este documento descreve o site COMO ELE É HOJE, não como deveria ser.** Não é uma especificação. Todo valor foi extraído do código (CSS Modules, `src/styles/`, JSX) em 2026-11-18; a origem é citada pelo nome do arquivo ou da seção. Onde não existe regra, está escrito "não consta"; onde dois pontos do código divergem, está escrito "inconsistente: A em X, B em Y". Quando o código e este documento divergirem, o código vale.
+> **Este documento descreve o site COMO ELE É, não como deveria ser.** Todo valor foi extraído do código (CSS Modules, `src/styles/`, JSX); a origem é citada pelo nome do arquivo ou da seção. Onde não existe regra, está escrito "não consta"; onde dois pontos do código divergem, está escrito "inconsistente: A em X, B em Y". Quando o código e este documento divergirem, o código vale.
 >
-> Finalidade: servir de entrada para o redesign mobile (Fase 2). A diferença entre **regra** (padrão repetido e intencional) e **acidente** (valor solto, duplicado ou contraditório) está marcada ao longo do texto e consolidada na seção 11.
+> Há dois layouts no mesmo app: **abaixo de 768px** o mobile (seção 14, componentes em `src/components/mobile/`) e **a partir de 768px** o desktop (seções 2 a 13 descrevem o desktop e os tokens comuns). A diferença entre **regra** (padrão repetido e intencional) e **acidente** (valor solto, duplicado ou contraditório) está marcada ao longo do texto e consolidada na seção 11.
 
 ## Sumário
 
@@ -19,6 +19,7 @@
 11. Inconsistências e dívidas de design
 12. Restrições para o redesign
 13. Apêndice: arquivos lidos
+14. Layout mobile (< 768px)
 
 ---
 
@@ -33,7 +34,7 @@
 - **Acabamento "luxo discreto":** filetes de 1px em dourado translúcido, anéis concêntricos decorativos (Hero, CTA), textura de grão sobre a página (`.grain` em `globals.css`, opacidade 0.035), sombras longas e suaves, animações lentas com easing `cubic-bezier(0.16, 1, 0.3, 1)` (16 usos).
 - **Copy** reforça o posicionamento: "CURADORIA EXCLUSIVA · PARA QUEM EXIGE O MELHOR", "O luxo que ele merece, a elegância que você aprecia." (`Hero.jsx`), "Sofisticação e conforto para quem ama seus pets." (`Footer.jsx`). Ver seção 10.
 
-**Stack de estilo.** CSS Modules por componente (25 arquivos `*.module.css`) mais 3 folhas globais em `src/styles/` (`variables.css`, `globals.css`, `buttons.css`). Sem Tailwind, sem biblioteca de UI, sem CSS-in-JS. Tokens são variáveis CSS em `:root` (`variables.css`). Estilos inline existem em 27 pontos de `style={{…}}` de uma linha no JSX, mais os blocos multilinha das 4 páginas de política (que não têm módulo CSS). Fontes self-hosted via `@fontsource` importado em `src/main.jsx`. `DevTweaks.jsx` e `tweaks-panel.jsx` (acento e grão) só carregam em dev.
+**Stack de estilo.** CSS Modules por componente mais 3 folhas globais em `src/styles/` (`variables.css`, `globals.css`, `buttons.css`). Sem Tailwind, sem biblioteca de UI, sem CSS-in-JS. Tokens são variáveis CSS em `:root` (`variables.css`). Estilos inline existem em 27 pontos de `style={{…}}` de uma linha no JSX, mais os blocos multilinha das páginas de política do desktop (em `PolicyLayout`; o mobile usa módulo CSS). Fontes self-hosted via `@fontsource` importado em `src/main.jsx`. `DevTweaks.jsx` e `tweaks-panel.jsx` (acento e grão) só carregam em dev.
 
 **Base de medida:** `html, body` têm `font-size: 15px` (`globals.css`). Portanto **1rem = 15px** em todo o site, e valores em `rem` não equivalem aos 16px usuais (ver seção 3).
 
@@ -50,7 +51,7 @@ Fonte: `src/styles/variables.css` (12 cores nomeadas). Contagens = ocorrências 
 | `--ink-soft` · texto secundário, rótulos mono | #5C5550 | quase todos os módulos (subtítulos, descrições, `small`, placeholders) | 51 |
 | `--caramelo` · acento de linha, `.gold`, hover de link, `cardNote` | #B08968 | Navbar (sublinhado do link), cards, selos, setas, `.section-tag .num` | 38 |
 | `--ink` · texto principal, fundo da seção escura | #2A2522 | corpo, `Differentials` (fundo), preço do card | 33 |
-| `--vinho` · cor de ação e **preço** | #6B1E2B | `.btn-primary`, badge, pill ativa, `.price` do `ProductModal` e da ficha (`ProductPage.module.css`), título do banner de cookies, `theme-color` do `index.html` | 32 |
+| `--vinho` · cor de ação e **preço** | #6B1E2B | `.btn-primary`, badge, pill ativa, `.price` da ficha (`ProductPage.module.css`), título do banner de cookies, `theme-color` do `index.html` | 32 |
 | `--offwhite` · fundo da página e superfícies | #F8F6F3 | `html/body`, cards flutuantes, modal, banner, texto sobre vinho | 29 |
 | `--dourado` · acento decorativo | #C6A96B | `::selection`, pontos `.eyebrow .dot`, números de `Differentials`, rótulo do FAQ | 19 |
 | `--bege` · superfície e bordas | #E8DED2 | `Featured` (fundo), bordas de acordeão/tabela, `.thumb` | 14 |
@@ -60,7 +61,7 @@ Fonte: `src/styles/variables.css` (12 cores nomeadas). Contagens = ocorrências 
 | `--cinza-soft` · linha fina | #ECEAE6 | `TrustBadges` (modal) | 1 |
 | `--dourado-soft` | #D4BC85 | **0 usos via `var()`**; o mesmo valor aparece em hex literal em `buttons.css` (`.btn-gold`) | 0 |
 
-**O vinho do preço:** `--vinho` #6B1E2B colore o preço no modal rápido e na ficha (30px, `ProductModal.module.css`, `ProductPage.module.css`). **Inconsistente:** o preço do **card** da grade é `--ink` (17px, `ProductCard.module.css`) e o preço do destaque (`Featured`) também é `--ink` (28px). O vinho vale para "preço de decisão" (modal/ficha), não para preço de listagem.
+**O vinho do preço:** `--vinho` #6B1E2B colore o preço na ficha (30px, `ProductPage.module.css`). **Inconsistente:** o preço do **card** da grade é `--ink` (17px, `ProductCard.module.css`) e o preço do destaque (`Featured`) também é `--ink` (28px). O vinho vale para "preço de decisão" (modal/ficha), não para preço de listagem.
 
 ### 2.2 Transparências (famílias de rgba)
 
@@ -82,7 +83,7 @@ As cores-base reaparecem como `rgba()` sem token. Ocorrências por família em `
 
 | Valor | Ocorrências | Onde | Observação |
 | --- | --- | --- | --- |
-| #EFE7DC | 5 | `Story`, `ProductModal`, `ProductGallery` (degradê de placeholder de imagem) | Duplica `--bege-soft`, em literal |
+| #EFE7DC | 5 | `Story`, `ProductGallery` (degradê de placeholder de imagem) | Duplica `--bege-soft`, em literal |
 | #D6C4AB | 4 | mesmos 3 módulos (fim do degradê `160deg, #EFE7DC → #D6C4AB`) | **Sem token**; o `ProductCard` usa outro degradê (`--bege-soft → --bege`) |
 | #C6A96B | 5 | `globals.css` (`.gold-text`, `.hairline`), `buttons.css` (`.btn-gold`), `NotFound` | Duplica `--dourado` |
 | #B08968 | 4 | `globals.css`, `buttons.css`, `NotFound` (degradês) | Duplica `--caramelo` |
@@ -142,7 +143,7 @@ Declarações `font-size` em `src/**/*.css` (lembrando 1rem = 15px):
 | **11px** | 10 | `.eyebrow`, `.section-tag`, `ProductSizeSelector` rótulo, `specsList dt`, `sizeTable th`, `BrandSeal .title`, `TrustBadges` banner, botão WhatsApp da Navbar (inline), `.faqLabel` (0.6875rem) |
 | **12px** | 10 | `.modalPriceOriginal`, `.fullDetailsLink`, `.backLink`, `.btn` ≤480px, `.waLink`, trigger e opções do `CategorySelector`, botões do banner de cookies, `ProductPage .priceOriginal` |
 | **13px** | 10 | `.btn` (padrão), links da Navbar, `.footTag`, `Story p`, `Differentials p`, `.modalBullets li`, `BrandSeal .label`, `.sizeBtn`, `AnalyticsConsent .desc` (≤640px) |
-| **14px** | 12 | `ProductModal p`, `ProductPage` (bullets, `dd`, tabela, `plainList`), links do rodapé, `.emptySubtitle`, `Hero .heroSub` ≤480px |
+| **14px** | 12 | `ProductPage` (bullets, `dd`, tabela, `plainList`), links do rodapé, `.emptySubtitle`, `Hero .heroSub` ≤480px |
 | **15px** | 7 | `ProductPage` (subtítulo, descrição, texto de seção), `Hero .heroSub`, `html/body` |
 | **16px** | 5 | `searchInput` (de propósito, contra zoom do iOS), `NotFound .notfoundSub`, parágrafo de `Featured`, `Hero .cornerTag b`, emoji do `BrandSeal` |
 | **17–18px** | 4 + 5 | 17: preço do card, `Story .lead`, `CTA p`, `Featured .featuredPrice .v` (≤480px); 18: nome do card, `.floatCard .val`, `.heroMeta .k` (≤768px), `.modalClose`, `.brandMark` (≤480px) |
@@ -184,7 +185,6 @@ Texto de leitura (não rótulo) com tamanho < 14px, a 390px:
 | --- | --- | --- |
 | Parágrafos da seção "Sobre" (`.storyText p`) | **13px** | `Story.module.css` |
 | Descrição dos diferenciais (`.diffItem p`) | **13px** | `Differentials.module.css` |
-| Bullets do modal rápido | **13px** | `ProductModal.module.css` |
 | Tagline do rodapé (`.footTag`) | **13px** | `Footer.module.css` |
 | Rótulos do `BrandSeal` | **13px** | `BrandSeal.module.css` |
 | Descrição do banner de cookies | **13px** (≤640px; 12–13px acima) | `AnalyticsConsent.module.css` |
@@ -207,7 +207,6 @@ E informação comercial em **8–10px** (rótulos mono): "VIA WHATSAPP" e `card
 | Largura máxima do container (`.wrap`) | `--max` = **1320px** | `variables.css`, `globals.css` |
 | Padding lateral (`--pad`) | `clamp(24px, 4vw, 64px)`; a 390px = **24px** (o piso vale até 600px de largura) | `variables.css` |
 | Políticas | `max-width: 800px`, padding `clamp(48px, 8vw, 96px) var(--pad)` (inline) | `PrivacyPage.jsx` e as outras 3 |
-| Modal rápido | `max-width: 880px`, `height: 90vh`, padding externo 40px (16px ≤768px) | `ProductModal.module.css` |
 | Campo de busca | `max-width: 480px` | `Products.module.css` |
 | Botões da ficha (`.buyStack`) | `max-width: 420px` (a 390px ocupa os 342px) | `ProductPage.module.css` |
 
@@ -256,9 +255,9 @@ Outras grades: Footer 5 colunas (1.4fr 1fr 1fr 1fr 1fr, gap 40px) com colapso 98
 
 ### 5.1 Meta viewport e zoom
 
-- `index.html`: `<meta name="viewport" content="width=device-width, initial-scale=1.0"/>` e `<meta name="theme-color" content="#6B1E2B"/>`. **Não há** `user-scalable=no` nem `maximum-scale` no HTML.
-- **Mesmo assim, o pinch-zoom está bloqueado por código:** `touch-action: pan-x pan-y` em `html, body` (`globals.css`); `main.jsx` chama `preventDefault()` em `gesturestart/gesturechange/gestureend` (WebKit) fora do lightbox; e, ao fim de um gesto, troca temporariamente o viewport para `maximum-scale=1.0` e depois o restaura. A exceção é o lightbox de fotos (`.yarl__portal`). `AI_CONTEXT_PETLUXO.md` e a lista de pendências em `docs/` (item 12) registram a ressalva de acessibilidade (WCAG 1.4.4).
-- `index.html` não usa `viewport-fit=cover` e o CSS não usa `env(safe-area-inset-*)` em nenhum ponto.
+- `index.html`: `<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>` e `<meta name="theme-color" content="#6B1E2B"/>`. Não há `user-scalable=no` nem `maximum-scale`.
+- **O pinch-zoom é livre** (WCAG 1.4.4): não há `touch-action: pan-x pan-y` nem bloqueio de `gesture*`. Carrosséis e galeria usam `touch-action: pan-y pinch-zoom`.
+- O layout mobile usa `env(safe-area-inset-*)` (`--m-safe-top` e `--m-safe-bottom`, seção 14); o desktop não.
 
 ### 5.2 Todos os `@media` encontrados
 
@@ -279,15 +278,14 @@ Total: **66 blocos** (768: 20, 980: 17, 480: 16, 640: 6, 641 min: 2, 860: 2, 540
 
 ### 5.3 O que NÃO tem tratamento mobile (ou tem tratamento fraco)
 
-1. **Ficha de produto (`ProductPage.module.css`):** só existe o breakpoint de 900px. Nada em 480px: preço 30px, nome em `clamp`, `padding-top` fixo de 96px, bullets e texto sem ajuste.
+1. **Ficha de produto desktop (`ProductPage.module.css`):** só existe o breakpoint de 900px (o mobile tem ficha própria, seção 14).
 2. **Estados de hover sem equivalente touch:** 38 regras `:hover` e **0** `@media (hover: hover)`. O botão "Visualizar" do card (`.qaBtn`, 36×36) só aparece em `:hover` (opacidade 0 por padrão): medido na produção em celular, `opacity: 0`, ou seja, **nunca visível no toque**. O hover do card (`translateY(-6px)` + sombra) e dos botões (`translateY(-2px)`) "gruda" após o toque.
-3. **Páginas de política:** estilos inline sem nenhum `@media`; sem módulo CSS. Na prévia a 390px o título H1 da política **encosta/sobrepõe a marca** da Navbar fixa (padding-top `clamp(48px, 8vw, 96px)` = 48px contra uma Navbar de ~74px).
+3. **Páginas de política (desktop):** estilos inline sem nenhum `@media` e sem módulo CSS (o mobile tem layout próprio, seção 14).
 4. **`Featured`, `Differentials`, `CTA`:** títulos `clamp` com piso de 44–56px sem regra mobile (ver 3.4); `CTA` tem anéis decorativos de 600/800/1000px fixos (cortados por `overflow: hidden`).
-5. **Unidades de viewport:** modal rápido e banner de cookies usam `90vh`/`82vh`/`84vh` (não `dvh`): em celular com barra de endereço dinâmica a altura passa da área visível. `NotFound` usa `100vh`. Só `Hero` (`100svh`) e `CategorySelector` (`100dvh`) tratam isso.
-6. **Safe area:** 0 usos de `env(safe-area-inset-bottom)`; o banner de cookies fica a 16px do rodapé em aparelhos com barra de gesto.
+5. **Unidades de viewport (desktop):** `NotFound` usa `100vh`; só `Hero` (`100svh`) e `CategorySelector` (`100dvh`) tratam a barra de endereço dinâmica. O mobile usa `100dvh` (seção 14).
+6. **Safe area:** só o layout mobile e o banner de cookies mobile usam `env(safe-area-inset-*)`.
 7. **Footer em cascata errada** (ver 5.4).
-8. **`prefers-reduced-motion`:** 0 ocorrências (ver 6 e 9).
-9. **Altura do banner de cookies:** na primeira visita ele cobre ~30% da altura da tela a 390×844 (observado nos prints), sobre o conteúdo inicial, em todas as rotas.
+8. **`prefers-reduced-motion` no desktop:** não consta; o layout mobile e o banner de cookies mobile respeitam (seção 14.8).
 
 ### 5.4 Cascata do Footer (acidente)
 
@@ -344,7 +342,7 @@ Tokens (`variables.css`): `--z-base` 1, `--z-dropdown` 10, `--z-navbar` 100, `--
 | Valor | Elemento |
 | --- | --- |
 | 1100 (`--z-above-modal`) | banner de cookies; portal do lightbox (`--yarl__portal_zindex`) |
-| 1000 (`--z-modal`) | `ProductModal`, backdrop do `CategorySelector` |
+| 1000 (`--z-modal`) | backdrop do `CategorySelector` |
 | 200 (**literal**) | `.grain` (textura global, `pointer-events: none`; fica acima da Navbar de 100) |
 | 100 (`--z-navbar`) | Navbar e drawer |
 | 10 (`--z-dropdown`) | setas e botão de zoom da galeria |
@@ -374,7 +372,7 @@ Só a marca (disco + "PETLUXO") dentro de `.wrap`; mesmo comportamento de rolage
 - **Estrutura:** `<article class="reveal dN">` → `.stage` (quadrado `aspect-ratio: 1/1`, radius 4px, fundo degradê `--bege-soft → --bege`) com `<img>` `object-fit: cover` (**recorta** a imagem), botão `.qaBtn` 36×36 (canto superior direito) e badge (canto inferior direito, pílula vinho, mono 9px, caixa alta, padding 6/12); abaixo `.meta`: nome serif 18px/1.15, `cardNote` (9px caramelo, só o id 20), `originalPrice` (10px mono riscado), preço serif 17px `--ink`, e "VIA WHATSAPP" mono 9px.
 - **Estados:** `:hover` levanta o `.stage` 6px + sombra; `.qaBtn` aparece em hover. Não há `:focus-visible`, `:active` nem estado indisponível (o badge "ESGOTADO" é só rótulo).
 - **Tamanho de toque:** o card inteiro é a área de toque (342×426, medido); o `.qaBtn` (36px) não é alcançável no toque.
-- **Problemas:** o clique está num `<article onClick>`, sem `<a>`, `role`, `tabIndex` nem `onKeyDown` (`ProductCard.jsx`): **não é acessível por teclado nem abre em nova aba**; `.badge:global(.gold)` e `.name small` são estilos sem uso no JSX; o `.qaBtn` tem `aria-label="Visualizar"` mas nenhum handler próprio.
+- **Navegação:** o card sempre leva a `/produto/:id` (sem modal). **Problemas:** o clique está num `<article onClick>`, sem `<a>`, `role`, `tabIndex` nem `onKeyDown` (`ProductCard.jsx`): **não é acessível por teclado nem abre em nova aba**; `.badge:global(.gold)` e `.name small` são estilos sem uso no JSX; o `.qaBtn` tem `aria-label="Visualizar"` mas nenhum handler próprio.
 
 ### 7.4 Grade e carrossel (`product/ProductGrid.jsx`, `ProductGrid.module.css`)
 
@@ -386,12 +384,9 @@ Carrossel próprio: trilha com `translateX` (0.55s), item `perView` 1/2/3 (640/1
 - **Mobile (≤640px):** `CategorySelector`: trigger 44px de altura (pílula, mono 12px, 0.15em), abre painel **tela cheia** (100dvh), lista com opções `min-height: 44px`, fecha com Escape e devolve o foco; botão X 36×36 (abaixo de 44px); `aria-haspopup="dialog"`, `role="dialog"`, `aria-modal`.
 - **≥641px:** pills mono 10px, padding 6/14 (≈28px de altura, só desktop), ativa em vinho com texto `#FFF`.
 
-### 7.6 Modal rápido (`product/ProductModal.jsx`, `ProductModal.module.css`)
+### 7.6 Produto sem ficha
 
-- **Quando abre:** só para produtos visíveis **sem ficha** (ids 14, 18, 24, 25, 30, 31): o card chama `onQuick`; os demais navegam para `/produto/:id`.
-- **Estrutura:** overlay fixo (z 1000, `rgba(42,37,34,0.5)` + blur 8px), cartão radius 6px, `height: 90vh`, 2 colunas (foto | informação); ≤980px 1 coluna; ≤768px padding 16px, foto com `max-height: 220px`; **≤480px a foto é escondida**: no celular o modal rápido não mostra imagem do produto (observado no print). Informação: nome serif (28px ≤768px), preço 30px vinho (por tamanho quando `buyLinks`), seletor de tamanho, descrição 14px, bullets 13px, botão de compra, `TrustBadges` do modal.
-- **Estados / toque:** botão fechar **36×36 (44×44 ≤768px, medido)**; fecha por clique no fundo.
-- **Problemas:** sem `role="dialog"`, `aria-modal`, `aria-label` no "×", Escape nem trava de scroll do `body` (nada disso no `ProductModal.jsx`); `height: 90vh` fixo mesmo com pouco conteúdo; o link "Ver ficha completa →" só existe se a ficha existe, o que, pela regra do card, nunca ocorre dentro do modal (código praticamente inalcançável).
+Não existe modal de produto: todo card leva a `/produto/:id`. Produto visível sem entrada em `PRODUCT_DETAILS` (ids 14, 18, 24, 25, 30, 31) abre a página normalmente, sem os acordeões (mobile: `MobileProductSimple`).
 
 ### 7.7 Ficha de produto (`pages/ProductPage.jsx`, `ProductPage.module.css`)
 
@@ -428,13 +423,13 @@ Rótulo Inter 11px, caixa alta, `letter-spacing: 2px`; botões `.sizeBtn` paddin
 ### 7.12 Badges e selos
 
 - **Badge de produto:** 5 valores permitidos (`MAIS VENDIDOS`, `PREMIUM`, `NOVO`, `EXCLUSIVO`, `ESGOTADO`), todos renderizados no card igual (pílula vinho, mono 9px). A variante `.gold` existe só no CSS.
-- **`TrustBadges`:** variante `banner` (faixa bege-soft logo abaixo do Hero; 4 itens mono 11px com ícone dourado; ≤640px grade 2×2 com 10px) e variante `modal` (modal rápido e ficha, 10px, opacidade 0.75). Conteúdo: "Compra Segura", "Troca em 7 dias", "Entrega Rastreada", "Atendimento Humanizado".
+- **`TrustBadges`:** variante `banner` (faixa bege-soft logo abaixo do Hero; 4 itens mono 11px com ícone dourado; ≤640px grade 2×2 com 10px) e variante `modal` (ficha, 10px, opacidade 0.75). Conteúdo: "Compra Segura", "Troca em 7 dias", "Entrega Rastreada", "Atendimento Humanizado".
 - **`BrandSeal`:** cartão bege-soft radius 6px com 6 itens (emoji + frase 13px), 2 colunas (1 ≤640px). Usa **emojis** (🤎 🚚 🛡️ 💬 🐾 ✨) como ícones, enquanto o resto do site usa SVG linear.
 - Os ícones dourados (`--dourado`) dos selos ficam sobre bege-soft: contraste baixo (ver 9).
 
 ### 7.13 Banner de cookies (`ui/AnalyticsConsent.jsx`, `AnalyticsConsent.module.css`)
 
-Fixo no canto (28px do canto inferior direito, até 400px; ≤640px 16px de margem e largura total), z 1100, radius 12px, borda 1px bege, `max-height: 84vh` com scroll. Conteúdo: título Inter 600 vinho (16px, 14px mobile), texto 13px, dois botões empilhados 100% de largura ("Aceitar analytics" preenchido vinho, "Recusar analytics" com borda 1.5px vinho; padding 11/16, 13px, 600, radius 10px; ≈43px de altura). `role="alertdialog"`, `aria-modal="true"`, `aria-labelledby/aria-describedby`; foco programático no banner. Estados: `:active` (desce 1px), `:focus-visible` (2px vinho), `:hover`. Reabre por "Preferências de cookies" no rodapé. **Observado nos prints:** o foco programático desenha um contorno preto grosso no banner (anel padrão do navegador, diferente dos anéis vinho do resto) e o banner cobre ~30% da tela.
+**Desktop (≥768px):** fixo no canto (28px do canto inferior direito, até 400px), z 1100, radius 12px, borda 1px bege, `max-height: 84vh` com scroll. Título Inter 600 vinho (16px), texto 13px, dois botões empilhados 100% de largura ("Aceitar analytics" preenchido vinho, "Recusar analytics" com borda 1.5px vinho; padding 11/16, 13px, 600, radius 10px). **Mobile (<768px):** folha inferior (seção 14.6). `role="alertdialog"`, `aria-modal="true"`, `aria-labelledby/aria-describedby`; foco programático no banner (no desktop desenha o contorno preto padrão do navegador). Estados: `:active`, `:focus-visible` (2px vinho), `:hover`. Reabre por "Preferências de cookies" no rodapé.
 
 ### 7.14 Rodapé (`layout/Footer.jsx`, `Footer.module.css`)
 
@@ -442,11 +437,11 @@ Fundo offwhite com `border-top`; 5 colunas (marca, Produtos, Sobre, Políticas, 
 
 ### 7.15 NotFound (`sections/NotFound.jsx`, `NotFound.module.css`)
 
-`min-height: 100vh`, centrado, fundo offwhite com radial dourado 0.12 em baixo; "404" serif com degradê dourado `clamp(100px, 20vw, 180px)`, título h1 serif `clamp(36px, 6vw, 64px)` com "encontrada." em itálico dourado, texto 16px, botão `.btn.btn-primary` "Voltar para a home" (`<a href="/">`, recarrega a página). Renderizado dentro de Navbar + Footer. O Worker responde 404 + `noindex` só em `/produto/*`; no resto das rotas inexistentes o status é 200 (soft 404; `AI_CONTEXT_PETLUXO.md`).
+`min-height: 100vh`, centrado, fundo offwhite com radial dourado 0.12 em baixo; "404" serif com degradê dourado `clamp(100px, 20vw, 180px)`, título h1 serif `clamp(36px, 6vw, 64px)` com "encontrada." em itálico dourado, texto 16px, botão `.btn.btn-primary` "Voltar para a home" (`Link` para `/`). Renderizado dentro de Navbar + Footer por `NotFoundPage` (mobile: `MobileNotFound`, seção 14.7). O Worker responde 404 + `noindex` só em `/produto/*`; no resto das rotas inexistentes o status é 200 (soft 404; `AI_CONTEXT_PETLUXO.md`).
 
 ### 7.16 Páginas de política (`pages/PrivacyPage.jsx`, `ReturnPolicyPage.jsx`, `ShippingPolicyPage.jsx`, `TermsPage.jsx`)
 
-Layout de texto 100% inline: coluna de 800px, Inter herdado (15px/1.8), h1 serif `clamp(2rem, 4vw, 3rem)` em vinho peso 600, h2 `clamp(1.25rem, 2.5vw, 1.6rem)` em vinho peso 600, "Última atualização" 13,1px com filete bege. As 4 páginas repetem o mesmo bloco de estilos inline (4 cópias do `Section`). Usam `Navbar` completa e `Footer`. Sem `@media`. Problemas: sobreposição do título com a Navbar a 390px (5.3), negrito sintético (3.2), âncoras de menu que não existem nessas rotas (7.1).
+Layout de texto (`PolicyLayout`; mobile: `MobilePolicyLayout`, seção 14.7) 100% inline no desktop: coluna de 800px, Inter herdado (15px/1.8), h1 serif `clamp(2rem, 4vw, 3rem)` em vinho peso 600, h2 `clamp(1.25rem, 2.5vw, 1.6rem)` em vinho peso 600, "Última atualização" 13,1px com filete bege. O bloco de estilos inline e o `Section` ficam em `PolicyLayout.jsx`. Usam `Navbar` completa e `Footer`. Sem `@media`. Problemas: negrito sintético (3.2), âncoras de menu que não existem nessas rotas (7.1).
 
 ### 7.17 Seções de marketing da home (resumo)
 
@@ -492,7 +487,6 @@ Panorama das 40 fotos principais:
 | --- | --- | --- |
 | Card (`ProductCard.module.css`) | Quadro `aspect-ratio: 1/1`, `<img>` `position: absolute; object-fit: cover` | **Recorta** fotos retrato e paisagem (um retrato 0,66 perde ~34% da altura; uma paisagem 1,57 perde ~36% da largura) |
 | Galeria da ficha (`ProductGallery.module.css`) | Quadro `aspect-ratio: 1/1`, `object-fit: contain`, fundo degradê bege | **Letterbox**: faixas bege nas laterais (retrato) ou em cima/baixo (paisagem); sem recorte |
-| Modal rápido (`ProductModal.module.css`) | `.modalImg` `object-fit: cover` com `transform: scale(0.9)`; altura do quadro = 100% (desktop) ou `max-height: 220px` (≤768px); **oculto ≤480px** | Mistura de recorte e escala; foto indisponível no celular |
 | Destaque (`Featured.module.css`) | `object-fit: contain; object-position: center bottom`, `min-height: 420px` (280px ≤768px) | Sem recorte, alinhada à base |
 | Hero (`Hero.module.css`) | `.logoCard img` `object-fit: cover`, `mix-blend-mode: multiply`, cartão fixo 360×468 (192×247 a 390px) | Proporção fixa do cartão |
 | Story (`Story.jsx`) | `object-fit: cover` (inline) em quadro `aspect-ratio: 4/5` | Recorte para 4:5 |
@@ -555,7 +549,6 @@ Leitura: o par escuro-sobre-claro (ink, ink-soft, vinho) é sólido. O **caramel
 | FAQ da home | `role="button"`, `tabIndex=0`, Enter/Espaço, `aria-expanded` |
 | `CategorySelector` | `aria-haspopup="dialog"`, `aria-expanded`, `role="dialog"`, `aria-modal`, Escape, devolve o foco |
 | Banner de cookies | `role="alertdialog"`, `aria-modal`, `aria-labelledby/describedby`, foco programático |
-| Modal rápido | **Nada**: sem `role`, `aria-modal`, rótulo no "×", Escape ou trap de foco |
 | Card de produto | **Nada** de teclado: `<article onClick>` |
 | Seletor de tamanho | `aria-pressed` |
 | Galeria | `aria-label` e `aria-current` em miniaturas e dots; setas com rótulo; lupa com `aria-pressed` |
@@ -565,8 +558,8 @@ Idioma: `<html lang="pt-BR">` (`index.html`).
 
 ### 9.5 Movimento e zoom
 
-- `prefers-reduced-motion`: **não consta**.
-- Pinch-zoom bloqueado (5.1).
+- `prefers-reduced-motion`: não consta no desktop; o mobile respeita (seção 14.8).
+- Pinch-zoom livre (5.1).
 - `scroll-behavior: smooth` global.
 - O conteúdo `.reveal` fica `opacity: 0` até o `IntersectionObserver` marcá-lo, sem versão para `prefers-reduced-motion`.
 
@@ -610,27 +603,24 @@ Idioma: `<html lang="pt-BR">` (`index.html`).
 Ordenadas por impacto no mobile (maior primeiro). Em cada item: o que é, onde está.
 
 1. **Alvos de toque pequenos em controles centrais:** dots do carrossel e da galeria 6px de altura, botões de tamanho 35px, "Voltar para a loja" 19px, links do rodapé ≈22px, setas da galeria 36px, lupa 30px, X do `CategorySelector` 36px (9.6).
-2. **Banner de cookies cobre ~30% da tela** na primeira visita, em todas as rotas (inclusive sobre o conteúdo da ficha), com contorno de foco preto grosso fora do padrão e botões em outro raio/peso que o `.btn` (`AnalyticsConsent.module.css`).
-3. **Pinch-zoom bloqueado** por `touch-action`, `gesture*` e `maximum-scale` temporário (`globals.css`, `main.jsx`); contraria WCAG 1.4.4, e o texto é pequeno (item 4).
-4. **Texto pequeno que carrega informação:** 58 elementos de 9px e 26 de 10px só na home; "VIA WHATSAPP", `cardNote`, badge e métricas do Hero em 8–9px; texto corrido de 13px (Story, Differentials, bullets do modal, FAQ, cookies) (3.6).
-5. **Hover sem equivalente de toque:** 38 `:hover` e nenhum `@media (hover: hover)`; `.qaBtn` invisível no toque; elevação do card e dos botões "gruda" (5.3).
-6. **Modal rápido no celular:** foto escondida ≤480px, `90vh` em vez de `dvh`, sem Escape/`role="dialog"`/trava de scroll (7.6).
-7. **Ficha de produto sem tratamento ≤480px** e **fotos em letterbox** na galeria (cover 1:1 no card, contain 1:1 na ficha, cover+scale no modal: três regras para as mesmas fotos; 28 proporções distintas entre 0,66 e 1,57) (7.7, 7.8, 8.3).
-8. **Páginas de política:** título sobreposto à Navbar a 390px, negrito sintético, estilos 100% inline repetidos 4 vezes, âncoras do menu (`#produtos`, `#sobre`…) que não existem fora da home (7.1, 7.16).
-9. **Drawer do menu sem WhatsApp** (o `.navDrawerCta` existe no CSS e não no JSX), links focáveis com `aria-hidden`, sem Escape/clique fora (7.1).
-10. **Card clicável sem `<a>`/teclado** (`<article onClick>`): sem nova aba, sem foco por teclado (7.3).
-11. **Cascata do Footer:** 5 → 1 → 2 → 1 colunas conforme a largura (5.4).
-12. **Foco visível só em 4 componentes (acordeão, banner, FAQ, busca)**; `.btn` global sem `:focus-visible`, `:active` nem `:disabled` (9.1, 7.10).
-13. **Contraste abaixo de 4,5:1** em caramelo e dourado sobre claro (2,10 a 3,17:1), incluindo `cardNote`, rótulo do FAQ e `.btn-gold` (9.2).
-14. **Dois sistemas de acordeão** (ficha e FAQ) com visual, comportamento e foco diferentes; `max-height: 200px` no FAQ pode cortar respostas (7.11).
-15. **Três breakpoints para a mesma grade:** carrossel em JS (640/1024) e grade de resultados em CSS (640/980) divergem entre 980 e 1023px; breakpoints de CSS espalhados em 8 valores (480, 540, 640, 641, 768, 860, 900, 980) (4.4, 5.2).
-16. **Títulos sem regra mobile** (Featured/Differentials 44px, CTA 56px) e escala de títulos desordenada (3.4).
-17. **Peso tipográfico fora do carregado:** Cormorant 600/700 pedido (acordeão, políticas) e 300 (FAQ), Inter 300 importado sem uso (3.2).
-18. **`transition: all` em 13 pontos** e animações infinitas sem `prefers-reduced-motion`; `.reveal` começa invisível e depende do observer (6.4).
-19. **Sem escala de espaçamento, sombras, raios e z-index completos:** tokens só para cor, fonte, container e z-index; `--z-overlay` e `--dourado-soft` órfãos; `.grain` com z-index literal 200 acima da Navbar (2.1, 4.3, 6.3, 6.5).
-20. **Cores duplicadas em literal** (3 degradês de placeholder, `#EFE7DC`, `#D6C4AB`, `#FFF`) e duas famílias de botão (`.btn` global × `.btn` do banner) (2.3, 6.1).
-21. **Código de estilo morto:** `.navDrawerCta`, `.badge:global(.gold)`, `.name small`, `.footBottom .links`, regras ≤640px de `.pillsScroll` (nunca visíveis), `.carouselSingle` com 5 `!important`.
-22. **Emojis como ícones** no `BrandSeal` convivendo com SVG linear no resto; copy "Compra 100% online" no Hero em um site de venda por WhatsApp (7.12, 10).
+2. **Texto pequeno que carrega informação:** 58 elementos de 9px e 26 de 10px só na home; "VIA WHATSAPP", `cardNote`, badge e métricas do Hero em 8–9px; texto corrido de 13px (Story, Differentials, bullets do modal, FAQ, cookies) (3.6).
+3. **Hover sem equivalente de toque:** 38 `:hover` e nenhum `@media (hover: hover)`; `.qaBtn` invisível no toque; elevação do card e dos botões "gruda" (5.3).
+4. **Ficha de produto sem tratamento ≤480px** e **fotos em letterbox** na galeria (cover 1:1 no card, contain 1:1 na ficha, cover+scale no modal: três regras para as mesmas fotos; 28 proporções distintas entre 0,66 e 1,57) (7.7, 7.8, 8.3).
+5. **Páginas de política (desktop):** negrito sintético, estilos 100% inline, âncoras do menu (`#produtos`, `#sobre`…) que não existem fora da home (7.1, 7.16).
+6. **Drawer do menu sem WhatsApp** (o `.navDrawerCta` existe no CSS e não no JSX), links focáveis com `aria-hidden`, sem Escape/clique fora (7.1).
+7. **Card clicável sem `<a>`/teclado** (`<article onClick>`): sem nova aba, sem foco por teclado (7.3).
+8. **Cascata do Footer:** 5 → 1 → 2 → 1 colunas conforme a largura (5.4).
+9. **Foco visível só em 4 componentes (acordeão, banner, FAQ, busca)**; `.btn` global sem `:focus-visible`, `:active` nem `:disabled` (9.1, 7.10).
+10. **Contraste abaixo de 4,5:1** em caramelo e dourado sobre claro (2,10 a 3,17:1), incluindo `cardNote`, rótulo do FAQ e `.btn-gold` (9.2).
+11. **Dois sistemas de acordeão** (ficha e FAQ) com visual, comportamento e foco diferentes; `max-height: 200px` no FAQ pode cortar respostas (7.11).
+12. **Três breakpoints para a mesma grade:** carrossel em JS (640/1024) e grade de resultados em CSS (640/980) divergem entre 980 e 1023px; breakpoints de CSS espalhados em 8 valores (480, 540, 640, 641, 768, 860, 900, 980) (4.4, 5.2).
+13. **Títulos sem regra mobile** (Featured/Differentials 44px, CTA 56px) e escala de títulos desordenada (3.4).
+14. **Peso tipográfico fora do carregado:** Cormorant 600/700 pedido (acordeão, políticas) e 300 (FAQ), Inter 300 importado sem uso (3.2).
+15. **`transition: all` em 13 pontos** e animações infinitas do desktop sem `prefers-reduced-motion`; `.reveal` começa invisível e depende do observer (6.4).
+16. **Sem escala de espaçamento, sombras, raios e z-index completos:** tokens só para cor, fonte, container e z-index; `--z-overlay` e `--dourado-soft` órfãos; `.grain` com z-index literal 200 acima da Navbar (2.1, 4.3, 6.3, 6.5).
+17. **Cores duplicadas em literal** (3 degradês de placeholder, `#EFE7DC`, `#D6C4AB`, `#FFF`) e duas famílias de botão (`.btn` global × `.btn` do banner) (2.3, 6.1).
+18. **Código de estilo morto:** `.navDrawerCta`, `.badge:global(.gold)`, `.name small`, `.footBottom .links`, regras ≤640px de `.pillsScroll` (nunca visíveis), `.carouselSingle` com 5 `!important`.
+19. **Emojis como ícones** no `BrandSeal` convivendo com SVG linear no resto; copy "Compra 100% online" no Hero em um site de venda por WhatsApp (7.12, 10).
 
 ---
 
@@ -638,15 +628,15 @@ Ordenadas por impacto no mobile (maior primeiro). Em cada item: o que é, onde e
 
 Fatos do projeto que o design **não pode quebrar** (fontes: `AI_CONTEXT_PETLUXO.md`, `docs/DECISIONS.md`, código):
 
-1. **Um único app mobile-first.** Não existe (nem deve existir) versão separada para celular e desktop: o mesmo React e os mesmos CSS Modules atendem todas as larguras. O redesign deve partir do celular e escalar.
+1. **Um único app.** O mesmo React atende todas as larguras; abaixo de 768px o `useIsMobile()` escolhe os componentes mobile e a partir de 768px o desktop (`docs/DECISIONS.md` §14). Dados e regras vêm dos mesmos módulos.
 2. **O catálogo é reescrito pelo painel da mãe** (`src/data/products.js`, painel admin em outro repositório, commits "via painel admin"). Campos, ordem e nomes de campo de `products.js` não podem depender do layout; textos, nomes e preços têm comprimento arbitrário (nomes longos como "Kit Élan Rosa | Elegância em Cada Passeio"); `badge` só aceita os 5 valores do validador; `buyLinks` define os tamanhos (P/M/G/GG, 800ml, cor…).
 3. **Imagens com proporções variadas** (0,66 a 1,57, 28 proporções distintas entre 40 fotos), entregues como WebP sem recorte padronizado; fotos novas chegam por `_incoming/` sem redimensionar. O design precisa funcionar com qualquer proporção (sem assumir 1:1 nem 4:5).
 4. **Venda por WhatsApp, sem checkout ainda.** O CTA é "CONSULTAR VIA WHATSAPP" com mensagem dinâmica (nome, variação, preço, link da ficha). O botão "COMPRAR AGORA" (links PagBank) está oculto por `HIDE_BUY_CTA = true` e pode voltar: o design deve prever os dois estados, mais o estado ESGOTADO. Carrinho/checkout é apenas planejado (`docs/CHECKOUT_ARCHITECTURE.md`).
 5. **Fontes self-hosted** (`@fontsource`, subset latin, sem Google Fonts em runtime): qualquer fonte nova precisa ser empacotada; cada peso/estilo adicional soma ao peso inicial.
 6. **Consentimento de cookies e GA4 (LGPD):** o banner de consentimento é obrigatório antes do `gtag.js`, reabrível pelo botão "Preferências de cookies" do rodapé; o texto das políticas depende de revisão jurídica. O redesign não pode remover o banner nem o ponto de reabertura.
 7. **Máquina de desenvolvimento lenta:** evitar dependências pesadas, builds longos e telas que exijam muitos ciclos de teste; preferir mudanças em CSS Modules a bibliotecas novas.
-8. **Escala do catálogo:** 40 produtos (29 visíveis) em 9 categorias, com 8 produtos em 2+ categorias; busca por palavras e filtro por categoria; 6 produtos visíveis só têm modal rápido (sem ficha); 11 ocultos por `visible: false`.
-9. **Rotas e SEO:** `/produto/:id` é reescrita por um Worker (título, descrição, `og:*`); `ProductPage` usa `MinimalNavbar`; id inexistente cai em `NotFound` (HTTP 404 só em `/produto/*`). Manter URLs e a estrutura de rotas.
+8. **Escala do catálogo:** 40 produtos (29 visíveis) em 9 categorias, com 8 produtos em 2+ categorias; busca por palavras e filtro por categoria; 6 produtos visíveis não têm ficha (abrem a ficha simples); 11 ocultos por `visible: false`.
+9. **Rotas e SEO:** `/produto/:id` é reescrita por um Worker (título, descrição, `og:*`); `ProductPage` usa `MinimalNavbar`; id inexistente cai em `NotFoundPage` (HTTP 404 só em `/produto/*`). Manter URLs e a estrutura de rotas.
 10. **Hospedagem estática (Cloudflare Workers com assets):** sem backend, sem banco; qualquer conteúdo dinâmico precisa vir do front-end.
 
 ---
@@ -655,9 +645,9 @@ Fatos do projeto que o design **não pode quebrar** (fontes: `AI_CONTEXT_PETLUXO
 
 **Estilos globais:** `src/styles/variables.css`, `src/styles/globals.css`, `src/styles/buttons.css`.
 
-**CSS Modules (25):** `layout/Navbar`, `layout/Footer`; `product/ProductCard`, `ProductGrid`, `ProductModal`, `ProductGallery`, `ProductLightbox`, `ProductSizeSelector`, `ProductBuyButton`; `sections/Hero`, `Featured`, `Products`, `Story`, `Differentials`, `CTA`, `FAQ`, `NotFound`; `pages/ProductPage`; `ui/Accordion`, `AnalyticsConsent`, `BrandSeal`, `CategorySelector`, `TrustBadges` (todos em `src/components/<pasta>/<Nome>.module.css`).
+**CSS Modules do desktop:** `layout/Navbar`, `layout/Footer`; `product/ProductCard`, `ProductGrid`, `ProductGallery`, `ProductLightbox`, `ProductSizeSelector`, `ProductBuyButton`; `sections/Hero`, `Featured`, `Products`, `Story`, `Differentials`, `CTA`, `FAQ`, `NotFound`; `pages/ProductPage`; `ui/Accordion`, `AnalyticsConsent`, `BrandSeal`, `CategorySelector`, `TrustBadges` (todos em `src/components/<pasta>/<Nome>.module.css`).
 
-**Componentes e entradas:** `index.html`, `src/main.jsx`, `src/app/page.jsx`, `src/app/DevTweaks.jsx`; `layout/Navbar.jsx`, `MinimalNavbar.jsx`, `Footer.jsx`; `product/ProductCard.jsx`, `ProductGrid.jsx`, `ProductModal.jsx`, `ProductGallery.jsx`, `ProductSizeSelector.jsx`, `ProductBuyButton.jsx`; `sections/Hero.jsx`, `Featured.jsx`, `Products.jsx`, `Story.jsx`, `Differentials.jsx`, `CTA.jsx`, `FAQ.jsx`, `NotFound.jsx`; `pages/ProductPage.jsx`, `PrivacyPage.jsx` (e, por grep, `ReturnPolicyPage.jsx`, `ShippingPolicyPage.jsx`, `TermsPage.jsx`); `ui/Accordion.jsx`, `AnalyticsConsent.jsx`, `BrandSeal.jsx`, `CategorySelector.jsx`, `TrustBadges.jsx`.
+**Componentes e entradas:** `index.html`, `src/main.jsx`, `src/app/page.jsx`, `src/app/DevTweaks.jsx`; `layout/Navbar.jsx`, `MinimalNavbar.jsx`, `Footer.jsx`; `product/ProductCard.jsx`, `ProductGrid.jsx`, `ProductGallery.jsx`, `ProductSizeSelector.jsx`, `ProductBuyButton.jsx`; `sections/Hero.jsx`, `Featured.jsx`, `Products.jsx`, `Story.jsx`, `Differentials.jsx`, `CTA.jsx`, `FAQ.jsx`, `NotFound.jsx`; `pages/ProductPage.jsx`, `PrivacyPage.jsx` (e, por grep, `ReturnPolicyPage.jsx`, `ShippingPolicyPage.jsx`, `TermsPage.jsx`); `ui/Accordion.jsx`, `AnalyticsConsent.jsx`, `BrandSeal.jsx`, `CategorySelector.jsx`, `TrustBadges.jsx`.
 
 **Dados e imagens:** `src/data/products.js` (campo `image`), `public/images/products/*` (40 principais + amostras de galeria, `identify` e `file`).
 
@@ -666,3 +656,61 @@ Fatos do projeto que o design **não pode quebrar** (fontes: `AI_CONTEXT_PETLUXO
 **Contexto:** `AI_CONTEXT_PETLUXO.md`.
 
 **Limites desta análise:** não foram executados leitores de tela nem testes de teclado reais; as afirmações de foco/ARIA vêm da leitura do código (e de medições de tamanho em navegador); "não consta" indica ausência no código lido, não ausência comprovada em runtime.
+
+---
+
+## 14. Layout mobile (< 768px)
+
+Componentes em `src/components/mobile/`; `useIsMobile()` (`(max-width: 767.98px)`, `useSyncExternalStore`) escolhe o layout na mesma rota. A origem visual é a referência em `docs/desing/design/` (o nome da pasta é esse mesmo).
+
+### 14.1 Tokens (`variables.css`)
+
+| Token | Valor | Uso |
+| --- | --- | --- |
+| `--m-gutter` | 24px | margem lateral |
+| `--m-safe-top` | `max(8px, env(safe-area-inset-top))` | distância do topo |
+| `--m-safe-bottom` | `max(20px, env(safe-area-inset-bottom))` | distância da base |
+| `--m-bar-h` | `64px + --m-safe-bottom` | altura da barra inferior |
+| `--m-scene-h` | `100vh − --m-bar-h` (`100dvh` onde há suporte) | altura de cada cena da home |
+| `--bege-line` | #D9CFC2 | borda de chip, ponto inativo, alça de folha |
+| `--ink-on-dark` / `--ink-on-dark-soft` | #CFC6BB / #A89F94 | texto sobre `--ink` |
+| `--line-on-dark`, `--ink-deep`, `--scrim`, `--ease-out-expo` | ver `variables.css` | fios e fundos escuros, fundo de modal, easing |
+
+Os artboards 390×844 do design viram `100dvh` + safe area. Caramelo e dourado não servem para texto pequeno sobre fundo claro (contraste).
+
+### 14.2 Primitivas (`ui/MobileUI.module.css`)
+
+`mEyebrow` (mono 11px, caixa alta, ponto dourado), `mBtn` (pílula 52px; `mBtnPrimary` vinho, `mBtnOutline`), `mBadge` (`mBadgeNovo` vinho), `mSrOnly`, `mNoScrollbar`. Alvos de toque ≥44px e `:focus-visible` com contorno vinho. `BottomSheet` (folha inferior acessível), `ProductBadge`, `Paw` (pegada) e `MobileIcons` (ícones de traço, `aria-hidden`).
+
+### 14.3 Navegação
+
+- `MobileHeader`: marca no topo (na home, o clique na marca volta ao início da rolagem).
+- `MobileTabBar` (fixa, `--m-bar-h`): Início, Produtos e Buscar (`Link`), mais o WhatsApp como pílula. Ausente em `/buscar`. As barras fixas reservam espaço pelo hook `useReserveBottomBar` (classe `m-bottom-bar` no `<html>` → `body { padding-bottom: var(--m-bar-h) }`).
+- `MobileFooter`: rodapé escuro com o texto de `data/siteContent.js` (FOOTER, POLICY_LINKS) e o botão de preferências de cookies.
+
+### 14.4 Home em cenas (`home/`)
+
+Ordem: Hero (medalha com o P, que se inclina ao toque) → Destaque (gatinho; o título é link ao produto) → Sobre nós (cachorro com guilhoché e olhar) → Diferenciais (histórias de 5s com barra de progresso) → Dúvidas (FAQ em folha) → Rodapé. Um único contêiner rola (`mPager`, `scroll-snap-type: y proximity`, cada cena com `--m-scene-h`). A **trilha dourada** é um SVG cujo `stroke-dashoffset` e marcador são atualizados direto no DOM a cada rolagem (progresso de 0 a 1, sem salto). Os textos vêm de `data/siteContent.js`, o destaque de `getFeaturedProduct()`.
+
+### 14.5 Catálogo, busca e produto
+
+- `MobileCatalog` (`/produtos`): chips de categoria (as categorias visíveis com produtos, na ordem de `CATEGORIES`, mais "Todos"; categoria na URL, `?categoria=<id>`) e grade de 2 colunas na ordem de `catalogList()`. Cartões são `Link` para `/produto/:id`. Um único h1.
+- `MobileSearch` (`/buscar`): campo, estado vazio, resultados e "sem resultado" com WhatsApp; usa `searchProducts()`. `noindex`.
+- Produto: `MobileProductFull` (com ficha: galeria com `scroll-snap` horizontal e `touch-action: pan-y pinch-zoom`, seletor de tamanho/cor, acordeões com `hidden="until-found"`, tabela de medidas) e `MobileProductSimple` (sem ficha). `ImageViewer` (tela cheia, pinch). Barra inferior com o botão de WhatsApp (mensagem de `lib/productMessage.js`); `HIDE_BUY_CTA` continua valendo; ESGOTADO vira selo e o botão de WhatsApp permanece. O botão de voltar é fixo.
+
+### 14.6 Cookies
+
+Folha inferior sem fundo escurecido (o banner não bloqueia a navegação), alça, fio dourado que se desenha, rótulo "Privacidade", título serifado 30px, botões em pílula de 52px lado a lado. A ordem visual é a ordem do código (Aceitar à esquerda, Recusar à direita; o Tab segue a ordem visual, sem `order` no CSS). Só CSS: a lógica do GA4 e do consentimento é a mesma do desktop.
+
+### 14.7 Políticas e 404
+
+`MobilePolicyLayout`: botão voltar, chips entre as 4 políticas (`nav aria-label="Políticas"`, `aria-current="page"`), eyebrow "Documento", h1 serif, fio dourado, "Última atualização", cartões opcionais (Troca e Devolução: 7 e 90 dias, constante `HIGHLIGHTS`), corpo do texto, cartão "Ficou alguma dúvida?" com WhatsApp, rodapé e barra inferior. `MobileNotFound`: trilha de pegadas com "?" que balança, h1 "Esta página se perdeu pelo caminho.", botões "Voltar ao início" e "Ver produtos" (`Link`).
+
+### 14.8 Movimento e acessibilidade
+
+- `prefers-reduced-motion: reduce` desliga as animações infinitas (halo da trilha, gatinho, pegadas, desenho do fio) e o avanço automático das histórias.
+- O avanço das histórias é guiado pelo `animationend` da barra de 5s e pausa fora da tela (`IntersectionObserver`), com a aba oculta (`visibilitychange`) e com movimento reduzido. Todo timer e listener é removido na desmontagem.
+- Interações por ponteiro usam `getBoundingClientRect` e `touch-action: pan-y pinch-zoom`; não bloqueiam a rolagem vertical nem o pinch-zoom.
+- Modais (`BottomSheet`, `ImageViewer`) usam `useModalFocus`: `#app` inerte e `aria-hidden`, foco preso, Esc fecha, foco volta ao gatilho.
+- Um h1 por página, h2 por seção, landmarks, `alt` nas fotos e `aria-label` nos botões de ícone. O conteúdo escondido (FAQ, acordeões) continua no DOM (`hidden="until-found"`), para buscadores e para a busca do navegador.
+- Todas as animações são CSS; não há biblioteca de animação.

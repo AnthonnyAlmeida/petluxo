@@ -71,7 +71,13 @@ export default function AnalyticsConsent() {
       aria-labelledby="analytics-consent-title"
       aria-describedby="analytics-consent-desc"
     >
+      <span className={styles.grip} aria-hidden="true"></span>
+      <svg className={styles.rule} viewBox="0 0 342 8" preserveAspectRatio="xMinYMid meet" fill="none" aria-hidden="true" focusable="false">
+        <path className={styles.rulePath} d="M0 4 H342" stroke="#C6A96B" strokeWidth="1.2"/>
+        <circle cx="3" cy="4" r="3" fill="#C6A96B"/>
+      </svg>
       <div className={styles.content}>
+        <p className={styles.eyebrow} aria-hidden="true"><span className={styles.eyebrowDot}></span>Privacidade</p>
         <h3 id="analytics-consent-title" className={styles.title}>
           Sua privacidade importa
         </h3>

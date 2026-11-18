@@ -1,0 +1,197 @@
+/* PetLuxo — MobilePolicyLayout.module.css
+ * Layout de leitura das políticas no mobile: voltar + rótulo, chips entre as
+ * 4 políticas, título, texto atual da política e cartão de contato. */
+
+.mPol { background: var(--offwhite); color: var(--ink); }
+
+.mPolTop {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: calc(var(--m-safe-top) + 2px) 12px 0 8px;
+}
+
+.mPolBack {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.mPolBack:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: -4px;
+  border-radius: 50%;
+}
+
+.mPolTopLabel {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.mPolChips {
+  display: flex;
+  gap: 8px;
+  padding: 6px var(--m-gutter) 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.mPolChips::-webkit-scrollbar { display: none; }
+
+.mPolChip {
+  flex: none;
+  height: 44px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--bege-line);
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mPolChip:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 2px;
+}
+
+.mPolChipOn {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--offwhite);
+}
+
+.mPolArticle { padding: 28px var(--m-gutter) 0; }
+
+.mPolTitle {
+  margin: 12px 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.mPolRule {
+  display: block;
+  width: 120px;
+  height: 8px;
+  margin-top: 16px;
+}
+
+.mPolRulePath {
+  stroke-dasharray: 112;
+  animation: mPolDraw 1.2s var(--ease-out-expo) 0.2s both;
+}
+
+@keyframes mPolDraw {
+  from { stroke-dashoffset: 112; }
+  to { stroke-dashoffset: 0; }
+}
+
+.mPolUpdated {
+  margin: 20px 0 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.mPolHighlights {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mPolHighlight {
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--bege-soft);
+}
+
+.mPolHighlightNum {
+  font-family: var(--serif);
+  font-size: 40px;
+  line-height: 1;
+}
+
+.mPolHighlightText {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+/* texto da política (mesmo JSX das páginas, com tipografia de leitura) */
+.mPolBody {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.mPolBody ul { padding-left: 1.2em; }
+.mPolBody strong { color: var(--ink); font-weight: 600; }
+.mPolBody a { color: var(--vinho); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+
+.mPolSection { margin-top: 28px; }
+
+.mPolSectionTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.mPolSectionBody {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mPolMore {
+  margin-top: 32px;
+  padding: 22px 20px;
+  border-radius: 18px;
+  background: var(--bege-soft);
+}
+
+.mPolMoreTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.mPolMoreText {
+  margin: 6px 0 16px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.mPolMoreText a { color: var(--vinho); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+
+.mPolFoot { margin-top: 32px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mPolRulePath { animation: none; }
+}

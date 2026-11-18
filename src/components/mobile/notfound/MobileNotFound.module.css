@@ -1,0 +1,102 @@
+/* PetLuxo — MobileNotFound.module.css
+ * 404 mobile: trilha de pegadas que se perde e um "?" que balança. */
+
+.mNf {
+  position: relative;
+  min-height: var(--m-scene-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: calc(var(--m-safe-top) + 24px) var(--m-gutter) 36px;
+  overflow: hidden;
+  background: var(--offwhite);
+  color: var(--ink);
+}
+
+.mNfGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 26%, rgba(198, 169, 107, 0.16), rgba(248, 246, 243, 0) 60%);
+  pointer-events: none;
+}
+
+.mNfArt {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--m-safe-top) - 24px);
+  width: min(100%, 480px);
+  height: auto;
+  transform: translateX(-50%);
+  fill: var(--dourado);
+  pointer-events: none;
+}
+
+.mNfTrail {
+  stroke-dashoffset: 0;
+  animation: mNfFlow 3s linear infinite;
+}
+
+.mNfStep {
+  opacity: 0;
+  animation: mNfStep 6s ease-in-out infinite;
+}
+
+.mNfQ {
+  transform-box: fill-box;
+  transform-origin: center;
+  fill: var(--caramelo);
+  font-family: var(--serif);
+  font-size: 44px;
+  font-style: italic;
+  animation: mNfQ 3s ease-in-out infinite;
+}
+
+.mNfBody { position: relative; }
+
+.mNfTitle {
+  margin: 10px 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 46px;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.mNfTitle em {
+  font-style: italic;
+  color: var(--caramelo);
+}
+
+.mNfText {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.mNfActions {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@keyframes mNfFlow { to { stroke-dashoffset: -18; } }
+
+@keyframes mNfStep {
+  0% { opacity: 0; }
+  8%, 70% { opacity: 1; }
+  90%, 100% { opacity: 0; }
+}
+
+@keyframes mNfQ {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-6px) rotate(6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mNfTrail,
+  .mNfQ { animation: none; }
+  .mNfStep { animation: none; opacity: 0.7; }
+}

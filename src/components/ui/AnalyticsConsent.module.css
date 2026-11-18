@@ -101,34 +101,106 @@
   border-color: var(--vinho-soft);
 }
 
-/* Mobile: prioriza área ocupada, botões empilhados e toque confortável */
-@media (max-width: 640px) {
+/* Elementos decorativos do sheet mobile: escondidos no desktop */
+.grip,
+.rule,
+.eyebrow { display: none; }
+
+/* Mobile (< 768px): folha inferior, sem fundo escurecido (o banner não
+ * bloqueia a navegação: "sua escolha não afeta a navegação nem a compra"). */
+@media (max-width: 767.98px) {
   .banner {
-    inset: auto 16px 16px auto;
+    inset: auto 0 0 0;
+    width: 100%;
     max-width: none;
-    width: calc(100% - 32px);
-    padding: clamp(12px, 4vw, 16px);
-    gap: 7px;
-    max-height: 82vh;
+    max-height: calc(100dvh - 24px);
+    padding: 10px var(--m-gutter) calc(var(--m-safe-bottom) + 8px);
+    gap: 0;
+    border: 0;
+    border-radius: 28px 28px 0 0;
+    box-shadow: 0 -12px 40px rgba(42, 37, 34, 0.18);
+    animation: sheetUp 0.4s var(--ease-out-expo) both;
   }
-  .content {
-    gap: 5px;
+  .banner:focus { outline: none; }
+  .grip {
+    display: block;
+    width: 44px;
+    height: 5px;
+    margin: 0 auto 18px;
+    border-radius: 999px;
+    background: var(--bege-line);
   }
-  .actions {
-    gap: 5px;
-    margin-top: 1px;
+  .rule {
+    display: block;
+    width: 100%;
+    height: 8px;
+    margin-bottom: 14px;
   }
+  .rulePath {
+    stroke-dasharray: 342;
+    animation: ruleDraw 1.4s var(--ease-out-expo) 0.3s both;
+  }
+  .eyebrow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .eyebrowDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--dourado);
+  }
+  .content { gap: 0; }
   .title {
-    font-size: 14px;
-    line-height: 1.45;
+    margin-top: 10px;
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0;
+    color: var(--ink);
   }
   .desc {
-    font-size: 13px;
-    line-height: 1.5;
+    margin-top: 10px;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .actions {
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 18px;
   }
   .btn {
-    padding: 11px 16px;
-    font-size: 13px;
-    border-radius: 10px;
+    flex: 1;
+    min-height: 52px;
+    padding: 6px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 1.25;
+    letter-spacing: 0.06em;
+    text-align: center;
   }
+  .btnAccept { box-shadow: none; }
+  .btnDeny { border: 1px solid var(--ink); color: var(--ink); }
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes ruleDraw {
+  from { stroke-dashoffset: 342; }
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .banner,
+  .rulePath { animation: none; }
 }

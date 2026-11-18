@@ -12,7 +12,7 @@ import { Story } from '../components/sections/Story.jsx';
 import { Differentials } from '../components/sections/Differentials.jsx';
 import { CTA } from '../components/sections/CTA.jsx';
 import { FAQ } from '../components/sections/FAQ.jsx';
-import { NotFound } from '../components/sections/NotFound.jsx';
+import { NotFoundPage } from '../components/sections/NotFound.jsx';
 import ProductPage from '../components/pages/ProductPage.jsx';
 import PrivacyPage from '../components/pages/PrivacyPage.jsx';
 import ReturnPolicyPage from '../components/pages/ReturnPolicyPage.jsx';
@@ -20,6 +20,7 @@ import ShippingPolicyPage from '../components/pages/ShippingPolicyPage.jsx';
 import TermsPage from '../components/pages/TermsPage.jsx';
 import { useScrollEffects } from '../hooks/useScroll.js';
 import { useIsMobile } from '../hooks/useMediaQuery.js';
+import { useDocumentHead } from '../hooks/useDocumentHead.js';
 import { trackPageView, isConsentGranted } from '../lib/analytics.js';
 import AnalyticsConsent from '../components/ui/AnalyticsConsent.jsx';
 import MobileHome from '../components/mobile/home/MobileHome.jsx';
@@ -66,11 +67,20 @@ function HomePage() {
   return isMobile ? <MobileHome/> : <DesktopHome/>;
 }
 
+const CATALOG_TITLE = 'Produtos | PetLuxo — Camas, coleiras de couro e acessórios premium';
+const CATALOG_DESCRIPTION =
+  'Catálogo PetLuxo: camas de luxo, coleiras de couro, comedouros e acessórios premium para cães e gatos. Escolha pela categoria e compre via WhatsApp.';
+
 /* Catálogo em rota própria. Abaixo de 768px: catálogo mobile (chips e grade
  * de 2 colunas). Acima: a seção de produtos da home (busca, filtros e
  * carrosséis) com Navbar e Footer. */
 function CatalogPage() {
   const isMobile = useIsMobile();
+  useDocumentHead({
+    title: CATALOG_TITLE,
+    description: CATALOG_DESCRIPTION,
+    path: '/produtos',
+  });
   if (isMobile) return <MobileCatalog/>;
   return (
     <>
@@ -86,6 +96,7 @@ function CatalogPage() {
 /* Busca: só no mobile (o desktop tem a busca dentro de /produtos). */
 function SearchPage() {
   const isMobile = useIsMobile();
+  useDocumentHead({ robots: 'noindex, follow' });
   return isMobile ? <MobileSearch/> : <Navigate to="/produtos" replace/>;
 }
 
@@ -111,13 +122,7 @@ export default function App() {
       <Route path="/politica-de-troca-e-devolucao" element={<ReturnPolicyPage />} />
       <Route path="/politica-de-frete-e-entrega" element={<ShippingPolicyPage />} />
       <Route path="/termos-de-uso" element={<TermsPage />} />
-      <Route path="*" element={
-        <>
-          <Navbar/>
-          <main><NotFound/></main>
-          <Footer/>
-        </>
-      } />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
     </>
   );

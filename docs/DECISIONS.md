@@ -173,7 +173,7 @@ git push
 
 ---
 
-## 9. Modal com seletor de tamanho (buyLinks array)
+## 9. Modal com seletor de tamanho (buyLinks array) — modal removido pela seção 14; o seletor de tamanho vive na ficha
 
 **Motivação:**
 Produtos como Cama CloudNest™ (id 14) e Comedouro Maison Élevé (id 16) têm variações de tamanho com preços e links de compra distintos.
@@ -258,3 +258,21 @@ O plano Hobby da Vercel é de uso não comercial e o site é uma loja. O painel 
 - Pagamento com cartão só por checkout hospedado: a cláusula 2.2.1(h) do contrato da Cloudflare proíbe coletar dados de cartão em propriedade que use serviços gratuitos.
 
 **Detalhes e registro da migração:** `docs/CLOUDFLARE_MIGRATION.md`.
+
+## 14. Layout mobile abaixo de 768px, com o desktop preservado
+
+**Situação:**
+O visual do site era desktop-first e fraco no celular (alvos de toque pequenos, pinch-zoom bloqueado, modal sem foco acessível, banner de cookies cobrindo a tela). O redesign mobile foi desenhado no Claude Design e portado para o código real.
+
+**Decisão:**
+- **Breakpoint de 768px.** `useIsMobile()` (`(max-width: 767.98px)`) escolhe, na mesma rota, o componente mobile ou o desktop. É o mesmo app, com os mesmos dados (`products.js`, `productDetails.js`) e as mesmas regras (`lib/catalog.js`, `lib/productMessage.js`, `data/siteContent.js`); nada é duplicado. A partir de 768px o layout desktop continua como era.
+- **Mobile-first no código novo.** Os componentes mobile ficam em `src/components/mobile/`, com CSS Modules próprios e tokens `--m-*`; todas as animações são CSS (sem biblioteca de animação, sem dependência nova).
+- **Cartões de produto sempre levam à página do produto.** O modal rápido (`ProductModal`) foi removido no mobile e no desktop; produto sem ficha abre a ficha simples.
+- **CTA final removido da home mobile** (a home termina em Dúvidas e Rodapé); o desktop mantém o CTA final. A cena "Mais vendidos" não existe na home mobile.
+- **Rotas novas:** `/produtos` (catálogo, com título, descrição e canonical próprios definidos no cliente) e `/buscar` (só mobile, `noindex` no cliente; no desktop redireciona para `/produtos`). O Worker de SEO só trata `/produto/*` e não foi alterado: a meta dessas duas rotas vale para quem executa JavaScript. `/produtos` está no sitemap; `/buscar` não.
+- **Acessibilidade como regra:** pinch-zoom livre, alvos de toque ≥44px, foco visível, `prefers-reduced-motion`, safe area, um h1 por página e conteúdo escondido mantido no DOM (`hidden="until-found"`).
+- **Banner de cookies mobile:** folha inferior sem fundo escurecido e sem interruptor de preferências, com a lógica do GA4 e do consentimento intacta.
+
+**Consequências:**
+- Duas árvores de componentes (mobile e desktop) para as mesmas páginas; mudanças de conteúdo entram em `data/siteContent.js` e `lib/`, mudanças visuais em cada layout.
+- A versão desktop nova ainda não foi feita (`docs/TODO.md` item 40).
