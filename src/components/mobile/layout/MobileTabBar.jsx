@@ -1,6 +1,6 @@
 /* PetLuxo — MobileTabBar
  * Barra inferior fixa do layout mobile. Enquanto montada, reserva a altura
- * dela no fim da página (useReserveBottomBar). "Buscar" chama onSearch. */
+ * dela no fim da página (useReserveBottomBar). "Buscar" abre /buscar. */
 
 import { Link, useLocation } from 'react-router-dom';
 import { useReserveBottomBar } from '../../../hooks/useReserveBottomBar.js';
@@ -11,10 +11,10 @@ import styles from './MobileTabBar.module.css';
 
 const cx = (...c) => c.filter(Boolean).join(' ');
 
-export function MobileTabBar({ onSearch, searchOpen = false, onHomeClick }) {
+export function MobileTabBar({ onHomeClick }) {
   const { pathname } = useLocation();
-  const isHome = pathname === '/' && !searchOpen;
-  const isCatalog = pathname === '/produtos' && !searchOpen;
+  const isHome = pathname === '/';
+  const isCatalog = pathname === '/produtos';
   useReserveBottomBar();
 
   return (
@@ -37,15 +37,10 @@ export function MobileTabBar({ onSearch, searchOpen = false, onHomeClick }) {
           <MIcon.Grid/>
           <span>Produtos</span>
         </Link>
-        <button
-          type="button"
-          className={cx(styles.mTab, searchOpen && styles.mTabActive)}
-          aria-expanded={searchOpen}
-          onClick={onSearch}
-        >
+        <Link to="/buscar" className={styles.mTab}>
           <MIcon.Search/>
           <span>Buscar</span>
-        </button>
+        </Link>
         <a
           className={cx(styles.mTab, styles.mTabWa)}
           href={wa(WA_MESSAGES.general)}

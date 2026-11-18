@@ -11,93 +11,20 @@ import { BrandSeal } from '../ui/BrandSeal.jsx';
 import { Accordion, AccordionItem } from '../ui/Accordion.jsx';
 import { PRODUCTS } from '../../data/products.js';
 import { PRODUCT_DETAILS } from '../../data/productDetails.js';
+import { SPEC_LABELS } from '../../data/specLabels.js';
 import { useProductBuy } from '../../hooks/useProductBuy.js';
 import { ProductSizeSelector } from '../product/ProductSizeSelector.jsx';
 import { ProductBuyButton } from '../product/ProductBuyButton.jsx';
 import { ProductGallery } from '../product/ProductGallery.jsx';
+import { useIsMobile } from '../../hooks/useMediaQuery.js';
+import MobileProductFull from '../mobile/product/MobileProductFull.jsx';
+import MobileProductSimple from '../mobile/product/MobileProductSimple.jsx';
 import styles from './ProductPage.module.css';
-
-const SPEC_LABELS = {
-  materialExterno: 'Material externo',
-  forracaoInterna: 'Forração interna',
-  estrutura: 'Estrutura',
-  ventilacao: 'Ventilação',
-  seguranca: 'Segurança',
-  tipoAlcas: 'Tipo de alças',
-  fechamento: 'Fechamento',
-  indicacaoUso: 'Indicação de uso',
-  modelo: 'Modelo',
-  acabamento: 'Acabamento',
-  isolamentoTermico: 'Isolamento térmico',
-  protecaoVazamentos: 'Proteção contra vazamentos',
-  uso: 'Uso',
-  largura: 'Largura',
-  altura: 'Altura',
-  espessura: 'Espessura',
-  superficieArranhador: 'Superfície do arranhador',
-  capacidade: 'Capacidade',
-  montagem: 'Montagem',
-  ajusteAltura: 'Ajuste de altura',
-  dimensoes: 'Dimensões',
-  peso: 'Peso',
-  tamanho: 'Tamanho',
-  material: 'Material',
-  formato: 'Formato',
-  som: 'Som',
-  tipo: 'Tipo',
-  cor: 'Cor',
-  modelos: 'Modelos',
-  caracteristicas: 'Características',
-  estilo: 'Estilo',
-  diametroTigela: 'Diâmetro da tigela',
-  materialSuporte: 'Material do suporte',
-  design: 'Design',
-  ferragens: 'Ferragens',
-  composicaoKit: 'Composição do kit',
-  tamanhosDisponiveis: 'Tamanhos disponíveis',
-  almofada: 'Almofada',
-  cortinas: 'Cortinas',
-  dimensoesEstruturaExterna: 'Dimensões da estrutura externa',
-  baseInterna: 'Base interna',
-  alturaTotal: 'Altura total',
-  fonteEnergia: 'Fonte de energia',
-  comprimentoTotal: 'Comprimento total',
-  larguraTotal: 'Largura total',
-  areaInterna: 'Área interna',
-  diametroCesto: 'Diâmetro do cesto',
-  aberturaFrontal: 'Abertura frontal',
-  pesoProduto: 'Peso do produto',
-  ondeUtilizar: 'Onde utilizar',
-  revestimento: 'Revestimento',
-  enchimento: 'Enchimento',
-  baseInferior: 'Base inferior',
-  indicacao: 'Indicação',
-  tapeteInterno: 'Tapete interno',
-  alcaTransversal: 'Alça transversal',
-  fixacao: 'Fixação',
-  aberturaDispensadora: 'Abertura dispensadora',
-  producao: 'Produção',
-  tecido: 'Tecido',
-  confeccao: 'Confecção',
-  protecaoEnchimento: 'Proteção do enchimento',
-  personalizacao: 'Personalização',
-  acabamentoPorta: 'Acabamento da porta',
-  coresTecidos: 'Cores e tecidos',
-  produto: 'Produto',
-  marca: 'Marca',
-  origem: 'Origem',
-  tecidoExterno: 'Tecido externo',
-  interior: 'Interior',
-  conteudo: 'Conteúdo da embalagem',
-  tamanhos: 'Tamanhos',
-  frete: 'Frete',
-  construcao: 'Construção',
-  medidas: 'Medidas',
-};
 
 export default function ProductPage() {
   const { id } = useParams();
   const product = PRODUCTS.find((p) => p.id === Number(id));
+  const isMobile = useIsMobile();
 
   if (!product || product.visible === false) {
     return (
@@ -109,6 +36,9 @@ export default function ProductPage() {
     );
   }
 
+  /* Abaixo de 768px: ficha mobile (com ficha em productDetails.js ou simples). */
+  if (isMobile) return <MobileProductPage product={product} />;
+
   return (
     <>
       <MinimalNavbar/>
@@ -116,6 +46,14 @@ export default function ProductPage() {
       <Footer/>
     </>
   );
+}
+
+function MobileProductPage({ product }) {
+  const buy = useProductBuy(product);
+  const details = PRODUCT_DETAILS[product.id];
+  return details
+    ? <MobileProductFull product={product} details={details} buy={buy} />
+    : <MobileProductSimple product={product} buy={buy} />;
 }
 
 function ProductPageContent({ product }) {

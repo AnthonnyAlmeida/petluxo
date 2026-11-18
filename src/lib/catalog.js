@@ -28,6 +28,13 @@ export function categoryLabel(categoryId) {
   return CATEGORIES.find((c) => c.id === categoryId)?.label ?? '';
 }
 
+/* Rótulo de categoria exibido no card: a primeira categoria do produto que
+ * não seja "mais-vendidos" (que já aparece como selo). */
+export function primaryCategoryLabel(product) {
+  const id = product.category.find((c) => c !== 'mais-vendidos') ?? product.category[0];
+  return categoryLabel(id);
+}
+
 /* Peso usado para ordenar listas que misturam categorias (grade filtrada). */
 const maxCategoryWeight = (p) => Math.max(...Object.values(p.categoryOrder ?? {}), 0);
 
@@ -51,6 +58,30 @@ export function searchProducts(query = '', categoryId = null) {
     .sort((a, b) => maxCategoryWeight(b) - maxCategoryWeight(a));
 }
 
+/* Ordem do catálogo "Todos": cada categoria na ordem de CATEGORIES, seus
+ * produtos por categoryOrder, sem repetir produto que já apareceu. */
+function catalogOrder() {
+  const seen = new Set();
+  const out = [];
+  CATEGORIES_WITH_PRODUCTS.forEach((cat) => {
+    productsInCategory(cat.id).forEach((p) => {
+      if (!seen.has(p.id)) {
+        seen.add(p.id);
+        out.push(p);
+      }
+    });
+  });
+  return out;
+}
+
+/* Lista do catálogo mobile: sem busca, "Todos" segue a ordem do site e uma
+ * categoria segue o peso dela; com busca, vale a ordem de searchProducts
+ * (maior peso de categoria) dentro da categoria escolhida, se houver. */
+export function catalogList(query = '', categoryId = null) {
+  if (query.trim()) return searchProducts(query, categoryId);
+  return categoryId ? productsInCategory(categoryId) : catalogOrder();
+}
+
 export function getFeaturedProduct() {
   return PRODUCTS.find((p) => p.featured === true && isVisible(p)) ?? null;
 }
@@ -65,4 +96,10 @@ export function lowestPrice(product) {
   return product.prices.reduce((min, p) =>
     parsePriceValue(p.price) < parsePriceValue(min.price) ? p : min
   ).price;
+}
+
+/* Separa o prefixo "a partir de" do valor ("a partir de R$ 394,00"). */
+export function splitPricePrefix(price) {
+  const m = /^\s*(a partir de)\s+(.*)$/i.exec(String(price ?? ''));
+  return m ? { prefix: m[1], value: m[2] } : { prefix: null, value: price };
 }

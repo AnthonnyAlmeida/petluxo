@@ -29,7 +29,7 @@ function trailPath(h) {
   return `M374 ${y(40)} C378 ${y(110)} 370 ${y(170)} 374 ${y(230)} S378 ${y(350)} 374 ${y(410)} S370 ${y(530)} 374 ${y(590)} S378 ${y(680)} 374 ${y(740)}`;
 }
 
-export default function MobileHome({ onSearch }) {
+export default function MobileHome() {
   const pagerRef = useRef(null);
   const pathRef = useRef(null);
   const markerRef = useRef(null);
@@ -119,7 +119,7 @@ export default function MobileHome({ onSearch }) {
           </g>
         </svg>
       </div>
-      <MobileTabBar onSearch={onSearch} onHomeClick={toTop}/>
+      <MobileTabBar onHomeClick={toTop}/>
     </>
   );
 }

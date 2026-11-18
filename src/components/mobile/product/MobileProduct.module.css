@@ -1,0 +1,616 @@
+/* PetLuxo — MobileProduct.module.css
+ * Página de produto mobile: ficha completa (Produto.dc) e sem ficha
+ * (ProdutoSimples.dc). Voltar flutuante, galeria, preço, variações,
+ * acordeões e barra fixa de compra. */
+
+.mProd { background: var(--offwhite); color: var(--ink); }
+
+/* ---------- Voltar ---------- */
+.mBack {
+  position: fixed;
+  left: 16px;
+  top: calc(var(--m-safe-top) + 8px);
+  z-index: var(--z-navbar);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(248, 246, 243, 0.92);
+  color: var(--ink);
+  box-shadow: 0 2px 10px rgba(42, 37, 34, 0.2);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mBack:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 3px;
+}
+
+/* ---------- Galeria ---------- */
+.mGallery {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 390 / 488;
+  max-height: 72dvh;
+  background: var(--bege-soft);
+}
+
+.mGalleryTrack {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+.mGalleryTrack::-webkit-scrollbar { display: none; }
+
+.mGalleryTrack:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: -2px;
+}
+
+.mSlide {
+  flex: none;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+}
+
+.mSlideImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mDots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.mDot {
+  display: block;
+  height: 6px;
+  width: 6px;
+  border-radius: 999px;
+  background: rgba(248, 246, 243, 0.6);
+  transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+.mDotOn {
+  width: 22px;
+  background: var(--offwhite);
+}
+
+.mZoomBtn {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(248, 246, 243, 0.92);
+  color: var(--ink);
+  box-shadow: 0 2px 10px rgba(42, 37, 34, 0.2);
+  cursor: pointer;
+}
+
+.mZoomBtn:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 3px;
+}
+
+/* ---------- Informações ---------- */
+.mInfo { padding: 22px var(--m-gutter) 12px; }
+
+.mMetaRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mMetaCat {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.mName {
+  margin: 14px 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  color: var(--ink);
+}
+
+.mSubtitle {
+  margin: 8px 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.25;
+  color: var(--ink-soft);
+}
+
+.mPriceBlock { margin-top: 20px; }
+
+.mPriceLabel {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.mPriceWas {
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
+
+.mPriceValue {
+  margin-top: 2px;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 34px;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.mFreight {
+  margin: 10px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+
+.mFreight svg { flex: none; }
+
+/* ---------- Variações ---------- */
+.mVariants { margin-top: 26px; }
+
+.mVariantsHead {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.mVariantsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.mVariant {
+  min-height: 60px;
+  padding: 8px 6px;
+  border-radius: 12px;
+  border: 1px solid var(--bege-line);
+  background: transparent;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-family: var(--sans);
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mVariant:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 2px;
+}
+
+.mVariantOn {
+  border: 1.5px solid var(--vinho);
+  background: var(--bege-soft);
+}
+
+.mVariantName {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.mVariantSub {
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
+.mSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(42, 37, 34, 0.25);
+}
+
+/* ---------- Destaques ---------- */
+.mBullets {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mBullets li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.mBulletMark {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 8px;
+  background: var(--dourado);
+  transform: rotate(45deg);
+}
+
+/* ---------- Acordeões ---------- */
+.mAccs {
+  margin: 30px var(--m-gutter) 0;
+  border-bottom: 1px solid var(--bege);
+}
+
+.mAccHead { margin: 0; }
+
+.mAccBtn {
+  width: 100%;
+  min-height: 58px;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--bege);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mAccBtn:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: -2px;
+}
+
+.mAccIcon {
+  flex: none;
+  color: var(--vinho);
+  transition: transform 0.25s ease;
+}
+
+.mAccIconOpen { transform: rotate(45deg); }
+
+.mAccPanel {
+  padding: 0 0 20px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.mAccPanel[hidden] { display: none; }
+
+.mAccPanel p { margin: 0 0 12px; }
+.mAccPanel p:last-child { margin-bottom: 0; }
+
+.mAccPanel ul {
+  margin: 0 0 12px;
+  padding-left: 1.2em;
+}
+
+.mAccPanel ul:last-child { margin-bottom: 0; }
+
+.mSpecs {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 12px 14px;
+}
+
+.mSpecs dt {
+  padding-top: 3px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.mSpecs dd { margin: 0; }
+
+.mTableWrap {
+  margin: 0 0 12px;
+  overflow-x: auto;
+}
+
+.mTable {
+  border-collapse: collapse;
+  min-width: 100%;
+  font-size: 13.5px;
+}
+
+.mTable th,
+.mTable td {
+  padding: 8px 10px 8px 0;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--bege);
+}
+
+.mTable th {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.mFaqQ {
+  margin: 0 0 4px;
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.mFaqA { margin: 0 0 16px; }
+
+.mBackShop {
+  margin: 28px var(--m-gutter) 32px;
+  width: auto;
+  letter-spacing: 0.12em;
+}
+
+/* ---------- Barra de compra ---------- */
+.mBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-navbar);
+  height: var(--m-bar-h);
+  padding: 6px 16px var(--m-safe-bottom);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--offwhite);
+  border-top: 1px solid var(--bege);
+}
+
+.mBarPrice {
+  flex: none;
+  min-width: 96px;
+}
+
+.mBarLabel {
+  font-size: 12px;
+  line-height: 1.2;
+  color: var(--ink-soft);
+}
+
+.mBarValue {
+  margin-top: 1px;
+  font-size: 19px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.mBarBtn {
+  flex: 1;
+  min-width: 0;
+  letter-spacing: 0.04em;
+  font-size: 12.5px;
+  box-shadow: 0 8px 20px rgba(107, 30, 43, 0.22);
+}
+
+/* ---------- Visualizador de fotos ---------- */
+.mViewer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: var(--ink-deep);
+  overflow: hidden;
+}
+
+.mViewerPanel {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+.mViewerPanel:focus { outline: none; }
+
+.mViewerFrame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: zoom-in;
+  transition: width 0.28s var(--ease-out-expo), height 0.28s var(--ease-out-expo);
+}
+
+.mViewerFrameZoomed {
+  width: 220%;
+  height: 220%;
+  cursor: zoom-out;
+}
+
+.mViewerImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.mViewerClose,
+.mViewerNav {
+  position: fixed;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(248, 246, 243, 0.92);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.mViewerClose:focus-visible,
+.mViewerNav:focus-visible {
+  outline: 2px solid var(--dourado-soft);
+  outline-offset: 3px;
+}
+
+.mViewerClose { left: 16px; top: calc(var(--m-safe-top) + 8px); }
+
+.mViewerNav { bottom: calc(var(--m-safe-bottom) + 12px); }
+.mViewerPrev { left: 16px; }
+.mViewerNext { right: 16px; }
+
+.mViewerHint {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--m-safe-bottom) + 26px);
+  margin: 0;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bege);
+  pointer-events: none;
+}
+
+/* ---------- Produto sem ficha ---------- */
+.mSimpleHero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 390 / 488;
+  max-height: 72dvh;
+  background: var(--bege-soft);
+}
+
+.mSimpleSheet {
+  position: relative;
+  margin-top: -24px;
+  padding: 28px var(--m-gutter) 24px;
+  border-radius: 28px 28px 0 0;
+  background: var(--offwhite);
+}
+
+.mSimpleName { font-size: 38px; margin-top: 12px; }
+
+.mSimpleRule {
+  display: block;
+  width: 120px;
+  height: 8px;
+  margin-top: 16px;
+}
+
+.mSimpleRulePath {
+  stroke-dasharray: 112;
+  animation: mSimpleDraw 1.2s var(--ease-out-expo) 0.2s both;
+}
+
+@keyframes mSimpleDraw {
+  from { stroke-dashoffset: 112; }
+  to { stroke-dashoffset: 0; }
+}
+
+.mSimplePrice {
+  margin-top: 20px;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.mSimpleFreight { margin-top: 4px; font-size: 13px; color: var(--ink-soft); }
+
+.mSimpleDesc {
+  margin: 26px 0 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.mSimpleDesc p { margin: 0 0 12px; }
+.mSimpleDesc p:last-child { margin-bottom: 0; }
+
+.mVariantSimple {
+  min-height: 52px;
+  border-radius: 14px;
+  font-size: 14px;
+}
+
+.mVariantSimple.mVariantOn {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--offwhite);
+}
+
+.mSimpleBullets { margin-top: 20px; }
+.mSimpleBullets .mBulletMark { border-radius: 50%; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mSimpleRulePath { animation: none; }
+  .mDot,
+  .mAccIcon,
+  .mViewerFrame { transition: none; }
+}

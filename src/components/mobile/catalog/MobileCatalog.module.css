@@ -1,0 +1,257 @@
+/* PetLuxo — MobileCatalog.module.css
+ * Catálogo mobile: título, busca, chips de categoria (rolagem horizontal,
+ * grudados no topo) e grade de 2 colunas. */
+
+.mCat {
+  padding: 0 var(--m-gutter) 28px;
+  border-top: 1px solid var(--bege);
+}
+
+.mCatTitle {
+  margin: 10px 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.mCatTitle em {
+  font-style: italic;
+  color: var(--caramelo);
+}
+
+.mCatIntro { padding-top: 20px; }
+
+.mCatSearch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  height: 48px;
+  padding: 0 8px 0 16px;
+  border-radius: 12px;
+  background: var(--bege-soft);
+  color: var(--ink-soft);
+}
+
+.mCatSearch:focus-within {
+  outline: 2px solid var(--vinho);
+  outline-offset: 2px;
+}
+
+.mCatSearch svg { flex: none; }
+
+.mCatInput {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.mCatInput::placeholder { font-style: italic; color: var(--ink-soft); }
+.mCatInput::-webkit-search-cancel-button { display: none; }
+
+.mCatClear {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.mCatClear:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: -2px;
+}
+
+/* chips grudados no topo ao rolar */
+.mCatChipsBar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin: 14px calc(-1 * var(--m-gutter)) 0;
+  padding: 8px 0 10px;
+  background: var(--offwhite);
+}
+
+.mCatChips {
+  display: flex;
+  gap: 8px;
+  padding: 0 var(--m-gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.mCatChip {
+  flex: none;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--bege-line);
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mCatChip:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 2px;
+}
+
+.mCatChipOn {
+  border-color: var(--vinho);
+  background: var(--vinho);
+  color: var(--offwhite);
+}
+
+.mCatCount {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.mCatGrid {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 14px;
+}
+
+.mCatCard {
+  display: block;
+  min-width: 0;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mCatCard:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
+.mCatMedia {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bege-soft);
+}
+
+.mCatImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mCatBadge {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  max-width: calc(100% - 16px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mCatLabel {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mCatName {
+  margin: 4px 0 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 1.12;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mCatFrom {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+.mCatWas {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-decoration: line-through;
+}
+
+.mCatPrice {
+  margin-top: 2px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.mCatMore { margin-top: 28px; }
+
+.mCatEmpty {
+  margin-top: 18px;
+  padding: 22px 20px;
+  border-radius: 14px;
+  background: var(--bege-soft);
+  text-align: center;
+}
+
+.mCatEmptyTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.mCatEmptyText {
+  margin: 8px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.mCatEmptyBtn {
+  display: inline-flex;
+  width: auto;
+  height: 48px;
+  margin-top: 16px;
+  padding: 0 22px;
+  letter-spacing: 0.1em;
+}

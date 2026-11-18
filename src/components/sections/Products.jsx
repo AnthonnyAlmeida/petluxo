@@ -17,7 +17,8 @@ import styles from './Products.module.css';
 
 const extraCategories = CATEGORIES.filter(c => c.id !== 'mais-vendidos' && c.visible !== false);
 
-export function Products() {
+export function Products({ asPage = false }) {
+  const Heading = asPage ? 'h1' : 'h2';
   const [expanded, setExpanded] = React.useState(false);
   const [query, setQuery] = React.useState('');
   const [activeCategory, setActiveCategory] = React.useState(null);
@@ -80,9 +81,9 @@ export function Products() {
             <div className="section-tag reveal">
               <span className="num">02</span><span className="line"></span><span>NOSSOS PRODUTOS</span>
             </div>
-            <h2 className="serif reveal d1">
+            <Heading className="serif reveal d1">
               Tudo que o seu <i className="italic gold-text">pet</i><br/>precisa.
-            </h2>
+            </Heading>
           </div>
         </div>
 

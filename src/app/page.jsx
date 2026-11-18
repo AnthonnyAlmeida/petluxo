@@ -1,7 +1,7 @@
 /* PetLuxo — App (página principal) */
 
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ScrollToTop } from './ScrollToTop.jsx';
 import { Navbar } from '../components/layout/Navbar.jsx';
 import { Footer } from '../components/layout/Footer.jsx';
@@ -23,6 +23,8 @@ import { useIsMobile } from '../hooks/useMediaQuery.js';
 import { trackPageView, isConsentGranted } from '../lib/analytics.js';
 import AnalyticsConsent from '../components/ui/AnalyticsConsent.jsx';
 import MobileHome from '../components/mobile/home/MobileHome.jsx';
+import MobileCatalog from '../components/mobile/catalog/MobileCatalog.jsx';
+import MobileSearch from '../components/mobile/search/MobileSearch.jsx';
 import styles from './page.module.css';
 
 /* TweaksPanel — carregado apenas em desenvolvimento.
@@ -61,23 +63,30 @@ function DesktopHome() {
 
 function HomePage() {
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
-  if (!isMobile) return <DesktopHome/>;
-  return <MobileHome onSearch={() => navigate('/produtos')}/>;
+  return isMobile ? <MobileHome/> : <DesktopHome/>;
 }
 
-/* Catálogo em rota própria. Acima de 768px: a seção de produtos da home
- * (busca, filtros e carrosséis) com Navbar e Footer. */
+/* Catálogo em rota própria. Abaixo de 768px: catálogo mobile (chips e grade
+ * de 2 colunas). Acima: a seção de produtos da home (busca, filtros e
+ * carrosséis) com Navbar e Footer. */
 function CatalogPage() {
+  const isMobile = useIsMobile();
+  if (isMobile) return <MobileCatalog/>;
   return (
     <>
       <Navbar/>
       <main className={styles.catalogMain}>
-        <Products/>
+        <Products asPage/>
       </main>
       <Footer/>
     </>
   );
+}
+
+/* Busca: só no mobile (o desktop tem a busca dentro de /produtos). */
+function SearchPage() {
+  const isMobile = useIsMobile();
+  return isMobile ? <MobileSearch/> : <Navigate to="/produtos" replace/>;
 }
 
 export default function App() {
@@ -96,6 +105,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/produtos" element={<CatalogPage />} />
+      <Route path="/buscar" element={<SearchPage />} />
       <Route path="/produto/:id" element={<ProductPage />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
       <Route path="/politica-de-troca-e-devolucao" element={<ReturnPolicyPage />} />
