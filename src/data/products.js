@@ -158,6 +158,7 @@ export const PRODUCTS = [
     badge: null,
     buyLink: 'https://pag.ae/81MuixsTN',
     tags: ['cama', 'suspensa', 'rattan', 'descanso'],
+    visible: false,
   },
   {
     id: 12,
