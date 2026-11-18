@@ -96,8 +96,9 @@ const xml = readFileSync(sitemapPath, 'utf8');
 const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 const visible = PRODUCTS.filter((p) => p.visible !== false);
 
-check('sitemap: contagem = visíveis + 1', () => assert.equal(locs.length, visible.length + 1));
+check('sitemap: contagem = visíveis + home + /produtos', () => assert.equal(locs.length, visible.length + 2));
 check('sitemap: contém a home', () => assert.ok(locs.includes(`${SITE}/`)));
+check('sitemap: contém /produtos', () => assert.ok(locs.includes(`${SITE}/produtos`)));
 check('sitemap: nenhum oculto', () => {
   for (const p of PRODUCTS.filter((x) => x.visible === false)) {
     assert.ok(!locs.includes(`${SITE}/produto/${p.id}`), `oculto ${p.id} no sitemap`);
