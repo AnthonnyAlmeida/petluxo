@@ -1,0 +1,50 @@
+/* PetLuxo — MobileHome.module.css
+ * Home mobile: um único container rolável (hero + cenas + rodapé) com
+ * altura da área útil, encaixe vertical por proximidade e a trilha dourada
+ * na borda direita. */
+
+.mHome {
+  position: relative;
+  height: var(--m-scene-h);
+  overflow: hidden;
+}
+
+.mPager {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mPagerMain { display: block; }
+
+/* ---------- Trilha (coleira) ---------- */
+.mTrail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  width: 32px;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.mTrailHalo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mTrailHalo 2.4s ease-out infinite;
+}
+
+@keyframes mTrailHalo {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mTrailHalo { animation: none; opacity: 0; }
+  .mPager { scroll-behavior: auto; }
+}

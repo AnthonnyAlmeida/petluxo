@@ -3,47 +3,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { wa } from '../../lib/whatsapp.js';
+import { FAQS, TROCA_ANSWER, WA_MESSAGES, FOOTER } from '../../data/siteContent.js';
 import styles from './FAQ.module.css';
 
-const FAQS = [
-  {
-    q: 'Os produtos são confortáveis para pets sensíveis?',
-    a: 'Sim! Todos os produtos são selecionados pensando em conforto, segurança e bem-estar, com materiais de qualidade para uso diário.',
-  },
-  {
-    q: 'Como acompanho meu pedido?',
-    a: 'Quando existir, enviaremos o código de rastreamento pelo WhatsApp após o despacho. Em caso de dúvida, entre em contato pelo WhatsApp.',
-  },
-  {
-    q: 'Os produtos podem ser lavados?',
-    a: 'Sim. Os produtos PetLuxo são feitos com materiais de fácil limpeza e higienização. Dúvidas específicas? Fale com a gente pelo WhatsApp.',
-  },
-  {
-    q: 'Quanto tempo leva a entrega?',
-    a: 'O prazo varia conforme o produto e o fornecedor e é informado no atendimento, antes da confirmação do pedido.',
-  },
-  {
-    q: 'Posso trocar o produto?',
-    a: null, // renderizado via JSX abaixo
-  },
-  {
-    q: 'Os produtos são iguais às fotos?',
-    a: 'Sim. Trabalhamos para apresentar imagens fiéis aos produtos, garantindo que o que você vê é o que você recebe.',
-  },
-  {
-    q: 'Como sei qual tamanho de cama escolher para o meu pet?',
-    a: 'Recomendamos medir o comprimento do seu pet de focinho a cauda e adicionar cerca de 20cm para garantir conforto total. Nossos produtos com variação de tamanho indicam as medidas de cada opção. Em caso de dúvida, fale com a gente pelo WhatsApp — adoramos ajudar!',
-  },
-];
-
-const TROCA_ANSWER = (
+const TROCA_ANSWER_JSX = (
   <>
-    Sim! Aceitamos trocas em até 7 dias corridos após o recebimento (produto sem uso, embalagem
-    original). Em caso de defeito de fabricação, o prazo é de 90 dias. Consulte nossa{' '}
-    <Link to="/politica-de-troca-e-devolucao" className={styles.faqLink}>
-      Política de Troca e Devolução
-    </Link>{' '}
-    para mais detalhes.
+    {TROCA_ANSWER.before}
+    <Link to={TROCA_ANSWER.to} className={styles.faqLink}>
+      {TROCA_ANSWER.linkText}
+    </Link>
+    {TROCA_ANSWER.after}
   </>
 );
 
@@ -80,7 +49,7 @@ export function FAQ() {
               </div>
               <div className={styles.faqAnswer}>
                 <p className={styles.faqAnswerText}>
-                  {item.a !== null ? item.a : TROCA_ANSWER}
+                  {item.a !== null ? item.a : TROCA_ANSWER_JSX}
                 </p>
               </div>
             </div>
@@ -91,7 +60,7 @@ export function FAQ() {
           <p>
             Tem outra dúvida? Fale pelo{' '}
             <a
-              href={wa('Olá! Tenho uma dúvida sobre os produtos PetLuxo.')}
+              href={wa(WA_MESSAGES.question)}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.faqLink}
@@ -99,8 +68,8 @@ export function FAQ() {
               WhatsApp
             </a>
             {' '}ou pelo e-mail{' '}
-            <a href="mailto:petluxo.service@gmail.com" className={styles.faqLink}>
-              petluxo.service@gmail.com
+            <a href={`mailto:${FOOTER.email}`} className={styles.faqLink}>
+              {FOOTER.email}
             </a>
           </p>
         </div>

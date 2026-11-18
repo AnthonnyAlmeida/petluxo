@@ -1,6 +1,6 @@
 /* PetLuxo — ProductBuyButton
- * Lógica de 3 estados do botão de compra, compartilhada entre ProductModal
- * e ProductPage:
+ * Lógica de 3 estados do botão de compra, usada pela
+ * ProductPage:
  * 1. badge === 'ESGOTADO'  → botão desabilitado + WhatsApp
  * 2. buyLinks (com tamanho)→ COMPRAR AGORA no link do tamanho ativo + WhatsApp
  * 3. buyLink único         → COMPRAR AGORA direto + WhatsApp

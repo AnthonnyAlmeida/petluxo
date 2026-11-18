@@ -1,7 +1,7 @@
 /* PetLuxo — App (página principal) */
 
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { ScrollToTop } from './ScrollToTop.jsx';
 import { Navbar } from '../components/layout/Navbar.jsx';
 import { Footer } from '../components/layout/Footer.jsx';
@@ -13,15 +13,17 @@ import { Differentials } from '../components/sections/Differentials.jsx';
 import { CTA } from '../components/sections/CTA.jsx';
 import { FAQ } from '../components/sections/FAQ.jsx';
 import { NotFound } from '../components/sections/NotFound.jsx';
-import { ProductModal } from '../components/product/ProductModal.jsx';
 import ProductPage from '../components/pages/ProductPage.jsx';
 import PrivacyPage from '../components/pages/PrivacyPage.jsx';
 import ReturnPolicyPage from '../components/pages/ReturnPolicyPage.jsx';
 import ShippingPolicyPage from '../components/pages/ShippingPolicyPage.jsx';
 import TermsPage from '../components/pages/TermsPage.jsx';
 import { useScrollEffects } from '../hooks/useScroll.js';
+import { useIsMobile } from '../hooks/useMediaQuery.js';
 import { trackPageView, isConsentGranted } from '../lib/analytics.js';
 import AnalyticsConsent from '../components/ui/AnalyticsConsent.jsx';
+import MobileHome from '../components/mobile/home/MobileHome.jsx';
+import styles from './page.module.css';
 
 /* TweaksPanel — carregado apenas em desenvolvimento.
  * O Vite elimina este import do bundle de produção via dead-code elimination
@@ -30,9 +32,7 @@ const DevTweaks = import.meta.env.DEV
   ? React.lazy(() => import('./DevTweaks.jsx'))
   : null;
 
-function HomePage() {
-  const [quick, setQuick] = React.useState(null);
-
+function DesktopHome() {
   /* Efeitos de scroll e paralaxe */
   useScrollEffects();
 
@@ -42,20 +42,40 @@ function HomePage() {
       <main>
         <Hero/>
         <Featured/>
-        <Products onQuick={setQuick}/>
+        <Products/>
         <Story/>
         <Differentials/>
         <CTA/>
         <FAQ/>
       </main>
       <Footer/>
-      <ProductModal product={quick} onClose={() => setQuick(null)}/>
 
       {import.meta.env.DEV && DevTweaks && (
         <React.Suspense fallback={null}>
           <DevTweaks/>
         </React.Suspense>
       )}
+    </>
+  );
+}
+
+function HomePage() {
+  const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  if (!isMobile) return <DesktopHome/>;
+  return <MobileHome onSearch={() => navigate('/produtos')}/>;
+}
+
+/* Catálogo em rota própria. Acima de 768px: a seção de produtos da home
+ * (busca, filtros e carrosséis) com Navbar e Footer. */
+function CatalogPage() {
+  return (
+    <>
+      <Navbar/>
+      <main className={styles.catalogMain}>
+        <Products/>
+      </main>
+      <Footer/>
     </>
   );
 }
@@ -75,6 +95,7 @@ export default function App() {
     <AnalyticsConsent />
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/produtos" element={<CatalogPage />} />
       <Route path="/produto/:id" element={<ProductPage />} />
       <Route path="/politica-de-privacidade" element={<PrivacyPage />} />
       <Route path="/politica-de-troca-e-devolucao" element={<ReturnPolicyPage />} />

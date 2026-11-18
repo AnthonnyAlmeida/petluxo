@@ -1,6 +1,6 @@
 /* PetLuxo — ProductSizeSelector
- * Seletor de variação para produtos com buyLinks. Compartilhado entre
- * ProductModal e ProductPage.
+ * Seletor de variação para produtos com buyLinks. Usado pela
+ * ProductPage.
  *
  * `variationType` é opcional e defaulta para tamanho ('tamanho'/'cor').
  * Quando 'cor', os botões passam a exibir um swatch com a cor medida do

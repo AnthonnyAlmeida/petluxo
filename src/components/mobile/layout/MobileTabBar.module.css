@@ -1,0 +1,59 @@
+/* PetLuxo — MobileTabBar.module.css
+ * Barra inferior fixa (zona do polegar): Início, Produtos, Buscar, WhatsApp. */
+
+.mTabBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-navbar);
+  height: var(--m-bar-h);
+  padding: 6px 12px var(--m-safe-bottom);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  background: var(--offwhite);
+  border-top: 1px solid var(--bege);
+}
+
+.mTab {
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mTab:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: -2px;
+}
+
+.mTabActive,
+.mTabWa {
+  color: var(--vinho);
+  font-weight: 600;
+}
+
+.mTabPill {
+  width: 38px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--vinho);
+  color: var(--offwhite);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -79,7 +79,7 @@
   overflow: hidden;
   /* pan-y permite rolar a lista interna sem bloquear o scroll vertical da página
      quando o sheet não cobre — aqui o body já está bloqueado via overflow:hidden. */
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
 }
 
 /* Barra de arrasto no topo */
@@ -119,7 +119,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
   padding-right: 4px; /* espaço para a scrollbar */
 }
 .optionsList {

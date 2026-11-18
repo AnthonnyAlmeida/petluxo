@@ -2,16 +2,22 @@
 
 import { Link } from 'react-router-dom';
 import { wa } from '../../lib/whatsapp.js';
+import { FOOTER, POLICY_LINKS, WA_MESSAGES, openConsentPreferences } from '../../data/siteContent.js';
+import { useIsMobile } from '../../hooks/useMediaQuery.js';
+import { MobileFooter } from '../mobile/layout/MobileFooter.jsx';
 import styles from './Footer.module.css';
 
 export function Footer() {
+  const isMobile = useIsMobile();
+  if (isMobile) return <MobileFooter/>;
+
   return (
     <footer className={styles.foot}>
       <div className="wrap">
         <div className={styles.footGrid}>
           <div>
             <div className={styles.footBrand}><i className="italic gold-text">Pet</i>Luxo</div>
-            <p className={styles.footTag}>Sofisticação e conforto para quem ama seus pets.</p>
+            <p className={styles.footTag}>{FOOTER.tagline}</p>
           </div>
           <div>
             <h4>Produtos</h4>
@@ -28,35 +34,34 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h4>Políticas</h4>
+            <h4>{FOOTER.policiesTitle}</h4>
             <ul>
-              <li><Link to="/politica-de-privacidade">Política de Privacidade</Link></li>
-              <li><Link to="/politica-de-troca-e-devolucao">Troca e Devolução</Link></li>
-              <li><Link to="/politica-de-frete-e-entrega">Frete e Entrega</Link></li>
-              <li><Link to="/termos-de-uso">Termos de Uso</Link></li>
+              {POLICY_LINKS.map((l) => (
+                <li key={l.to}><Link to={l.to}>{l.label}</Link></li>
+              ))}
               <li>
                 <button
                   type="button"
                   className={styles.linkButton}
-                  onClick={() => window.dispatchEvent(new CustomEvent('petluxo:open-consent'))}
+                  onClick={openConsentPreferences}
                 >
-                  Preferências de cookies
+                  {FOOTER.cookiePrefs}
                 </button>
               </li>
             </ul>
           </div>
           <div>
-            <h4>Contato</h4>
+            <h4>{FOOTER.contactTitle}</h4>
             <ul>
-              <li><a href={wa("Olá! Vim do site PetLuxo e gostaria de mais informações.")} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
-              <li><a href="mailto:petluxo.service@gmail.com">petluxo.service@gmail.com</a></li>
+              <li><a href={wa(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+              <li><a href={`mailto:${FOOTER.email}`}>{FOOTER.email}</a></li>
             </ul>
           </div>
         </div>
 
         <div className={styles.footSocial}>
           <a
-            href="https://www.instagram.com/pettluxo_/"
+            href={FOOTER.instagram}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.footSocialLink}
@@ -71,7 +76,7 @@ export function Footer() {
         </div>
 
         <div className={styles.footBottom}>
-          <span>© 2026 PETLUXO · CNPJ 23.833.930/0001-21</span>
+          <span>{FOOTER.legal}</span>
         </div>
       </div>
     </footer>

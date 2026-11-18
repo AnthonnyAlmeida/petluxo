@@ -1,5 +1,6 @@
 /* PetLuxo — Página 404 */
 
+import { Link } from 'react-router-dom';
 import '../../styles/buttons.css';
 import styles from './NotFound.module.css';
 
@@ -15,9 +16,9 @@ export function NotFound() {
           A página que você procura não existe ou foi movida.<br/>
           Volte para a home e explore nossos produtos.
         </p>
-        <a className="btn btn-primary" href="/">
+        <Link className="btn btn-primary" to="/">
           Voltar para a home
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ function usePerView() {
   return perView;
 }
 
-export function ProductGrid({ products, onQuick, resetKey, title }) {
+export function ProductGrid({ products, resetKey, title }) {
   const perView = usePerView();
   const totalPages = Math.ceil(products.length / perView);
   const [index, setIndex] = React.useState(0);
@@ -110,7 +110,7 @@ export function ProductGrid({ products, onQuick, resetKey, title }) {
                 className={styles.carouselItem}
                 style={{ width: `${100 / products.length}%` }}
               >
-                <ProductCard product={p} index={i} onQuick={onQuick} />
+                <ProductCard product={p} index={i} />
               </div>
             ))}
           </div>

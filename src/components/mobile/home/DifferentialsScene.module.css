@@ -1,0 +1,216 @@
+/* PetLuxo — DifferentialsScene.module.css
+ * Cena "Por que escolher a PetLuxo": stories com barra de progresso, ícones
+ * de traço desenhados em código e toque nas laterais/setas. */
+
+.mDiff {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--m-scene-h);
+  padding: calc(var(--m-safe-top) + 12px) var(--m-gutter) 22px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--ink);
+  color: var(--offwhite);
+}
+
+.mDiffTap {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mDiffSegs {
+  position: relative;
+  display: flex;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.mDiffSeg {
+  flex: 1;
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(248, 246, 243, 0.22);
+  overflow: hidden;
+}
+
+.mDiffSegFill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--dourado-soft);
+}
+
+.mDiffSegDone { width: 100%; }
+
+.mDiffSegRun { animation: mDiffSeg 5s linear forwards; }
+
+.mDiffPaused .mDiffSegRun { animation-play-state: paused; }
+
+@keyframes mDiffSeg {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.mDiffTag {
+  position: relative;
+  margin-top: 21px;
+  color: var(--dourado-soft);
+  pointer-events: none;
+}
+
+.mDiffSlides {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.mDiffSlide {
+  display: flex;
+  flex-direction: column;
+}
+
+.mDiffSlide[hidden] { display: none; }
+
+.mDiffIco {
+  flex: none;
+  height: 210px;
+  margin-top: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mDiffIco svg {
+  width: 200px;
+  height: 200px;
+  stroke: var(--dourado-soft);
+}
+
+.mDiffNum {
+  margin-top: 32px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--dourado-soft);
+}
+
+.mDiffTitle {
+  margin: 10px 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.mDiffBody {
+  margin: 14px 0 0;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--ink-on-dark);
+}
+
+.mDiffNav {
+  position: relative;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mDiffBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mDiffBtn:focus-visible {
+  outline: 2px solid var(--dourado-soft);
+  outline-offset: 3px;
+}
+
+.mDiffPrev {
+  border: 1px solid rgba(212, 188, 133, 0.5);
+  background: transparent;
+  color: var(--dourado-soft);
+}
+
+.mDiffNext {
+  border: 0;
+  background: var(--dourado-soft);
+  color: var(--ink);
+}
+
+.mDiffHint {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-on-dark);
+  pointer-events: none;
+}
+
+/* ---------- Ícones ---------- */
+.mDiffDraw {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 0;
+  animation: mDiffDraw 1.8s var(--ease-out-expo) var(--d, 0s) both;
+}
+
+@keyframes mDiffDraw {
+  from { stroke-dashoffset: 400; }
+  to { stroke-dashoffset: 0; }
+}
+
+.mDiffTwinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mDiffTwinkle 2.2s ease-in-out infinite;
+}
+
+@keyframes mDiffTwinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.mDiffBounce { animation: mDiffBounce 1.6s ease-in-out infinite; }
+
+@keyframes mDiffBounce {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+.mDiffFlow {
+  stroke-dasharray: 3 7;
+  animation: mDiffFlow 1.2s linear infinite;
+}
+
+@keyframes mDiffFlow { to { stroke-dashoffset: -20; } }
+
+.mDiffSpin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mDiffSpin 24s linear infinite;
+}
+
+@keyframes mDiffSpin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mDiffSegRun,
+  .mDiffDraw,
+  .mDiffTwinkle,
+  .mDiffBounce,
+  .mDiffFlow,
+  .mDiffSpin { animation: none !important; }
+  .mDiffSegRun { width: 100%; }
+}

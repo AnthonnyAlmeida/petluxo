@@ -4,10 +4,14 @@
  * "Produtos"/"Sobre"/etc. quando o cliente já está numa ficha de produto. */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useIsMobile } from '../../hooks/useMediaQuery.js';
+import { MobileHeader } from '../mobile/layout/MobileHeader.jsx';
 import navStyles from './Navbar.module.css';
 
 export function MinimalNavbar() {
   const [scrolled, setScrolled] = React.useState(false);
+  const isMobile = useIsMobile();
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -15,13 +19,15 @@ export function MinimalNavbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  if (isMobile) return <MobileHeader padded/>;
+
   return (
     <header className={[navStyles.nav, scrolled && navStyles.navScrolled].filter(Boolean).join(' ')}>
       <div className="wrap">
-        <a href="/" className={navStyles.brandMark}>
+        <Link to="/" className={navStyles.brandMark}>
           <span className={navStyles.logoDisc}></span>
           <span><b>PETLUXO</b></span>
-        </a>
+        </Link>
       </div>
     </header>
   );
