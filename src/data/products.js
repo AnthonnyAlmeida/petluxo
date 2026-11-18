@@ -600,6 +600,7 @@ export const PRODUCTS = [
     badge: 'PREMIUM',
     buyLink: 'https://pag.ae/81Rpy249r',
     tags: ['comedouro', 'portatil', 'dobravel', 'viagem', 'pet premium', 'nômade'],
+    visible: false,
   },
   {
     id: 37,
