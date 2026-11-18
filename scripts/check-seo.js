@@ -78,6 +78,18 @@ check('buildProductMeta: toda descrição visível termina em fim de frase váli
   }
 });
 
+check('buildProductMeta: nenhuma descrição visível termina em palavra de ligação + "…" nem em vírgula', () => {
+  const STOP = new Set(['a', 'o', 'as', 'os', 'um', 'uma', 'e', 'ou', 'de', 'da', 'do', 'das', 'dos', 'em', 'no', 'na', 'nos', 'nas', 'com', 'para', 'por', 'pelo', 'pela', 'que', 'ao', 'à']);
+  for (const p of PRODUCTS.filter((x) => x.visible !== false)) {
+    const d = buildProductMeta(p).description;
+    assert.ok(!d.endsWith(','), `id ${p.id}: termina em vírgula`);
+    if (d.endsWith('…')) {
+      const last = d.slice(0, -1).replace(/[\s,;:.\-–—]+$/, '').split(' ').pop().toLowerCase();
+      assert.ok(!STOP.has(last), `id ${p.id}: termina em "${last}…"`);
+    }
+  }
+});
+
 const sitemapPath = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist', 'sitemap.xml');
 assert.ok(existsSync(sitemapPath), 'dist/sitemap.xml não existe: rode npm run build antes');
 const xml = readFileSync(sitemapPath, 'utf8');

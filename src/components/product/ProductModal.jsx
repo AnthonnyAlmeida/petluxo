@@ -29,7 +29,7 @@ export function ProductModal({ product, onClose }) {
               <div className={styles.modalPriceOriginal}>{product.originalPrice}</div>
             )}
             {product.prices ? (
-              <div className="price serif">
+              <div className={["serif", styles.price].join(" ")}>
                 {product.buyLinks && selectedSize
                   ? activePrice
                     ? <div>{activePrice.size} — {activePrice.price}</div>
@@ -40,7 +40,7 @@ export function ProductModal({ product, onClose }) {
                 }
               </div>
             ) : (
-              <div className="price serif">{product.price}</div>
+              <div className={["serif", styles.price].join(" ")}>{product.price}</div>
             )}
             {product.buyLinks && (
               <ProductSizeSelector buyLinks={product.buyLinks} selectedSize={selectedSize} onSelect={setSelectedSize} variationType={product.variationType}/>

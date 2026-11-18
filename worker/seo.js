@@ -31,6 +31,20 @@ function normalizeSpaces(text) {
 
 const MIN_SENTENCE = 60;
 
+/* Palavras que não podem encerrar a frase (artigos, conjunções, preposições). */
+const DANGLING_WORDS = new Set(['a', 'o', 'as', 'os', 'um', 'uma', 'e', 'ou', 'de', 'da', 'do', 'das', 'dos', 'em', 'no', 'na', 'nos', 'nas', 'com', 'para', 'por', 'pelo', 'pela', 'que', 'ao', 'à']);
+const TRAILING_PUNCT = /[\s,;:.\-–—]+$/;
+
+/* Remove pontuação/espaço pendentes e, em seguida, palavras de ligação do final, repetindo. */
+function trimDangling(text) {
+  let out = text.replace(TRAILING_PUNCT, '');
+  for (;;) {
+    const i = out.lastIndexOf(' ');
+    if (i < 0 || !DANGLING_WORDS.has(out.slice(i + 1).toLowerCase())) return out;
+    out = out.slice(0, i).replace(TRAILING_PUNCT, '');
+  }
+}
+
 /* Cabe inteiro: usa inteiro. Senão, corta no último fim de frase dentro de `max`
    (se tiver pelo menos MIN_SENTENCE caracteres); senão, corta por palavra com "…".
    Fim de frase: ".", "!" ou "?" seguido de espaço no texto original (assim "2.0" e "3.5 kg" não cortam). */
@@ -43,7 +57,7 @@ function truncate(text, max) {
   const slice = text.slice(0, max + 1);
   const lastSpace = slice.lastIndexOf(' ');
   const cut = lastSpace > 0 ? slice.slice(0, lastSpace) : text.slice(0, max);
-  return cut.replace(/[\s,;:.\-–—]+$/, '') + '…';
+  return trimDangling(cut) + '…';
 }
 
 export function buildProductMeta(product) {

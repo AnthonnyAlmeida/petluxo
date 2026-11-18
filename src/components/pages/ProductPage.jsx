@@ -92,7 +92,6 @@ const SPEC_LABELS = {
   tamanhos: 'Tamanhos',
   frete: 'Frete',
   construcao: 'Construção',
-  cores: 'Cores',
   medidas: 'Medidas',
 };
 

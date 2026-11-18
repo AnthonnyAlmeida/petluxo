@@ -88,7 +88,6 @@ Usos de `:global()` que existem hoje no código:
 - `ProductCard.module.css:94` — `.product .badge:global(.gold)`
 - `CTA.module.css:87` — `.ctaRow :global(.btn)` (media query)
 - `Hero.module.css:260` e `:272` — `.heroCtaRow :global(.btn)` (media queries)
-- `ProductModal.module.css:66` — `.modalInfo :global(.price)`: **uso fora da lista permitida, a revisar** (`.price` não está entre as utilitárias globais acima)
 
 `.btn` vem de `buttons.css` (global controlado) e também não consta na lista permitida acima.
 

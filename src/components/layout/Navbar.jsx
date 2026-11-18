@@ -1,6 +1,7 @@
 /* PetLuxo — Navbar */
 
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Icon } from '../../icons.jsx';
 import { wa } from '../../lib/whatsapp.js';
 import '../../styles/buttons.css';
@@ -9,6 +10,7 @@ import styles from './Navbar.module.css';
 export function Navbar() {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
+  const { pathname } = useLocation();
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -17,6 +19,16 @@ export function Navbar() {
   }, []);
 
   const close = () => setOpen(false);
+
+  /* Na home o Link não troca de rota (ScrollToTop não dispara), então o clique
+   * simples no logo rola ao topo. Cliques com tecla modificadora ou botão
+   * não principal ficam com o navegador (nova aba/janela). */
+  const onBrandClick = (e) => {
+    if (pathname !== '/') return;
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <header className={[styles.nav, scrolled && styles.navScrolled].filter(Boolean).join(' ')}>
@@ -27,10 +39,10 @@ export function Navbar() {
           <a href="#faq" className={styles.navLink}>FAQ</a>
           <a href="#contato" className={styles.navLink}>Contato</a>
         </nav>
-        <a href="/" className={styles.brandMark}>
+        <Link to="/" className={styles.brandMark} onClick={onBrandClick}>
           <span className={styles.logoDisc}></span>
           <span><b>PETLUXO</b></span>
-        </a>
+        </Link>
         <div className={styles.navRight}>
           <a className="btn btn-primary" href={wa("Olá! Vim do site PetLuxo e gostaria de mais informações.")} target="_blank" rel="noopener" style={{padding:"10px 18px", fontSize:11}}>
             <Icon.Wa className="wa-icon"/> WhatsApp

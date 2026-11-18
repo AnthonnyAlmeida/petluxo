@@ -63,7 +63,7 @@
   z-index: 2;
 }
 .modalInfo h3 { font-family: var(--serif); font-size: clamp(1.25rem, 2.8vw, 2rem); line-height: 1.2; margin-bottom: 14px; }
-.modalInfo :global(.price) { font-family: var(--serif); font-size: 30px; color: var(--vinho); margin-bottom: 20px; }
+.modalInfo .price { font-family: var(--serif); font-size: 30px; color: var(--vinho); margin-bottom: 20px; }
 .modalInfo p { color: var(--ink-soft); font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
 
 /* ---------- Modal image ---------- */
