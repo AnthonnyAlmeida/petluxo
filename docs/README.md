@@ -22,6 +22,7 @@ PetLuxo é um site institucional de e-commerce de produtos premium para pets (c�
 | Google Analytics           | G-KKMV5VHR48 | GA4: `gtag.js` só é carregado por `src/lib/analytics.js` depois do consentimento do visitante (`AnalyticsConsent`). Revogar um consentimento antes concedido recarrega a página; o banner não tem mais o botão "Gerenciar preferências" |
 | PagBank                    | —            | Links de pagamento cadastrados em `buyLink` / `buyLinks`; o botão está oculto por `HIDE_BUY_CTA` em `ProductBuyButton.jsx` |
 | Playwright                 | ^1.49.0      | devDependency; testes de consentimento do GA4 em `tests/`                                                                  |
+| Design system (documento)  | —            | `docs/DESIGN_SYSTEM.md`: retrato do estado atual do visual (cores, tipografia, breakpoints, componentes, acessibilidade), não uma especificação |
 
 ## Estrutura de pastas
 

@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>PetLuxo — Home, hero mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; }
+button { font-family: inherit; }
+
+/* ---------- Arte: entrada (desenho do traço) ---------- */
+.art .draw {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 0;
+  animation: pl-draw 2.4s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both;
+}
+@keyframes pl-draw {
+  from { stroke-dashoffset: 800; }
+  to { stroke-dashoffset: 0; }
+}
+.art .fadein {
+  animation: pl-fade 1s ease 2.2s both;
+}
+@keyframes pl-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---------- Arte: vida contínua ---------- */
+.art .orbit {
+  transform-origin: 186px 168px;
+  animation: pl-spin 48s linear infinite;
+}
+@keyframes pl-spin {
+  to { transform: rotate(360deg); }
+}
+.art .breathe-d {
+  transform-origin: 108px 292px;
+  animation: pl-breathe 4.2s ease-in-out infinite;
+}
+.art .breathe-c {
+  transform-origin: 262px 292px;
+  animation: pl-breathe 4.8s ease-in-out -1.5s infinite;
+}
+@keyframes pl-breathe {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.014); }
+}
+.art .dtail {
+  transform-origin: 64px 284px;
+  animation: pl-wag 2.6s ease-in-out infinite;
+}
+.art .dog.happy .dtail {
+  animation-duration: 0.32s;
+}
+@keyframes pl-wag {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(9deg); }
+}
+.art .ctail {
+  transform-origin: 310px 288px;
+  animation: pl-sway 5s ease-in-out infinite;
+}
+@keyframes pl-sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(6deg); }
+}
+.art .dear-l {
+  transform-origin: 80px 100px;
+  animation: pl-earl 5s ease-in-out infinite;
+}
+.art .dear-r {
+  transform-origin: 160px 100px;
+  animation: pl-earr 5s ease-in-out -2s infinite;
+}
+.art .dog.happy .dear-l {
+  animation: pl-earl 0.5s ease-in-out infinite;
+}
+.art .dog.happy .dear-r {
+  animation: pl-earr 0.5s ease-in-out infinite;
+}
+@keyframes pl-earl {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-3deg); }
+}
+@keyframes pl-earr {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(3deg); }
+}
+.art .cear-r {
+  transform-origin: 288px 104px;
+  animation: pl-twitch 9s ease-in-out infinite;
+}
+.art .cear-l {
+  transform-origin: 236px 104px;
+  animation: pl-twitch-l 13s ease-in-out -4s infinite;
+}
+@keyframes pl-twitch {
+  0%, 90%, 100% { transform: rotate(0deg); }
+  92% { transform: rotate(-9deg); }
+  94% { transform: rotate(2deg); }
+  96% { transform: rotate(-6deg); }
+}
+@keyframes pl-twitch-l {
+  0%, 88%, 100% { transform: rotate(0deg); }
+  90% { transform: rotate(9deg); }
+  92% { transform: rotate(-2deg); }
+  94% { transform: rotate(6deg); }
+}
+.art .whl {
+  transform-origin: 238px 164px;
+  animation: pl-whl 6s ease-in-out infinite;
+}
+.art .whr {
+  transform-origin: 286px 164px;
+  animation: pl-whr 6s ease-in-out infinite;
+}
+@keyframes pl-whl {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-2.5deg); }
+}
+@keyframes pl-whr {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(2.5deg); }
+}
+.art .blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pl-blink 5.5s infinite;
+}
+.art .blink-c {
+  animation-delay: -2.4s;
+}
+@keyframes pl-blink {
+  0%, 94%, 100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.08); }
+}
+
+/* ---------- Arte: resposta ao toque ---------- */
+.art .dhead {
+  transform-origin: 108px 182px;
+  transform: rotate(calc(var(--dvx, 0) * 4deg));
+  transition: transform 0.25s ease-out;
+}
+.art .chead {
+  transform-origin: 262px 182px;
+  transform: rotate(calc(var(--cvx, 0) * 4deg));
+  transition: transform 0.25s ease-out;
+}
+.art .look-d {
+  transform: translate(calc(var(--dvx, 0) * 3.4px), calc(var(--dvy, 0) * 2.6px));
+  transition: transform 0.18s ease-out;
+}
+.art .look-c {
+  transform: translate(calc(var(--cvx, 0) * 4px), calc(var(--cvy, 0) * 1.6px));
+  transition: transform 0.18s ease-out;
+}
+.art .tongue {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.art .dog.happy .tongue {
+  opacity: 1;
+}
+.art .cat.happy .blink-c {
+  animation: none;
+  transform: scaleY(0.2);
+}
+.art .cat.happy .purr {
+  animation: pl-purr 0.12s linear infinite;
+}
+@keyframes pl-purr {
+  0%, 100% { transform: translate(0px, 0px); }
+  50% { transform: translate(0.6px, -0.5px); }
+}
+.pl-pop {
+  animation: pl-pop 1.1s ease-out both;
+}
+@keyframes pl-pop {
+  0% { opacity: 0; transform: translateY(0px) scale(0.4); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-34px) scale(1.15); }
+}
+
+
+/* ---------- Medalha de coleira ---------- */
+.medal-lean { transform: rotate(calc(var(--tx, 0) * 7deg)); transition: transform 0.5s ease-out; }
+.medal-swing { animation: medal-idle 7s ease-in-out infinite; }
+@keyframes medal-idle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(2.4deg); }
+  75% { transform: rotate(-2.4deg); }
+}
+.medal-swing.k1 { animation: medal-k1 3s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+.medal-swing.k2 { animation: medal-k2 3s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+@keyframes medal-k1 {
+  0% { transform: rotate(0deg); } 14% { transform: rotate(12deg); } 34% { transform: rotate(-8deg); }
+  54% { transform: rotate(5deg); } 74% { transform: rotate(-2.5deg); } 100% { transform: rotate(0deg); }
+}
+@keyframes medal-k2 {
+  0% { transform: rotate(0deg); } 14% { transform: rotate(-12deg); } 34% { transform: rotate(8deg); }
+  54% { transform: rotate(-5deg); } 74% { transform: rotate(2.5deg); } 100% { transform: rotate(0deg); }
+}
+.medal-drop { animation: medal-drop 1.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes medal-drop {
+  from { opacity: 0; transform: translateY(-26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.medal-shine { animation: medal-shine 5.5s ease-in-out 1.4s infinite; }
+.medal-swing.k1 .medal-shine, .medal-swing.k2 .medal-shine { animation-duration: 1.6s; animation-delay: 0s; }
+@keyframes medal-shine {
+  0% { transform: translateX(0px) skewX(-18deg); }
+  45%, 100% { transform: translateX(300px) skewX(-18deg); }
+}
+.medal-orbit { transform-origin: 186px 176px; animation: medal-orb 26s linear infinite; }
+@keyframes medal-orb { to { transform: rotate(360deg); } }
+.medal-spark { transform-box: fill-box; transform-origin: center; opacity: 0; animation: medal-spark 5s ease-in-out 1.8s infinite; }
+@keyframes medal-spark {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- Movimento reduzido / desligado ---------- */
+.art.still *, .art.still .draw {
+  animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .art *, .art .draw {
+    animation: none !important;
+  }
+}
+</style>
+</helmet>
+
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: radial-gradient(ellipse 85% 42% at 50% 60%, #EFE7DC 0%, #F8F6F3 72%); color: #2A2522; font-family: 'Inter', system-ui, sans-serif; overflow: hidden">
+
+  <!-- Cabeçalho: só a marca. A navegação mora na barra inferior. -->
+  <header style="flex: none; padding: 52px 24px 0; display: flex; align-items: center; justify-content: center; gap: 12px; height: 44px">
+    <img src="/_blob/ea85c591f985fe7ee19cab96e384c5a7" alt="" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(176, 137, 104, 0.35)">
+    <span style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 20px; letter-spacing: 0.34em; color: #2A2522">PETLUXO</span>
+  </header>
+
+  <main style="flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 20px 24px 0; gap: 12px">
+
+    <p style="margin: 0; display: flex; gap: 10px; align-items: flex-start; font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.5; letter-spacing: 0.14em; text-transform: uppercase; color: #5C5550"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; margin-top: 5px; border-radius: 50%; background: #C6A96B"></span><span>Curadoria exclusiva · para quem exige o melhor</span></p>
+
+    <h1 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 36px; line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; color: #2A2522">O luxo que <em style="font-style: italic; color: #B08968">ele merece,</em> a elegância que você aprecia.</h1>
+
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #5C5550; text-wrap: pretty">Cada peça da nossa coleção é selecionada com rigor, para pets que vivem com o mesmo padrão que seus donos.</p>
+
+    <!-- Arte em código: medalha de coleira em ouro, pendurada numa corrente fina. Balança sempre; o toque a faz balançar mais. -->
+    <div style="flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px">
+
+      <div class="art {{artClass}}" onPointerMove="{{onMove}}" onPointerDown="{{onDown}}" onPointerUp="{{onUp}}" onPointerLeave="{{onUp}}" style="--tx: {{tx}}; position: relative; width: 100%; max-width: 324px; touch-action: pan-y; cursor: pointer; -webkit-tap-highlight-color: transparent">
+
+        <svg viewBox="0 0 372 320" width="100%" aria-hidden="true" style="display: block; overflow: visible">
+          <defs>
+            <linearGradient id="mg" x1="0.1" y1="0" x2="0.9" y2="1">
+              <stop offset="0" stop-color="#F1E3B8"></stop>
+              <stop offset="0.35" stop-color="#D4BC85"></stop>
+              <stop offset="0.7" stop-color="#B8995A"></stop>
+              <stop offset="1" stop-color="#9E8148"></stop>
+            </linearGradient>
+            <linearGradient id="mg2" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="#C6A96B"></stop>
+              <stop offset="1" stop-color="#EAD9A8"></stop>
+            </linearGradient>
+            <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"></stop>
+              <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0.75"></stop>
+              <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"></stop>
+            </linearGradient>
+            <clipPath id="disc"><circle cx="0" cy="104" r="62"></circle></clipPath>
+          </defs>
+
+          <!-- anéis finos e ponto em órbita -->
+          <circle cx="186" cy="176" r="150" fill="none" stroke="#C6A96B" stroke-opacity="0.38" stroke-width="1"></circle>
+          <circle cx="186" cy="176" r="118" fill="none" stroke="#C6A96B" stroke-opacity="0.24" stroke-width="1"></circle>
+          <g class="medal-orbit"><circle cx="186" cy="26" r="3" fill="#C6A96B"></circle></g>
+
+          <!-- corrente: dois fios pontilhados que descem até o argolão -->
+          <path d="M-6 8 C66 30 140 66 177 94" fill="none" stroke="{{lineColor}}" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0.1 5"></path>
+          <path d="M378 8 C306 30 232 66 195 94" fill="none" stroke="{{lineColor}}" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="0.1 5"></path>
+          <ellipse cx="186" cy="296" rx="58" ry="4" fill="#B08968" fill-opacity="0.16"></ellipse>
+
+          <!-- medalha: g externo inclina para o dedo; g interno balança -->
+          <g class="medal-lean" style="transform-origin: 186px 96px">
+            <g class="medal-swing {{kickClass}}" style="transform-origin: 186px 96px">
+              <g class="medal-drop">
+                <circle cx="186" cy="96" r="9" fill="none" stroke="url(#mg)" stroke-width="2.4"></circle>
+                <circle cx="186" cy="112" r="6" fill="none" stroke="url(#mg)" stroke-width="2.2"></circle>
+                <circle cx="186" cy="176" r="62" fill="url(#mg)"></circle>
+                <circle cx="186" cy="176" r="62" fill="none" stroke="#F6EBC8" stroke-opacity="0.8" stroke-width="1"></circle>
+                <circle cx="186" cy="176" r="54" fill="none" stroke="#7A6232" stroke-opacity="0.55" stroke-width="0.9"></circle>
+                <circle cx="186" cy="176" r="50" fill="none" stroke="#F6EBC8" stroke-opacity="0.6" stroke-width="0.6"></circle>
+
+                <!-- monograma gravado -->
+                <text x="187" y="195" text-anchor="middle" fill="#F6EBC8" fill-opacity="0.75" style="font-family: 'Cormorant Garamond', serif; font-size: 70px; font-style: italic; font-weight: 500">P</text>
+                <text x="186" y="194" text-anchor="middle" fill="#6E5829" style="font-family: 'Cormorant Garamond', serif; font-size: 70px; font-style: italic; font-weight: 500">P</text>
+                <text x="186" y="226" text-anchor="middle" fill="#6E5829" fill-opacity="0.85" style="font-family: 'JetBrains Mono', monospace; font-size: 7px; letter-spacing: 0.42em">PETLUXO</text>
+
+                <!-- brilho que atravessa o metal -->
+                <g clip-path="url(#disc)" transform="translate(186 72)">
+                  <rect class="medal-shine" x="-120" y="0" width="46" height="208" fill="url(#shine)" transform="skewX(-18)"></rect>
+                </g>
+              </g>
+            </g>
+          </g>
+
+          <!-- faíscas discretas -->
+          <g class="medal-spark"><path d="M270 118 V138 M260 128 H280" fill="none" stroke="#D4BC85" stroke-width="1.2" stroke-linecap="round"></path></g>
+          <g class="medal-spark" style="animation-delay: 2.5s"><path d="M96 232 V244 M90 238 H102" fill="none" stroke="#D4BC85" stroke-width="1.2" stroke-linecap="round"></path></g>
+        </svg>
+      </div>
+
+      <sc-if value="{{showHint}}" hint-placeholder-val="{{true}}">
+        <p style="margin: 0; display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08968" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5a2 2 0 0 1 4 0v6"></path><path d="M13 10a2 2 0 0 1 4 0v3a6 6 0 0 1-6 6h-1a5 5 0 0 1-4-2l-2-3a1.6 1.6 0 0 1 2.4-2L9 14"></path></svg>
+          Toque na medalha
+        </p>
+      </sc-if>
+    </div>
+
+    <button type="button" style="flex: none; margin-top: 4px; height: 52px; border: 0; border-radius: 999px; background: #6B1E2B; color: #F8F6F3; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; box-shadow: 0 10px 24px rgba(107, 30, 43, 0.22); cursor: pointer">
+      Ver produtos
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+    </button>
+  </main>
+
+  <!-- Barra inferior: zona do polegar -->
+  <nav aria-label="Navegação principal" style="flex: none; margin-top: 16px; height: 84px; box-sizing: border-box; padding: 6px 12px 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; background: #F8F6F3; border-top: 1px solid #E8DED2">
+
+    <button type="button" aria-label="Início" aria-current="page" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #6B1E2B; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B1E2B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"></path><path d="M6 10v9h12v-9"></path><path d="M10 19v-5h4v5"></path></svg>
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.02em">Início</span>
+    </button>
+
+    <button type="button" aria-label="Produtos" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #5C5550; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect></svg>
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.02em">Produtos</span>
+    </button>
+
+    <button type="button" aria-label="Buscar" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #5C5550; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.02em">Buscar</span>
+    </button>
+
+    <button type="button" aria-label="Falar pelo WhatsApp" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #6B1E2B; cursor: pointer">
+      <span aria-hidden="true" style="width: 38px; height: 28px; border-radius: 999px; background: #6B1E2B; display: flex; align-items: center; justify-content: center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>
+      </span>
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.02em">WhatsApp</span>
+    </button>
+  </nav>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"lineColor":{"editor":"color","default":"#C6A96B","options":["#C6A96B","#B08968","#6B1E2B"]},"motion":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tx: 0, kick: 0, kickOn: false, touched: false };
+    this._timer = null;
+    this._resetTimer = null;
+  }
+
+  componentWillUnmount() {
+    if (this._timer) clearTimeout(this._timer);
+    if (this._resetTimer) clearTimeout(this._resetTimer);
+  }
+
+  lean(e) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const v = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    return Math.round(Math.max(-1, Math.min(1, v)) * 100) / 100;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const motion = this.props.motion ?? true;
+
+    const onMove = (e) => {
+      if (this._resetTimer) clearTimeout(this._resetTimer);
+      this.setState({ tx: this.lean(e) });
+    };
+
+    const onDown = (e) => {
+      this.setState({ tx: this.lean(e), touched: true, kick: this.state.kick + 1, kickOn: true });
+      if (this._timer) clearTimeout(this._timer);
+      this._timer = setTimeout(() => this.setState({ kickOn: false }), 3000);
+    };
+
+    const onUp = () => {
+      if (this._resetTimer) clearTimeout(this._resetTimer);
+      this._resetTimer = setTimeout(() => this.setState({ tx: 0 }), 900);
+    };
+
+    return {
+      lineColor: this.props.lineColor ?? '#C6A96B',
+      artClass: motion ? '' : 'still',
+      kickClass: s.kickOn ? (s.kick % 2 ? 'k1' : 'k2') : '',
+      tx: s.tx,
+      showHint: !s.touched,
+      onMove, onDown, onUp
+    };
+  }
+}
+</script>
+</body>
+</html>

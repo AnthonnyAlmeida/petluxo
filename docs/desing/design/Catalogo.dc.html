@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>PetLuxo — Catálogo mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; }
+button { font-family: inherit; }
+.pl-scroll { scrollbar-width: none; }
+.pl-scroll::-webkit-scrollbar { display: none; }
+.pl-chips { scrollbar-width: none; }
+.pl-chips::-webkit-scrollbar { display: none; }
+.pl-clamp2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pl-search:focus-visible { outline: 2px solid #6B1E2B; outline-offset: 2px; }
+</style>
+</helmet>
+
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F8F6F3; color: #2A2522; font-family: 'Inter', system-ui, sans-serif; overflow: hidden">
+
+  <!-- Cabeçalho: só a marca -->
+  <header style="flex: none; padding: 52px 24px 0; display: flex; align-items: center; justify-content: center; gap: 12px; height: 44px; padding-bottom: 12px">
+    <img src="/_blob/ea85c591f985fe7ee19cab96e384c5a7" alt="" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(176, 137, 104, 0.35)">
+    <span style="font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 20px; letter-spacing: 0.34em; color: #2A2522">PETLUXO</span>
+  </header>
+
+  <!-- Área rolável: a barra inferior fica parada -->
+  <div class="pl-scroll" style="flex: 1; min-height: 0; overflow-y: auto; padding: 8px 24px 28px; border-top: 1px solid #E8DED2">
+
+    <p style="margin: 20px 0 0; display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>Nossos produtos</p>
+
+    <h1 style="margin: 10px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 34px; line-height: 1.1; letter-spacing: -0.01em; color: #2A2522">Tudo que o seu <em style="font-style: italic; color: #B08968">pet</em> precisa.</h1>
+
+    <label style="display: flex; align-items: center; gap: 12px; margin-top: 18px; height: 48px; box-sizing: border-box; padding: 0 16px; border-radius: 12px; background: #EFE7DC">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>
+      <input class="pl-search" type="search" aria-label="Buscar produtos" placeholder="Buscar produtos…" style="flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font-family: 'Inter', sans-serif; font-size: 16px; font-style: italic; color: #2A2522">
+    </label>
+
+    <!-- Categorias: chips com rolagem horizontal, ficam grudados no topo -->
+    <div style="position: sticky; top: -8px; z-index: 2; margin: 14px -24px 0; padding: 8px 0 10px; background: #F8F6F3">
+      <div class="pl-chips" role="group" aria-label="Categorias" style="display: flex; gap: 8px; overflow-x: auto; padding: 0 24px">
+        <sc-for list="{{chips}}" as="c" hint-placeholder-count="4">
+          <sc-if value="{{c.active}}" hint-placeholder-val="{{false}}">
+            <button type="button" aria-pressed="true" onClick="{{c.pick}}" style="flex: none; height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #6B1E2B; background: #6B1E2B; color: #F8F6F3; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer">{{c.label}}</button>
+          </sc-if>
+          <sc-if value="{{c.idle}}" hint-placeholder-val="{{true}}">
+            <button type="button" aria-pressed="false" onClick="{{c.pick}}" style="flex: none; height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #D9CFC2; background: transparent; color: #5C5550; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer">{{c.label}}</button>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- Grade em 2 colunas -->
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 14px; margin-top: 10px">
+      <sc-for list="{{products}}" as="p" hint-placeholder-count="4">
+        <button type="button" style="display: block; padding: 0; border: 0; background: transparent; text-align: left; color: inherit; cursor: pointer; min-width: 0">
+          <div style="position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden; background: #EFE7DC">
+            <img src="{{p.img}}" alt="{{p.name}}" style="display: block; width: 100%; height: 100%; object-fit: cover">
+            <sc-if value="{{p.badgeNew}}" hint-placeholder-val="{{false}}">
+              <span style="position: absolute; left: 8px; top: 8px; padding: 5px 9px; border-radius: 999px; background: #6B1E2B; color: #F8F6F3; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em">NOVO</span>
+            </sc-if>
+            <sc-if value="{{p.badgeTop}}" hint-placeholder-val="{{false}}">
+              <span style="position: absolute; left: 8px; top: 8px; padding: 5px 9px; border-radius: 999px; background: #2A2522; color: #F8F6F3; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em">MAIS VENDIDOS</span>
+            </sc-if>
+          </div>
+          <div style="margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #5C5550; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{p.category}}</div>
+          <div class="pl-clamp2" style="margin-top: 4px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 21px; line-height: 1.12; color: #2A2522">{{p.name}}</div>
+          <sc-if value="{{p.hasPrefix}}" hint-placeholder-val="{{false}}">
+            <div style="margin-top: 6px; font-size: 12px; color: #5C5550">a partir de</div>
+          </sc-if>
+          <div style="margin-top: 2px; font-size: 15px; font-weight: 600; color: #2A2522">{{p.price}}</div>
+        </button>
+      </sc-for>
+    </div>
+
+    <button type="button" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; margin-top: 28px; border-radius: 999px; border: 1px solid #2A2522; background: transparent; color: #2A2522; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer">
+      Ver mais produtos
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2A2522" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+    </button>
+  </div>
+
+  <!-- Barra inferior -->
+  <nav aria-label="Navegação principal" style="flex: none; height: 84px; box-sizing: border-box; padding: 6px 12px 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; background: #F8F6F3; border-top: 1px solid #E8DED2">
+
+    <button type="button" aria-label="Início" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"></path><path d="M6 10v9h12v-9"></path><path d="M10 19v-5h4v5"></path></svg>
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.02em; color: #5C5550">Início</span>
+    </button>
+
+    <button type="button" aria-label="Produtos" aria-current="page" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B1E2B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect></svg>
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: #6B1E2B">Produtos</span>
+    </button>
+
+    <button type="button" aria-label="Buscar" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.02em; color: #5C5550">Buscar</span>
+    </button>
+
+    <button type="button" aria-label="Falar pelo WhatsApp" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <span aria-hidden="true" style="width: 38px; height: 28px; border-radius: 999px; background: #6B1E2B; display: flex; align-items: center; justify-content: center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>
+      </span>
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: #6B1E2B">WhatsApp</span>
+    </button>
+  </nav>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cat: 'Todos' };
+  }
+
+  renderVals() {
+    const labels = ['Todos', 'Mais Vendidos', 'Essenciais em Couro', 'Conforto & Estilo', 'À Mesa', 'Coleção Cozy Luxo', 'Brinquedos & Estilo', 'Coleção Passeio', 'Sono & Refúgio', 'Viagem & Mobilidade'];
+    const chips = labels.map((label) => ({
+      label,
+      active: this.state.cat === label,
+      idle: this.state.cat !== label,
+      pick: () => this.setState({ cat: label })
+    }));
+
+    // Produtos e preços reais do catálogo (src/data/products.js). Fotos reduzidas.
+    const data = [
+      { img: '/_blob/8b7b16bad70f92f91fda7b25a9f31789', name: 'Bolsa Transporte', category: 'Viagem & Mobilidade', badge: 'top', prefix: true, price: 'R$ 1.197,00' },
+      { img: '/_blob/296f42dddb10aff87902717fbc78b0eb', name: 'Refúgio Suspenso', category: 'Sono & Refúgio', badge: 'top', prefix: false, price: 'R$ 389,00' },
+      { img: '/_blob/9f9c76c914d508ffe458d7962f52417d', name: 'Brinquedo PetLuxo', category: 'Brinquedos & Estilo', badge: 'new', prefix: false, price: 'R$ 59,90' },
+      { img: '/_blob/effd1d4db3a543e3a6720ea208a1744f', name: 'Refúgio Cozy', category: 'Sono & Refúgio', badge: 'new', prefix: true, price: 'R$ 394,00' },
+      { img: '/_blob/8fc0b6de849832a845ceae1ab223bef2', name: 'Kit Élan Rosa', category: 'Essenciais em Couro', badge: '', prefix: false, price: 'R$ 999,90' },
+      { img: '/_blob/6df49dde21c2eb9036dc48fa7e764e8a', name: 'Porta Saquinhos', category: 'Essenciais em Couro', badge: '', prefix: false, price: 'R$ 227,00' },
+      { img: '/_blob/4bafad6a81afaef4b7f4e6f50776b271', name: 'Bolsa Térmica Metalassê', category: 'Coleção Passeio', badge: 'new', prefix: false, price: 'R$ 349,00' },
+      { img: '/_blob/fdf70a61ed24f643497b6a678c912eb6', name: 'Sofá Essence', category: 'Conforto & Estilo', badge: '', prefix: false, price: 'R$ 497,00' }
+    ];
+    const products = data.map((d) => ({
+      img: d.img, name: d.name, category: d.category, price: d.price,
+      hasPrefix: d.prefix, badgeNew: d.badge === 'new', badgeTop: d.badge === 'top'
+    }));
+
+    return { chips, products };
+  }
+}
+</script>
+</body>
+</html>

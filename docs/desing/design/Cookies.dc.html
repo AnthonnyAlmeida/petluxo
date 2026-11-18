@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>PetLuxo — Cookies (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; }
+button { font-family: inherit; }
+.sc { scrollbar-width: none; }
+.sc::-webkit-scrollbar { display: none; }
+.up { animation: up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.fd { animation: fd 0.3s ease both; }
+@keyframes fd { from { opacity: 0; } to { opacity: 1; } }
+.ln { stroke-dasharray: 342; animation: dr 1.4s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes dr { from { stroke-dashoffset: 342; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F8F6F3; color: #2A2522; font-family: 'Inter', system-ui, sans-serif; overflow: hidden">
+  <!-- fundo: eco discreto do hero, escurecido -->
+  <div style="flex: 1; min-height: 0; position: relative; padding: 58px 24px 0">
+    <div style="display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="width: 38px; height: 38px; border-radius: 50%; background: #E8DED2; border: 1px solid #C6A96B"></span><span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; letter-spacing: 0.18em">PETLUXO</span></div>
+    <p style="margin: 40px 0 0; font-family: 'Cormorant Garamond', serif; font-size: 36px; line-height: 1.08">O luxo que <em style="color: #B08968">ele merece,</em> a elegância que você aprecia.</p>
+  </div>
+    <nav aria-label="Navegação principal" style="position: relative; z-index: 10; flex: none; height: 84px; box-sizing: border-box; padding: 6px 12px 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; background: #F8F6F3; border-top: 1px solid #E8DED2">
+    <button type="button" aria-label="Início" aria-current="page" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B1E2B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"></path><path d="M6 10v9h12v-9"></path><path d="M10 19v-5h4v5"></path></svg>
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: #6B1E2B">Início</span>
+    </button>
+    <button type="button" aria-label="Produtos" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect></svg>
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.02em; color: #5C5550">Produtos</span>
+    </button>
+    <button type="button" aria-label="Buscar" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.02em; color: #5C5550">Buscar</span>
+    </button>
+    <button type="button" aria-label="Falar pelo WhatsApp" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <span aria-hidden="true" style="width: 38px; height: 28px; border-radius: 999px; background: #6B1E2B; display: flex; align-items: center; justify-content: center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>
+      </span>
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: #6B1E2B">WhatsApp</span>
+    </button>
+  </nav>
+
+  <div class="fd" style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; background: rgba(42, 37, 34, 0.45)"></div>
+
+  <div class="up" role="dialog" aria-label="Preferências de cookies" style="position: absolute; left: 0; right: 0; bottom: 0; box-sizing: border-box; padding: 10px 24px 28px; border-radius: 28px 28px 0 0; background: #F8F6F3; box-shadow: 0 -12px 40px rgba(42, 37, 34, 0.18)">
+    <div aria-hidden="true" style="width: 44px; height: 5px; margin: 0 auto 18px; border-radius: 999px; background: #D9CFC2"></div>
+    <!-- fio dourado que se desenha ao abrir -->
+    <svg aria-hidden="true" viewBox="0 0 342 8" width="342" height="8" fill="none" style="display: block; margin-bottom: 14px"><path class="ln" d="M0 4 H342" stroke="#C6A96B" stroke-width="1.2"></path><circle cx="3" cy="4" r="3" fill="#C6A96B"></circle></svg>
+    <p style="margin: 0; display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>Privacidade</p>
+    <h2 style="margin: 10px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 30px; line-height: 1.1">Seus dados, <em style="color: #B08968">sua escolha.</em></h2>
+    <p style="margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: #5C5550">Usamos cookies de análise (Google Analytics) para entender como o site é usado e melhorá-lo. Eles só são ativados se você permitir.</p>
+
+    <sc-if value="{{prefs}}" hint-placeholder-val="{{false}}">
+      <div class="fd" style="margin-top: 16px; border-top: 1px solid #E8DED2">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; border-bottom: 1px solid #E8DED2">
+          <div><div style="font-size: 15px; font-weight: 600">Essenciais</div><div style="margin-top: 2px; font-size: 13px; color: #5C5550">Necessários para o site funcionar.</div></div>
+          <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #5C5550">SEMPRE ATIVOS</span>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; border-bottom: 1px solid #E8DED2">
+          <div><div style="font-size: 15px; font-weight: 600">Análise</div><div style="margin-top: 2px; font-size: 13px; color: #5C5550">Estatísticas de uso, sem identificar você.</div></div>
+          <button type="button" role="switch" aria-checked="{{analytics}}" aria-label="Cookies de análise" onClick="{{toggle}}" style="flex: none; position: relative; width: 52px; height: 32px; padding: 0; border: 0; border-radius: 999px; background: {{swBg}}; transition: background 0.25s; cursor: pointer"><span style="position: absolute; top: 3px; left: {{swLeft}}px; width: 26px; height: 26px; border-radius: 50%; background: #F8F6F3; box-shadow: 0 2px 6px rgba(42, 37, 34, 0.25); transition: left 0.25s"></span></button>
+        </div>
+      </div>
+    </sc-if>
+
+    <div style="display: flex; gap: 10px; margin-top: 18px">
+      <button type="button" onClick="{{reject}}" style="flex: 1; height: 52px; border-radius: 999px; border: 1px solid #2A2522; background: transparent; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #2A2522; cursor: pointer">Recusar</button>
+      <button type="button" onClick="{{accept}}" style="flex: 1; height: 52px; border: 0; border-radius: 999px; background: #6B1E2B; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #F8F6F3; cursor: pointer">{{primary}}</button>
+    </div>
+    <button type="button" onClick="{{togglePrefs}}" style="display: block; width: 100%; min-height: 48px; margin-top: 4px; border: 0; background: transparent; font-size: 13px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; color: #5C5550; cursor: pointer">{{prefsLabel}}</button>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { prefs: false, analytics: true, done: null };
+  }
+  renderVals() {
+    const s = this.state;
+    return {
+      prefs: s.prefs,
+      analytics: s.analytics,
+      swBg: s.analytics ? '#6B1E2B' : '#D9CFC2',
+      swLeft: s.analytics ? 23 : 3,
+      toggle: () => this.setState({ analytics: !this.state.analytics }),
+      togglePrefs: () => this.setState({ prefs: !this.state.prefs }),
+      prefsLabel: s.prefs ? 'Ocultar preferências' : 'Personalizar preferências',
+      primary: s.prefs ? 'Salvar' : 'Aceitar',
+      accept: () => this.setState({ done: 'ok' }),
+      reject: () => this.setState({ done: 'no', analytics: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

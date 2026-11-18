@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>PetLuxo — Home, cenas abaixo do hero (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; }
+button { font-family: inherit; }
+.pl-pager { scrollbar-width: none; scroll-snap-type: y proximity; }
+.pl-pager::-webkit-scrollbar { display: none; }
+.pl-rail { scrollbar-width: none; }
+.pl-rail::-webkit-scrollbar { display: none; }
+.pl-clamp3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- trilha: pegadas que caminham ---------- */
+.pl-step {
+  opacity: 0;
+  animation: pl-step 4.5s ease-in-out infinite;
+}
+@keyframes pl-step {
+  0%, 100% { opacity: 0; }
+  15%, 45% { opacity: 1; }
+  70% { opacity: 0; }
+}
+
+/* ---------- marcador da coleira ---------- */
+.pl-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pl-halo 2.4s ease-out infinite;
+}
+@keyframes pl-halo {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* ---------- stories: progresso e ícones ---------- */
+.pl-seg-run {
+  animation: pl-seg 5s linear forwards;
+}
+@keyframes pl-seg {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+.pl-ico .draw {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 0;
+  animation: pl-draw 1.8s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both;
+}
+@keyframes pl-draw {
+  from { stroke-dashoffset: 400; }
+  to { stroke-dashoffset: 0; }
+}
+.pl-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pl-twinkle 2.2s ease-in-out infinite;
+}
+@keyframes pl-twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+.pl-bounce {
+  animation: pl-bounce 1.6s ease-in-out infinite;
+}
+@keyframes pl-bounce {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+.pl-flow {
+  stroke-dasharray: 3 7;
+  animation: pl-flow 1.2s linear infinite;
+}
+@keyframes pl-flow {
+  to { stroke-dashoffset: -20; }
+}
+.pl-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pl-spin 24s linear infinite;
+}
+@keyframes pl-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- gato (cena do destaque) ---------- */
+.pl-cat {
+  filter: drop-shadow(0 4px 10px rgba(42, 37, 34, 0.28));
+}
+.pl-cat .c-breathe {
+  transform-origin: 262px 292px;
+  animation: pl-breathe 4.8s ease-in-out infinite;
+}
+@keyframes pl-breathe {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.014); }
+}
+.pl-cat .c-tail {
+  transform-origin: 310px 288px;
+  animation: pl-sway 5s ease-in-out infinite;
+}
+@keyframes pl-sway {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(6deg); }
+}
+.pl-cat .c-ear-r {
+  transform-origin: 288px 104px;
+  animation: pl-twitch 9s ease-in-out infinite;
+}
+@keyframes pl-twitch {
+  0%, 90%, 100% { transform: rotate(0deg); }
+  92% { transform: rotate(-9deg); }
+  94% { transform: rotate(2deg); }
+  96% { transform: rotate(-6deg); }
+}
+.pl-cat .c-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pl-blink 5.5s infinite;
+}
+@keyframes pl-blink {
+  0%, 94%, 100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.08); }
+}
+.pl-cat.happy .c-blink {
+  animation: none;
+  transform: scaleY(0.2);
+}
+.pl-cat.happy .c-head {
+  animation: pl-purr 0.12s linear infinite;
+}
+@keyframes pl-purr {
+  0%, 100% { transform: translate(0px, 0px); }
+  50% { transform: translate(0.8px, -0.6px); }
+}
+.pl-cat .c-heart {
+  opacity: 0;
+}
+.pl-cat.happy .c-heart {
+  animation: pl-heart 1.2s ease-out infinite;
+}
+@keyframes pl-heart {
+  0% { opacity: 0; transform: translateY(0px) scale(0.5); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-22px) scale(1.1); }
+}
+
+/* ---------- cachorro espiando (cena sobre nós) ---------- */
+.pl-dog {
+  filter: drop-shadow(0 3px 8px rgba(42, 37, 34, 0.25));
+}
+.pl-dog .d-head {
+  transform-origin: 108px 182px;
+  transform: rotate(calc(var(--dvx, 0) * 5deg));
+  transition: transform 0.25s ease-out;
+}
+.pl-dog .d-look {
+  transform: translate(calc(var(--dvx, 0) * 3.4px), calc(var(--dvy, 0) * 2.6px));
+  transition: transform 0.18s ease-out;
+}
+.pl-dog .d-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pl-blink 4.8s infinite;
+}
+.pl-dog .d-ear-l {
+  transform-origin: 80px 100px;
+  animation: pl-earl 5s ease-in-out infinite;
+}
+.pl-dog .d-ear-r {
+  transform-origin: 160px 100px;
+  animation: pl-earr 5s ease-in-out -2s infinite;
+}
+@keyframes pl-earl {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-3deg); }
+}
+@keyframes pl-earr {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* ---------- arte do sobre nós ---------- */
+.pl-about .pl-ab-draw {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 0;
+  animation: pl-draw 2.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.pl-about .pl-ab-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pl-blink 5s infinite;
+}
+.pl-heartbeat {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pl-beat 2.4s ease-in-out infinite;
+}
+@keyframes pl-beat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.1); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.07); }
+  56% { transform: scale(1); }
+}
+.pl-orbit {
+  transform-origin: 195px 150px;
+  animation: pl-orbit 18s linear infinite;
+}
+.pl-orbit-b {
+  animation-duration: 12s;
+  animation-direction: reverse;
+}
+@keyframes pl-orbit {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- guilloché do sobre nós ---------- */
+.pl-guil {
+  animation: pl-guil-in 2.4s ease-out both, pl-orbit 120s linear infinite;
+}
+@keyframes pl-guil-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.pl-guil-tilt {
+  transform: rotate(calc(var(--dvx, 0) * 14deg));
+  transition: transform 0.6s ease-out;
+}
+
+/* ---------- bottom sheet ---------- */
+.pl-sheet {
+  animation: pl-sheet 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes pl-sheet {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0%); }
+}
+.pl-fade {
+  animation: pl-fadein 0.25s ease both;
+}
+@keyframes pl-fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.pl-grow { transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-step, .pl-halo, .pl-seg-run, .pl-ico .draw, .pl-twinkle, .pl-bounce, .pl-flow, .pl-spin, .pl-cat *, .pl-dog *, .pl-sheet, .pl-about *, .pl-guil, .pl-heartbeat, .pl-orbit {
+    animation: none !important;
+  }
+  .pl-step { opacity: 0.6; }
+}
+</style>
+</helmet>
+
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F8F6F3; color: #2A2522; font-family: 'Inter', system-ui, sans-serif; overflow: hidden">
+
+  <!-- PAGER: cada cena ocupa a tela, a rolagem encaixa em páginas -->
+  <div class="pl-pager" onScroll="{{onPager}}" style="flex: 1; min-height: 0; overflow-y: auto">
+
+    <!-- ===== CENA 1: MAIS VENDIDOS ===== -->
+    <section style="position: relative; flex: none; height: 760px; box-sizing: border-box; padding: 58px 0 0; scroll-snap-align: start; overflow: hidden">
+      <div style="padding: 0 24px">
+        <p style="margin: 0; display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>Nossos produtos</p>
+        <h2 style="margin: 10px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 40px; line-height: 1.05; letter-spacing: -0.01em">Mais Vendidos</h2>
+      </div>
+
+      <!-- pegadas que caminham pelo topo -->
+      <svg aria-hidden="true" viewBox="0 0 120 56" width="120" height="56" style="position: absolute; right: 38px; top: 58px" fill="#C6A96B">
+        <g class="pl-step" style="animation-delay: 0s"><g transform="translate(10 40) rotate(-20)"><path d="M0 2 C-5 2 -8 7 -4 10 C-2 11 2 11 4 10 C8 7 5 2 0 2 Z"></path><circle cx="-7" cy="-2" r="2.2"></circle><circle cx="-2.6" cy="-6" r="2.2"></circle><circle cx="2.6" cy="-6" r="2.2"></circle><circle cx="7" cy="-2" r="2.2"></circle></g></g>
+        <g class="pl-step" style="animation-delay: 0.6s"><g transform="translate(34 24) rotate(-20)"><path d="M0 2 C-5 2 -8 7 -4 10 C-2 11 2 11 4 10 C8 7 5 2 0 2 Z"></path><circle cx="-7" cy="-2" r="2.2"></circle><circle cx="-2.6" cy="-6" r="2.2"></circle><circle cx="2.6" cy="-6" r="2.2"></circle><circle cx="7" cy="-2" r="2.2"></circle></g></g>
+        <g class="pl-step" style="animation-delay: 1.2s"><g transform="translate(60 40) rotate(-20)"><path d="M0 2 C-5 2 -8 7 -4 10 C-2 11 2 11 4 10 C8 7 5 2 0 2 Z"></path><circle cx="-7" cy="-2" r="2.2"></circle><circle cx="-2.6" cy="-6" r="2.2"></circle><circle cx="2.6" cy="-6" r="2.2"></circle><circle cx="7" cy="-2" r="2.2"></circle></g></g>
+        <g class="pl-step" style="animation-delay: 1.8s"><g transform="translate(84 24) rotate(-20)"><path d="M0 2 C-5 2 -8 7 -4 10 C-2 11 2 11 4 10 C8 7 5 2 0 2 Z"></path><circle cx="-7" cy="-2" r="2.2"></circle><circle cx="-2.6" cy="-6" r="2.2"></circle><circle cx="2.6" cy="-6" r="2.2"></circle><circle cx="7" cy="-2" r="2.2"></circle></g></g>
+        <g class="pl-step" style="animation-delay: 2.4s"><g transform="translate(110 40) rotate(-20)"><path d="M0 2 C-5 2 -8 7 -4 10 C-2 11 2 11 4 10 C8 7 5 2 0 2 Z"></path><circle cx="-7" cy="-2" r="2.2"></circle><circle cx="-2.6" cy="-6" r="2.2"></circle><circle cx="2.6" cy="-6" r="2.2"></circle><circle cx="7" cy="-2" r="2.2"></circle></g></g>
+      </svg>
+
+      <div class="pl-rail" onScroll="{{onRail}}" style="display: flex; gap: 14px; margin-top: 26px; padding: 0 24px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: 24px">
+        <sc-for list="{{best}}" as="p" hint-placeholder-count="3">
+          <button type="button" style="flex: none; width: 300px; padding: 0; border: 0; background: transparent; text-align: left; color: inherit; scroll-snap-align: start; cursor: pointer">
+            <div style="position: relative; width: 300px; height: 330px; border-radius: 22px; overflow: hidden; background: #EFE7DC; box-shadow: 0 14px 30px rgba(42, 37, 34, 0.12)">
+              <img src="{{p.img}}" alt="{{p.name}}" style="display: block; width: 100%; height: 100%; object-fit: cover">
+              <sc-if value="{{p.badgeNew}}" hint-placeholder-val="{{false}}">
+                <span style="position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 999px; background: #6B1E2B; color: #F8F6F3; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em">NOVO</span>
+              </sc-if>
+              <sc-if value="{{p.badgeTop}}" hint-placeholder-val="{{false}}">
+                <span style="position: absolute; left: 12px; top: 12px; padding: 6px 10px; border-radius: 999px; background: #2A2522; color: #F8F6F3; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em">MAIS VENDIDOS</span>
+              </sc-if>
+            </div>
+            <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #5C5550">{{p.category}}</div>
+            <div style="margin-top: 4px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 27px; line-height: 1.1">{{p.name}}</div>
+            <div style="margin-top: 6px; font-size: 16px; font-weight: 600">{{p.price}}</div>
+          </button>
+        </sc-for>
+        <div aria-hidden="true" style="flex: none; width: 10px"></div>
+      </div>
+
+      <div style="padding: 0 24px; margin-top: 18px; display: flex; align-items: center; gap: 10px">
+        <sc-for list="{{railDots}}" as="d" hint-placeholder-count="3">
+          <span style="display: block; height: 4px; width: {{d.w}}px; border-radius: 999px; background: {{d.bg}}; transition: width 0.25s ease"></span>
+        </sc-for>
+        <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: #5C5550">{{railLabel}}</span>
+      </div>
+
+      <div style="padding: 0 24px; margin-top: 20px">
+        <button type="button" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; border-radius: 999px; border: 1px solid #2A2522; background: transparent; color: #2A2522; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer">
+          Ver todos os produtos
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2A2522" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== CENA 2: DESTAQUE, com o gato sentado na borda ===== -->
+    <section style="position: relative; flex: none; height: 760px; scroll-snap-align: start; overflow: hidden; background: #EFE7DC">
+      <img src="/_blob/9392d7949c65d3aff1c784c726e6f8bc" alt="Refúgio Cozy, cabana personalizada" style="position: absolute; left: 0; top: 0; width: 390px; height: 430px; object-fit: cover; object-position: 50% 40%">
+      <span style="position: absolute; left: 20px; top: 58px; padding: 7px 14px; border-radius: 999px; background: #F8F6F3; color: #6B1E2B; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em">DESTAQUE</span>
+      <div style="position: absolute; left: 20px; top: 352px; padding: 9px 14px; border-radius: 12px; background: #F8F6F3; box-shadow: 0 6px 18px rgba(42, 37, 34, 0.18)">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #5C5550">A partir de</div>
+        <div style="margin-top: 2px; font-size: 18px; font-weight: 600">R$ 394,00</div>
+      </div>
+
+      <div style="position: absolute; left: 0; right: 0; top: 412px; bottom: 0; box-sizing: border-box; padding: 28px 24px 20px; border-radius: 28px 28px 0 0; background: #F8F6F3">
+        <p style="margin: 0; display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>Produto em destaque</p>
+        <h2 style="margin: 12px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 40px; line-height: 1.05; letter-spacing: -0.01em">Refúgio Cozy</h2>
+        <p style="margin: 6px 0 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; line-height: 1.25; color: #5C5550">Cabana personalizada feita sob encomenda</p>
+        <p class="pl-clamp3" style="margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: #5C5550">Tecido externo impermeável e interior quentinho, com design inspirado nas cabanas. Produzida sob encomenda, com detalhes personalizados.</p>
+        <button type="button" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; margin-top: 18px; border: 0; border-radius: 999px; background: #6B1E2B; color: #F8F6F3; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; box-shadow: 0 10px 24px rgba(107, 30, 43, 0.2); cursor: pointer">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>
+          Consultar via WhatsApp
+        </button>
+      </div>
+
+      <!-- gato em traço, sentado na borda da ficha: toque para ele ronronar -->
+      <button type="button" aria-label="Fazer carinho no gato" onClick="{{petCat}}" style="position: absolute; left: 276px; top: 288px; width: 92px; height: 128px; padding: 0; border: 0; background: transparent; z-index: 2; cursor: pointer; -webkit-tap-highlight-color: transparent">
+        <svg class="pl-cat {{catClass}}" viewBox="204 62 158 238" width="92" height="138" aria-hidden="true" style="display: block; overflow: visible; margin-top: -10px">
+          <g fill="#F8F6F3" stroke="#B08968" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <g class="c-tail"><path fill="none" d="M310 288 C342 292 354 252 338 228 C329 214 316 220 322 234"></path></g>
+            <g class="c-breathe">
+              <path d="M232 172 C222 204 214 240 216 292 H308 C310 240 302 204 292 172 Z"></path>
+              <path fill="none" d="M250 228 L249 292"></path>
+              <path fill="none" d="M274 228 L275 292"></path>
+              <path fill="none" stroke="#C6A96B" d="M233 188 C250 203 274 203 291 188"></path>
+              <circle cx="262" cy="204" r="4.5" fill="none" stroke="#C6A96B"></circle>
+              <g class="c-head">
+                <path d="M226 112 L222 78 L250 98 Z"></path>
+                <g class="c-ear-r"><path d="M298 112 L302 78 L274 98 Z"></path></g>
+                <path d="M222 138 C222 106 232 98 262 98 C292 98 302 106 302 138 C302 166 286 180 262 180 C238 180 222 166 222 138 Z"></path>
+                <path fill="none" stroke-width="1.6" d="M238 158 L206 151 M238 164 L206 166 M286 158 L318 151 M286 164 L318 166"></path>
+                <path fill="none" d="M262 160 V165 M262 165 C258 170 252 168 250 164 M262 165 C266 170 272 168 274 164"></path>
+                <path fill="#6B1E2B" stroke="none" d="M257 153 L267 153 L262 160 Z"></path>
+                <g class="c-blink">
+                  <path fill="none" stroke-width="1.8" d="M236 138 C241 130 251 130 256 138 C251 146 241 146 236 138 Z"></path>
+                  <path fill="none" stroke-width="1.8" d="M268 138 C273 130 283 130 288 138 C283 146 273 146 268 138 Z"></path>
+                  <ellipse cx="246" cy="138" rx="2" ry="4.2" fill="#2A2522" stroke="none"></ellipse>
+                  <ellipse cx="278" cy="138" rx="2" ry="4.2" fill="#2A2522" stroke="none"></ellipse>
+                </g>
+              </g>
+            </g>
+            <g class="c-heart"><path fill="#6B1E2B" stroke="none" d="M262 66 C252 54 240 68 262 84 C284 68 272 54 262 66 Z"></path></g>
+          </g>
+        </svg>
+      </button>
+    </section>
+
+    <!-- ===== CENA 3: SOBRE NÓS, com o cachorro espiando ===== -->
+    <section onPointerMove="{{onAbout}}" style="position: relative; flex: none; height: 760px; scroll-snap-align: start; overflow: hidden; background: #2A2522; touch-action: pan-y">
+      <!-- arte em código: rosácea guilloché em linhas finas, monograma P ao centro -->
+      <div aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 390px; height: 760px; background: radial-gradient(circle at 50% 22%, rgba(198, 169, 107, 0.18), rgba(42, 37, 34, 0) 62%)"></div>
+      <svg aria-hidden="true" class="pl-about" viewBox="0 0 390 300" width="390" height="300" fill="none" stroke="#D4BC85" style="position: absolute; left: 0; top: 30px; --dvx: {{dvx}}">
+        <g transform="translate(195 150)">
+          <g class="pl-guil-tilt"><g class="pl-guil" stroke-width="0.6" stroke-opacity="0.5"><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(0)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(5)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(10)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(15)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(20)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(25)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(30)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(35)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(40)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(45)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(50)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(55)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(60)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(65)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(70)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(75)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(80)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(85)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(90)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(95)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(100)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(105)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(110)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(115)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(120)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(125)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(130)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(135)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(140)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(145)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(150)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(155)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(160)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(165)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(170)"></ellipse><ellipse cx="0" cy="0" rx="112" ry="40" transform="rotate(175)"></ellipse></g></g>
+          <circle r="116" stroke-width="0.8" stroke-opacity="0.5"></circle>
+          <circle r="122" stroke-width="0.5" stroke-opacity="0.25"></circle>
+          <circle r="40" fill="#2A2522" stroke-width="1"></circle>
+          <circle r="35" stroke-width="0.5" stroke-opacity="0.6"></circle>
+          <text x="0" y="13" text-anchor="middle" fill="#D4BC85" stroke="none" style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-style: italic">P</text>
+        </g>
+      </svg>
+
+      <div class="pl-grow" style="position: absolute; left: 0; right: 0; bottom: 0; height: {{aboutH}}px; box-sizing: border-box; padding: 28px 24px 0; border-radius: 28px 28px 0 0; background: #F8F6F3; overflow: visible">
+
+        <!-- cachorro em traço espiando por cima da borda -->
+        <div style="position: absolute; left: 26px; top: -74px; width: 124px; height: 74px; overflow: hidden; pointer-events: none">
+          <svg class="pl-dog" viewBox="44 78 152 104" width="124" height="85" aria-hidden="true" style="display: block; overflow: visible; --dvx: {{dvx}}; --dvy: {{dvy}}">
+            <g fill="#F8F6F3" stroke="#B08968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <g class="d-head">
+                <g class="d-ear-l"><path d="M80 100 C56 96 46 128 58 156 C64 166 76 156 80 138"></path></g>
+                <g class="d-ear-r"><path d="M160 100 C184 96 194 128 182 156 C176 166 164 156 160 138"></path></g>
+                <path d="M78 118 C78 78 162 78 162 118 C162 142 156 162 144 172 C136 184 104 184 96 172 C84 162 78 142 78 118 Z"></path>
+                <path fill="none" stroke-width="1.5" d="M97 109 C101 105 107 105 111 109 M129 109 C133 105 139 105 143 109"></path>
+                <path fill="#6B1E2B" stroke="none" d="M109 152 C109 146 131 146 131 152 C131 160 122 164 120 164 C118 164 109 160 109 152 Z"></path>
+                <path fill="none" d="M120 164 V172 M120 172 C114 179 106 177 104 171 M120 172 C126 179 134 177 136 171"></path>
+                <g class="d-blink"><g class="d-look">
+                  <circle cx="104" cy="121" r="3.6" fill="#2A2522" stroke="none"></circle>
+                  <circle cx="136" cy="121" r="3.6" fill="#2A2522" stroke="none"></circle>
+                </g></g>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div style="height: 100%; overflow-y: auto">
+          <p style="margin: 0; display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>Sobre nós</p>
+          <h2 style="margin: 12px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 32px; line-height: 1.08; letter-spacing: -0.01em">Onde o amor <em style="font-style: italic; color: #B08968">encontra o luxo</em> que seu pet merece.</h2>
+          <p style="margin: 14px 0 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; line-height: 1.4">A PetLuxo nasceu de um lugar genuíno — o amor pelos animais que fazem parte da nossa família e a vontade de oferecer a eles o melhor que existe.</p>
+
+          <sc-if value="{{aboutOpen}}" hint-placeholder-val="{{false}}">
+            <div class="pl-fade">
+              <p style="margin: 16px 0 0; font-size: 15px; line-height: 1.65; color: #5C5550">Somos uma curadoria criteriosa de produtos sofisticados, funcionais e esteticamente refinados, pensados para tutores que enxergam seus pets como membros da família e não abrem mão de qualidade, design e exclusividade.</p>
+              <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.65; color: #5C5550">Cada peça da nossa coleção é escolhida com atenção aos detalhes: materiais nobres, acabamento impecável e aquele toque especial que transforma o dia a dia em uma experiência única.</p>
+              <p style="margin: 16px 0 24px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: #5C5550">Com carinho — Equipe PetLuxo</p>
+            </div>
+          </sc-if>
+
+          <button type="button" aria-expanded="{{aboutOpen}}" onClick="{{toggleAbout}}" style="display: flex; align-items: center; gap: 8px; min-height: 48px; margin-top: 6px; padding: 0; border: 0; background: transparent; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #6B1E2B; cursor: pointer">
+            {{aboutLabel}}
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B1E2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate({{aboutRot}}deg); transition: transform 0.3s ease"><path d="M6 15l6-6 6 6"></path></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CENA 4: DIFERENCIAIS em stories, com ícones de traço ===== -->
+    <section style="position: relative; flex: none; height: 760px; box-sizing: border-box; scroll-snap-align: start; overflow: hidden; background: #2A2522; color: #F8F6F3">
+
+      <div role="presentation" onClick="{{onStoryTap}}" style="position: absolute; left: 0; top: 0; width: 390px; height: 760px; cursor: pointer"></div>
+
+      <div style="position: absolute; left: 24px; right: 24px; top: 56px; display: flex; gap: 6px; pointer-events: none">
+        <sc-for list="{{segs}}" as="g" hint-placeholder-count="4">
+          <div style="flex: 1; height: 3px; border-radius: 999px; background: rgba(248, 246, 243, 0.22); overflow: hidden">
+            <span class="{{g.cls}}" style="display: block; height: 100%; width: {{g.w}}; background: #D4BC85"></span>
+          </div>
+        </sc-for>
+      </div>
+
+      <p style="position: absolute; left: 24px; top: 80px; margin: 0; display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #D4BC85; pointer-events: none"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>Por que escolher a PetLuxo</p>
+
+      <!-- ícone de traço desenhado em código (um por motivo) -->
+      <div class="pl-ico" aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 150px; height: 210px; display: flex; align-items: center; justify-content: center; pointer-events: none">
+        <sc-if value="{{i0}}" hint-placeholder-val="{{true}}">
+          <svg viewBox="0 0 120 120" width="200" height="200" fill="none" stroke="#D4BC85" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path class="draw" d="M34 30 H86 L104 54 L60 100 L16 54 Z"></path>
+            <path class="draw" style="--d: 0.3s" d="M16 54 H104"></path>
+            <path class="draw" style="--d: 0.4s" d="M34 30 L44 54 L60 100 L76 54 L86 30"></path>
+            <path class="draw" style="--d: 0.5s" d="M44 54 L60 30 L76 54"></path>
+            <g class="pl-twinkle"><path d="M102 8 V24 M94 16 H110"></path></g>
+            <g class="pl-twinkle" style="animation-delay: 0.9s"><path d="M16 18 V28 M11 23 H21"></path></g>
+          </svg>
+        </sc-if>
+        <sc-if value="{{i1}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 120 120" width="200" height="200" fill="none" stroke="#D4BC85" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path class="draw" d="M26 24 H94 Q106 24 106 36 V70 Q106 82 94 82 H58 L38 100 V82 H26 Q14 82 14 70 V36 Q14 24 26 24 Z"></path>
+            <g class="pl-bounce">
+              <path class="draw" style="--d: 0.5s" d="M60 58 C52 58 48 65 53 68 C56 70 64 70 67 68 C72 65 68 58 60 58 Z"></path>
+              <circle class="draw" style="--d: 0.7s" cx="48" cy="49" r="4"></circle>
+              <circle class="draw" style="--d: 0.8s" cx="55" cy="42" r="4"></circle>
+              <circle class="draw" style="--d: 0.9s" cx="65" cy="42" r="4"></circle>
+              <circle class="draw" style="--d: 1s" cx="72" cy="49" r="4"></circle>
+            </g>
+          </svg>
+        </sc-if>
+        <sc-if value="{{i2}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 120 120" width="200" height="200" fill="none" stroke="#D4BC85" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path class="draw" d="M60 14 L102 34 V78 L60 98 L18 78 V34 Z"></path>
+            <path class="draw" style="--d: 0.3s" d="M18 34 L60 54 L102 34"></path>
+            <path class="draw" style="--d: 0.4s" d="M60 54 V98"></path>
+            <path class="draw" style="--d: 0.6s" d="M39 24 L81 44"></path>
+            <path class="pl-flow" d="M10 110 H110"></path>
+          </svg>
+        </sc-if>
+        <sc-if value="{{i3}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 120 120" width="200" height="200" fill="none" stroke="#D4BC85" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <g class="pl-spin"><path class="draw" d="M104 60 L78.5 67.7 L91.1 91.1 L67.7 78.5 L60 104 L52.3 78.5 L28.9 91.1 L41.5 67.7 L16 60 L41.5 52.3 L28.9 28.9 L52.3 41.5 L60 16 L67.7 41.5 L91.1 28.9 L78.5 52.3 Z"></path></g>
+            <circle class="draw" style="--d: 0.6s" cx="60" cy="60" r="9"></circle>
+            <circle class="draw" style="--d: 0.8s" cx="60" cy="60" r="52" stroke-opacity="0.4"></circle>
+          </svg>
+        </sc-if>
+      </div>
+
+      <div style="position: absolute; left: 24px; right: 24px; top: 392px; pointer-events: none">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #D4BC85">{{slide.n}} / 04</div>
+        <h3 style="margin: 10px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 42px; line-height: 1.05; letter-spacing: -0.01em">{{slide.t}}</h3>
+        <p style="margin: 14px 0 0; font-size: 16.5px; line-height: 1.6; color: #CFC6BB">{{slide.d}}</p>
+      </div>
+
+      <div style="position: absolute; left: 24px; right: 24px; bottom: 22px; display: flex; align-items: center; justify-content: space-between">
+        <button type="button" aria-label="Motivo anterior" onClick="{{prevSlide}}" style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(212, 188, 133, 0.5); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4BC85" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg>
+        </button>
+        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #CFC6BB">Toque para avançar</span>
+        <button type="button" aria-label="Próximo motivo" onClick="{{nextSlide}}" style="width: 48px; height: 48px; border-radius: 50%; border: 0; background: #D4BC85; display: flex; align-items: center; justify-content: center; cursor: pointer">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2A2522" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== CENA 5: DÚVIDAS (sheet) + CONTATO + INSTITUCIONAL ===== -->
+    <section style="position: relative; flex: none; box-sizing: border-box; padding: 58px 24px 40px; scroll-snap-align: start; background: #F8F6F3">
+      <p style="margin: 0; display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>Dúvidas frequentes</p>
+      <h2 style="margin: 10px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 38px; line-height: 1.05; letter-spacing: -0.01em">Perguntas Frequentes</h2>
+      <p style="margin: 8px 0 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; color: #5C5550">Tire suas dúvidas antes de comprar</p>
+
+      <div style="margin-top: 22px; border-bottom: 1px solid #E8DED2">
+        <sc-for list="{{faq}}" as="f" hint-placeholder-count="5">
+          <button type="button" onClick="{{f.open}}" style="width: 100%; min-height: 64px; padding: 10px 0; border: 0; border-top: 1px solid #E8DED2; background: transparent; display: flex; align-items: center; justify-content: space-between; gap: 16px; text-align: left; font-size: 15.5px; line-height: 1.4; font-weight: 500; color: #2A2522; cursor: pointer">
+            <span>{{f.q}}</span>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08968" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="margin-top: 26px; padding: 22px 20px; border-radius: 18px; background: #EFE7DC">
+        <p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 25px; line-height: 1.2">Tem outra dúvida?</p>
+        <p style="margin: 6px 0 0; font-size: 14.5px; line-height: 1.55; color: #5C5550">Fale pelo WhatsApp ou pelo e-mail petluxo.service@gmail.com</p>
+        <button type="button" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; margin-top: 16px; border: 0; border-radius: 999px; background: #6B1E2B; color: #F8F6F3; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>
+          Falar via WhatsApp
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ===== RODAPÉ ===== -->
+    <footer style="position: relative; flex: none; box-sizing: border-box; padding: 44px 24px 36px; scroll-snap-align: end; background: #2A2522; color: #F8F6F3">
+      <svg aria-hidden="true" viewBox="0 0 342 8" width="342" height="8" fill="none" style="display: block"><path d="M0 4 H342" stroke="#C6A96B" stroke-width="1" stroke-opacity="0.6"></path><circle cx="3" cy="4" r="3" fill="#C6A96B"></circle></svg>
+
+      <div style="margin-top: 26px; display: flex; align-items: center; gap: 12px">
+        <img src="/_blob/ea85c591f985fe7ee19cab96e384c5a7" alt="PetLuxo" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover">
+        <span style="font-family: 'Cormorant Garamond', serif; font-size: 26px; letter-spacing: 0.18em">PETLUXO</span>
+      </div>
+      <p style="margin: 14px 0 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; line-height: 1.35; color: #CFC6BB">Curadoria exclusiva para quem exige o melhor.</p>
+
+      <p style="margin: 34px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #D4BC85">Políticas e informações</p>
+      <nav aria-label="Rodapé" style="margin-top: 10px; border-bottom: 1px solid rgba(248, 246, 243, 0.14)">
+        <sc-for list="{{links}}" as="l" hint-placeholder-count="5">
+          <button type="button" style="width: 100%; min-height: 56px; padding: 0; border: 0; border-top: 1px solid rgba(248, 246, 243, 0.14); background: transparent; display: flex; align-items: center; justify-content: space-between; gap: 16px; text-align: left; font-size: 15.5px; font-weight: 500; color: #F8F6F3; cursor: pointer"><span>{{l}}</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D4BC85" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M9 6l6 6-6 6"></path></svg></button>
+        </sc-for>
+      </nav>
+
+      <p style="margin: 30px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #D4BC85">Contato</p>
+      <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px">
+        <button type="button" style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0; border: 0; background: transparent; font-size: 15px; color: #F8F6F3; cursor: pointer">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4BC85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>WhatsApp</button>
+        <button type="button" style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0; border: 0; background: transparent; font-size: 15px; color: #F8F6F3; cursor: pointer">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4BC85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"></rect><path d="M4 7.5l8 6 8-6"></path></svg>petluxo.service@gmail.com</button>
+        <button type="button" style="display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0; border: 0; background: transparent; font-size: 15px; color: #F8F6F3; cursor: pointer">
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4BC85" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17" cy="7" r="0.8" fill="#D4BC85"></circle></svg>Instagram</button>
+      </div>
+
+      <p style="margin: 30px 0 0; padding-top: 20px; border-top: 1px solid rgba(248, 246, 243, 0.14); font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.8; letter-spacing: 0.1em; text-transform: uppercase; color: #A89F94">© 2026 PetLuxo<br>CNPJ 23.833.930/0001-21</p>
+    </footer>
+  </div>
+
+  <!-- COLEIRA: uma linha dourada que se desenha conforme a rolagem, com marcador -->
+  <svg aria-hidden="true" viewBox="0 0 390 760" width="390" height="760" fill="none" style="position: absolute; left: 0; top: 0; pointer-events: none; z-index: 3">
+    <path d="M374 40 C378 110 370 170 374 230 S378 350 374 410 S370 530 374 590 S378 680 374 740" stroke="#C6A96B" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="720" stroke-dashoffset="{{dash}}" stroke-opacity="0.9"></path>
+    <g transform="translate(374 {{my}})">
+      <circle class="pl-halo" r="5" fill="#C6A96B"></circle>
+      <circle r="4.5" fill="#F8F6F3" stroke="#C6A96B" stroke-width="1.6"></circle>
+    </g>
+  </svg>
+
+  <!-- Barra inferior -->
+  <nav aria-label="Navegação principal" style="position: relative; z-index: 10; flex: none; height: 84px; box-sizing: border-box; padding: 6px 12px 20px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; background: #F8F6F3; border-top: 1px solid #E8DED2">
+    <button type="button" aria-label="Início" aria-current="page" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B1E2B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"></path><path d="M6 10v9h12v-9"></path><path d="M10 19v-5h4v5"></path></svg>
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: #6B1E2B">Início</span>
+    </button>
+    <button type="button" aria-label="Produtos" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect></svg>
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.02em; color: #5C5550">Produtos</span>
+    </button>
+    <button type="button" aria-label="Buscar" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.02em; color: #5C5550">Buscar</span>
+    </button>
+    <button type="button" aria-label="Falar pelo WhatsApp" style="border: 0; background: transparent; min-height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer">
+      <span aria-hidden="true" style="width: 38px; height: 28px; border-radius: 999px; background: #6B1E2B; display: flex; align-items: center; justify-content: center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>
+      </span>
+      <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: #6B1E2B">WhatsApp</span>
+    </button>
+  </nav>
+
+  <!-- Resposta da dúvida: bottom sheet que sobe de baixo -->
+  <sc-if value="{{sheetOn}}" hint-placeholder-val="{{false}}">
+    <div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; z-index: 30">
+      <button type="button" aria-label="Fechar resposta" onClick="{{closeSheet}}" class="pl-fade" style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; padding: 0; border: 0; background: rgba(42, 37, 34, 0.5); cursor: pointer"></button>
+      <div class="pl-sheet" role="dialog" aria-label="Resposta" style="position: absolute; left: 0; right: 0; bottom: 0; box-sizing: border-box; padding: 12px 24px 36px; border-radius: 28px 28px 0 0; background: #F8F6F3">
+        <div aria-hidden="true" style="width: 44px; height: 5px; margin: 0 auto 20px; border-radius: 999px; background: #D9CFC2"></div>
+        <h3 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 28px; line-height: 1.15">{{sheetQ}}</h3>
+        <p style="margin: 14px 0 0; font-size: 16px; line-height: 1.65; color: #5C5550">{{sheetA}}</p>
+        <button type="button" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; height: 52px; margin-top: 22px; border: 0; border-radius: 999px; background: #6B1E2B; color: #F8F6F3; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>
+          Falar via WhatsApp
+        </button>
+        <button type="button" onClick="{{closeSheet}}" style="width: 100%; height: 48px; margin-top: 8px; border: 0; background: transparent; font-size: 14px; font-weight: 500; color: #5C5550; cursor: pointer">Fechar</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { p: 0, rail: 0, story: 0, aboutOpen: false, faqSel: null, catHappy: false, dvx: 0, dvy: 0 };
+    this._timer = null;
+    this._catTimer = null;
+  }
+
+  componentDidMount() {
+    this.restartStory();
+  }
+
+  componentWillUnmount() {
+    if (this._timer) clearInterval(this._timer);
+    if (this._catTimer) clearTimeout(this._catTimer);
+  }
+
+  restartStory() {
+    if (this._timer) clearInterval(this._timer);
+    this._timer = setInterval(() => {
+      this.setState({ story: (this.state.story + 1) % 4 });
+    }, 5000);
+  }
+
+  go(n) {
+    this.setState({ story: ((n % 4) + 4) % 4 });
+    this.restartStory();
+  }
+
+  renderVals() {
+    const s = this.state;
+
+    // Produtos e preços reais (src/data/products.js). Fotos reduzidas.
+    const best = [
+      { img: '/_blob/9f9c76c914d508ffe458d7962f52417d', name: 'Brinquedo PetLuxo', category: 'Brinquedos & Estilo', badgeNew: true, badgeTop: false, price: 'R$ 59,90' },
+      { img: '/_blob/8b7b16bad70f92f91fda7b25a9f31789', name: 'Bolsa Transporte', category: 'Viagem & Mobilidade', badgeNew: false, badgeTop: true, price: 'a partir de R$ 1.197,00' },
+      { img: '/_blob/296f42dddb10aff87902717fbc78b0eb', name: 'Refúgio Suspenso', category: 'Sono & Refúgio', badgeNew: false, badgeTop: true, price: 'R$ 389,00' }
+    ];
+
+    const reasons = [
+      { n: '01', t: 'Qualidade garantida', d: 'Produtos selecionados com atenção à qualidade dos materiais, durabilidade e conforto para o seu animal.' },
+      { n: '02', t: 'Atendimento via WhatsApp', d: 'Tire suas dúvidas e acompanhe seu pedido pelo WhatsApp. Atendimento direto, rápido e personalizado.' },
+      { n: '03', t: 'Entrega em todo o Brasil', d: 'Enviamos para qualquer cidade do Brasil com embalagem cuidadosa e rastreamento garantido.' },
+      { n: '04', t: 'Curadoria premium', d: 'Cada produto é selecionado com um olhar criterioso: design refinado, materiais nobres e aquele toque especial que transforma o dia a dia em uma experiência única.' }
+    ];
+
+    const faqData = [
+      { q: 'Os produtos são confortáveis para pets sensíveis?', a: 'Sim! Todos os produtos são selecionados pensando em conforto, segurança e bem-estar, com materiais de qualidade para uso diário.' },
+      { q: 'Como acompanho meu pedido?', a: 'Quando existir, enviaremos o código de rastreamento pelo WhatsApp após o despacho. Em caso de dúvida, entre em contato pelo WhatsApp.' },
+      { q: 'Os produtos podem ser lavados?', a: 'Sim. Os produtos PetLuxo são feitos com materiais de fácil limpeza e higienização. Dúvidas específicas? Fale com a gente pelo WhatsApp.' },
+      { q: 'Quanto tempo leva a entrega?', a: 'O prazo varia conforme o produto e o fornecedor e é informado no atendimento, antes da confirmação do pedido.' },
+      { q: 'Posso trocar o produto?', a: 'Sim! Aceitamos trocas em até 7 dias corridos após o recebimento (produto sem uso, embalagem original). Em caso de defeito de fabricação, o prazo é de 90 dias. Consulte nossa Política de Troca e Devolução para mais detalhes.' },
+      { q: 'Os produtos são iguais às fotos?', a: 'Sim. Trabalhamos para apresentar imagens fiéis aos produtos, garantindo que o que você vê é o que você recebe.' },
+      { q: 'Como sei qual tamanho de cama escolher para o meu pet?', a: 'Recomendamos medir o comprimento do seu pet de focinho a cauda e adicionar cerca de 20cm para garantir conforto total. Nossos produtos com variação de tamanho indicam as medidas de cada opção. Em caso de dúvida, fale com a gente pelo WhatsApp — adoramos ajudar!' }
+    ];
+    const faq = faqData.map((f, i) => ({ q: f.q, open: () => this.setState({ faqSel: i }) }));
+    const sel = s.faqSel === null ? null : faqData[s.faqSel];
+
+    const slide = reasons[s.story];
+    const segs = reasons.map((r, i) => ({
+      cls: i === s.story ? 'pl-seg-run' : '',
+      w: i < s.story ? '100%' : '0%'
+    }));
+
+    const railDots = best.map((b, i) => ({ w: i === s.rail ? 28 : 10, bg: i === s.rail ? '#6B1E2B' : '#D9CFC2' }));
+
+    return {
+      best, railDots,
+      railLabel: String(s.rail + 1).padStart(2, '0') + ' / 0' + best.length,
+      onPager: (e) => {
+        const el = e.currentTarget;
+        const max = el.scrollHeight - el.clientHeight;
+        const p = max > 0 ? Math.max(0, Math.min(1, el.scrollTop / max)) : 0;
+        this.setState({ p: Math.round(p * 1000) / 1000 });
+      },
+      onRail: (e) => {
+        const el = e.currentTarget;
+        const i = Math.round(el.scrollLeft / 314);
+        if (i !== this.state.rail) this.setState({ rail: Math.max(0, Math.min(best.length - 1, i)) });
+      },
+      dash: Math.round(720 * (1 - s.p)),
+      my: Math.round(40 + s.p * 700),
+
+      catClass: s.catHappy ? 'happy' : '',
+      petCat: () => {
+        this.setState({ catHappy: true });
+        if (this._catTimer) clearTimeout(this._catTimer);
+        this._catTimer = setTimeout(() => this.setState({ catHappy: false }), 1800);
+      },
+
+      dvx: s.dvx, dvy: s.dvy,
+      onAbout: (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const eyeX = r.left + 26 + 48;
+        const eyeY = r.top + (s.aboutOpen ? 760 - 660 : 760 - 392) - 74 + 34;
+        const c = (v) => Math.round(Math.max(-1, Math.min(1, v)) * 100) / 100;
+        this.setState({ dvx: c((e.clientX - eyeX) / 160), dvy: c((e.clientY - eyeY) / 160) });
+      },
+      aboutOpen: s.aboutOpen,
+      aboutH: s.aboutOpen ? 660 : 392,
+      aboutLabel: s.aboutOpen ? 'Ler menos' : 'Ler mais',
+      aboutRot: s.aboutOpen ? 0 : 180,
+      toggleAbout: () => this.setState({ aboutOpen: !this.state.aboutOpen }),
+
+      slide, segs,
+      i0: s.story === 0, i1: s.story === 1, i2: s.story === 2, i3: s.story === 3,
+      onStoryTap: (e) => {
+        const r = e.currentTarget.getBoundingClientRect();
+        const left = (e.clientX - r.left) / r.width < 0.35;
+        this.go(this.state.story + (left ? -1 : 1));
+      },
+      prevSlide: (e) => { e.stopPropagation(); this.go(this.state.story - 1); },
+      nextSlide: (e) => { e.stopPropagation(); this.go(this.state.story + 1); },
+
+      faq,
+      links: ['Política de Privacidade', 'Troca e Devolução', 'Frete e Entrega', 'Termos de Uso', 'Preferências de cookies'],
+      sheetOn: sel !== null,
+      sheetQ: sel ? sel.q : '',
+      sheetA: sel ? sel.a : '',
+      closeSheet: () => this.setState({ faqSel: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

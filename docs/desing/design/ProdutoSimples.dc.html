@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>PetLuxo — Produto sem ficha (mobile)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; }
+button { font-family: inherit; }
+.sc { scrollbar-width: none; }
+.sc::-webkit-scrollbar { display: none; }
+.ln3 { stroke-dasharray: 112; animation: dr3 1.2s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes dr3 { from { stroke-dashoffset: 112; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F8F6F3; color: #2A2522; font-family: 'Inter', system-ui, sans-serif; overflow: hidden">
+  <div class="sc" style="flex: 1; min-height: 0; overflow-y: auto">
+    <div style="position: relative; width: 390px; height: 488px; background: #EFE7DC">
+      <img src="/_blob/a219856f3dc0c65e19d3c4b5d2f2df1e" alt="Cama PetLuxo CloudNest" style="display: block; width: 390px; height: 488px; object-fit: cover">
+      <button type="button" aria-label="Voltar" style="position: absolute; left: 16px; top: 48px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(248, 246, 243, 0.92); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(42, 37, 34, 0.15); cursor: pointer"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2A2522" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg></button>
+    </div>
+
+    <div style="position: relative; margin-top: -24px; padding: 28px 24px 24px; border-radius: 28px 28px 0 0; background: #F8F6F3">
+      <p style="margin: 0; display: flex; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>Sono &amp; Refúgio</p>
+      <h1 style="margin: 12px 0 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 38px; line-height: 1.05; letter-spacing: -0.01em">Cama PetLuxo CloudNest™</h1>
+      <p style="margin: 8px 0 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; line-height: 1.3; color: #5C5550">Elegância, conforto e aconchego em um só espaço.</p>
+      <svg aria-hidden="true" viewBox="0 0 120 8" width="120" height="8" fill="none" style="display: block; margin-top: 16px"><path class="ln3" d="M0 4 H112" stroke="#C6A96B" stroke-width="1.2"></path><circle cx="116" cy="4" r="3" fill="#C6A96B"></circle></svg>
+
+      <div style="margin-top: 20px; display: flex; align-items: baseline; gap: 8px">
+        <span style="font-size: 28px; font-weight: 600">{{price}}</span>
+      </div>
+      <p style="margin: 4px 0 0; font-size: 13px; color: #5C5550">Frete calculado à parte.</p>
+
+      <p style="margin: 22px 0 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550">Tamanho</p>
+      <div style="display: flex; gap: 8px">
+        <sc-for list="{{sizes}}" as="z" hint-placeholder-count="3">
+          <button type="button" onClick="{{z.pick}}" style="flex: 1; height: 52px; border-radius: 14px; border: 1px solid {{z.bd}}; background: {{z.bg}}; color: {{z.fg}}; font-size: 14px; font-weight: 600; cursor: pointer">{{z.label}}</button>
+        </sc-for>
+      </div>
+
+      <p style="margin: 26px 0 0; font-size: 16px; line-height: 1.7; color: #5C5550">Feita para pets que merecem descansar com máximo conforto e sofisticação. Design minimalista em tons neutros, que combina com ambientes modernos e decoração premium.</p>
+
+      <ul style="margin: 20px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px">
+        <sc-for list="{{bullets}}" as="b" hint-placeholder-count="6">
+          <li style="display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.45">
+            <span aria-hidden="true" style="flex: none; margin-top: 8px; width: 6px; height: 6px; border-radius: 50%; background: #C6A96B"></span>{{b}}
+          </li>
+        </sc-for>
+      </ul>
+      <div style="height: 120px"></div>
+    </div>
+  </div>
+
+  <div style="position: relative; z-index: 10; flex: none; box-sizing: border-box; padding: 12px 20px 28px; display: flex; align-items: center; gap: 16px; background: #F8F6F3; border-top: 1px solid #E8DED2; box-shadow: 0 -8px 24px rgba(42, 37, 34, 0.06)">
+    <div style="flex: none"><div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #5C5550">{{sizeLabel}}</div><div style="margin-top: 2px; font-size: 20px; font-weight: 600">{{price}}</div></div>
+    <button type="button" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px; height: 52px; border: 0; border-radius: 999px; background: #6B1E2B; color: #F8F6F3; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>Consultar via WhatsApp</button>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 0 };
+  }
+  renderVals() {
+    const s = this.state;
+    const opts = [
+      { label: 'P', price: 'R$ 329,90' },
+      { label: 'M', price: 'R$ 397,90' },
+      { label: 'G', price: 'R$ 459,90' }
+    ];
+    const sizes = opts.map((o, i) => ({
+      label: o.label,
+      pick: () => this.setState({ sel: i }),
+      bg: i === s.sel ? '#2A2522' : 'transparent',
+      fg: i === s.sel ? '#F8F6F3' : '#2A2522',
+      bd: i === s.sel ? '#2A2522' : '#D9CFC2'
+    }));
+    return {
+      sizes, price: opts[s.sel].price, sizeLabel: 'TAM. ' + opts[s.sel].label,
+      bullets: ['Design sofisticado e moderno', 'Toque ultra macio e aconchegante', 'Combina com ambientes elegantes', 'Ideal para descanso profundo e confortável', 'Fácil de limpar', 'Estética clean luxury']
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>PetLuxo — Busca mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; }
+button { font-family: inherit; }
+.pl-scroll { scrollbar-width: none; }
+.pl-scroll::-webkit-scrollbar { display: none; }
+.pl-input:focus-visible { outline: none; }
+.pl-box:focus-within { outline: 2px solid #6B1E2B; outline-offset: 2px; }
+</style>
+</helmet>
+
+<div style="position: relative; width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #F8F6F3; color: #2A2522; font-family: 'Inter', system-ui, sans-serif; overflow: hidden">
+
+  <!-- Campo de busca no topo, com o teclado abaixo na vida real -->
+  <div style="flex: none; padding: 52px 16px 12px 24px; display: flex; align-items: center; gap: 4px">
+    <label class="pl-box" style="flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; height: 48px; box-sizing: border-box; padding: 0 8px 0 16px; border-radius: 12px; background: #EFE7DC">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><circle cx="11" cy="11" r="6.5"></circle><path d="M16 16l4 4"></path></svg>
+      <input class="pl-input" type="search" value="{{q}}" onChange="{{onInput}}" aria-label="Buscar produtos" placeholder="Buscar produtos…" style="flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font-family: 'Inter', sans-serif; font-size: 16px; color: #2A2522">
+      <sc-if value="{{hasQuery}}" hint-placeholder-val="{{false}}">
+        <button type="button" aria-label="Limpar busca" onClick="{{clear}}" style="flex: none; width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5C5550" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+        </button>
+      </sc-if>
+    </label>
+    <button type="button" style="flex: none; height: 44px; padding: 0 10px; border: 0; background: transparent; font-size: 15px; font-weight: 500; color: #6B1E2B; cursor: pointer">Cancelar</button>
+  </div>
+
+  <div class="pl-scroll" style="flex: 1; min-height: 0; overflow-y: auto; padding: 8px 24px 32px">
+
+    <!-- Sem texto digitado: categorias e populares -->
+    <sc-if value="{{showStart}}" hint-placeholder-val="{{true}}">
+      <div>
+        <p style="margin: 14px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550">Categorias</p>
+        <div style="margin-top: 8px; border-bottom: 1px solid #E8DED2">
+          <sc-for list="{{cats}}" as="c" hint-placeholder-count="5">
+            <button type="button" style="width: 100%; min-height: 52px; padding: 0; border: 0; border-top: 1px solid #E8DED2; background: transparent; display: flex; align-items: center; justify-content: space-between; text-align: left; font-size: 16px; color: #2A2522; cursor: pointer">
+              {{c}}
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08968" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </button>
+          </sc-for>
+        </div>
+
+        <p style="margin: 30px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5C5550">Mais vendidos</p>
+        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 14px">
+          <sc-for list="{{popular}}" as="p" hint-placeholder-count="3">
+            <button type="button" style="display: flex; align-items: center; gap: 14px; width: 100%; padding: 0; border: 0; background: transparent; text-align: left; color: inherit; cursor: pointer">
+              <img src="{{p.img}}" alt="" style="flex: none; width: 64px; height: 64px; border-radius: 10px; object-fit: cover; background: #EFE7DC">
+              <span style="min-width: 0">
+                <span style="display: block; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 20px; line-height: 1.15">{{p.name}}</span>
+                <span style="display: block; margin-top: 3px; font-size: 14px; font-weight: 600">{{p.price}}</span>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Com texto: resultados -->
+    <sc-if value="{{hasQuery}}" hint-placeholder-val="{{false}}">
+      <div>
+        <p style="margin: 14px 0 0; font-size: 14px; color: #5C5550">{{countLabel}}</p>
+        <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 16px">
+          <sc-for list="{{results}}" as="r" hint-placeholder-count="0">
+            <button type="button" style="display: flex; align-items: center; gap: 14px; width: 100%; padding: 0; border: 0; background: transparent; text-align: left; color: inherit; cursor: pointer">
+              <img src="{{r.img}}" alt="" style="flex: none; width: 72px; height: 72px; border-radius: 10px; object-fit: cover; background: #EFE7DC">
+              <span style="min-width: 0">
+                <span style="display: block; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #5C5550">{{r.category}}</span>
+                <span style="display: block; margin-top: 3px; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 21px; line-height: 1.12">{{r.name}}</span>
+                <span style="display: block; margin-top: 4px; font-size: 14px; font-weight: 600">{{r.price}}</span>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{noResults}}" hint-placeholder-val="{{false}}">
+          <div style="margin-top: 6px; padding: 22px 20px; border-radius: 14px; background: #EFE7DC; text-align: center">
+            <p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 24px; line-height: 1.2">Não achou o que procura?</p>
+            <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.55; color: #5C5550">Fale com a gente pelo WhatsApp. Adoramos ajudar.</p>
+            <button type="button" style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; margin-top: 16px; padding: 0 22px; border: 0; border-radius: 999px; background: #6B1E2B; color: #F8F6F3; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8F6F3" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0-7.4 12.7L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5z"></path><path d="M9 9.2c.3 2.6 2.4 4.8 5.2 5.5l1.2-1.3-1.9-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.9z"></path></svg>
+              Falar via WhatsApp
+            </button>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+  </div>
+</div>
+</x-dc>
+
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { q: '' };
+  }
+
+  renderVals() {
+    const q = this.state.q;
+    const norm = (t) => String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+    // Amostra do catálogo real (src/data/products.js). A busca de verdade usa os 29 produtos.
+    const all = [
+      { img: '/_blob/8b7b16bad70f92f91fda7b25a9f31789', name: 'Bolsa Transporte', category: 'Viagem & Mobilidade', price: 'a partir de R$ 1.197,00' },
+      { img: '/_blob/296f42dddb10aff87902717fbc78b0eb', name: 'Refúgio Suspenso', category: 'Sono & Refúgio', price: 'R$ 389,00' },
+      { img: '/_blob/9f9c76c914d508ffe458d7962f52417d', name: 'Brinquedo PetLuxo', category: 'Brinquedos & Estilo', price: 'R$ 59,90' },
+      { img: '/_blob/effd1d4db3a543e3a6720ea208a1744f', name: 'Refúgio Cozy', category: 'Sono & Refúgio', price: 'a partir de R$ 394,00' },
+      { img: '/_blob/8fc0b6de849832a845ceae1ab223bef2', name: 'Kit Élan Rosa', category: 'Essenciais em Couro', price: 'R$ 999,90' },
+      { img: '/_blob/6df49dde21c2eb9036dc48fa7e764e8a', name: 'Porta Saquinhos', category: 'Essenciais em Couro', price: 'R$ 227,00' },
+      { img: '/_blob/4bafad6a81afaef4b7f4e6f50776b271', name: 'Bolsa Térmica Metalassê', category: 'Coleção Passeio', price: 'R$ 349,00' },
+      { img: '/_blob/fdf70a61ed24f643497b6a678c912eb6', name: 'Sofá Essence', category: 'Conforto & Estilo', price: 'R$ 497,00' }
+    ];
+
+    const nq = norm(q);
+    const results = nq ? all.filter((p) => norm(p.name).includes(nq) || norm(p.category).includes(nq)) : [];
+    const n = results.length;
+
+    return {
+      q,
+      hasQuery: nq.length > 0,
+      showStart: nq.length === 0,
+      onInput: (e) => this.setState({ q: e.target.value }),
+      clear: () => this.setState({ q: '' }),
+      cats: ['Mais Vendidos', 'Essenciais em Couro', 'Conforto & Estilo', 'À Mesa', 'Coleção Cozy Luxo', 'Brinquedos & Estilo', 'Coleção Passeio', 'Sono & Refúgio', 'Viagem & Mobilidade'],
+      popular: [all[2], all[0], all[1]],
+      results,
+      noResults: nq.length > 0 && n === 0,
+      countLabel: n === 0 ? 'Nenhum produto encontrado' : (n === 1 ? '1 produto' : n + ' produtos')
+    };
+  }
+}
+</script>
+</body>
+</html>
