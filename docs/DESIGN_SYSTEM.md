@@ -369,7 +369,7 @@ Só a marca (disco + "PETLUXO") dentro de `.wrap`; mesmo comportamento de rolage
 
 ### 7.3 Card de produto (`product/ProductCard.jsx`, `ProductCard.module.css`)
 
-- **Estrutura:** `<article class="reveal dN">` → `.stage` (quadrado `aspect-ratio: 1/1`, radius 4px, fundo degradê `--bege-soft → --bege`) com `<img>` `object-fit: cover` (**recorta** a imagem), botão `.qaBtn` 36×36 (canto superior direito) e badge (canto inferior direito, pílula vinho, mono 9px, caixa alta, padding 6/12); abaixo `.meta`: nome serif 18px/1.15, `cardNote` (9px caramelo, só o id 20), `originalPrice` (10px mono riscado), preço serif 17px `--ink`, e "VIA WHATSAPP" mono 9px.
+- **Estrutura:** `<article class="reveal dN">` → `.stage` (quadrado `aspect-ratio: 1/1`, radius 4px, fundo degradê `--bege-soft → --bege`) com `<img>` `object-fit: contain` (estado atual: o card mostra a foto inteira em quadro fixo 1:1 sobre o fundo bege; faixas aparecem em fotos não quadradas), botão `.qaBtn` 36×36 (canto superior direito) e badge (canto inferior direito, pílula vinho, mono 9px, caixa alta, padding 6/12); abaixo `.meta`: nome serif 18px/1.15, `cardNote` (9px caramelo, só o id 20), `originalPrice` (10px mono riscado), preço serif 17px `--ink`, e "VIA WHATSAPP" mono 9px.
 - **Estados:** `:hover` levanta o `.stage` 6px + sombra; `.qaBtn` aparece em hover. Não há `:focus-visible`, `:active` nem estado indisponível (o badge "ESGOTADO" é só rótulo).
 - **Tamanho de toque:** o card inteiro é a área de toque (342×426, medido); o `.qaBtn` (36px) não é alcançável no toque.
 - **Navegação:** o card sempre leva a `/produto/:id` (sem modal). **Problemas:** o clique está num `<article onClick>`, sem `<a>`, `role`, `tabIndex` nem `onKeyDown` (`ProductCard.jsx`): **não é acessível por teclado nem abre em nova aba**; `.badge:global(.gold)` e `.name small` são estilos sem uso no JSX; o `.qaBtn` tem `aria-label="Visualizar"` mas nenhum handler próprio.
@@ -635,7 +635,7 @@ Fatos do projeto que o design **não pode quebrar** (fontes: `AI_CONTEXT_PETLUXO
 5. **Fontes self-hosted** (`@fontsource`, subset latin, sem Google Fonts em runtime): qualquer fonte nova precisa ser empacotada; cada peso/estilo adicional soma ao peso inicial.
 6. **Consentimento de cookies e GA4 (LGPD):** o banner de consentimento é obrigatório antes do `gtag.js`, reabrível pelo botão "Preferências de cookies" do rodapé; o texto das políticas depende de revisão jurídica. O redesign não pode remover o banner nem o ponto de reabertura.
 7. **Máquina de desenvolvimento lenta:** evitar dependências pesadas, builds longos e telas que exijam muitos ciclos de teste; preferir mudanças em CSS Modules a bibliotecas novas.
-8. **Escala do catálogo:** 40 produtos (29 visíveis) em 9 categorias, com 8 produtos em 2+ categorias; busca por palavras e filtro por categoria; 6 produtos visíveis não têm ficha (abrem a ficha simples); 11 ocultos por `visible: false`.
+8. **Escala do catálogo:** 41 produtos (29 visíveis) em 9 categorias, com 8 produtos em 2+ categorias; busca por palavras e filtro por categoria; 6 produtos visíveis não têm ficha (abrem a ficha simples); 12 ocultos por `visible: false`.
 9. **Rotas e SEO:** `/produto/:id` é reescrita por um Worker (título, descrição, `og:*`); `ProductPage` usa `MinimalNavbar`; id inexistente cai em `NotFoundPage` (HTTP 404 só em `/produto/*`). Manter URLs e a estrutura de rotas.
 10. **Hospedagem estática (Cloudflare Workers com assets):** sem backend, sem banco; qualquer conteúdo dinâmico precisa vir do front-end.
 
@@ -694,9 +694,9 @@ Ordem: Hero (medalha com o P, que se inclina ao toque) → Destaque (gatinho; o 
 
 ### 14.5 Catálogo, busca e produto
 
-- `MobileCatalog` (`/produtos`): chips de categoria (as categorias visíveis com produtos, na ordem de `CATEGORIES`, mais "Todos"; categoria na URL, `?categoria=<id>`) e grade de 2 colunas na ordem de `catalogList()`. Cartões são `Link` para `/produto/:id`. Um único h1.
+- `MobileCatalog` (`/produtos`): chips de categoria (as categorias visíveis com produtos, na ordem de `CATEGORIES`, mais "Todos"; categoria na URL, `?categoria=<id>`) e grade de 2 colunas na ordem de `catalogList()`. Cartões são `Link` para `/produto/:id`. A imagem do cartão (`.mCatImg`) usa `object-fit: contain` em quadro fixo 1:1 sobre `--bege-soft`: mostra a foto inteira; faixas aparecem em fotos não quadradas. Um único h1.
 - `MobileSearch` (`/buscar`): campo, estado vazio, resultados e "sem resultado" com WhatsApp; usa `searchProducts()`. `noindex`.
-- Produto: `MobileProductFull` (com ficha: galeria com `scroll-snap` horizontal e `touch-action: pan-y pinch-zoom`, seletor de tamanho/cor, acordeões com `hidden="until-found"`, tabela de medidas) e `MobileProductSimple` (sem ficha). `ImageViewer` (tela cheia, pinch). Barra inferior com o botão de WhatsApp (mensagem de `lib/productMessage.js`); `HIDE_BUY_CTA` continua valendo; ESGOTADO vira selo e o botão de WhatsApp permanece. O botão de voltar é fixo.
+- Produto: `MobileProductFull` (com ficha: galeria com `scroll-snap` horizontal e `touch-action: pan-y pinch-zoom`, seletor de tamanho/cor, acordeões com `hidden="until-found"`, tabela de medidas; a galeria mobile mostra a foto inteira (`.mSlideImg` com `object-fit: contain`, quadro fixo `aspect-ratio: 390 / 488` sobre fundo `--bege-soft`), e o card da grade também mostra a foto inteira em quadro 1:1 (`contain`)) e `MobileProductSimple` (sem ficha). `ImageViewer` (tela cheia, pinch). Barra inferior com o botão de WhatsApp (mensagem de `lib/productMessage.js`); `HIDE_BUY_CTA` continua valendo; ESGOTADO vira selo e o botão de WhatsApp permanece. O botão de voltar é fixo.
 
 ### 14.6 Cookies
 
