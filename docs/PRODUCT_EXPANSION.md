@@ -24,7 +24,7 @@ Ponto central do pedido: o negócio ainda está levantando esse nível de detalh
 
 O conteúdo expandido vive em uma página própria, rota `/produto/:id` — usando o `id` numérico que já é a chave única e estável de cada produto em `products.js`, sem precisar de campo novo.
 
-O `ProductModal` (quick view) continua exatamente como está hoje. A única mudança nele é um link condicional "Ver ficha completa", que só aparece quando o produto tem dados expandidos, apontando para `/produto/:id`.
+Todo card de produto leva a `/produto/:id`, no desktop e no mobile; não existe modal de produto. Produto visível sem entrada em `productDetails.js` abre a mesma rota, sem os acordeões (no mobile, `MobileProductSimple`; ver `docs/DECISIONS.md` §14).
 
 Motivo: o volume de conteúdo pedido é de leitura, não de "olhar rápido e comprar". Empurrar isso para dentro do modal (que já tem scroll interno apertado no mobile) degradaria a experiência de todo o catálogo, inclusive dos produtos que não vão ter esse conteúdo tão cedo. Uma rota própria também dá URL compartilhável, o que importa porque o negócio vende bastante via link direto no WhatsApp.
 
@@ -48,7 +48,7 @@ Cada campo em `productDetails.js` é opcional. Cada seção da `ProductPage` só
 
 Acesso a `/produto/:id` de um produto com `visible: false` ou de um `id` que não existe em `PRODUCTS` renderiza o componente `NotFound` já existente (mesmo tratamento do catch-all `*`), em vez de vazar um produto que deveria estar oculto do site.
 
-A página reutiliza a mesma lógica de 3 estados do botão de compra, que vive em `ProductBuyButton.jsx` e é compartilhada com `ProductModal.jsx` (badge `ESGOTADO` → botão desabilitado + WhatsApp; `buyLinks` → seletor de tamanho; `buyLink` único → botão direto; nenhum dos dois → só WhatsApp), em vez de duplicar essa regra.
+A página reutiliza a mesma lógica de 3 estados do botão de compra, que vive em `ProductBuyButton.jsx` e é usada pela ficha desktop (a ficha mobile tem barra de compra própria, com a mesma mensagem de WhatsApp de `lib/productMessage.js`) (badge `ESGOTADO` → botão desabilitado + WhatsApp; `buyLinks` → seletor de tamanho; `buyLink` único → botão direto; nenhum dos dois → só WhatsApp), em vez de duplicar essa regra.
 
 ### Selo "Por que escolher a PetLuxo?"
 

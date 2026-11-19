@@ -237,7 +237,7 @@ src/
 
 ### Reaproveitamento do que já existe
 
-- **`ProductBuyButton`** e **`useProductBuy`** já centralizam a lógica de 3 estados e o tamanho selecionado, e já são compartilhados entre `ProductModal` e `ProductPage`. O botão "ADICIONAR AO CARRINHO" entra **dentro deles** — as duas telas ganham carrinho de graça, sem duplicação.
+- **`ProductBuyButton`** e **`useProductBuy`** já centralizam a lógica de 3 estados e o tamanho selecionado, e já são usados pela ficha desktop (`ProductPage`); a ficha mobile tem barra de compra própria (`mobile/product/`), que o carrinho também terá de cobrir. O botão "ADICIONAR AO CARRINHO" entra **dentro deles** — as duas telas ganham carrinho de graça, sem duplicação.
 - `ProductSizeSelector` já resolve a escolha de tamanho; o carrinho só consome `selectedSize`.
 - `Accordion` serve para o resumo do pedido recolhível no mobile.
 - Padrão de CSS Modules por componente e tokens de `variables.css` — nenhum framework de UI novo.
@@ -401,10 +401,10 @@ Cada fase é deployável e reversível sozinha. **Nada quebra o site atual até 
 ### Fase 1 — Carrinho front-end puro (sem backend, sem pagamento)
 - `CartContext` + `useCart` + persistência em `localStorage`.
 - `CartDrawer` e página `/carrinho`, com badge de contagem na `Navbar`.
-- "ADICIONAR AO CARRINHO" dentro de `ProductBuyButton` — chega junto em `ProductModal` e `ProductPage`.
+- "ADICIONAR AO CARRINHO" dentro de `ProductBuyButton` — chega na ficha desktop; a barra de compra da ficha mobile precisa receber o mesmo botão.
 - "COMPRAR AGORA" continua indo para o PagBank: **nenhuma venda é interrompida**.
 
-**Validação:** adicionar tamanhos diferentes do mesmo produto e recarregar a página (carrinho sobrevive); confirmar que ESGOTADO e produtos só-WhatsApp não entram; `npm run build` sem inchar o bundle principal; Playwright cobrindo `ProductPage` e `ProductModal`, que passam pelo mesmo botão.
+**Validação:** adicionar tamanhos diferentes do mesmo produto e recarregar a página (carrinho sobrevive); confirmar que ESGOTADO e produtos só-WhatsApp não entram; `npm run build` sem inchar o bundle principal; Playwright cobrindo a ficha desktop (`ProductPage`) e a mobile.
 
 ### Fase 2 — Banco, pedido persistido e frete real
 Fase mais pesada do plano; feita em duas etapas.
