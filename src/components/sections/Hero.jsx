@@ -4,6 +4,7 @@ import { Icon } from '../../icons.jsx';
 import { TrustBadges } from '../ui/TrustBadges.jsx';
 import heroImg from '../../../assets/hero/image-hero.webp';
 import '../../styles/buttons.css';
+import { HERO } from '../../data/siteContent.js';
 import styles from './Hero.module.css';
 
 export function Hero() {
@@ -13,15 +14,15 @@ export function Hero() {
       <div className={['wrap', styles.heroGrid].join(' ')}>
         <div>
           <div className="eyebrow reveal in" style={{marginBottom:36}}>
-            <span className="dot"></span>CURADORIA EXCLUSIVA · PARA QUEM EXIGE O MELHOR
+            <span className="dot"></span>{HERO.eyebrow}
           </div>
           <h1 className={['serif', styles.heroHeadline].join(' ')}>
-            <span className={styles.line}><span>O luxo que</span></span>
-            <span className={styles.line}><span><i className="italic gold-text">ele merece,</i></span></span>
-            <span className={styles.line}><span>a elegância que você aprecia.</span></span>
+            <span className={styles.line}><span>{HERO.titleStart}</span></span>
+            <span className={styles.line}><span><i className="italic gold-text">{HERO.titleAccent}</i></span></span>
+            <span className={styles.line}><span>{HERO.titleEnd}</span></span>
           </h1>
           <p className={styles.heroSub}>
-            Cada peça da nossa coleção é selecionada com rigor, para pets que vivem com o mesmo padrão que seus donos.
+            {HERO.sub}
           </p>
           <div className={styles.heroCtaRow}>
             <a className="btn btn-primary" href="#produtos">

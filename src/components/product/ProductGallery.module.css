@@ -156,7 +156,7 @@
 .mobileViewport {
   width: 100%;
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
   border-radius: 6px;
 }
 

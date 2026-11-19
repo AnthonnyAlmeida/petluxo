@@ -1,14 +1,11 @@
 /* PetLuxo — Featured */
 
 import { Icon } from '../../icons.jsx';
-import { PRODUCTS } from '../../data/products.js';
+import { getFeaturedProduct, lowestPrice as getLowestPrice } from '../../lib/catalog.js';
+import { WA_MESSAGES } from '../../data/siteContent.js';
 import { wa } from '../../lib/whatsapp.js';
 import '../../styles/buttons.css';
 import styles from './Featured.module.css';
-
-function parsePriceValue(str) {
-  return parseFloat(str.replace(/[^\d,]/g, '').replace(',', '.'));
-}
 
 function renderName(name) {
   const trademark = 'PetLuxo™';
@@ -24,16 +21,14 @@ function renderName(name) {
 }
 
 export function Featured() {
-  const product = PRODUCTS.find(p => p.featured === true && p.visible !== false);
+  const product = getFeaturedProduct();
   if (!product) return null;
 
-  const lowestPrice = product.prices
-    ? product.prices.reduce((min, p) => parsePriceValue(p.price) < parsePriceValue(min.price) ? p : min).price
-    : product.price;
+  const lowestPrice = getLowestPrice(product);
   /* CTA TEMPORÁRIO: com o PagBank desativado (HIDE_BUY_CTA em
    * ProductBuyButton.jsx), o destaque aponta para o WhatsApp, com a mesma
    * mensagem do fluxo de produto. buyLink/buyLinks continuam no catálogo. */
-  const waHref = wa(`Olá! Gostaria de mais informações sobre "${product.name}".`);
+  const waHref = wa(WA_MESSAGES.product(product.name));
 
   return (
     <section className={[styles.featured, 'section-pad'].filter(Boolean).join(' ')}>

@@ -1,0 +1,6 @@
+/* PetLuxo — page.module.css (estilos das páginas montadas em page.jsx) */
+
+/* /produtos no desktop: espaço para a Navbar fixa */
+@media (min-width: 768px) {
+  .catalogMain { padding-top: 96px; }
+}

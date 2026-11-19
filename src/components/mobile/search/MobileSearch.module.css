@@ -1,0 +1,236 @@
+/* PetLuxo — MobileSearch.module.css
+ * Tela de busca (/buscar): campo no topo, categorias e mais vendidos quando
+ * vazio, resultados reais e estado sem resultado com WhatsApp. */
+
+.mSearch {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--offwhite);
+}
+
+.mSearchTop {
+  flex: none;
+  padding: calc(var(--m-safe-top) + 8px) 16px 12px var(--m-gutter);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mSearchBox {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  padding: 0 8px 0 16px;
+  border-radius: 12px;
+  background: var(--bege-soft);
+  color: var(--ink-soft);
+}
+
+.mSearchBox:focus-within {
+  outline: 2px solid var(--vinho);
+  outline-offset: 2px;
+}
+
+.mSearchBox svg { flex: none; }
+
+.mSearchInput {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.mSearchInput::-webkit-search-cancel-button { display: none; }
+
+.mSearchClear {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.mSearchClear:focus-visible,
+.mSearchCancel:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: -2px;
+  border-radius: 12px;
+}
+
+.mSearchCancel {
+  flex: none;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--vinho);
+  cursor: pointer;
+}
+
+.mSearchBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px var(--m-gutter) calc(var(--m-safe-bottom) + 12px);
+}
+
+.mSearchLabel {
+  margin: 14px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.mSearchLabelPop { margin-top: 30px; }
+
+.mSearchCats {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  border-bottom: 1px solid var(--bege);
+}
+
+.mSearchCat {
+  width: 100%;
+  min-height: 52px;
+  border-top: 1px solid var(--bege);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.mSearchCat svg { flex: none; color: var(--caramelo); }
+
+.mSearchCat:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: -2px;
+}
+
+.mSearchList {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mSearchListLoose { gap: 16px; margin-top: 14px; }
+
+.mSearchRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mSearchRow:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 3px;
+  border-radius: 10px;
+}
+
+.mSearchThumb {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: var(--bege-soft);
+}
+
+.mSearchThumbLg { width: 72px; height: 72px; }
+
+.mSearchInfo { min-width: 0; }
+
+.mSearchCatLabel {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.mSearchName {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.mSearchPrice {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.mSearchCount {
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.mSearchEmpty {
+  margin-top: 18px;
+  padding: 22px 20px;
+  border-radius: 14px;
+  background: var(--bege-soft);
+  text-align: center;
+}
+
+.mSearchEmptyTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.mSearchEmptyText {
+  margin: 8px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.mSearchEmptyBtn {
+  display: inline-flex;
+  width: auto;
+  height: 48px;
+  margin-top: 16px;
+  padding: 0 22px;
+  letter-spacing: 0.1em;
+}

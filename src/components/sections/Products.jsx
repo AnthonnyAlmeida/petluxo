@@ -5,7 +5,9 @@
 
 import React from 'react';
 import { Icon } from '../../icons.jsx';
-import { CATEGORIES, PRODUCTS } from '../../data/products.js';
+import { CATEGORIES } from '../../data/products.js';
+import { BEST_SELLERS as featuredProducts, CATEGORIES_WITH_PRODUCTS as categoriesWithProducts, productsInCategory, searchProducts } from '../../lib/catalog.js';
+import { WA_MESSAGES } from '../../data/siteContent.js';
 import { ProductGrid } from '../product/ProductGrid.jsx';
 import { ProductCard } from '../product/ProductCard.jsx';
 import { CategorySelector } from '../ui/CategorySelector.jsx';
@@ -13,17 +15,10 @@ import { wa } from '../../lib/whatsapp.js';
 import '../../styles/buttons.css';
 import styles from './Products.module.css';
 
-const featuredProducts = PRODUCTS
-  .filter(p => p.category.includes('mais-vendidos') && p.visible !== false)
-  .sort((a, b) => (b.categoryOrder?.['mais-vendidos'] ?? 0) - (a.categoryOrder?.['mais-vendidos'] ?? 0));
-const extraCategories  = CATEGORIES.filter(c => c.id !== 'mais-vendidos' && c.visible !== false);
+const extraCategories = CATEGORIES.filter(c => c.id !== 'mais-vendidos' && c.visible !== false);
 
-// Categorias que têm pelo menos um produto (para pills de filtro)
-const categoriesWithProducts = CATEGORIES.filter(cat =>
-  cat.visible !== false && PRODUCTS.some(p => p.category.includes(cat.id) && p.visible !== false)
-);
-
-export function Products({ onQuick }) {
+export function Products({ asPage = false }) {
+  const Heading = asPage ? 'h1' : 'h2';
   const [expanded, setExpanded] = React.useState(false);
   const [query, setQuery] = React.useState('');
   const [activeCategory, setActiveCategory] = React.useState(null);
@@ -32,32 +27,10 @@ export function Products({ onQuick }) {
 
   const isFiltering = query.trim() !== '' || activeCategory !== null;
 
-  const filteredProducts = React.useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return PRODUCTS
-      .filter(p => {
-        // Produtos ocultos nunca aparecem na busca/filtro
-        if (p.visible === false) return false;
-        // Filtro de categoria
-        if (activeCategory && !p.category.includes(activeCategory)) return false;
-        // Filtro de busca por nome, label da categoria e tags
-        if (q) {
-          const catLabel = p.category.map(catId => {
-            const cat = CATEGORIES.find(c => c.id === catId);
-            return cat ? cat.label : '';
-          }).join(' ');
-          const searchable = [p.name, p.shortName, catLabel, ...(p.tags || [])].join(' ').toLowerCase();
-          const words = q.split(/\s+/).filter(Boolean);
-          if (!words.every(w => searchable.includes(w))) return false;
-        }
-        return true;
-      })
-      .sort((a, b) => {
-        const maxA = Math.max(...Object.values(a.categoryOrder ?? {}), 0);
-        const maxB = Math.max(...Object.values(b.categoryOrder ?? {}), 0);
-        return maxB - maxA;
-      });
-  }, [query, activeCategory]);
+  const filteredProducts = React.useMemo(
+    () => searchProducts(query.trim(), activeCategory),
+    [query, activeCategory]
+  );
 
   // Re-observa elementos .reveal sempre que o estado muda (isFiltering, filteredProducts, expanded).
   // O useScrollEffects global roda apenas uma vez no mount — novos elementos montados pelo
@@ -108,9 +81,9 @@ export function Products({ onQuick }) {
             <div className="section-tag reveal">
               <span className="num">02</span><span className="line"></span><span>NOSSOS PRODUTOS</span>
             </div>
-            <h2 className="serif reveal d1">
+            <Heading className="serif reveal d1">
               Tudo que o seu <i className="italic gold-text">pet</i><br/>precisa.
-            </h2>
+            </Heading>
           </div>
         </div>
 
@@ -180,7 +153,7 @@ export function Products({ onQuick }) {
                   className={styles.resultCard}
                   style={{ animationDelay: `${i * 40}ms` }}
                 >
-                  <ProductCard product={product} onQuick={onQuick} />
+                  <ProductCard product={product} />
                 </div>
               ))}
             </div>
@@ -212,7 +185,7 @@ export function Products({ onQuick }) {
               <p className={styles.emptySubtitle}>
                 Tente outro termo ou{' '}
                 <a
-                  href={wa('Olá! Estou procurando um produto específico na PetLuxo.')}
+                  href={wa(WA_MESSAGES.searching)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.emptyLink}
@@ -226,7 +199,7 @@ export function Products({ onQuick }) {
         ) : (
           /* Modo padrão: carrosséis por categoria */
           <>
-            <ProductGrid products={featuredProducts} onQuick={onQuick} title="Mais Vendidos" />
+            <ProductGrid products={featuredProducts} title="Mais Vendidos" />
 
             {!expanded && (
               <div style={{textAlign:"center", marginTop:32}}>
@@ -239,15 +212,12 @@ export function Products({ onQuick }) {
             <div className={[styles.productsExpand, expanded && styles.productsExpandOpen].filter(Boolean).join(' ')}>
               <div className={styles.productsExpandInner}>
                 {extraCategories.map(cat => {
-                  const catProducts = PRODUCTS
-                    .filter(p => p.category.includes(cat.id) && p.visible !== false)
-                    .sort((a, b) => (b.categoryOrder?.[cat.id] ?? 0) - (a.categoryOrder?.[cat.id] ?? 0));
+                  const catProducts = productsInCategory(cat.id);
                   if (!catProducts.length) return null;
                   return (
                     <div key={cat.id} className={styles.productsCategoryBlock}>
                       <ProductGrid
                         products={catProducts}
-                        onQuick={onQuick}
                         title={cat.label}
                       />
                     </div>

@@ -15,14 +15,14 @@ PetLuxo é um site institucional de e-commerce de produtos premium para pets (c�
 | -------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------- |
 | React                      | 18.3.1       | Interface declarativa com componentes e hooks                                                                              |
 | Vite                       | 6.4.2        | Bundler e servidor de desenvolvimento                                                                                      |
-| React Router               | ^7.15.0      | Rotas: home, `/produto/:id` e páginas de política                                                                          |
+| React Router               | ^7.15.0      | Rotas: home, `/produtos`, `/buscar` (mobile), `/produto/:id` e páginas de política                                                                          |
 | yet-another-react-lightbox | ^3.32.2      | Lightbox com zoom, carregado sob demanda em dispositivos touch                                                             |
 | CSS Modules                | —            | Estilização por componente, sem frameworks de UI; globais em `src/styles/`                                                 |
 | @fontsource                | ^5.3.0       | Cormorant Garamond (serif) + Inter (sans) + JetBrains Mono, hospedadas no site (subset latin, importadas em `src/main.jsx`)  |
 | Google Analytics           | G-KKMV5VHR48 | GA4: `gtag.js` só é carregado por `src/lib/analytics.js` depois do consentimento do visitante (`AnalyticsConsent`). Revogar um consentimento antes concedido recarrega a página; o banner não tem mais o botão "Gerenciar preferências" |
 | PagBank                    | —            | Links de pagamento cadastrados em `buyLink` / `buyLinks`; o botão está oculto por `HIDE_BUY_CTA` em `ProductBuyButton.jsx` |
 | Playwright                 | ^1.49.0      | devDependency; testes de consentimento do GA4 em `tests/`                                                                  |
-| Design system (documento)  | —            | `docs/DESIGN_SYSTEM.md`: retrato do estado atual do visual (cores, tipografia, breakpoints, componentes, acessibilidade), não uma especificação |
+| Design system (documento)  | —            | `docs/DESIGN_SYSTEM.md`: tokens, componentes, padrões do layout mobile, regras de movimento e acessibilidade |
 
 ## Estrutura de pastas
 
@@ -31,7 +31,7 @@ petluxo/
 ├── public/              # Arquivos copiados diretamente para o build
 │   ├── favicon.svg      # Ícone da aba do navegador
 │   ├── robots.txt       # Instruções para robôs de busca
-│   ├── sitemap.xml      # Só a home (obsoleto: o build gera dist/sitemap.xml com os produtos)
+│   ├── sitemap.xml      # Obsoleto: o build gera dist/sitemap.xml (home, /produtos e produtos visíveis)
 │   ├── og-image.jpg     # Imagem de capa 1200×630 usada nas meta tags (og:image / twitter:image)
 │   ├── og-image.png     # Arte original 1536×1024, mantida (links e prévias antigas)
 │   ├── favicon.ico
@@ -41,23 +41,31 @@ petluxo/
 ├── assets/              # Assets importados pelo Vite (logo, hero)
 ├── src/
 │   ├── app/
-│   │   ├── page.jsx     # Rotas e HomePage
+│   │   ├── page.jsx     # Rotas, HomePage, CatalogPage e SearchPage
 │   │   ├── ScrollToTop.jsx
 │   │   └── DevTweaks.jsx # Painel de design — carregado apenas em dev
 │   ├── components/
 │   │   ├── layout/      # Navbar (com menu hambúrguer), MinimalNavbar e Footer
-│   │   ├── product/     # ProductCard, ProductGrid (carrossel), ProductModal, ProductGallery, ProductLightbox, ProductSizeSelector, ProductBuyButton
+│   │   ├── product/     # ProductCard, ProductGrid (carrossel), ProductGallery, ProductLightbox, ProductSizeSelector, ProductBuyButton
 │   │   ├── sections/    # Hero, Featured, Products, Story, Differentials, CTA, FAQ, NotFound
-│   │   ├── pages/       # ProductPage e páginas de política (privacidade, troca, frete, termos)
-│   │   └── ui/          # Accordion, AnalyticsConsent, BrandSeal, CategorySelector, TrustBadges
+│   │   ├── pages/       # ProductPage, PolicyLayout e páginas de política (privacidade, troca, frete, termos)
+│   │   ├── ui/          # Accordion, AnalyticsConsent, BrandSeal, CategorySelector, TrustBadges
+│   │   └── mobile/      # Layout mobile (< 768px): ui/, layout/ (header, tab bar, rodapé), home/, catalog/, search/, product/, policy/, notfound/, MobileIcons.jsx
 │   ├── data/
 │   │   ├── products.js  # Catálogo de produtos — fonte de verdade
-│   │   └── productDetails.js # Fichas expandidas, indexadas por id
+│   │   ├── productDetails.js # Fichas expandidas, indexadas por id
+│   │   ├── siteContent.js # Textos institucionais (hero, história, diferenciais, FAQ, rodapé), fonte única de desktop e mobile
+│   │   └── specLabels.js  # Rótulos das especificações da ficha
 │   ├── hooks/
 │   │   ├── useScroll.js # Animações de scroll (IntersectionObserver + parallax)
-│   │   └── useProductBuy.js # Tamanho selecionado, link e preço ativos
+│   │   ├── useProductBuy.js # Tamanho selecionado, link e preço ativos
+│   │   ├── useMediaQuery.js # useIsMobile (< 768px) e prefers-reduced-motion
+│   │   ├── useDocumentHead.js # title, description, canonical e robots por rota
+│   │   └── useHiddenUntilFound.js, useReserveBottomBar.js, useModalFocus.js # apoio do layout mobile
 │   ├── lib/
 │   │   ├── whatsapp.js  # Gera links de WhatsApp com mensagem pré-preenchida
+│   │   ├── catalog.js   # Consultas ao catálogo (visibilidade, ordem, busca, preço)
+│   │   ├── productMessage.js # Mensagem de WhatsApp por produto
 │   │   └── analytics.js # GA4 com consentimento (carrega gtag.js só após aceite)
 │   ├── styles/
 │   │   ├── variables.css  # Design tokens: cores, fontes, espaçamentos
@@ -164,7 +172,7 @@ npm run preview
 
 ## Testes
 
-`tests/analytics-consent.spec.js` (9 testes Playwright do consentimento GA4) e `playwright.config.js`. Não há script npm para executá-los.
+`tests/analytics-consent.spec.js` (9 testes Playwright do consentimento GA4) e `playwright.config.js`. Não há script npm para executá-los (`npx playwright test`, com o servidor de desenvolvimento na porta 5173). Não há lint (ESLint não está instalado).
 
 ## Variáveis de ambiente
 

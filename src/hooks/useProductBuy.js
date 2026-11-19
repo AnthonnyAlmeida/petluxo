@@ -1,7 +1,7 @@
 /* PetLuxo — useProductBuy
  * Estado do tamanho selecionado e valores derivados (link e preço ativos)
- * para produtos com variação de tamanho (buyLinks/prices). Compartilhado
- * entre ProductModal e ProductPage.
+ * para produtos com variação de tamanho (buyLinks/prices). Usado
+ * pela ProductPage (desktop e mobile).
  */
 
 import { useState, useEffect } from 'react';

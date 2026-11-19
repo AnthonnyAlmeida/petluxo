@@ -4,6 +4,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Icon } from '../../icons.jsx';
 import { wa } from '../../lib/whatsapp.js';
+import { useIsMobile } from '../../hooks/useMediaQuery.js';
+import { MobileChrome } from '../mobile/layout/MobileChrome.jsx';
 import '../../styles/buttons.css';
 import styles from './Navbar.module.css';
 
@@ -11,6 +13,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const { pathname } = useLocation();
+  const isMobile = useIsMobile();
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -29,6 +32,9 @@ export function Navbar() {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  /* Abaixo de 768px: cabeçalho só com a marca + barra inferior. */
+  if (isMobile) return <MobileChrome/>;
 
   return (
     <header className={[styles.nav, scrolled && styles.navScrolled].filter(Boolean).join(' ')}>

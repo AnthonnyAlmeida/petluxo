@@ -1,0 +1,55 @@
+/* PetLuxo — BottomSheet.module.css
+ * Folha que sobe de baixo, com fundo escurecido. */
+
+.mSheetRoot {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+}
+
+.mSheetScrim {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
+  animation: mSheetFade 0.25s ease both;
+}
+
+.mSheetPanel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: calc(100% - var(--m-safe-top) - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px var(--m-gutter) calc(var(--m-safe-bottom) + 16px);
+  border-radius: 28px 28px 0 0;
+  background: var(--offwhite);
+  color: var(--ink);
+  animation: mSheetUp 0.32s var(--ease-out-expo) both;
+}
+
+.mSheetPanel:focus { outline: none; }
+
+.mSheetGrip {
+  width: 44px;
+  height: 5px;
+  margin: 0 auto 20px;
+  border-radius: 999px;
+  background: var(--bege-line);
+}
+
+@keyframes mSheetUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0%); }
+}
+
+@keyframes mSheetFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mSheetScrim,
+  .mSheetPanel { animation: none; }
+}

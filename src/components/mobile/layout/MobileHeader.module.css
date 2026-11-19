@@ -1,0 +1,49 @@
+/* PetLuxo — MobileHeader.module.css
+ * Cabeçalho mobile: só a marca (a navegação mora na barra inferior). */
+
+.mHeader {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--m-safe-top) + 8px) var(--m-gutter) 0;
+  background: transparent;
+}
+
+.mHeaderPadded { padding-bottom: 12px; }
+
+.mBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mBrand:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+.mBrandDisc {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-image: url("../../../../assets/logo.webp");
+  background-size: 180%;
+  background-position: 38% 45%;
+  box-shadow: 0 4px 12px rgba(176, 137, 104, 0.35);
+}
+
+.mBrandName {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: 0.34em;
+  /* compensa o espaçamento da última letra para centralizar a palavra */
+  margin-right: -0.34em;
+}

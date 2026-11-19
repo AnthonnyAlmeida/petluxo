@@ -1,0 +1,140 @@
+/* PetLuxo — FaqScene.module.css
+ * Cena "Dúvidas": lista de perguntas; a resposta abre numa folha inferior. */
+
+.mFaq {
+  position: relative;
+  padding: calc(var(--m-safe-top) + 14px) var(--m-gutter) 40px;
+  scroll-snap-align: start;
+  background: var(--offwhite);
+}
+
+.mFaqTitle {
+  margin: 10px 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.mFaqSub {
+  margin: 8px 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--ink-soft);
+}
+
+.mFaqList {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  border-bottom: 1px solid var(--bege);
+}
+
+.mFaqQ {
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 0;
+  border: 0;
+  border-top: 1px solid var(--bege);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 15.5px;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mFaqQ svg { flex: none; color: var(--caramelo); }
+
+.mFaqQ:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: -2px;
+}
+
+/* resposta no DOM para buscadores e para a busca da página; aparece na folha */
+.mFaqHiddenA {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* revelada pela busca da página (beforematch) antes de a folha abrir */
+.mFaqHiddenA:not([hidden]) { padding: 0 0 16px; }
+
+.mFaqMore {
+  margin-top: 26px;
+  padding: 22px 20px;
+  border-radius: 18px;
+  background: var(--bege-soft);
+}
+
+.mFaqMoreTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.mFaqMoreText {
+  margin: 6px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.mFaqLink {
+  color: var(--vinho);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.mFaqMoreBtn { margin-top: 16px; }
+
+/* ---------- Folha da resposta ---------- */
+.mFaqSheetQ {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.15;
+}
+
+.mFaqSheetA {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.mFaqSheetWa { margin-top: 22px; }
+
+.mFaqSheetClose {
+  width: 100%;
+  height: 48px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.mFaqSheetClose:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 2px;
+}

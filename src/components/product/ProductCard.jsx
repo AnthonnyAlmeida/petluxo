@@ -2,19 +2,13 @@
 
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '../../icons.jsx';
-import { PRODUCT_DETAILS } from '../../data/productDetails.js';
 import styles from './ProductCard.module.css';
 
-export function ProductCard({ product, index, onQuick }) {
+/* O card sempre leva à página do produto (/produto/:id), com ou sem ficha
+ * em productDetails.js: a ProductPage trata os dois casos. */
+export function ProductCard({ product, index }) {
   const navigate = useNavigate();
-  const hasFullDetails = Boolean(PRODUCT_DETAILS[product.id]);
-  const handleClick = () => {
-    if (hasFullDetails) {
-      navigate(`/produto/${product.id}`);
-    } else {
-      onQuick(product);
-    }
-  };
+  const handleClick = () => navigate(`/produto/${product.id}`);
 
   return (
     <article className={[styles.product, 'reveal', `d${(index % 5) + 1}`].filter(Boolean).join(' ')} onClick={handleClick}>

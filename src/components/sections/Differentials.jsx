@@ -1,14 +1,8 @@
 /* PetLuxo — Differentials */
 
 import { Icon } from '../../icons.jsx';
+import { DIFFERENTIALS as DIFFS, DIFFERENTIALS_TAG } from '../../data/siteContent.js';
 import styles from './Differentials.module.css';
-
-const DIFFS = [
-  { num: "01", title: "Qualidade garantida",          body: "Produtos selecionados com atenção à qualidade dos materiais, durabilidade e conforto para o seu animal." },
-  { num: "02", title: "Atendimento via WhatsApp",      body: "Tire suas dúvidas e acompanhe seu pedido pelo WhatsApp. Atendimento direto, rápido e personalizado." },
-  { num: "03", title: "Entrega em todo o Brasil",      body: "Enviamos para qualquer cidade do Brasil com embalagem cuidadosa e rastreamento garantido." },
-  { num: "04", title: "Curadoria premium",     body: "Cada produto é selecionado com um olhar criterioso: design refinado, materiais nobres e aquele toque especial que transforma o dia a dia em uma experiência única." },
-];
 
 export function Differentials() {
   return (
@@ -17,7 +11,7 @@ export function Differentials() {
         <div className={['section-tag', 'reveal'].filter(Boolean).join(' ')}>
           <span className="num" style={{color:"var(--dourado)"}}>04</span>
           <span className="line" style={{background:"var(--dourado)"}}></span>
-          <span>POR QUE ESCOLHER A PETLUXO</span>
+          <span>{DIFFERENTIALS_TAG}</span>
         </div>
         <h2 className={['serif', 'reveal', 'd1'].filter(Boolean).join(' ')}>
           Quatro motivos.<br/>

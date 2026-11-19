@@ -1,0 +1,205 @@
+/* PetLuxo — MobileHero.module.css
+ * Hero da home mobile com a medalha de coleira dourada (arte em código).
+ * Valores de Main.dc.html; a altura acompanha a área útil (--m-scene-h). */
+
+.mHero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: var(--m-scene-h);
+  min-height: 560px;
+  overflow: hidden;
+  background: radial-gradient(ellipse 85% 42% at 50% 60%, var(--bege-soft) 0%, var(--offwhite) 72%);
+  scroll-snap-align: start;
+}
+
+.mHeroMain {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px var(--m-gutter) 16px;
+}
+
+.mHeroEyebrow {
+  align-items: flex-start;
+  letter-spacing: 0.14em;
+}
+.mHeroEyebrow > span:first-child { margin-top: 5px; }
+
+.mHeroTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+.mHeroTitle em {
+  font-style: italic;
+  color: var(--caramelo);
+}
+
+.mHeroSub {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.mHeroStage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  container-type: size;
+}
+
+.mHeroArt {
+  --tx: 0;
+  position: relative;
+  width: 100%;
+  max-width: 324px;
+  flex: none;
+  display: flex;
+  justify-content: center;
+  touch-action: pan-y pinch-zoom;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mHeroArt:focus-visible {
+  outline: 2px solid var(--vinho);
+  outline-offset: 4px;
+  border-radius: 24px;
+}
+
+/* a medalha encolhe pela altura disponível (proporção 372 × 320, 30px
+ * reservados para a dica) para caber em telas baixas */
+@container (max-height: 9999px) {
+  .mHeroArt { width: min(100%, calc((100cqh - 30px) * 1.1625)); }
+}
+
+.mHeroSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.mHeroP { font-family: var(--serif); font-size: 70px; font-style: italic; font-weight: 500; }
+.mHeroBrand { font-family: var(--mono); font-size: 7px; letter-spacing: 0.42em; }
+
+.mHeroHint {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.mHeroHint svg { color: var(--caramelo); }
+
+.mHeroCta {
+  flex: none;
+  margin-top: 4px;
+  gap: 12px;
+}
+
+/* ---------- Medalha ---------- */
+.mMedalLean {
+  transform-origin: 186px 96px;
+  transform: rotate(calc(var(--tx, 0) * 7deg));
+  transition: transform 0.5s ease-out;
+}
+
+.mMedalSwing {
+  transform-origin: 186px 96px;
+  animation: mMedalIdle 7s ease-in-out infinite;
+}
+
+.mMedalSwing.mMedalK1 { animation: mMedalK1 3s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+.mMedalSwing.mMedalK2 { animation: mMedalK2 3s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+
+.mMedalDrop { animation: mMedalDrop 1.4s var(--ease-out-expo) both; }
+
+.mMedalShine { animation: mMedalShine 5.5s ease-in-out 1.4s infinite; }
+
+.mMedalK1 .mMedalShine,
+.mMedalK2 .mMedalShine {
+  animation-duration: 1.6s;
+  animation-delay: 0s;
+}
+
+.mMedalOrbit {
+  transform-origin: 186px 176px;
+  animation: mMedalOrb 26s linear infinite;
+}
+
+.mMedalSpark {
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: mMedalSpark 5s ease-in-out 1.8s infinite;
+}
+
+.mMedalSparkLate { animation-delay: 2.5s; }
+
+@keyframes mMedalIdle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(2.4deg); }
+  75% { transform: rotate(-2.4deg); }
+}
+
+@keyframes mMedalK1 {
+  0% { transform: rotate(0deg); }
+  14% { transform: rotate(12deg); }
+  34% { transform: rotate(-8deg); }
+  54% { transform: rotate(5deg); }
+  74% { transform: rotate(-2.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes mMedalK2 {
+  0% { transform: rotate(0deg); }
+  14% { transform: rotate(-12deg); }
+  34% { transform: rotate(8deg); }
+  54% { transform: rotate(-5deg); }
+  74% { transform: rotate(2.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes mMedalDrop {
+  from { opacity: 0; transform: translateY(-26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes mMedalShine {
+  0% { transform: translateX(0px) skewX(-18deg); }
+  45%, 100% { transform: translateX(300px) skewX(-18deg); }
+}
+
+@keyframes mMedalOrb { to { transform: rotate(360deg); } }
+
+@keyframes mMedalSpark {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mHeroArt * { animation: none !important; }
+  .mMedalLean { transition: none; }
+}

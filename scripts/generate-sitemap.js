@@ -1,4 +1,4 @@
-/* PetLuxo — gera dist/sitemap.xml no build (home + produtos visíveis).
+/* PetLuxo — gera dist/sitemap.xml no build (home, catálogo /produtos e produtos visíveis).
  * Sobrescreve o sitemap que o Vite copiou de public/. Roda depois do vite build. */
 
 import { existsSync, writeFileSync } from 'fs';
@@ -17,13 +17,14 @@ if (!existsSync(dist)) {
 
 const urls = [
   `${SITE}/`,
+  `${SITE}/produtos`,
   ...PRODUCTS.filter((p) => p.visible !== false)
     .sort((a, b) => a.id - b.id)
     .map((p) => `${SITE}/produto/${p.id}`),
 ];
 
-if (urls.length < 2) {
-  console.error(`generate-sitemap: apenas ${urls.length} URL(s); esperado ao menos 2.`);
+if (urls.length < 3) {
+  console.error(`generate-sitemap: apenas ${urls.length} URL(s); esperado ao menos 3.`);
   process.exit(1);
 }
 

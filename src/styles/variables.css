@@ -17,8 +17,27 @@
   --sans: "Inter", -apple-system, system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, monospace;
 
+  /* Mobile (< 768px): cores auxiliares do redesign */
+  --bege-line: #D9CFC2;         /* borda de chip, ponto inativo, alça de sheet */
+  --ink-on-dark: #CFC6BB;       /* texto corrido sobre --ink */
+  --ink-on-dark-soft: #A89F94;  /* texto pequeno do rodapé escuro */
+  --ink-deep: #1E1A18;          /* fundo do visualizador de fotos */
+  --line-on-dark: rgba(248, 246, 243, 0.14);
+  --scrim: rgba(42, 37, 34, 0.5);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
   --max: 1320px;
   --pad: clamp(24px, 4vw, 64px);
+
+  /* Mobile: gutter, áreas seguras e altura útil.
+   * Os artboards do design têm 390×844 com 44px de barra de status no topo
+   * e 20px de indicador de início embaixo: aqui viram env(safe-area-inset-*). */
+  --m-gutter: 24px;
+  --m-safe-top: max(8px, env(safe-area-inset-top));
+  --m-safe-bottom: max(20px, env(safe-area-inset-bottom));
+  --m-bar-h: calc(64px + var(--m-safe-bottom));
+  --m-scene-h: calc(100vh - var(--m-bar-h));
 
   /* ---------- Z-Index ---------- */
   --z-base: 1;
@@ -27,4 +46,8 @@
   --z-modal: 1000;
   --z-navbar: 100;
   --z-above-modal: 1100;
+}
+
+@supports (height: 100dvh) {
+  :root { --m-scene-h: calc(100dvh - var(--m-bar-h)); }
 }
