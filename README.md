@@ -40,7 +40,7 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 
 | Recurso | Descrição |
 |---|---|
-| 🛍️ **Catálogo dinâmico** | 40 produtos em 9 categorias (29 visíveis), carregados de um arquivo `products.js` centralizado |
+| 🛍️ **Catálogo dinâmico** | 41 produtos em 9 categorias (29 visíveis), carregados de um arquivo `products.js` centralizado |
 | 🎠 **Carrosséis por categoria** | Um carrossel por categoria com setas laterais, dots de paginação e swipe touch |
 | 📱 **Layout mobile próprio** | Abaixo de 768px o site usa componentes próprios (home em cenas, catálogo, busca, ficha); a partir de 768px o layout desktop segue igual |
 | 💳 **Links PagBank** | Cada produto mantém `buyLink` / `buyLinks`, mas o botão "Comprar Agora" está oculto por `HIDE_BUY_CTA` em `ProductBuyButton.jsx` |

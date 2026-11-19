@@ -122,7 +122,7 @@ npm run preview
 
 ## Catálogo de produtos
 
-**40 produtos em 9 categorias. A tabela abaixo lista os 29 visíveis; os 11 com `visible: false` não aparecem no site:**
+**41 produtos em 9 categorias. A tabela abaixo lista os 29 visíveis; os 12 com `visible: false` não aparecem no site:**
 
 | ID  | Nome                                                          | Categorias                            |
 | --- | ------------------------------------------------------------- | ------------------------------------- |
@@ -131,9 +131,9 @@ npm run preview
 | 9   | Élan Couro \| Elegância em Cada Passeio                       | couro                                 |
 | 10  | Porta Saquinhos em Couro                                      | couro                                 |
 | 12  | Sofá PetLuxo Essence                                          | conforto, sono-refugio                |
+| 13  | Sofá Ortopédico Lounge PetLuxo™                               | conforto, sono-refugio                |
 | 14  | Cama PetLuxo CloudNest™                                       | sono-refugio                          |
 | 17  | Bolsa Voyage Signature™️ \| Transporte Luxury para Pets       | colecao-passeio                       |
-| 18  | Cama Suspensa Rattan Élysée                                   | conforto, sono-refugio                |
 | 20  | Refúgio Suspenso                                              | mais-vendidos, conforto, sono-refugio |
 | 21  | Cama Executive Bed™ \| Couro Soft Premium                     | couro, sono-refugio                   |
 | 24  | Fonte Automática Elegance \| Design Minimalista Premium       | a-mesa                                |
@@ -145,7 +145,6 @@ npm run preview
 | 33  | Reservatório Hermético Cozy para Ração Pet                    | colecao-cozy-luxo                     |
 | 34  | Bolsa Térmica Signature Metalassê                             | colecao-passeio                       |
 | 35  | Manta Serenity™ PetLuxo Premium                               | sono-refugio                          |
-| 36  | Comedouro Nômade Premium™ Dobrável e Portátil                 | viagem-mobilidade                     |
 | 37  | Chaise Féline                                                 | sono-refugio                          |
 | 38  | Refúgio Majestá - Caminha Premium em Madeira com Cortinas     | sono-refugio, conforto                |
 | 39  | Brinquedo PetLuxo Companhia para Brincar                      | brinquedos, mais-vendidos             |
@@ -155,6 +154,7 @@ npm run preview
 | 43  | Kit Élan Rosa \| Elegância em Cada Passeio                    | couro                                 |
 | 44  | Peitoral Élan Signature                                       | couro                                 |
 | 45  | Porta-Saquinhos Premium Élan                                  | couro                                 |
+| 46  | Guia Élan Trama                                               | couro                                 |
 
 **Categorias disponíveis:**
 

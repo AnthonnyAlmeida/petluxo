@@ -669,4 +669,31 @@ export const PRODUCT_DETAILS = {
       { question: 'Como fazer a limpeza?', answer: 'Limpar delicadamente com pano macio e seco. Evitar exposição prolongada à umidade e armazenar em local arejado.' },
     ],
   },
+  46: {
+    gallery: [
+      '/images/products/guia-elan-trama/principal.webp',
+      '/images/products/guia-elan-trama/guia-elan-trama-2.webp',
+      '/images/products/guia-elan-trama/guia-elan-trama-3.webp',
+      '/images/products/guia-elan-trama/guia-elan-trama-4.webp',
+      '/images/products/guia-elan-trama/guia-elan-trama-5.webp',
+    ],
+    specs: {
+      material: 'Couro trançado (conforme especificação do fornecedor)',
+      cor: 'Marrom',
+      acabamento: 'Trançado, com detalhes de costura contrastante',
+      fixacao: 'Mosquetão metálico dourado',
+      alcaDeMao: 'Integrada',
+      comprimentoTotal: 'M: 65 cm | G: 115 cm',
+      design: 'Clássico e sofisticado',
+    },
+    careInstructions: 'Limpar delicadamente com pano macio e seco. Evitar exposição prolongada à umidade e armazenar em local arejado.',
+    faq: [
+      { question: 'Quais tamanhos estão disponíveis?', answer: 'M, com 65 cm de comprimento total, e G, com 115 cm de comprimento total.' },
+      { question: 'Qual é o material?', answer: 'Couro trançado, conforme especificação do fornecedor.' },
+      { question: 'Qual é a cor?', answer: 'Marrom, com detalhes dourados.' },
+      { question: 'Como a guia é fixada ao peitoral ou à coleira?', answer: 'Ela tem mosquetão metálico dourado para fixação.' },
+      { question: 'A guia tem alça de mão?', answer: 'Sim, a alça de mão é integrada.' },
+      { question: 'Como fazer a limpeza?', answer: 'Limpar delicadamente com pano macio e seco. Evitar exposição prolongada à umidade e armazenar em local arejado.' },
+    ],
+  },
 };

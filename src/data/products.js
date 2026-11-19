@@ -784,5 +784,37 @@ export const PRODUCTS = [
     buyLink: 'https://wa.me/5561994063917',
     tags: ['porta-saquinhos', 'saquinhos', 'passeio', 'élan', 'família élan', 'couro', 'avelã', 'premium'],
     visible: true,
+  },
+  {
+    id: 46,
+    name: 'Guia Élan Trama',
+    shortName: 'Guia Élan Trama',
+    subtitle: 'Elegância em cada detalhe. Personalidade em cada passeio.',
+    description: 'A Guia Élan Trama combina a beleza do trabalho trançado com a sofisticação dos acabamentos clássicos. Seu design em tom marrom profundo, aliado aos detalhes dourados, cria uma peça de presença marcante e elegância atemporal. Desenvolvida para acompanhar os passeios com resistência, conforto e estilo, é um acessório para quem valoriza qualidade e beleza em cada detalhe.',
+    bullets: [
+      'Material anunciado: couro trançado, conforme especificação do fornecedor',
+      'Estrutura resistente',
+      'Acabamento trançado com detalhes de costura contrastante',
+      'Mosquetão metálico dourado para fixação',
+      'Alça de mão integrada',
+      'Disponível nos tamanhos M (65 cm) e G (115 cm), medidas de comprimento total',
+    ],
+    price: 'a partir de R$ 319,90',
+    prices: [
+      { size: 'M', price: 'R$ 319,90' },
+      { size: 'G', price: 'R$ 369,00' },
+    ],
+    originalPrice: null,
+    category: ['couro'],
+    order: 61,
+    categoryOrder: {"couro":2100},
+    image: '/images/products/guia-elan-trama/principal.webp',
+    badge: null,
+    buyLinks: [
+      { size: 'M', link: 'https://wa.me/5561994063917' },
+      { size: 'G', link: 'https://wa.me/5561994063917' },
+    ],
+    tags: ['guia', 'élan', 'família élan', 'élan trama', 'couro', 'trançado', 'passeio', 'marrom', 'dourado'],
+    visible: true,
   }
 ];

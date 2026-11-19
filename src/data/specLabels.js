@@ -78,4 +78,5 @@ export const SPEC_LABELS = {
   frete: 'Frete',
   construcao: 'Construção',
   medidas: 'Medidas',
+  alcaDeMao: 'Alça de mão',
 };
