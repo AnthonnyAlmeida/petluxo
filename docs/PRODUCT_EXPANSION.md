@@ -69,7 +69,7 @@ export const PRODUCT_DETAILS = {
     whatsIncluded: [],      // string[] opcional — "o que acompanha o produto"
     careInstructions: '',   // string opcional — limpeza e conservação
     airTravelNote: '',      // string opcional — só produtos aplicáveis a viagens aéreas
-    warranty: '',           // string opcional — garantia
+    warranty: '',           // string opcional — garantia (hoje: a frase padrão de 90 dias, igual nas 25 fichas)
     faq: [],                // { question, answer }[] opcional — FAQ específico do produto
   },
 };
@@ -85,8 +85,10 @@ export const PRODUCT_DETAILS = {
 | `whatsIncluded` | string[] (opcional) | Lista simples |
 | `careInstructions` | string (opcional) | Texto livre |
 | `airTravelNote` | string (opcional) | Omitir em produtos sem aplicação a viagem aérea |
-| `warranty` | string (opcional) | Texto livre |
+| `warranty` | string (opcional) | Texto livre. Em 2026-11-20 todas as 25 fichas passaram a ter a frase padrão do advogado: "Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC." A garantia contratual de 6 meses só entra onde o fornecedor confirmar |
 | `faq` | `{question, answer}[]` (opcional) | FAQ do produto — não confundir com o `FAQ` global da home |
+
+O aviso de prazo e frete não é campo por produto: é a constante `DELIVERY_NOTE` em `src/data/siteContent.js` ("Prazo e frete informados no atendimento pelo WhatsApp, antes da confirmação do pedido."), mostrada em toda ficha, com ou sem `PRODUCT_DETAILS` (desktop em `ProductPage.jsx`, mobile em `FreightNote`).
 
 Produto sem entrada em `PRODUCT_DETAILS[id]`: `ProductPage` renderiza apenas o que já existe em `products.js` (imagem, nome, descrição, bullets, preço, compra) — nenhuma seção nova aparece.
 

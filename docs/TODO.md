@@ -82,14 +82,14 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 
 ## Conteúdo e vendas
 
-- [ ] **7. Prazo estimado de entrega nas fichas** 🟡
-      Informar com clareza as condições de entrega (fornecedor + frete), parte de apresentar a oferta com informação clara ao consumidor. O schema de `productDetails.js` não tem campo dedicado: criar `deliveryNote` (e renderizar no `ProductPage`) ou, provisoriamente, usar `faq`/`warranty`. O campo é uma decisão de implementação, não a obrigação em si.
+- [x] **7. Prazo estimado de entrega nas fichas** 🟡
+      Feito (2026-11-20): em vez de campo por produto, o aviso virou a constante única `DELIVERY_NOTE` em `src/data/siteContent.js` ("Prazo e frete informados no atendimento pelo WhatsApp, antes da confirmação do pedido."; frase padrão do advogado, 2026-11-19). Aparece no desktop (`ProductPage.jsx`, dentro de `.buyStack`, entre o botão de compra e os `TrustBadges`) e no mobile (`FreightNote`, variantes normal e `simple`). O schema de `productDetails.js` não ganhou campo de entrega.
 
 - [ ] **8. Completar fichas dos produtos sem `PRODUCT_DETAILS`** 🔴
       16 dos 41 produtos não têm entrada em `PRODUCT_DETAILS` (ids 1, 3, 4, 13, 14, 15, 18, 19, 22, 24, 25, 27, 29, 30, 31, 32). Dos 29 visíveis, 6 estão sem ficha e abrem a ficha simples: ids 13, 14, 24, 25, 30, 31 (os outros 10 sem ficha estão ocultos). Priorizar os mais vendidos e de ticket mais alto. Medidas, cuidados e FAQ são as dúvidas que mais travam a compra.
-      O id 45 (Porta-Saquinhos Premium Élan) entrou em 2026-11-17 com ficha sem garantia e sem medidas (nenhum dos dois dados foi informado); aguarda esses dados e o parecer jurídico sobre a garantia.
-      Estado do id 44: ficha de 6 campos; falta a medida do tamanho M para `sizeChart`/`howToChooseSize` e falta definir a garantia. O fornecedor não informa nenhuma das duas e a dona do negócio não conseguiu obter. A garantia precisa de UM texto único da loja antes do preenchimento em lote (eram 4 textos diferentes nas fichas; restam 2 após a retirada abaixo).
-      Em 2026-11-17, as linhas de garantia de 2 e 3 meses dos ids 20, 41 e 42 foram retiradas temporariamente (campo `warranty` removido) por recomendação do advogado. O texto padronizado de garantia legal (90 dias para produto durável) entra depois do parecer, previsto para 24 a 25/11/2026.
+      O id 45 (Porta-Saquinhos Premium Élan) entrou em 2026-11-17 com ficha sem medidas (o dado não foi informado); aguarda esse dado.
+      Estado do id 44: ficha de 6 campos; falta a medida do tamanho M para `sizeChart`/`howToChooseSize`. O fornecedor não informa e a dona do negócio não conseguiu obter.
+      Garantia (2026-11-20): as 25 chaves de `PRODUCT_DETAILS` têm agora o mesmo `warranty`: "Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC." (frase padrão do advogado, 2026-11-19). Isso inclui os ids 20, 41 e 42, que estavam sem o campo desde 2026-11-17, e os ids 2, 8 e 10 (o id 10 perdeu o "6 meses"). Não foram criadas fichas novas. A garantia contratual de 6 meses do id 10 e dos ids 2 e 8 só volta com confirmação do fornecedor (item 37).
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
       Sitemap feito: `scripts/generate-sitemap.js` gera `dist/sitemap.xml` no build (home, `/produtos` e produtos visíveis, sem `lastmod`). `public/sitemap.xml` não existe mais no repositório. Pendente: JSON-LD `Product` nas fichas (o preço é texto livre, como `'R$ 379,90'`, e precisaria de conversão).
@@ -102,10 +102,10 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Verificar prazo de recebimento por forma de pagamento antes de escolher o gateway (a intenção é a InfinitePay; `docs/CHECKOUT_ARCHITECTURE.md` ainda cita Mercado Pago), para não repetir o problema de caixa do modelo de compra sob encomenda ao fornecedor.
       A confirmar com a InfinitePay: se o checkout integrado aceita débito; taxas do cartão à vista e parcelado; custo e condições do recebimento na hora (há relatos de plano com permanência mínima); prazo de liberação por forma de pagamento.
 
-- [ ] **22. Alinhar os textos que citam o PagBank ao atendimento por WhatsApp** 🟡
+- [x] **22. Alinhar os textos que citam o PagBank ao atendimento por WhatsApp** 🟡
       Feito (2026-11-01): removidos o selo "PagBank" do rodapé e o item "A compra é segura?" do FAQ; Privacidade, Frete e Entrega e Termos de Uso reescritos sem o PagBank como pagamento ativo, com redação neutra (pedido, dados e frete combinados pelo WhatsApp). O PagBank só resta em comentários de código sobre `HIDE_BUY_CTA` e nos links `pag.ae` de `products.js`.
       Feito (2026-11-04): Privacidade cita o PagBank como operador do link de cartão e o pagamento por Pix ou link; Frete e Entrega, Termos de Uso e FAQ sem prazos fixos (prazo variável por produto e fornecedor, informado no atendimento) e sem "no momento da compra".
-      Resta: o dono decidir a redação definitiva (como o pagamento e o frete são feitos hoje, prazos, quem despacha) e a revisão jurídica (item 37), inclusive do PagBank como operador na Privacidade. `ReturnPolicyPage.jsx` não foi alterada.
+      Feito (2026-11-20): as 4 políticas foram reescritas com os textos finais do advogado (2026-11-19; fonte em `_juridico/textos-finais-2026-11-19.md`): Privacidade (com o PagBank como operador de pagamentos), Frete e Entrega, Termos de Uso e Troca e Devolução, todas com "Última atualização: novembro de 2026". O que ainda depende da dona do negócio está no item 37.
 
 - [ ] **23. Decidir sobre privatizar o repositório** 🟡
       Pré-requisitos: corrigir as miniaturas do painel `petluxo-admin` que usam `raw.githubusercontent.com` (`ProductsPage.jsx:351` e `CategoriesPage.jsx:399` e, no modo edição, `Step3Photo.jsx:21`); testar um commit do painel com o repositório privado (autor do commit e o build na Cloudflare) e se o Workers Builds consegue clonar repositório privado (NÃO VERIFICADO); conferir o escopo do token. A documentação do projeto (`README.md`, `docs/DEPLOY.md`, `docs/DECISIONS.md` §8) afirma que o repositório deve ser público; isso não foi verificado na conta.
@@ -163,9 +163,28 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Roteiro: abrir GA4 → Tempo real; em aba anônima, abrir o site, aceitar o banner de consentimento, navegar em uma ou duas páginas e ver o usuário ativo. Conferir o domínio do stream (pode estar com o domínio antigo, sem `www`) e filtros de hostname. Sem consentimento o `gtag` não carrega (esperado). Testado pelo dono antes (relatado em 2026-11-05) e funcionando; registrado como concluído em 2026-11-11.
 
 - [ ] **37. Revisão jurídica dos textos legais e da base legal do GA4 (Consent Mode, transferência internacional)** 🔴
-      Revisar Privacidade, Frete e Entrega e Termos de Uso após a mudança para o atendimento só por WhatsApp; definir a base legal do GA4 (consentimento × legítimo interesse) e se o Consent Mode se aplica; avaliar a transferência internacional de dados (Google, Meta, Cloudflare). Hoje as políticas não tratam de transferência internacional.
+      Aplicados em 2026-11-20 os textos finais do advogado (2026-11-19; `_juridico/textos-finais-2026-11-19.md`) nas 4 políticas. O que o texto aplicado cobre está marcado como feito abaixo; o item segue aberto pelo que depende da dona do negócio.
       Feito (2026-11-16): Google Fonts substituído por fontes hospedadas no próprio site (@fontsource); revogação do GA4 passou a recarregar a página; parágrafo do Google Fonts removido da Privacidade.
-      Pendências levantadas em 2026-11-16 (dependem de advogado e/ou da dona do negócio): (a) identificação do fornecedor no site: razão social e endereço físico (Decreto 7.962/2013, art. 2º), hoje só PETLUXO, CNPJ e e-mail; (b) porte da empresa (MEI/ME/EPP) e canal do titular em vez de encarregado (Res. CD/ANPD 2/2022); (c) frete de devolução no arrependimento está como do cliente na Troca e Devolução (entendimento do STJ/Idec: é do fornecedor); (d) foro de Brasília com renúncia nos Termos, a revisar para relação de consumo; (e) 'exclusão dos dados após o pedido' x obrigações de guarda e ausência de prazo de retenção; (f) transferência internacional (Google, Meta, Cloudflare) e lista de direitos do titular (art. 18 da LGPD) incompletas; (g) papéis do PagBank e do distribuidor; (h) abertura da Privacidade diz 'exclusivamente' pedidos, o que destoa do GA4; (i) Troca e Devolução datada de maio de 2025 e pede 'número do pedido'; (j) base legal do GA4: manter consentimento e retirar a frase 'depende de confirmação jurídica' após confirmação do advogado.
+      Pendências levantadas em 2026-11-16, conferidas em 2026-11-20 contra o texto aplicado em `src/`:
+      - (a) feito: a Privacidade traz "Identificação do Controlador" com razão social, CNPJ, endereço e canal de privacidade. A conferência dos dados está em "Resta" (5).
+      - (b) parcial: o canal de privacidade (e-mail) no lugar de encarregado está no texto; o porte da empresa (MEI/ME/EPP) não aparece nos textos aplicados e segue aberto.
+      - (c) feito no texto: a Troca e Devolução diz que a PetLuxo arca com o frete de devolução no arrependimento (a confirmação da dona está em "Resta" (1)).
+      - (d) feito: o foro dos Termos passou a ser o do domicílio do consumidor, sem renúncia.
+      - (e) feito no texto: a Privacidade ganhou "Prazos de Retenção de Dados" (5 anos para registros de atendimento e para comprovantes e dados fiscais; dados de entrega eliminados ou anonimizados após o envio e o prazo de garantia). A prática do item de entrega está em "Resta" (3).
+      - (f) feito: a Privacidade trata a transferência internacional (WhatsApp/Meta, Google, PagBank, Cloudflare) e lista os direitos I a X do art. 18 da LGPD.
+      - (g) feito: papéis do PagBank (operador de pagamentos) e do distribuidor parceiro (recebe nome e endereço) descritos no compartilhamento.
+      - (h) feito: a abertura da Privacidade não diz mais "exclusivamente" e passa a falar de pedidos, suporte e operação.
+      - (i) feito: a Troca e Devolução é de novembro de 2026 e não pede mais número do pedido.
+      - (j) feito: a base legal do GA4 ficou em consentimento e a frase "depende de confirmação jurídica" saiu.
+      Resta (depende da dona do negócio):
+      1. Frete de devolução pago pela PetLuxo no arrependimento e restituição do frete original (Troca e Devolução): confirmar que a loja arca com isso na prática.
+      2. Rastreio "será enviado" (Frete e Entrega): o texto garante o envio do código de rastreamento pelo WhatsApp; confirmar que o distribuidor sempre fornece o código.
+      3. Eliminação ou anonimização dos dados de entrega após o despacho e o fim do prazo de garantia (Privacidade): confirmar que a loja faz isso.
+      4. Garantia de 6 meses do id 10 e dos ids 2 e 8: só com confirmação do fornecedor; hoje as fichas têm a garantia legal de 90 dias.
+      5. Conferir o CNPJ (23.833.930/0001-21) e a razão social com o cartão CNPJ: verificar se a razão social publicada na Privacidade é idêntica ao cartão (por exemplo, se o nome empresarial leva números do CNPJ).
+      6. Porte da empresa (MEI/ME/EPP), da pendência (b): não consta nos textos.
+      Revisão de texto pendente (o advogado ainda não revisou; não alterados): "Entrega Rastreada" (`TrustBadges.jsx`), "rastreamento garantido" (`DIFFERENTIALS[2]` em `siteContent.js`) e "Quando existir…" (`FAQS[1]` em `siteContent.js`), porque afirmam ou condicionam o rastreamento de forma diferente da Política de Frete e Entrega.
+      Em 2026-11-20 a `TROCA_ANSWER` perdeu o trecho "(produto sem uso, embalagem original)", porque a política nova não exige embalagem original.
 
 - [ ] **38. Remover a obrigatoriedade de buyLink/buyLinks no catálogo** 🟢
       Não iniciado; o caminho abaixo é provável, não definitivo.
@@ -180,8 +199,8 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
   - Paliativo atual: produtos novos usam `buyLinks` com `https://wa.me/5561994063917` por tamanho (ids 2, 33 e 43). O cliente não vê esses links.
   - Caminho provável: o tamanho passa a vir de `prices` em vez de `buyLinks`; o validador deixa de exigir link; o painel é ajustado em paralelo (ordem a decidir, porque o painel reescreve `products.js`).
 
-- [ ] **39. Atualizar os cartões "7" e "90" da Troca e Devolução após a revisão jurídica** 🟢
-      O mobile mostra dois cartões (`HIGHLIGHTS` em `ReturnPolicyPage.jsx`): "7" (dias corridos para desistir da compra) e "90" (dias para defeito de fabricação). Os números e frases são uma cópia do texto atual da política e não se atualizam sozinhos: quando o advogado revisar a política (item 37), alterar `HIGHLIGHTS` junto com o texto, ou remover os cartões se os prazos mudarem de forma que não caibam neles. Há um comentário no código avisando.
+- [x] **39. Atualizar os cartões "7" e "90" da Troca e Devolução após a revisão jurídica** 🟢
+      Feito (2026-11-20): os cartões (`HIGHLIGHTS` em `ReturnPolicyPage.jsx`) foram conferidos com o texto do advogado de 2026-11-19: "7" (dias corridos para desistir da compra, a contar do recebimento) e "90" (dias para defeito de fabricação, a contar do recebimento) batem com a política nova, então os números e frases ficaram; só o comentário acima da constante foi atualizado. Se a política mudar, `HIGHLIGHTS` precisa mudar junto.
 
 - [ ] **40. Versão desktop nova** 🔴
       O layout a partir de 768px é o anterior ao redesign mobile (`docs/DECISIONS.md` §14). Falta desenhar e portar a versão desktop com a mesma linguagem do mobile. Inclui decidir se o CTA final (só no desktop hoje) fica, e se o desktop ganha a busca `/buscar` em vez do redirecionamento para `/produtos`.

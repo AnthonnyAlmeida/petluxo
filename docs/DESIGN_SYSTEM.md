@@ -390,7 +390,7 @@ Não existe modal de produto: todo card leva a `/produto/:id`. Produto visível 
 
 ### 7.7 Ficha de produto (`pages/ProductPage.jsx`, `ProductPage.module.css`)
 
-- **Estrutura (≤900px, 1 coluna):** `MinimalNavbar` → link "← VOLTAR PARA A LOJA" (12px caixa alta, **19px de altura**, medido) → galeria → nome (h1 serif 26,25px) → subtítulo 15px → preço 30px vinho (por tamanho) → descrição 15px/1.75 → bullets 14px (marcador "—" caramelo) → seletor de tamanho → botão de compra + `TrustBadges` → `BrandSeal` → acordeões (`.details`, `border-top` bege).
+- **Estrutura (≤900px, 1 coluna):** `MinimalNavbar` → link "← VOLTAR PARA A LOJA" (12px caixa alta, **19px de altura**, medido) → galeria → nome (h1 serif 26,25px) → subtítulo 15px → preço 30px vinho (por tamanho) → descrição 15px/1.75 → bullets 14px (marcador "—" caramelo) → seletor de tamanho → botão de compra + `DELIVERY_NOTE` (classe `.deliveryNote`, 0.8125rem, `--ink-soft`) + `TrustBadges` → `BrandSeal` → acordeões (`.details`, `border-top` bege).
 - **Acordeões na ordem fixa:** specs, tabela de medidas, como escolher o tamanho, nota do guia, o que acompanha, cuidados, viagem aérea, garantia, FAQ. Specs em `dl` de duas colunas (`max-content 1fr`, gap 10/24px, `dt` 11px caixa alta); tabela de medidas com `white-space: nowrap` dentro de `.tableWrap { overflow-x: auto }` (rola na horizontal no celular).
 - **Problemas:** 4 pontos de estilo inline em `ProductPage.jsx` (margens das listas de garantia e FAQ); sem tratamento ≤480px (ver 5.3); a classe `price` vem com `serif` e cor vinho, mas o tamanho de 30px é fixo.
 
@@ -441,7 +441,7 @@ Fundo offwhite com `border-top`; 5 colunas (marca, Produtos, Sobre, Políticas, 
 
 ### 7.16 Páginas de política (`pages/PrivacyPage.jsx`, `ReturnPolicyPage.jsx`, `ShippingPolicyPage.jsx`, `TermsPage.jsx`)
 
-Layout de texto (`PolicyLayout`; mobile: `MobilePolicyLayout`, seção 14.7) 100% inline no desktop: coluna de 800px, Inter herdado (15px/1.8), h1 serif `clamp(2rem, 4vw, 3rem)` em vinho peso 600, h2 `clamp(1.25rem, 2.5vw, 1.6rem)` em vinho peso 600, "Última atualização" 13,1px com filete bege. O bloco de estilos inline e o `Section` ficam em `PolicyLayout.jsx`. Usam `Navbar` completa e `Footer`. Sem `@media`. Problemas: negrito sintético (3.2), âncoras de menu que não existem nessas rotas (7.1).
+Layout de texto (`PolicyLayout`; mobile: `MobilePolicyLayout`, seção 14.7; textos finais do advogado aplicados em 2026-11-20, a lista de direitos da Privacidade usa `<ul>` sem marcadores porque os itens trazem os algarismos romanos I a X) 100% inline no desktop: coluna de 800px, Inter herdado (15px/1.8), h1 serif `clamp(2rem, 4vw, 3rem)` em vinho peso 600, h2 `clamp(1.25rem, 2.5vw, 1.6rem)` em vinho peso 600, "Última atualização" 13,1px com filete bege. O bloco de estilos inline e o `Section` ficam em `PolicyLayout.jsx`. Usam `Navbar` completa e `Footer`. Sem `@media`. Problemas: negrito sintético (3.2), âncoras de menu que não existem nessas rotas (7.1).
 
 ### 7.17 Seções de marketing da home (resumo)
 
@@ -633,7 +633,7 @@ Fatos do projeto que o design **não pode quebrar** (fontes: `AI_CONTEXT_PETLUXO
 3. **Imagens com proporções variadas** (0,66 a 1,57, 28 proporções distintas entre 40 fotos), entregues como WebP sem recorte padronizado; fotos novas chegam por `_incoming/` sem redimensionar. O design precisa funcionar com qualquer proporção (sem assumir 1:1 nem 4:5).
 4. **Venda por WhatsApp, sem checkout ainda.** O CTA é "CONSULTAR VIA WHATSAPP" com mensagem dinâmica (nome, variação, preço, link da ficha). O botão "COMPRAR AGORA" (links PagBank) está oculto por `HIDE_BUY_CTA = true` e pode voltar: o design deve prever os dois estados, mais o estado ESGOTADO. Carrinho/checkout é apenas planejado (`docs/CHECKOUT_ARCHITECTURE.md`).
 5. **Fontes self-hosted** (`@fontsource`, subset latin, sem Google Fonts em runtime): qualquer fonte nova precisa ser empacotada; cada peso/estilo adicional soma ao peso inicial.
-6. **Consentimento de cookies e GA4 (LGPD):** o banner de consentimento é obrigatório antes do `gtag.js`, reabrível pelo botão "Preferências de cookies" do rodapé; o texto das políticas depende de revisão jurídica. O redesign não pode remover o banner nem o ponto de reabertura.
+6. **Consentimento de cookies e GA4 (LGPD):** o banner de consentimento é obrigatório antes do `gtag.js`, reabrível pelo botão "Preferências de cookies" do rodapé; os textos das políticas são os finais do advogado (2026-11-19) e ainda restam pendências da dona do negócio (`docs/TODO.md` item 37). O redesign não pode remover o banner nem o ponto de reabertura.
 7. **Máquina de desenvolvimento lenta:** evitar dependências pesadas, builds longos e telas que exijam muitos ciclos de teste; preferir mudanças em CSS Modules a bibliotecas novas.
 8. **Escala do catálogo:** 41 produtos (29 visíveis) em 9 categorias, com 8 produtos em 2+ categorias; busca por palavras e filtro por categoria; 6 produtos visíveis não têm ficha (abrem a ficha simples); 12 ocultos por `visible: false`.
 9. **Rotas e SEO:** `/produto/:id` é reescrita por um Worker (título, descrição, `og:*`); `ProductPage` usa `MinimalNavbar`; id inexistente cai em `NotFoundPage` (HTTP 404 só em `/produto/*`). Manter URLs e a estrutura de rotas.
@@ -696,7 +696,7 @@ Ordem: Hero (medalha com o P, que se inclina ao toque) → Destaque (gatinho; o 
 
 - `MobileCatalog` (`/produtos`): chips de categoria (as categorias visíveis com produtos, na ordem de `CATEGORIES`, mais "Todos"; categoria na URL, `?categoria=<id>`) e grade de 2 colunas na ordem de `catalogList()`. Cartões são `Link` para `/produto/:id`. A imagem do cartão (`.mCatImg`) usa `object-fit: contain` em quadro fixo 1:1 sobre `--bege-soft`: mostra a foto inteira; faixas aparecem em fotos não quadradas. Um único h1.
 - `MobileSearch` (`/buscar`): campo, estado vazio, resultados e "sem resultado" com WhatsApp; usa `searchProducts()`. `noindex`.
-- Produto: `MobileProductFull` (com ficha: galeria com `scroll-snap` horizontal e `touch-action: pan-y pinch-zoom`, seletor de tamanho/cor, acordeões com `hidden="until-found"`, tabela de medidas; a galeria mobile mostra a foto inteira (`.mSlideImg` com `object-fit: contain`, quadro fixo `aspect-ratio: 390 / 488` sobre fundo `--bege-soft`), e o card da grade também mostra a foto inteira em quadro 1:1 (`contain`)) e `MobileProductSimple` (sem ficha). `ImageViewer` (tela cheia, pinch). Barra inferior com o botão de WhatsApp (mensagem de `lib/productMessage.js`); `HIDE_BUY_CTA` continua valendo; ESGOTADO vira selo e o botão de WhatsApp permanece. O botão de voltar é fixo.
+- Produto: `MobileProductFull` (com ficha: galeria com `scroll-snap` horizontal e `touch-action: pan-y pinch-zoom`, seletor de tamanho/cor, nota de entrega (`FreightNote`, texto de `DELIVERY_NOTE`; `.mFreight` e `.mSimpleFreight` sem `nowrap`, então o texto longo quebra de linha), acordeões com `hidden="until-found"`, tabela de medidas; a galeria mobile mostra a foto inteira (`.mSlideImg` com `object-fit: contain`, quadro fixo `aspect-ratio: 390 / 488` sobre fundo `--bege-soft`), e o card da grade também mostra a foto inteira em quadro 1:1 (`contain`)) e `MobileProductSimple` (sem ficha). `ImageViewer` (tela cheia, pinch). Barra inferior com o botão de WhatsApp (mensagem de `lib/productMessage.js`); `HIDE_BUY_CTA` continua valendo; ESGOTADO vira selo e o botão de WhatsApp permanece. O botão de voltar é fixo.
 
 ### 14.6 Cookies
 
@@ -704,7 +704,7 @@ Folha inferior sem fundo escurecido (o banner não bloqueia a navegação), alç
 
 ### 14.7 Políticas e 404
 
-`MobilePolicyLayout`: botão voltar, chips entre as 4 políticas (`nav aria-label="Políticas"`, `aria-current="page"`), eyebrow "Documento", h1 serif, fio dourado, "Última atualização", cartões opcionais (Troca e Devolução: 7 e 90 dias, constante `HIGHLIGHTS`), corpo do texto, cartão "Ficou alguma dúvida?" com WhatsApp, rodapé e barra inferior. `MobileNotFound`: trilha de pegadas com "?" que balança, h1 "Esta página se perdeu pelo caminho.", botões "Voltar ao início" e "Ver produtos" (`Link`).
+`MobilePolicyLayout`: botão voltar, chips entre as 4 políticas (`nav aria-label="Políticas"`, `aria-current="page"`), eyebrow "Documento", h1 serif, fio dourado, "Última atualização", cartões opcionais (Troca e Devolução: 7 e 90 dias, constante `HIGHLIGHTS`, conferidos com o texto do advogado em 2026-11-20), corpo do texto, cartão "Ficou alguma dúvida?" com WhatsApp, rodapé e barra inferior. `MobileNotFound`: trilha de pegadas com "?" que balança, h1 "Esta página se perdeu pelo caminho.", botões "Voltar ao início" e "Ver produtos" (`Link`).
 
 ### 14.8 Movimento e acessibilidade
 
