@@ -2,11 +2,10 @@
 
 import PolicyLayout, { Section } from './PolicyLayout.jsx';
 
-
-/* Prazos que o próprio texto abaixo traz (Prazo para Solicitação), mostrados
- * em destaque no mobile. ATENÇÃO: estes números e frases são uma cópia do
- * texto da política; precisam ser atualizados junto com ele após a revisão
- * jurídica (ver docs/TODO.md). */
+/* Cartões em destaque no mobile (7 e 90 dias). Conferidos com o texto do
+ * advogado de 2026-11-19 (seção "Modalidades de Troca e Devolução":
+ * arrependimento em até 7 dias corridos; defeito em até 90 dias, ambos a
+ * contar do recebimento). Se a política mudar, atualizar junto. */
 const HIGHLIGHTS = [
   { num: '7', text: 'dias corridos para desistir da compra, a contar do recebimento' },
   { num: '90', text: 'dias para defeito de fabricação, a contar do recebimento' },
@@ -16,62 +15,44 @@ export default function ReturnPolicyPage() {
   return (
     <PolicyLayout
       title="Política de Troca e Devolução"
-      updated="maio de 2025" highlights={HIGHLIGHTS}
+      updated="novembro de 2026" highlights={HIGHLIGHTS}
     >
       <p style={{ lineHeight: 1.8, marginBottom: '2rem' }}>
-        A PetLuxo deseja proporcionar a melhor experiência possível para você e seu pet. Caso
-        precise solicitar uma troca ou devolução, estamos à disposição para ajudar.
+        Queremos que você e seu pet tenham a melhor experiência com a PetLuxo.
       </p>
 
-      <Section title="Prazo para Solicitação">
+      <Section title="Modalidades de Troca e Devolução">
         <ul>
           <li>
-            <strong>Arrependimento (desistência da compra):</strong> até 7 dias corridos após
-            o recebimento do produto, conforme o Art. 49 do Código de Defesa do Consumidor.
+            <strong>Arrependimento / Desistência da Compra:</strong> Até 7 (sete) dias corridos
+            após o recebimento do produto (art. 49 do CDC). Na PetLuxo, arcamos com o custo do
+            frete de devolução por arrependimento e restituímos integralmente os valores pagos
+            (incluindo o frete original). O produto deve estar sem sinais de uso efetivo, sendo
+            permitida a inspeção necessária para conhecer suas características.
           </li>
           <li>
-            <strong>Defeito de fabricação:</strong> até 90 dias após o recebimento, conforme
-            o Art. 26 do CDC para produtos duráveis.
-          </li>
-        </ul>
-      </Section>
-
-      <Section title="Condições para Troca ou Devolução">
-        <p>O produto deve:</p>
-        <ul>
-          <li>Estar sem sinais de uso</li>
-          <li>Conter embalagem original</li>
-          <li>Possuir todos os acessórios incluídos</li>
-        </ul>
-        <p>
-          Produtos que apresentem defeito de fabricação comprovado são aceitos
-          independentemente das condições acima.
-        </p>
-      </Section>
-
-      <Section title="Frete de Devolução">
-        <ul>
-          <li>
-            <strong>Em caso de arrependimento:</strong> o frete de retorno é de
-            responsabilidade do cliente.
+            <strong>Vício ou Defeito de Fabricação:</strong> Até 90 (noventa) dias após o
+            recebimento para produtos duráveis (art. 26 do CDC). O frete de retorno e reenvio é
+            integralmente de responsabilidade da PetLuxo, e o cliente poderá optar entre a troca
+            do produto ou o reembolso integral dos valores.
           </li>
           <li>
-            <strong>Em caso de defeito de fabricação:</strong> o frete de retorno é de
-            responsabilidade da PetLuxo.
+            <strong>Troca por Liberalidade:</strong> Caso o cliente deseje trocar o produto por
+            motivos de preferência pessoal (como tamanho ou cor) fora do prazo de arrependimento,
+            a possibilidade e as condições de frete serão avaliadas individualmente pelo
+            atendimento via WhatsApp.
           </li>
         </ul>
       </Section>
 
       <Section title="Como Solicitar">
-        <p>Entre em contato pelos canais abaixo informando:</p>
-        <ul>
-          <li>Número do pedido</li>
-          <li>Nome completo</li>
-          <li>Motivo da solicitação</li>
-          <li>Fotos do produto (quando aplicável)</li>
-        </ul>
         <p>
-          <a href="mailto:petluxo.service@gmail.com">petluxo.service@gmail.com</a>
+          Como o nosso atendimento é humanizado e realizado via WhatsApp, basta entrar em contato
+          conosco informando seu nome completo, dados de contato e fotos do produto (em caso de
+          defeito), sem burocracia com números de pedido complexos:
+        </p>
+        <p>
+          E-mail: <a href="mailto:petluxo.service@gmail.com">petluxo.service@gmail.com</a>
         </p>
         <p>
           <a
@@ -83,27 +64,8 @@ export default function ReturnPolicyPage() {
           </a>
         </p>
         <p>
-          Após a análise da solicitação, nossa equipe entrará em contato para combinar os
-          detalhes do processo de devolução e envio.
-        </p>
-      </Section>
-
-      <Section title="Reembolso">
-        <p>
-          O reembolso será processado após a conclusão da análise da solicitação. O prazo e o
-          método serão informados no atendimento, de acordo com cada caso e com o método de
-          pagamento utilizado na compra.
-        </p>
-      </Section>
-
-      <Section title="Observações">
-        <p>
-          Produtos que já foram utilizados somente serão aceitos para troca ou devolução em
-          caso de defeito de fabricação comprovado.
-        </p>
-        <p>
-          A PetLuxo reserva-se o direito de avaliar cada solicitação individualmente, sempre
-          respeitando os direitos garantidos pelo Código de Defesa do Consumidor.
+          Nossa equipe orientará sobre o procedimento de postagem reversa e o respectivo
+          reembolso ou troca.
         </p>
       </Section>
     </PolicyLayout>

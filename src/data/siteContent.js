@@ -74,8 +74,12 @@ export const FAQS = [
   },
 ];
 
+/* Aviso de entrega único (decisão: constante, não campo por produto).
+ * Texto padrão do advogado, 2026-11-19. */
+export const DELIVERY_NOTE = 'Prazo e frete informados no atendimento pelo WhatsApp, antes da confirmação do pedido.';
+
 export const TROCA_ANSWER = {
-  before: 'Sim! Aceitamos trocas em até 7 dias corridos após o recebimento (produto sem uso, embalagem original). Em caso de defeito de fabricação, o prazo é de 90 dias. Consulte nossa ',
+  before: 'Sim! Aceitamos trocas em até 7 dias corridos após o recebimento. Em caso de defeito de fabricação, o prazo é de 90 dias. Consulte nossa ',
   linkText: 'Política de Troca e Devolução',
   to: '/politica-de-troca-e-devolucao',
   after: ' para mais detalhes.',

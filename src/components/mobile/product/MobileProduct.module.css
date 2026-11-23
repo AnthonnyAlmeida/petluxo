@@ -186,14 +186,14 @@
 .mFreight {
   margin: 10px 0 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   font-size: 13px;
   line-height: 1.4;
   color: var(--ink-soft);
 }
 
-.mFreight svg { flex: none; }
+.mFreight svg { flex: none; margin-top: 1px; }
 
 /* ---------- Variações ---------- */
 .mVariants { margin-top: 26px; }

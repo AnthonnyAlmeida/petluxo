@@ -5,6 +5,7 @@ import { Fragment } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MIcon } from '../MobileIcons.jsx';
 import { useReserveBottomBar } from '../../../hooks/useReserveBottomBar.js';
+import { DELIVERY_NOTE } from '../../../data/siteContent.js';
 import { splitPricePrefix } from '../../../lib/catalog.js';
 import { productWaLink } from '../../../lib/productMessage.js';
 import ui from '../ui/MobileUI.module.css';
@@ -74,11 +75,11 @@ export function VariantPicker({ product, selectedSize, onSelect, weights = {}, s
 }
 
 export function FreightNote({ simple = false }) {
-  if (simple) return <p className={styles.mSimpleFreight}>Frete informado no atendimento pelo WhatsApp</p>;
+  if (simple) return <p className={styles.mSimpleFreight}>{DELIVERY_NOTE}</p>;
   return (
     <p className={styles.mFreight}>
       <MIcon.Truck/>
-      Frete informado no atendimento pelo WhatsApp
+      {DELIVERY_NOTE}
     </p>
   );
 }

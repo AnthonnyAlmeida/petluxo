@@ -10,6 +10,7 @@ import { BrandSeal } from '../ui/BrandSeal.jsx';
 import { Accordion, AccordionItem } from '../ui/Accordion.jsx';
 import { PRODUCTS } from '../../data/products.js';
 import { PRODUCT_DETAILS } from '../../data/productDetails.js';
+import { DELIVERY_NOTE } from '../../data/siteContent.js';
 import { SPEC_LABELS } from '../../data/specLabels.js';
 import { useProductBuy } from '../../hooks/useProductBuy.js';
 import { ProductSizeSelector } from '../product/ProductSizeSelector.jsx';
@@ -103,6 +104,7 @@ function ProductPageContent({ product }) {
                 selectedSize={selectedSize}
                 activePrice={activePrice}
               />
+              <p className={styles.deliveryNote}>{DELIVERY_NOTE}</p>
               <TrustBadges variant="modal" />
             </div>
           </div>

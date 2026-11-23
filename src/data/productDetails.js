@@ -39,7 +39,7 @@ export const PRODUCT_DETAILS = {
       '1 almofada para complementar o cantinho do seu pet',
     ],
     careInstructions: 'Para conservar o tecido, o bordado e os acabamentos, siga as instruções de limpeza indicadas para os materiais utilizados. Confirme as orientações de lavagem antes de higienizar a peça.',
-    warranty: 'Garantia contra defeitos de fabricação.',
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
     faq: [
       { question: 'A Refúgio Cozy é feita sob encomenda?', answer: 'Sim. Todos os tamanhos são produzidos sob encomenda, com personalizações definidas no momento do pedido.' },
       { question: 'O que posso personalizar?', answer: 'Você pode escolher o tecido da cabana, os detalhes da almofada conforme as opções disponíveis e incluir o nome do pet bordado na etiqueta.' },
@@ -88,6 +88,7 @@ export const PRODUCT_DETAILS = {
       { question: 'Como faço a limpeza da Cabana Lumière?', answer: 'Os zíperes permitem retirar o enchimento para lavagem completa da almofada e estrutura.' },
       { question: 'A Cabana Lumière é produzida sob encomenda?', answer: 'Sim. A Cabana Lumière é produzida artesanalmente sob encomenda, com atenção a cada detalhe para garantir exclusividade e qualidade.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   17: {
     gallery: [
@@ -97,6 +98,7 @@ export const PRODUCT_DETAILS = {
       '/images/products/bolsa-voyage-signature/bolsa-voyage-signature-4.webp',
       '/images/products/bolsa-voyage-signature/bolsa-voyage-signature-5.webp',
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   8: {
     gallery: [
@@ -129,7 +131,7 @@ export const PRODUCT_DETAILS = {
     ],
     careInstructions: 'Limpe utilizando pano macio levemente umedecido e detergente neutro. Não utilize álcool, solventes ou produtos abrasivos. Armazene em local seco e protegido da luz solar direta. As tonalidades podem sofrer pequenas variações conforme o lote de fabricação ou a configuração da tela do dispositivo.',
     airTravelNote: 'Este modelo pode ser utilizado em viagens aéreas, porém recomendamos consultar previamente a companhia aérea, pois cada empresa possui regras específicas para dimensões e transporte de animais.',
-    warranty: 'Garantia contra defeitos de fabricação.',
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
     faq: [
       { question: 'A bolsa acompanha alça transversal?', answer: 'Sim. Todos os modelos acompanham alça transversal ajustável e removível.' },
       { question: 'O fundo é removível?', answer: 'Sim. A base é reforçada e removível para facilitar a limpeza.' },
@@ -155,6 +157,7 @@ export const PRODUCT_DETAILS = {
       alturaTotal: '19 cm',
       areaInterna: '53 × 40 cm',
     },
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   37: {
     gallery: [
@@ -175,6 +178,7 @@ export const PRODUCT_DETAILS = {
       dimensoes: '60 × 35 × 40 cm',
       peso: '1 kg',
     },
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   16: {
     gallery: [
@@ -202,6 +206,7 @@ export const PRODUCT_DETAILS = {
       { size: '1.200 ml', height: '20 cm', length: '—', width: '23 cm', weight: '—' },
       { size: '1.800 ml', height: '24 cm', length: '—', width: '26,5 cm', weight: '—' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   9: {
     gallery: [
@@ -223,6 +228,7 @@ export const PRODUCT_DETAILS = {
       'Bolsinha porta acessórios',
     ],
     sizeGuideNote: 'Guia de referência PetLuxo por porte do pet — PP: 2 a 4 kg · M: 9 a 15 kg · G: 15 a 23 kg. Consulte o guia completo de medidas para mais detalhes por raça.',
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   38: {
     gallery: [
@@ -247,6 +253,7 @@ export const PRODUCT_DETAILS = {
       'Detalhe decorativo especial',
     ],
     careInstructions: 'Limpe a estrutura com pano macio e seco, ou levemente umedecido. Evite produtos abrasivos. Não deixe exposto diretamente à chuva e mantenha em ambiente protegido da umidade excessiva. Siga as recomendações de higienização da almofada.',
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   21: {
     gallery: [
@@ -272,6 +279,7 @@ export const PRODUCT_DETAILS = {
       'Almofada com fibra siliconada',
     ],
     careInstructions: 'Higienize com pano macio umedecido e detergente neutro. Evite produtos abrasivos. Abra o zíper para facilitar a limpeza da almofada interna, seguindo as recomendações de higienização do enchimento.',
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   34: {
     specs: {
@@ -290,6 +298,7 @@ export const PRODUCT_DETAILS = {
       '1 Bolsa Térmica Signature Metalassê',
     ],
     sizeGuideNote: 'Medidas realizadas manualmente, podendo apresentar variação aproximada de 1–3 cm.',
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   35: {
     gallery: [
@@ -320,6 +329,7 @@ export const PRODUCT_DETAILS = {
       { question: 'A Manta tem certificação?', answer: 'Sim. O produto é apresentado com certificação OEKO-TEX® STANDARD 100, conforme as informações disponibilizadas pelo fabricante.' },
       { question: 'Em quais lugares posso usar a Manta?', answer: 'Pode ser utilizada sobre camas, sofás, poltronas, canis, carros, caixas de transporte e outras superfícies de descanso, em ambientes internos e externos.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   39: {
     gallery: [
@@ -333,6 +343,7 @@ export const PRODUCT_DETAILS = {
       indicacaoUso: 'Cães de pequeno, médio e grande porte',
       dimensoes: '25,5 cm de altura × 13,5 cm de largura',
     },
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   40: {
     gallery: [
@@ -346,6 +357,7 @@ export const PRODUCT_DETAILS = {
       caracteristicas: 'Macio e resistente a roer',
       dimensoes: '32 cm de altura × 8,5 cm de largura',
     },
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   36: {
     gallery: [
@@ -360,6 +372,7 @@ export const PRODUCT_DETAILS = {
       indicacaoUso: 'Para água e alimento',
       caracteristicas: 'Leve e com mosquetão para prender à guia',
     },
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   41: {
     gallery: [
@@ -401,6 +414,7 @@ export const PRODUCT_DETAILS = {
       { question: 'A bolsa pode ser usada em viagens de avião?', answer: 'É indicada para cabine, mas a aceitação depende das regras, dimensões e condições da companhia aérea.' },
       { question: 'Quais são as dimensões?', answer: 'P: 40 × 20 × 27 cm. M: 40 × 25 × 27 cm.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   42: {
     gallery: [
@@ -443,6 +457,7 @@ export const PRODUCT_DETAILS = {
       { question: 'A bolsa pode ser usada em viagens de avião?', answer: 'É apta para cabine de avião, mas a utilização está sempre sujeita às regras, dimensões e condições da companhia aérea.' },
       { question: 'Como escolher o tamanho ideal do meu pet?', answer: 'A capacidade de peso é uma referência. Antes da compra, recomendamos verificar as dimensões internas da bolsa e o porte do pet para garantir conforto e segurança.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   10: {
     gallery: [
@@ -461,7 +476,7 @@ export const PRODUCT_DETAILS = {
       'Os saquinhos higiênicos NÃO acompanham o produto.',
     ],
     careInstructions: 'Limpar com pano levemente úmido e sabão neutro. Secar naturalmente à sombra. Não lavar à máquina.',
-    warranty: 'Garantia de 6 meses contra defeitos de fabricação.',
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
     faq: [
       { question: 'Os saquinhos higiênicos acompanham o produto?', answer: 'Não. Os saquinhos higiênicos NÃO acompanham o produto. O Porta Saquinhos é vendido separadamente.' },
       { question: 'Qual é o material do porta saquinhos?', answer: 'Couro bovino legítimo.' },
@@ -489,6 +504,7 @@ export const PRODUCT_DETAILS = {
       'Porta acessórios',
     ],
     careInstructions: 'A resistência e durabilidade do produto depende da tração que o animal pratica durante o passeio. Se o seu cachorro puxar muito forte por um determinado tempo a resistência do produto pode diminuir. É importante treinar o seu cão para caminhar ao seu lado e não puxar a guia para evitar esse tipo de problema.',
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   20: {
     gallery: [
@@ -536,6 +552,7 @@ export const PRODUCT_DETAILS = {
         answer: 'Ele combina com salas, quartos, cozinhas e varandas cobertas. Também pode funcionar como peça decorativa ou organizadora.',
       },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   43: {
     gallery: [
@@ -571,6 +588,7 @@ export const PRODUCT_DETAILS = {
       { question: 'Como escolher o tamanho ideal?', answer: 'Pela referência de peso do pet: PP de 2 a 4 kg, M de 4 a 15 kg e G de 15 a 23 kg.' },
       { question: 'Como limpar o kit?', answer: 'Com pano macio levemente umedecido, evitando produtos abrasivos, imersão em água e exposição prolongada ao sol ou à umidade.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   33: {
     gallery: [
@@ -608,6 +626,7 @@ export const PRODUCT_DETAILS = {
       { question: 'O reservatório é hermético?', answer: 'Sim.' },
       { question: 'O que acompanha o reservatório?', answer: 'Apenas o reservatório. O dessecante e o copo medidor não acompanham o produto.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   44: {
     gallery: [
@@ -638,6 +657,7 @@ export const PRODUCT_DETAILS = {
       { question: 'Qual é o material?', answer: 'O fornecedor anuncia couro bovino de flor integral, com construção em camada dupla.' },
       { question: 'Como cuidar da peça?', answer: 'Limpar delicadamente com pano macio e seco, evitar exposição prolongada à umidade e armazenar em local arejado.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   45: {
     gallery: [
@@ -668,6 +688,7 @@ export const PRODUCT_DETAILS = {
       { question: 'Qual é o material?', answer: 'Couro genuíno, conforme especificação do fornecedor.' },
       { question: 'Como fazer a limpeza?', answer: 'Limpar delicadamente com pano macio e seco. Evitar exposição prolongada à umidade e armazenar em local arejado.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
   46: {
     gallery: [
@@ -695,5 +716,6 @@ export const PRODUCT_DETAILS = {
       { question: 'A guia tem alça de mão?', answer: 'Sim, a alça de mão é integrada.' },
       { question: 'Como fazer a limpeza?', answer: 'Limpar delicadamente com pano macio e seco. Evitar exposição prolongada à umidade e armazenar em local arejado.' },
     ],
+    warranty: 'Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC.',
   },
 };
