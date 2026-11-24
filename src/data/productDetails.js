@@ -634,7 +634,6 @@ export const PRODUCT_DETAILS = {
       '/images/products/peitoral-elan-signature/peitoral-elan-signature-2.webp',
       '/images/products/peitoral-elan-signature/peitoral-elan-signature-3.webp',
       '/images/products/peitoral-elan-signature/peitoral-elan-signature-4.webp',
-      '/images/products/peitoral-elan-signature/peitoral-elan-signature-5.webp',
     ],
     specs: {
       material: 'Couro bovino de flor integral (anunciado pelo fornecedor)',

@@ -466,7 +466,7 @@ Amostra pedida (ids 43, 44, 45) e mais 5 produtos variados:
 | id | Pasta | Dimensões | Proporção (L/A) | Fotos na pasta |
 | --- | --- | --- | --- | --- |
 | 43 | `kit-elan-rosa` | 1536 × 1024 | 1,50 (paisagem 3:2) | 5 (galeria: 1,50 ×3, 1,499, **0,914** na foto 5) |
-| 44 | `peitoral-elan-signature` | 1312 × 1199 | 1,09 (quase quadrada) | 5 (1,09 ×4, 1,00 ×1) |
+| 44 | `peitoral-elan-signature` | 1312 × 1199 | 1,09 (quase quadrada) | 4 (1,09 ×3, 1,00 ×1) |
 | 45 | `porta-saquinhos-premium-elan` | 1122 × 1402 | 0,80 (retrato 4:5) | 4 (todas 0,80) |
 | 40 | `polvo-mimo` | 1064 × 1620 | **0,66** (a mais vertical) | 2 |
 | 21 | `executive-bed` | 1086 × 1448 | 0,75 (retrato 3:4) | 5 |
