@@ -38,7 +38,7 @@ petluxo/
 │   └── images/
 │       ├── brand/       # Logo e assets de marca
 │       └── products/    # Fotos dos produtos (vão para o git)
-├── assets/              # Assets importados pelo Vite (logo, hero)
+├── assets/              # Assets importados pelo Vite (só logo.webp, usada pelo mobile)
 ├── src/
 │   ├── app/
 │   │   ├── page.jsx     # Rotas, HomePage, CatalogPage e SearchPage
@@ -47,9 +47,10 @@ petluxo/
 │   ├── components/
 │   │   ├── layout/      # Navbar (com menu hambúrguer), MinimalNavbar e Footer
 │   │   ├── product/     # ProductCard, ProductGrid (carrossel), ProductGallery, ProductLightbox, ProductSizeSelector, ProductBuyButton
-│   │   ├── sections/    # Hero, Featured, Products, Story, Differentials, CTA, FAQ, NotFound
+│   │   ├── sections/    # Hero, TrustStrip, Featured, Products, Story, Differentials, CTA, FAQ, NotFound
 │   │   ├── pages/       # ProductPage, PolicyLayout e páginas de política (privacidade, troca, frete, termos)
-│   │   ├── ui/          # Accordion, AnalyticsConsent, BrandSeal, CategorySelector, TrustBadges
+│   │   ├── ui/          # Accordion, AnalyticsConsent, BrandMark, BrandSeal, CategorySelector, SectionTag, TrustBadges
+│   │   │   └── art/     # Arte desktop em SVG: Dog, Cat, Medal, Sparkle, PeekingCat, svgId.js, art.module.css
 │   │   └── mobile/      # Layout mobile (< 768px): ui/, layout/ (header, tab bar, rodapé), home/, catalog/, search/, product/, policy/, notfound/, MobileIcons.jsx
 │   ├── data/
 │   │   ├── products.js  # Catálogo de produtos — fonte de verdade
@@ -57,7 +58,8 @@ petluxo/
 │   │   ├── siteContent.js # Textos institucionais (hero, história, diferenciais, FAQ, rodapé), fonte única de desktop e mobile
 │   │   └── specLabels.js  # Rótulos das especificações da ficha
 │   ├── hooks/
-│   │   ├── useScroll.js # Animações de scroll (IntersectionObserver + parallax)
+│   │   ├── useScroll.js # Reveal da home desktop (IntersectionObserver)
+│   │   ├── useHoverState.js # Hover da arte animada (mouse, foco visível, toque temporário)
 │   │   ├── useProductBuy.js # Tamanho selecionado, link e preço ativos
 │   │   ├── useMediaQuery.js # useIsMobile (< 768px) e prefers-reduced-motion
 │   │   ├── useDocumentHead.js # title, description, canonical e robots por rota
@@ -66,10 +68,11 @@ petluxo/
 │   │   ├── whatsapp.js  # Gera links de WhatsApp com mensagem pré-preenchida
 │   │   ├── catalog.js   # Consultas ao catálogo (visibilidade, ordem, busca, preço)
 │   │   ├── productMessage.js # Mensagem de WhatsApp por produto
+│   │   ├── text.js      # splitLastWord (itálico na última palavra dos títulos)
 │   │   └── analytics.js # GA4 com consentimento (carrega gtag.js só após aceite)
 │   ├── styles/
 │   │   ├── variables.css  # Design tokens: cores, fontes, espaçamentos
-│   │   ├── globals.css    # Reset, utilitárias, tipografia e .reveal (166 linhas)
+│   │   ├── globals.css    # Reset, .wrap, .grain, .reveal e foco visível do desktop (101 linhas)
 │   │   └── buttons.css    # .btn e variantes
 │   ├── icons.jsx          # Ícones SVG inline (sem biblioteca externa)
 │   ├── tweaks-panel.jsx   # Painel de ajustes de design (apenas em dev)
@@ -87,7 +90,7 @@ petluxo/
 └── docs/                # Esta pasta — documentação do projeto
 ```
 
-> **Imagens:** as de produtos (`public/images/products/`) e `og-image.png` / `og-image.jpg` vão para o git. A imagem do hero fica em `assets/hero/image-hero.webp` (importada pelo Vite).
+> **Imagens:** as de produtos (`public/images/products/`) e `og-image.png` / `og-image.jpg` vão para o git. Em `assets/` resta só `logo.webp` (cabeçalho e rodapé do mobile, importado pelo Vite); a Hero e o Sobre nós do desktop são arte em código (`src/components/ui/art/` e as próprias seções), sem foto.
 
 ## Como rodar localmente
 
@@ -114,7 +117,7 @@ npm run dev -- --host
 npm run build
 ```
 
-O build roda antes o validador de catálogo (`scripts/validate-catalog.js`); se houver erro no catálogo, o build falha. Depois do Vite, `scripts/generate-sitemap.js` grava `dist/sitemap.xml`. Para rodar só o validador: `npm run validate:catalog`. Os arquivos finais são gerados na pasta `dist/`. Tamanho atual: JS principal ~342 kB (~105 kB gzip) e CSS ~55 kB (~11 kB gzip). Para visualizar o build localmente antes de subir:
+O build roda antes o validador de catálogo (`scripts/validate-catalog.js`); se houver erro no catálogo, o build falha. Depois do Vite, `scripts/generate-sitemap.js` grava `dist/sitemap.xml`. Para rodar só o validador: `npm run validate:catalog`. Os arquivos finais são gerados na pasta `dist/`. Tamanho atual: JS principal 443,85 kB (136,28 kB gzip) e CSS 114,41 kB (22,08 kB gzip); o `ProductLightbox` (só em toque) é separado, com 42,10 kB de JS (15,43 kB gzip) e 5,94 kB de CSS. Para visualizar o build localmente antes de subir:
 
 ```bash
 npm run preview

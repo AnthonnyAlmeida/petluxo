@@ -42,11 +42,11 @@ PetLuxo apresenta um catálogo de produtos premium para pets com foco em camas, 
 |---|---|
 | 🛍️ **Catálogo dinâmico** | 41 produtos em 9 categorias (29 visíveis), carregados de um arquivo `products.js` centralizado |
 | 🎠 **Carrosséis por categoria** | Um carrossel por categoria com setas laterais, dots de paginação e swipe touch |
-| 📱 **Layout mobile próprio** | Abaixo de 768px o site usa componentes próprios (home em cenas, catálogo, busca, ficha); a partir de 768px o layout desktop segue igual |
+| 📱 **Layout mobile próprio** | Abaixo de 768px o site usa componentes próprios (home em cenas, catálogo, busca, ficha); a partir de 768px o layout desktop novo (home, `/produtos`, ficha, políticas, 404 e banner de cookies; descrição em `docs/DESIGN_SYSTEM.md` §15) |
 | 💳 **Links PagBank** | Cada produto mantém `buyLink` / `buyLinks`, mas o botão "Comprar Agora" está oculto por `HIDE_BUY_CTA` em `ProductBuyButton.jsx` |
 | 💬 **Consulta via WhatsApp** | CTA ativo "Consultar via WhatsApp", com mensagem pré-preenchida (nome, variação, preço e link da ficha) |
-| 📱 **Totalmente responsivo** | Layout adaptado para desktop (≥980px), tablet (≤980px) e mobile (≤768px / ≤480px) |
-| ✨ **Animações de scroll** | Reveal de elementos com `IntersectionObserver` e efeito parallax no logo da navbar |
+| 📱 **Totalmente responsivo** | Dois layouts: desktop a partir de 768px (do iPad retrato a 2560px; Navbar com gaveta abaixo de 1024px) e mobile abaixo de 768px (componentes próprios) |
+| ✨ **Animações de scroll** | Reveal de elementos com `IntersectionObserver` (sem parallax); arte animada em SVG com CSS (hover, foco e toque), parada com `prefers-reduced-motion` |
 | 🔎 **SEO básico** | Open Graph completo, Twitter Card, sitemap.xml gerado no build, meta tags por produto via Worker, robots.txt, GA4 com consentimento |
 | ⚡ **Performance** | Build em ~5s, hot reload instantâneo, DevTweaks excluído do bundle de produção |
 
@@ -87,13 +87,13 @@ petluxo/
 │   ├── components/
 │   │   ├── layout/          # Navbar (hambúrguer mobile) · MinimalNavbar · Footer
 │   │   ├── product/         # ProductCard · ProductGrid · ProductGallery · ProductLightbox · ProductSizeSelector · ProductBuyButton
-│   │   ├── sections/        # Hero · Featured · Products · Story · Differentials · CTA · FAQ · NotFound
+│   │   ├── sections/        # Hero · TrustStrip · Featured · Products · Story · Differentials · CTA · FAQ · NotFound
 │   │   ├── pages/           # ProductPage · PrivacyPage · ReturnPolicyPage · ShippingPolicyPage · TermsPage
-│   │   └── ui/              # Accordion · AnalyticsConsent · BrandSeal · CategorySelector · TrustBadges
+│   │   └── ui/              # Accordion · AnalyticsConsent · BrandMark · BrandSeal · CategorySelector · SectionTag · TrustBadges · art/ (arte SVG do desktop)
 │   ├── data/
 │   │   ├── products.js      # ← Fonte de verdade do catálogo
 │   │   └── productDetails.js # Fichas expandidas por id
-│   ├── hooks/               # useScroll.js (IntersectionObserver + parallax) · useProductBuy.js
+│   ├── hooks/               # useScroll.js (reveal com IntersectionObserver) · useHoverState.js · useProductBuy.js
 │   ├── lib/
 │   │   ├── whatsapp.js      # Gerador de links wa.me
 │   │   └── analytics.js     # GA4 com consentimento
@@ -115,7 +115,7 @@ petluxo/
 ## Decisões Técnicas
 
 **CSS Modules sem framework**
-Controle total sobre o design, bundle enxuto e identidade visual 100% proprietária. Os componentes têm `.module.css` próprio com estilos scoped (23 módulos). Estilos globais divididos em: `variables.css` (tokens), `globals.css` (166 linhas de reset/utilitárias) e `buttons.css` (`.btn` e variantes, importado explicitamente por cada componente que usa botões). Os `@keyframes` ficam nos próprios módulos (`Hero.module.css`, `Products.module.css`).
+Controle total sobre o design, bundle enxuto e identidade visual 100% proprietária. Os componentes têm `.module.css` próprio com estilos scoped (44 módulos: 28 do desktop e 16 do mobile). Estilos globais divididos em: `variables.css` (tokens), `globals.css` (101 linhas: reset, `.wrap`, `.reveal`, foco visível do desktop) e `buttons.css` (`.btn` e variantes, importado explicitamente por cada componente que usa botões). Os `@keyframes` ficam nos próprios módulos (por exemplo `Hero.module.css`, `Products.module.css` e `ui/art/art.module.css`).
 
 **Carrossel sem biblioteca externa**
 Implementado com React state + `transform: translateX`. Setas laterais usam flexbox (não `position: absolute`) para evitar clipping em containers com `overflow: hidden`. Suporte a swipe touch com detecção de direção e limiar de 50px.

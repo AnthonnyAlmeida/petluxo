@@ -1,0 +1,22 @@
+/* PetLuxo — SectionTag.module.css */
+
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--vinho);
+}
+
+.line {
+  width: 40px;
+  height: 1px;
+  flex: none;
+  background: var(--dourado);
+}
+
+.dark { color: var(--dourado); }

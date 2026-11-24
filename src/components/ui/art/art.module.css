@@ -1,0 +1,165 @@
+/* PetLuxo — art.module.css
+ * Animações da arte desktop compartilhada (medalha, cachorro, gato,
+ * faíscas). O estado vem do React (props → classes); nenhuma regra depende
+ * de hover em outro elemento. Origens com transform-box: fill-box (o
+ * view-box tem suporte irregular no Safari/iPad). */
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+@keyframes swing {
+  0% { transform: rotate(22deg); }
+  20% { transform: rotate(-17deg); }
+  40% { transform: rotate(11deg); }
+  60% { transform: rotate(-7deg); }
+  80% { transform: rotate(3deg); }
+  100% { transform: rotate(0); }
+}
+@keyframes flipx {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(0.04); }
+  100% { transform: scaleX(1); }
+}
+/* Cópias de swing e flipx: a medalha reinicia o tranco alternando entre o
+ * nome e a cópia (o navegador só reinicia a animação quando o nome muda), sem
+ * remontar o SVG: as faces continuam as mesmas e a troca acompanha o giro. */
+@keyframes swingB {
+  0% { transform: rotate(22deg); }
+  20% { transform: rotate(-17deg); }
+  40% { transform: rotate(11deg); }
+  60% { transform: rotate(-7deg); }
+  80% { transform: rotate(3deg); }
+  100% { transform: rotate(0); }
+}
+@keyframes flipxB {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(0.04); }
+  100% { transform: scaleX(1); }
+}
+@keyframes wag {
+  0%, 100% { transform: rotate(-14deg); }
+  50% { transform: rotate(16deg); }
+}
+@keyframes tilt {
+  0%, 100% { transform: rotate(0); }
+  30%, 70% { transform: rotate(-9deg); }
+}
+@keyframes swish {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(8deg); }
+}
+@keyframes blink {
+  0%, 94%, 100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.08); }
+}
+@keyframes nod {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(4px); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Parada clara dos degradês dourados (stop-color aceita var(); o atributo SVG não) */
+.stopLight { stop-color: var(--dourado-claro); }
+
+/* ---- Medalha da Hero: pendurada pelo topo do fio ----
+ * `.medal` balança sempre (nunca é trocada, então não há salto); o tranco
+ * (`.medalKick`) é um grupo interno com a própria animação, que termina em 0°
+ * e se soma ao balanço. */
+.medal {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: sway 5s ease-in-out infinite;
+}
+.medalHover { animation-duration: 1.6s; }
+
+.medalKick {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+.medalSwingA { animation: swing 1.5s ease-out 1; }
+.medalSwingB { animation: swingB 1.5s ease-out 1; }
+
+.medalFace {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.medalFlipA { animation: flipx 0.7s ease-in-out 1; }
+.medalFlipB { animation: flipxB 0.7s ease-in-out 1; }
+
+.monogram {
+  font-family: var(--serif);
+  font-size: 50px;
+  font-weight: 600;
+  fill: var(--vinho);
+}
+
+.faceA,
+.faceB { transition: opacity 0.2s 0.25s; }
+.faceB { opacity: 0; }
+.flipped .faceA { opacity: 0; }
+.flipped .faceB { opacity: 1; }
+
+/* ---- Cachorro ---- */
+.dogTail {
+  transform-box: fill-box;
+  transform-origin: 100% 50%;
+}
+.dogWag { animation: wag 0.38s ease-in-out infinite; }
+
+.dogHead {
+  transform-box: fill-box;
+  transform-origin: 50% 90%;
+}
+.dogTiltOnce { animation: tilt 1.2s ease-in-out 1; }
+.dogTiltLoop { animation: tilt 1.4s ease-in-out infinite; }
+
+/* ---- Gato ---- */
+.catTail {
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+}
+.catSwish { animation: swish 1.6s ease-in-out infinite; }
+.catSwishFast { animation: swish 1.2s ease-in-out infinite; }
+
+.catEyes {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: blink 6s infinite;
+}
+.catBlinkFast { animation: blink 0.5s 2; }
+
+.catNodOnce { animation: nod 1s ease-in-out 1; }
+.catNodLoop { animation: nod 1.6s ease-in-out infinite; }
+
+/* ---- Faísca de quatro pontas ---- */
+.sparkle {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: twinkle 3.2s ease-in-out infinite;
+}
+
+/* Movimento reduzido: tudo parado (mesma especificidade, declarado depois) */
+@media (prefers-reduced-motion: reduce) {
+  .medal,
+  .medalSwingA,
+  .medalSwingB,
+  .medalFlipA,
+  .medalFlipB,
+  .dogWag,
+  .dogTiltOnce,
+  .dogTiltLoop,
+  .catSwish,
+  .catSwishFast,
+  .catEyes,
+  .catBlinkFast,
+  .catNodOnce,
+  .catNodLoop,
+  .sparkle { animation: none; }
+
+  .faceA,
+  .faceB { transition: none; }
+}

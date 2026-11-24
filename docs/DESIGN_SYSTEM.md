@@ -2,7 +2,7 @@
 
 > **Este documento descreve o site COMO ELE É, não como deveria ser.** Todo valor foi extraído do código (CSS Modules, `src/styles/`, JSX); a origem é citada pelo nome do arquivo ou da seção. Onde não existe regra, está escrito "não consta"; onde dois pontos do código divergem, está escrito "inconsistente: A em X, B em Y". Quando o código e este documento divergirem, o código vale.
 >
-> Há dois layouts no mesmo app: **abaixo de 768px** o mobile (seção 14, componentes em `src/components/mobile/`) e **a partir de 768px** o desktop (seções 2 a 13 descrevem o desktop e os tokens comuns). A diferença entre **regra** (padrão repetido e intencional) e **acidente** (valor solto, duplicado ou contraditório) está marcada ao longo do texto e consolidada na seção 11.
+> Há dois layouts no mesmo app: **abaixo de 768px** o mobile (seção 14, componentes em `src/components/mobile/`) e **a partir de 768px** o desktop. O desktop foi redesenhado em 2026-11-23: **a seção 15 descreve o desktop atual e vale sobre as seções 2 a 13**, que continuam como retrato do desktop anterior (úteis para os tokens comuns e para o histórico das decisões). A diferença entre **regra** (padrão repetido e intencional) e **acidente** (valor solto, duplicado ou contraditório) está marcada ao longo do texto e consolidada na seção 11.
 
 ## Sumário
 
@@ -20,6 +20,7 @@
 12. Restrições para o redesign
 13. Apêndice: arquivos lidos
 14. Layout mobile (< 768px)
+15. Layout desktop (≥ 768px), redesign de 2026-11-23
 
 ---
 
@@ -455,7 +456,7 @@ Layout de texto (`PolicyLayout`; mobile: `MobilePolicyLayout`, seção 14.7; tex
 
 - Produtos: `public/images/products/<slug>/principal.webp` (obrigatório, usado em card, modal, destaque e `og:image`) + `<slug>-2.webp`, `<slug>-3.webp`… (galeria da ficha, listada em `PRODUCT_DETAILS[id].gallery`). Servidas como `/images/products/<slug>/…`.
 - O `slug` é o nome da pasta, em geral derivado do nome do produto (`kit-elan-rosa`, `porta-saquinhos-premium-elan`). Há pastas legadas fora do padrão (`cama-suspensa-rattan-aura/` com `01.webp…`, `manta-serenity-petluxo-premium/` com prefixo `manta-serenity-`).
-- Marca e hero (importados pelo Vite, em `assets/`): `logo.webp`, `hero/image-hero.webp`, `sobre_nos/*.webp`. Compartilhamento: `public/og-image.jpg` (1200×630) e `og-image.png` (1536×1024).
+- Marca (importada pelo Vite, em `assets/`): só `logo.webp` (usada pelo mobile). As fotos antigas da Hero e do Sobre nós (`hero/image-hero.webp`, `sobre_nos/*.webp`) foram apagadas em 2026-11-23; o desktop usa arte em código. Compartilhamento: `public/og-image.jpg` (1200×630) e `og-image.png` (1536×1024).
 - Formato: todas as fotos de produto são WebP (97 arquivos `.webp` em `public/images/products`; conferido com `file`: "Web/P image"). O limite combinado de ~150 KB não é validado: 23 dos 97 passam disso.
 
 ### 8.2 Proporções reais (40 fotos principais, `identify`)
@@ -714,3 +715,88 @@ Folha inferior sem fundo escurecido (o banner não bloqueia a navegação), alç
 - Modais (`BottomSheet`, `ImageViewer`) usam `useModalFocus`: `#app` inerte e `aria-hidden`, foco preso, Esc fecha, foco volta ao gatilho.
 - Um h1 por página, h2 por seção, landmarks, `alt` nas fotos e `aria-label` nos botões de ícone. O conteúdo escondido (FAQ, acordeões) continua no DOM (`hidden="until-found"`), para buscadores e para a busca do navegador.
 - Todas as animações são CSS; não há biblioteca de animação.
+
+---
+
+## 15. Layout desktop (≥ 768px), redesign de 2026-11-23
+
+Porte do desenho aprovado em 2026-11-23 (arquivos `.dc.html` do canvas, fora do repositório; só referência visual). Os textos vêm de `src/data/siteContent.js` (bloco "Layout desktop" no fim do arquivo), `products.js` e `productDetails.js`. O mobile (seção 14) não mudou. Em divergência com as seções 2 a 13, esta seção e o código valem.
+
+### 15.1 Tokens e fontes
+
+| Token | Valor | Uso |
+| --- | --- | --- |
+| `--ink` / `--ink-soft` | #2A2522 / #5C5550 | texto, fundo escuro (Diferenciais, rodapé) / texto secundário |
+| `--vinho` / `--vinho-soft` | #6B1E2B / #7A2A38 | ação, itálico de destaque nos fundos claros / hover do botão |
+| `--offwhite`, `--bege`, `--bege-soft` | #F8F6F3, #E8DED2, #EFE7DC | fundo, fundo da seção Sobre nós e da foto do destaque, faixas (confiança, FAQ, selo da ficha) |
+| `--caramelo`, `--dourado` | #B08968, #C6A96B | pontos de lista da CTA; filetes, contornos, itálico nos fundos escuros |
+| `--bege-deep` (novo) | #D9CBB9 | separadores finos, chão da arte |
+| `--dourado-claro` (novo) | #E3CE96 | parada clara dos degradês dourados das artes (classe `.stopLight` em `art.module.css`, porque `stop-color` aceita `var()` e o atributo SVG não) e olhos do gato do 404 |
+| `--nav-h` (novo) | 84px | altura da Navbar fixa (20 + 44 + 20) |
+
+- Degradês dentro das artes: radial #E3CE96 → #C6A96B (medalhas, coleira, campainha) e linear #E3CE96 → #C6A96B → #B08968 (404). Botão dourado: #D3B87A → #C6A96B → #B8936F (`.btn-gold`). Tons só da arte: #A07A59 e #8C6A4C (cachorro), #8E7440 (contorno da campainha).
+- Sem tokens de raio: 999px (pílulas), 16px (cartões de arte, foto do destaque), 14px (banner), 10px (cartões 7/90), 8px (galeria, cartões laterais), 6px (cards, miniaturas).
+- Fontes (`main.jsx`): Cormorant Garamond 400/500/600 e itálicos 400/500/600 (o 600 entrou neste redesign; o 400 segue em uso no mobile), Inter 300–600, JetBrains Mono 400/500. Títulos em Cormorant 500 com uma palavra/trecho em `<em>` (vinho no claro, dourado no escuro); nomes, preços e perguntas em Cormorant 600; rótulos em JetBrains Mono 11–12px, caixa alta, `letter-spacing` 0.12–0.18em; texto corrido em Inter 15–17px.
+- Observação: no Chromium, o circunflexo da Cormorant ("elegância", "você") aparece deslocado tanto no desktop quanto no mobile; é da fonte (subconjunto latin), não do layout.
+
+### 15.2 Estrutura, alturas e breakpoints
+
+- Contêiner `.wrap`: 1320px + `clamp(24px, 4vw, 64px)` de cada lado.
+- Navbar fixa com `--nav-h`: as páginas compensam com `padding-top: var(--nav-h)` e as seções com âncora têm `scroll-margin-top: var(--nav-h)`.
+- Requisito da Home: cada seção cabe inteira na altura útil (viewport − `--nav-h`), sem altura forçada. A arte da Hero limita a largura por `100svh`. Produtos: as pills ficam numa linha com rolagem horizontal abaixo de 900px de altura (e, de 768 a 1023px de largura, até 969px de altura); abaixo de 760px de altura o respiro, o título e o palco dos cards diminuem (palco 3:2 via `--stage-ratio`, lida por `ProductCard.module.css`), e abaixo de 680px mais um passo (16:9). Medido com Playwright no build de produção (altura da seção em px; Hero sem o espaço da Navbar; `!` = passa da altura útil):
+
+| Viewport (útil) | Hero | Destaque | Produtos | Sobre nós | Diferenciais | CTA | FAQ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1920 × 1080 (996) | 596 | 564 | 726 | 597 | 592 | 520 | 620 |
+| 1440 × 900 (816) | 596 | 564 | 729 | 597 | 592 | 520 | 620 |
+| 1366 × 800 (716) | 596 | 564 | 681 | 597 | 590 | 520 | 618 |
+| 1366 × 720 (636) | 596 | 564 | 591 | 597 | 590 | 520 | 618 |
+| 1440 × 720 (636) | 596 | 564 | 591 | 597 | 592 | 520 | 620 |
+| 1920 × 720 (636) | 596 | 564 | 588 | 597 | 592 | 520 | 620 |
+| 1280 × 720 (636) | 596 | 564 | 582 | 597 | 587 | 520 | 614 |
+| 1180 × 820 (736) | 596 | 564 | 640 | 597 | 583 | 520 | 610 |
+| 1024 × 768 (684) | 596 | 564 | 597 | 634 | 553 | 520 | 595 |
+| 820 × 1180 (1096) | 522 | 555 | 777 | 632 | 584 | 540 | 612 |
+| 768 × 1024 (940) | 648 | 555 | 877 | 685 | 608 | 608 | 619 |
+| 768 × 900 (816) | 648 | 555 | 675 | 685 | 608 | 608 | 619 |
+| 768 × 720 (636) | 648 ! | 555 | 597 | 685 ! | 608 | 608 | 619 |
+
+  **Limites reais (o que não cabe):** (1) 768 × 720: a Hero (648) e o Sobre nós (685) passam de 636px; é um tamanho que nenhum aparelho real tem (o iPad retrato é 768 × 1024, onde tudo cabe) e as duas seções empilham em duas colunas estreitas, então caber exigiria encolher a arte ao ponto de estragar o desenho. (2) Alturas de tela abaixo de ~700px: Sobre nós (597–615), Diferenciais (576–592) e FAQ (607–620) são mais altos que a altura útil (ex.: 1366 × 657, zoom de 125% em 1366 × 768 = 1093 × 614, zoom de 150% em 1440 × 900 = 960 × 600). Em 960 × 600 o Produtos também passa (525 contra 516). (3) Nesses tamanhos nada quebra: sem rolagem horizontal, sem sobreposição e sem texto cortado (só o `line-clamp` intencional do Destaque); a seção só ocupa mais que uma tela e a página rola.
+
+  A faixa de confiança (100px; 164px em duas linhas) fica logo abaixo da Hero, fora do requisito.
+- Breakpoints do desktop: `max-width: 1179.98px` (Navbar compacta), `1023.98px` (iPad retrato: Navbar com gaveta; Hero, Destaque, Sobre nós, Diferenciais e FAQ mantêm duas colunas com bases menores; políticas com a coluna lateral no topo), `1279.98px` (ficha: galeria e informações lado a lado em 1024px), `max-height: 899.98px` (e, de 768 a 1023px de largura, `969.98px`), `759.98px` e `679.98px` (Produtos), `max-height: 559.98px` (404: a arte sai). Abaixo de 768px, o mobile.
+
+### 15.3 Componentes
+
+- **`ui/BrandMark`**: medalha "PL" (SVG 40px) + "PetLuxo" (Cormorant 600, 26px; 40px no rodapé, sem medalha). Usado por Navbar, MinimalNavbar e Footer.
+- **`ui/SectionTag`**: rótulo "02 —— NOSSOS PRODUTOS" (mono 12px, vinho; `tone="dark"` dourado); número e fio opcionais.
+- **Botões (`styles/buttons.css`)**: `.btn` pílula de 52px, mono 12px caixa alta, 0.16em; `btn-primary` (vinho), `btn-ghost` (contorno tinta, enche no hover), `btn-outline` (contorno vinho), `btn-gold`, `btn-raised` (sombra vinho), `btn-sm` (44px, Navbar), `btn-full` (54px, ficha). O mobile não usa `.btn`.
+- **Navbar / MinimalNavbar**: fixas, fundo com blur depois de 24px de rolagem; Navbar com as âncoras `NAV_LINKS` (Coleção, Sobre nós, Diferenciais, Contato, Dúvidas → `#produtos`, `#sobre`, `#diferenciais`, `#contato`, `#faq`) e gaveta abaixo de 1024px (Esc fecha e devolve o foco ao hambúrguer; clicar ou tocar fora, ou num link, também fecha); MinimalNavbar (ficha, políticas, 404) só com marca e WhatsApp.
+- **Footer**: faixa escura; marca, frase, WhatsApp; colunas Políticas (4 links + botão "Preferências de cookies") e Contato (e-mail, Instagram); linha legal.
+- **Home**: Hero (arte em arco interativa) → TrustStrip (4 títulos de `DIFFERENTIALS`) → Featured (foto quadrada, gato espiando, WhatsApp, menor preço) → Products (busca, pills, "Ver mais produtos / Ver menos" na linha dos filtros, carrosséis por categoria com pontos no cabeçalho e setas laterais, grid de resultados) → Story (arte "curadoria") → Differentials (lista + medalhas) → CTA (anéis, cachorro e gato) → FAQ (campainha + acordeão).
+- **ProductCard**: `Link` para `/produto/:id`; palco 4:3 `contain` em degradê bege; "+" e badge sobre a foto; nome Cormorant 600 20px; preço 19px + "VIA WHATSAPP"; sobe 6px no hover.
+- **Ficha**: galeria (miniaturas verticais 72px, foto 5:4, setas 44px, contador, zoom 1.35 por hover com origem no cursor; lightbox em toque), nome, subtítulo, preço, seletor em pílulas, abas Descrição/Destaques, WhatsApp, aviso de entrega, `TrustBadges` (4 garantias), faixa `BrandSeal` (6 itens com ícones de traço), "Detalhes da peça" em acordeão (ícone "+" que gira; o primeiro abre por padrão).
+- **Políticas (`PolicyLayout` + módulo)**: coluna lateral fixa ao rolar (título, `NavLink` das 4 políticas, cartão "Ficou com dúvida?"), leitura com h1 vinho, data, cartões 7 e 90 (`HIGHLIGHTS`) e corpo estilizado por descendência.
+- **404**: "4 [medalha] 4" + gato; a medalha vira no clique (patinha ↔ "?").
+- **Banner de cookies**: cartão de 440px no canto inferior esquerdo, régua dourada, rótulo "Privacidade", título Cormorant 30px, dois botões iguais (contorno vinho, enchem no hover).
+
+### 15.4 Arte em código (`src/components/ui/art/`)
+
+- `Dog.jsx` e `Cat.jsx`: desenhados nas coordenadas da Hero (viewBox 520 × 650) e reaproveitados pela CTA com outro `viewBox` (sem SVG duplicado). Props de estado: `Dog` (`wag`, `tilt: 'once' | 'loop'`), `Cat` (`swish: 'slow' | 'fast'`, `nod: 'once' | 'loop'`, `blink: 'fast'`).
+- `Medal.jsx` (medalha "PL" da Hero: `hover`, `kick` (contador de cliques; cada incremento reinicia o tranco e o giro alternando entre `swing`/`swingB` e `flipx`/`flipxB`, sem remontar o SVG, então a troca de face acompanha o giro e o balanço não pula), `flipped`), `Sparkle.jsx` (faísca de quatro pontas, `x`, `y`, `r`, `delay`), `PeekingCat.jsx` (gato em traço do Destaque), `svgId.js` (`useSvgId`: id único sem ":" para gradientes e clipPath, porque cada arte pode aparecer mais de uma vez na página).
+- `art.module.css` concentra os `@keyframes` dessas peças (sway, swing, swingB, flipx, flipxB, wag, tilt, swish, blink, nod, twinkle). Artes de uso único ficam na própria seção, com keyframes no próprio módulo: curadoria (`Story`), medalhas no trilho (`Differentials`), campainha (`FAQ`), 404 (`NotFound`), anéis (`CTA`), trilha tracejada (`Hero`).
+- Regras: `transform-box: fill-box` com `transform-origin` em % (nunca `view-box`, por causa do Safari/iPad); o `<g>` que posiciona (`transform="translate(…)"`) é separado do `<g>` animado, porque o `transform` do CSS substitui o atributo; as ilustrações têm `role="img"` + `aria-label`, os enfeites `aria-hidden`.
+
+### 15.5 Movimento
+
+- Só CSS. O estado vem do React e vira classe (hover/foco → `hover`, clique → `act`/`ringing`); as reações de uma vez do cachorro e do gato remontam a peça com `key` para poder repetir (a medalha reinicia por contador, sem remontar); o hover de Hero, CTA e campainha vem de `hooks/useHoverState.js` (mouse: `pointerenter`/`pointerleave`; teclado: foco visível; toque: estado temporário de 1,6s com timeout limpo, sem ficar preso); todo `setTimeout` é limpo na desmontagem (padrão do `MobileHero`).
+- Infinitas: balanço da medalha (5s), piscar do gato (6s), faíscas (3.2s), órbita da curadoria (90s), coração (3.4s), medalhas do trilho (5.5s), anéis da CTA (80s), medalha e cauda do 404. De interação: rabo e cabeça do cachorro, cauda/cabeça/olhos do gato, giro da medalha, campainha (1,8s), balão da CTA, crescimento da medalha escolhida, fio da curadoria.
+- `prefers-reduced-motion: reduce`: cada módulo termina com um bloco que zera animações e transições com a mesma especificidade (sem `!important`); o `.reveal` aparece sem deslizar e a rolagem suave é desligada (`globals.css`, só ≥ 768px; o mobile não muda; o `scrollIntoView` e o `scrollTo` do desktop usam `usePrefersReducedMotion`). Depois de entrar, o `.reveal` solta o `will-change`). O `.reveal` não é usado na Hero.
+
+### 15.6 Acessibilidade
+
+- Foco visível global a partir de 768px (`globals.css`): contorno vinho de 2px, afastado 3px; em fundo escuro (Diferenciais, rodapé) o módulo troca para dourado. O diálogo de cookies recebe o foco ao abrir sem contorno; os botões dele mostram o foco.
+- A busca de Produtos, sem `outline` próprio, mostra contorno vinho de 2px (offset 3px) no `:focus-within` (a borda dourada sozinha dá 1,84:1). No carrossel, o foco num card de outra página leva o carrossel para essa página e zera o `scrollLeft` do viewport (o Tab não desalinha a trilha). Os títulos dos carrosséis são h3 sob o h2 da home e h2 sob o h1 de `/produtos` (a ordem dos níveis não pula). A coluna lateral das políticas se chama "Navegação das políticas" (o rodapé é "Políticas").
+- Controles reais (`<button>`, `<a>`, `Link`, `NavLink`), alvos de 44px ou mais (medido: nenhum controle da Home, de `/produtos`, da ficha, das políticas e do 404 abaixo de 44px, exceto links dentro de texto corrido; os pontos do carrossel têm área de 44 × 44px com a barra visível de 6 × 6 / 24 × 6; os botões transparentes sobre a arte têm `min-width/min-height: 44px`), `aria-pressed` (pills, pilares, medalhas, 404), `aria-expanded` + `aria-controls` (Ver mais, Diferenciais, FAQ, acordeões, gaveta), abas da ficha no padrão WAI-ARIA (setas alternam), `aria-current="page"` nas políticas e `aria-current` nos pontos dos carrosséis e nas miniaturas.
+- Conteúdo recolhido continua no DOM: respostas e corpos com `hidden`, acordeões e expansão de categorias com `visibility: hidden` (fora do Tab).
+- Ícones de traço em SVG (`icons.jsx`), sem emoji.

@@ -1,51 +1,47 @@
-/* PetLuxo — BrandSeal.module.css
- * Bloco de confiança compacto e denso — não é uma seção editorial (ver
- * Differentials.module.css para o contraste de escala).
- */
+/* PetLuxo — BrandSeal.module.css (ficha, layout desktop) */
 
 .seal {
-  background: var(--bege-soft);
-  border: 1px solid var(--bege);
-  border-radius: 6px;
-  padding: clamp(20px, 3vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 .title {
-  display: block;
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--vinho);
-  margin-bottom: 16px;
 }
 
 .grid {
+  list-style: none;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px 24px;
+  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+  gap: 20px 28px;
 }
 
 .item {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 10px;
 }
 
-.emoji {
-  font-size: 16px;
-  line-height: 1.4;
-  flex-shrink: 0;
+.icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--dourado);
+  border-radius: 50%;
+  color: var(--vinho);
 }
 
 .label {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.45;
-  color: var(--ink-soft);
-}
-
-@media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
 }

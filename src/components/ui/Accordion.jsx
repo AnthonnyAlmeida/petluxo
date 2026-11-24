@@ -1,12 +1,12 @@
-/* PetLuxo — Accordion
- * Componente genérico de acordeão: cada AccordionItem controla seu próprio
- * estado aberto/fechado, então múltiplos itens podem ficar abertos ao mesmo
- * tempo (nenhum estado compartilhado no Accordion pai).
- */
+/* PetLuxo — Accordion (detalhes da ficha, layout desktop)
+ * Cada AccordionItem controla o próprio estado (vários podem ficar abertos
+ * ao mesmo tempo). O painel fechado fica no DOM, recolhido e fora do Tab. */
 
 import { useId, useState } from 'react';
 import { Icon } from '../../icons.jsx';
 import styles from './Accordion.module.css';
+
+const cx = (...c) => c.filter(Boolean).join(' ');
 
 export function Accordion({ children }) {
   return <div className={styles.accordion}>{children}</div>;
@@ -30,15 +30,14 @@ export function AccordionItem({ title, defaultOpen = false, children }) {
           onClick={() => setOpen((o) => !o)}
         >
           <span>{title}</span>
-          <Icon.Chevron className={[styles.chevron, open ? styles.chevronOpen : ''].join(' ')} aria-hidden="true" />
+          <Icon.Plus className={cx(styles.icon, open && styles.iconOpen)}/>
         </button>
       </h3>
       <div
         id={panelId}
         role="region"
         aria-labelledby={triggerId}
-        className={styles.panel}
-        style={{ gridTemplateRows: open ? '1fr' : '0fr' }}
+        className={cx(styles.panel, open && styles.panelOpen)}
       >
         <div className={styles.panelInner}>
           <div className={styles.panelContent}>{children}</div>

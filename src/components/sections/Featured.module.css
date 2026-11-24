@@ -1,145 +1,137 @@
-/* PetLuxo — Featured */
+/* PetLuxo — Featured.module.css (layout desktop, ≥ 768px) */
 
-.featured {
-  background: var(--bege);
-  position: relative;
-  overflow: hidden;
-}
+.featured { scroll-margin-top: var(--nav-h); }
 
-.featured::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(800px 500px at 80% 20%, rgba(255,255,255,0.6), transparent 60%);
-  pointer-events: none;
-}
-
-.featuredGrid {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 90px;
-  align-items: center;
-  position: relative;
-}
-
-.featuredStage {
-  position: relative;
-  border-radius: 4px;
-  background:
-    linear-gradient(160deg, #F2EADD 0%, #DCCDB6 100%);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.7) inset,
-    0 50px 100px -40px rgba(176,137,104,0.4);
-  overflow: hidden;
+.grid {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  min-height: 420px;
+  gap: 40px 64px;
+  padding-top: 88px;
+  padding-bottom: 56px;
 }
 
-.featuredStage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: var(--z-base);
-  background:
-    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(0,0,0,0.22), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 30% 10%, rgba(0,0,0,0.10), transparent 60%);
-  pointer-events: none;
+/* ---- Foto ---- */
+.media {
+  position: relative;
+  flex: 0 1 420px;
+  min-width: 0;
 }
 
-.featuredImg {
-  position: absolute;
-  inset: 0;
+.photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--bege);
+}
+
+.photo img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.photoLink {
   display: block;
-  z-index: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.featuredTag {
+.photoLink:hover img { transform: scale(1.04); }
+
+.peek {
   position: absolute;
-  top: 26px; left: 26px;
-  z-index: 2;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--vinho);
-  background: var(--offwhite);
-  padding: 8px 14px;
-  border-radius: 999px;
-  box-shadow: 0 6px 20px -8px rgba(0,0,0,0.15);
+  right: 28px;
+  top: -62px;
 }
 
-.featuredPrice {
-  position: absolute;
-  bottom: 26px; right: 26px;
-  z-index: 2;
-  background: var(--offwhite);
-  padding: 14px 20px;
-  border-radius: 6px;
-  box-shadow: 0 14px 30px -12px rgba(0,0,0,0.2);
+/* ---- Texto ---- */
+.info {
+  flex: 1 1 380px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.featuredPrice .small {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+.name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(36px, 3.8vw, 54px);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.name em { color: var(--vinho); }
+
+.nameLink {
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.nameLink:hover { color: var(--vinho); }
+
+.subtitle {
+  max-width: 480px;
+  font-size: 17px;
+  line-height: 1.7;
   color: var(--ink-soft);
+  text-wrap: pretty;
 }
 
-.featuredPrice .v {
+.description {
+  max-width: 480px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+}
+
+.buyRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   font-family: var(--serif);
   font-size: 28px;
-  color: var(--ink);
-  margin-top: 4px;
-}
-
-.featuredInfo h2 {
-  font-size: clamp(44px, 5vw, 72px);
+  font-weight: 600;
   line-height: 1;
-  margin: 24px 0 28px;
 }
 
-.featuredInfo p {
+.from {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
   color: var(--ink-soft);
-  font-size: 16px;
-  max-width: 460px;
-  line-height: 1.7;
 }
 
-.featuredSubtitle {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(17px, 2vw, 22px);
-  color: var(--caramelo) !important;
-  margin: -6px 0 28px !important;
-  line-height: 1.3;
+/* ---- iPad retrato (768–1023px): foto e texto lado a lado ---- */
+@media (max-width: 1023.98px) {
+  .grid { gap: 40px; }
+  .media { flex-basis: 300px; }
+  .info { flex-basis: 300px; }
+  .description {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
 }
 
-.featuredInfo > div:last-child {
-  margin-top: 44px;
-}
-
-/* @media (max-width: 980px) — tablet */
-@media (max-width: 980px) {
-  .featuredGrid { grid-template-columns: 1fr; gap: 40px; }
-}
-
-/* @media (max-width: 768px) — tablet */
-@media (max-width: 768px) {
-  .featuredStage { min-height: 280px; }
-  .featuredPrice .v { font-size: 20px; }
-  .featuredPrice { padding: 10px 14px; bottom: 16px; right: 16px; }
-  .featuredInfo > div:last-child { margin-top: 24px; }
-}
-
-/* @media (max-width: 480px) — mobile */
-@media (max-width: 480px) {
-  .featuredPrice .v { font-size: 17px; }
-  .featuredPrice { padding: 8px 12px; }
+@media (prefers-reduced-motion: reduce) {
+  .photo img,
+  .nameLink { transition: none; }
+  .photoLink:hover img { transform: none; }
 }

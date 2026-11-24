@@ -36,7 +36,7 @@ const DevTweaks = import.meta.env.DEV
   : null;
 
 function DesktopHome() {
-  /* Efeitos de scroll e paralaxe */
+  /* Reveal dos elementos ao entrar na tela */
   useScrollEffects();
 
   return (

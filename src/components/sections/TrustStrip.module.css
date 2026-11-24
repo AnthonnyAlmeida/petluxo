@@ -1,0 +1,38 @@
+/* PetLuxo — TrustStrip.module.css (layout desktop, ≥ 768px) */
+
+.strip { background: var(--bege-soft); }
+
+.grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 20px 32px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--dourado);
+  border-radius: 50%;
+  color: var(--vinho);
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

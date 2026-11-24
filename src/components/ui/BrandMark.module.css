@@ -1,0 +1,31 @@
+/* PetLuxo — BrandMark.module.css */
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+}
+
+.seal {
+  width: 40px;
+  height: 40px;
+  flex: none;
+}
+
+.sealText {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  fill: var(--vinho);
+}
+
+.name {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.lg .name { font-size: 40px; }

@@ -39,47 +39,6 @@ button {
 
 ::selection { background: var(--dourado); color: var(--offwhite); }
 
-/* ---------- Type ---------- */
-.eyebrow {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  font-weight: 400;
-}
-
-.eyebrow .dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--dourado);
-  margin-right: 10px;
-  vertical-align: middle;
-  transform: translateY(-1px);
-}
-
-.serif {
-  font-family: var(--serif);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.05;
-}
-
-.italic { font-style: italic; }
-
-.gold {
-  color: var(--caramelo);
-}
-
-.gold-text {
-  background: linear-gradient(135deg, #C6A96B 0%, #E0C896 40%, #B08968 70%, #C6A96B 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 /* ---------- Layout ---------- */
 .wrap {
   max-width: var(--max);
@@ -88,37 +47,8 @@ button {
   padding-right: var(--pad);
 }
 
-.hairline {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(198,169,107,0.4) 20%, rgba(198,169,107,0.4) 80%, transparent);
-  border: 0;
-  width: 100%;
-}
-
 /* ---------- Sections ---------- */
 section { position: relative; overflow-x: hidden; }
-.section-pad { padding: clamp(80px, 12vh, 140px) 0; }
-#produtos.section-pad { padding: clamp(36px, 4vh, 56px) 0; }
-.section-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 28px;
-}
-.section-tag .num {
-  color: var(--caramelo);
-  font-feature-settings: "tnum";
-}
-.section-tag .line {
-  width: 32px; height: 1px;
-  background: var(--caramelo);
-  display: inline-block;
-}
 
 /* Subtle grain overlay */
 .grain {
@@ -138,23 +68,34 @@ section { position: relative; overflow-x: hidden; }
   transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
-.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.in { opacity: 1; transform: translateY(0); will-change: auto; } /* depois de entrar, solta a camada */
 .reveal.d1 { transition-delay: 0.08s; }
 .reveal.d2 { transition-delay: 0.16s; }
 .reveal.d3 { transition-delay: 0.24s; }
 .reveal.d4 { transition-delay: 0.32s; }
 .reveal.d5 { transition-delay: 0.40s; }
 
-/* ---------- Responsive — 768px ---------- */
-@media (max-width: 768px) {
-  .eyebrow { white-space: normal; word-break: break-word; overflow-wrap: break-word; }
+/* ---------- Foco visível do layout desktop (≥ 768px) ----------
+ * Só vale a partir de 768px, onde o mobile não é renderizado. Seções
+ * escuras trocam a cor do contorno no próprio módulo. */
+@media (min-width: 768px) {
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  [role="button"]:focus-visible,
+  [role="tab"]:focus-visible {
+    outline: 2px solid var(--vinho);
+    outline-offset: 3px;
+  }
 }
 
-/* ---------- Responsive — 480px ---------- */
-@media (max-width: 480px) {
-  /* Sections */
-  .section-pad { padding: clamp(52px, 8vh, 80px) 0; }
-
+/* Movimento reduzido: sem rolagem suave (âncoras, scrollIntoView, scrollTo).
+ * Só a partir de 768px, como o resto deste bloco: o mobile (aprovado) não muda. */
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  html, body { scroll-behavior: auto; }
 }
 
-
+/* Movimento reduzido no desktop: o reveal aparece sem deslizar. */
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; }
+}

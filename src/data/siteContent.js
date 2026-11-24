@@ -113,3 +113,149 @@ export const WA_MESSAGES = {
 export function openConsentPreferences() {
   window.dispatchEvent(new CustomEvent('petluxo:open-consent'));
 }
+
+/* ===================== Layout desktop (≥ 768px) =====================
+ * Constantes do redesign desktop (desenho aprovado em 2026-11-23). São
+ * aditivas: o mobile não as usa. Textos já existentes no código foram
+ * movidos para cá sem alteração; os demais vêm do desenho. */
+
+export const BRAND = { name: 'PetLuxo', monogram: 'PL' };
+
+/* Telefone formatado para exibição: a mesma string das páginas de
+ * Troca, Frete e Termos ("WhatsApp: (61) 99406-3917"). */
+export const CONTACT = { phoneDisplay: '(61) 99406-3917' };
+
+export const NAV_TEXT = {
+  ariaLabel: 'Principal',
+  whatsapp: 'Falar no WhatsApp',
+  openMenu: 'Abrir menu',
+  closeMenu: 'Fechar menu',
+};
+
+/* Âncoras da home: rótulos do desenho, ids atuais das seções. */
+export const NAV_LINKS = [
+  { href: '#produtos', label: 'Coleção' },
+  { href: '#sobre', label: 'Sobre nós' },
+  { href: '#diferenciais', label: 'Diferenciais' },
+  { href: '#contato', label: 'Contato' },
+  { href: '#faq', label: 'Dúvidas' },
+];
+
+export const HERO_DESKTOP = {
+  cta: 'Ver produtos',
+  secondary: 'Conheça a PetLuxo',
+  hint: 'Toque na medalha, no cachorro ou no gato',
+  artLabel: 'Ilustração: uma medalha dourada pendurada, um cachorro e um gato sentados em um arco',
+  medalLabel: 'Girar a medalha PetLuxo',
+  dogLabel: 'Fazer carinho no cachorro',
+  catLabel: 'Fazer carinho no gato',
+};
+
+export const HERO_META = [
+  { k: 'Qualidade', v: 'PREMIUM' },
+  { k: 'Entrega', v: 'TODO O BRASIL' },
+  { k: 'Compra', v: '100% ONLINE' },
+];
+
+export const TRUST_STRIP_LABEL = 'Por que escolher a PetLuxo';
+
+export const FEATURED_TEXT = {
+  tag: 'PRODUTO EM DESTAQUE',
+  from: 'A PARTIR DE',
+  cta: 'CONSULTAR VIA WHATSAPP',
+  peekLabel: 'Gato espiando atrás da foto',
+};
+
+/* Sobre nós: as quatro marcas da curadoria (arte interativa). */
+export const STORY_PILLARS = [
+  'Materiais nobres',
+  'Acabamento impecável',
+  'Design e exclusividade',
+  'Pets são da família',
+];
+
+export const STORY_ART = {
+  caption: 'Curadoria',
+  artLabel: 'Um coração dentro de uma medalha dourada, rodeado por quatro marcas da curadoria PetLuxo',
+};
+
+export const DIFFERENTIALS_TITLE = {
+  start: 'Quatro motivos.',
+  accent: 'Para comprar agora.',
+  artLabel: 'Quatro medalhas douradas penduradas em um trilho: qualidade, atendimento, entrega e curadoria. A escolhida desce e se destaca.',
+};
+
+export const CTA_TEXT = {
+  eyebrow: 'COMPRA SEGURA · ENTREGA EM TODO O BRASIL',
+  titleStart: 'Pronto para',
+  titleAccent: 'começar a comprar?',
+  sub: 'Explore nossa coleção e finalize sua compra com segurança. Dúvidas? Estamos no WhatsApp.',
+  shop: 'VER PRODUTOS',
+  chat: 'FALAR VIA WHATSAPP',
+  waMessage: 'Olá! Gostaria de tirar uma dúvida sobre os produtos PetLuxo.',
+  meta: ['Resposta rápida', 'Entrega em todo o Brasil', 'Pagamento seguro'],
+  dogLabel: 'Cachorro sentado, atento aos botões',
+  catLabel: 'Gato sentado em uma almofada, atento aos botões',
+};
+
+export const FAQ_DESKTOP = {
+  num: '06',
+  moreBefore: 'Fale pelo',
+  moreWa: 'WhatsApp',
+  moreMid: 'ou pelo e-mail',
+  bellHint: 'Toque na campainha',
+  bellLabel: 'Tocar a campainha de atendimento',
+  artLabel: 'Uma campainha dourada de balcão e um gato sentado ao lado, pronto para tocá-la',
+};
+
+export const PRODUCT_PAGE_TEXT = {
+  back: 'Voltar para a loja',
+  tabsLabel: 'Sobre a peça',
+  tabDescription: 'Descrição',
+  tabHighlights: 'Destaques',
+  detailsStart: 'Detalhes',
+  detailsAccent: 'da peça',
+};
+
+/* Selo "Por que escolher a PetLuxo?" da ficha (antes fixo em BrandSeal.jsx). */
+export const BRAND_SEAL = {
+  title: 'Por que escolher a PetLuxo?',
+  items: [
+    'Curadoria de produtos premium',
+    'Envio para todo o Brasil',
+    'Compra segura',
+    'Atendimento personalizado',
+    'Produtos selecionados pensando no conforto do seu pet',
+    'Qualidade e elegância em cada detalhe',
+  ],
+};
+
+export const FOOTER_DESKTOP = {
+  whatsapp: 'Falar no WhatsApp',
+  instagram: 'Instagram',
+};
+
+export const POLICY_TEXT = {
+  back: 'Voltar para a loja',
+  eyebrow: 'Transparência',
+  titleStart: 'Nossas',
+  titleAccent: 'políticas',
+  updatedPrefix: 'Última atualização:',
+  helpTitle: 'Ficou com dúvida?',
+  whatsappPrefix: 'WhatsApp:',
+  navLabel: 'Navegação das políticas',
+};
+
+export const NOT_FOUND_TEXT = {
+  titleStart: 'Página não',
+  titleAccent: 'encontrada.',
+  lines: [
+    'A página que você procura não existe ou foi movida.',
+    'Volte para a home e explore nossos produtos.',
+  ],
+  home: 'Voltar para a home',
+  products: 'Ver produtos',
+  hint: 'Toque na medalha',
+  medalLabel: 'Virar a medalha',
+  artLabel: '404 com uma medalha dourada no lugar do zero e um gato sentado ao lado',
+};

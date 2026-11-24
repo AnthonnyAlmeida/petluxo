@@ -1,35 +1,30 @@
-/* PetLuxo — BrandSeal
- * Selo fixo "Por que escolher a PetLuxo?" — bloco de confiança compacto e
- * reutilizável, sem props de produto, mesmo padrão de TrustBadges.jsx.
- *
- * Distinto de Differentials.jsx: aquela é a seção editorial da home (4
- * itens, formato de seção completa). Este é um bloco denso com 6 itens
- * fixos, pensado para caber dentro da ficha de um produto (ProductPage).
- */
+/* PetLuxo — BrandSeal: faixa "Por que escolher a PetLuxo?" da ficha
+ * (layout desktop). Seis itens fixos (BRAND_SEAL) com ícones de traço.
+ * Distinto de Differentials.jsx (seção editorial da home). */
 
+import { Icon } from '../../icons.jsx';
+import { BRAND_SEAL } from '../../data/siteContent.js';
 import styles from './BrandSeal.module.css';
 
-const SEAL_ITEMS = [
-  { emoji: '🤎', label: 'Curadoria de produtos premium' },
-  { emoji: '🚚', label: 'Envio para todo o Brasil' },
-  { emoji: '🛡️', label: 'Compra segura' },
-  { emoji: '💬', label: 'Atendimento personalizado' },
-  { emoji: '🐾', label: 'Produtos selecionados pensando no conforto do seu pet' },
-  { emoji: '✨', label: 'Qualidade e elegância em cada detalhe' },
-];
+/* Na ordem de BRAND_SEAL.items: curadoria, envio, compra segura,
+ * atendimento, conforto, qualidade. */
+const ICONS = [Icon.Star, Icon.Truck, Icon.Shield, Icon.Wa, Icon.Heart, Icon.Rays];
 
 export function BrandSeal() {
   return (
     <div className={styles.seal}>
-      <span className={styles.title}>Por que escolher a PetLuxo?</span>
-      <div className={styles.grid} role="list">
-        {SEAL_ITEMS.map((item) => (
-          <div key={item.label} className={styles.item} role="listitem">
-            <span className={styles.emoji} aria-hidden="true">{item.emoji}</span>
-            <span className={styles.label}>{item.label}</span>
-          </div>
-        ))}
-      </div>
+      <h2 className={styles.title}>{BRAND_SEAL.title}</h2>
+      <ul className={styles.grid}>
+        {BRAND_SEAL.items.map((label, i) => {
+          const SealIcon = ICONS[i] ?? Icon.Star; // item novo nos dados: ícone padrão
+          return (
+            <li key={label} className={styles.item}>
+              <span className={styles.icon}><SealIcon width="20" height="20" strokeWidth="1.5"/></span>
+              <span className={styles.label}>{label}</span>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

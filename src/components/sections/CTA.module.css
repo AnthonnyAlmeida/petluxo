@@ -1,89 +1,167 @@
-/* PetLuxo — CTA */
+/* PetLuxo — CTA.module.css (layout desktop, ≥ 768px) */
+
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .cta {
   position: relative;
-  text-align: center;
-  background:
-    radial-gradient(800px 500px at 50% 100%, rgba(198,169,107,0.18), transparent 60%),
-    var(--offwhite);
   overflow: hidden;
+  background: linear-gradient(180deg, var(--offwhite) 0%, var(--bege-soft) 100%);
+  scroll-margin-top: var(--nav-h);
 }
 
-.ctaOrn {
+/* ---- Anéis ao fundo ---- */
+.rings {
   position: absolute;
-  inset: 0;
-  display: grid; place-items: center;
+  left: 50%;
+  top: 50%;
+  height: 190%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
 
-.ctaOrn .ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(198,169,107,0.18);
+.ringsG {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 0.9s var(--ease-out-expo);
 }
 
-.ctaOrn .ring.r1 { width: 600px; height: 600px; }
-.ctaOrn .ring.r2 { width: 800px; height: 800px; border-color: rgba(198,169,107,0.1); }
-.ctaOrn .ring.r3 { width: 1000px; height: 1000px; border-color: rgba(198,169,107,0.06); }
+.ctaActive .ringsG { transform: scale(1.03); }
 
-.ctaContent { position: relative; z-index: var(--z-base); }
-
-.cta h2 {
-  font-size: clamp(56px, 7vw, 110px);
-  line-height: 0.96;
-  letter-spacing: -0.02em;
-  margin: 28px auto 32px;
-  max-width: 18ch;
-  padding-right: 0.3em;
+.orbit {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: spin 80s linear infinite;
 }
 
-/* Estende o box do elemento para que o background-clip:text cubra o
-   overhang óptico do ? em Cormorant Garamond itálico */
-.cta h2 i {
-  padding-right: 0.2em;
-}
-
-.cta p {
-  font-size: 17px;
-  color: var(--ink-soft);
-  max-width: 520px;
-  margin: 0 auto 44px;
-  line-height: 1.65;
-}
-
-.ctaRow {
-  display: inline-flex;
-  gap: 16px;
-  flex-wrap: wrap;
+/* ---- Conteúdo ---- */
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max);
+  min-height: 520px;
+  margin: 0 auto;
+  padding: 56px clamp(24px, 20vw, 300px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 18px;
+  text-align: center;
 }
 
-.ctaMeta {
-  margin-top: 60px;
+.eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 28px;
+  gap: 12px;
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
+  font-size: 12px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }
 
-.ctaMeta span {
-  display: inline-flex; align-items: center; gap: 10px;
-}
-
-.ctaMeta .dotg {
-  width: 6px; height: 6px;
+.eyebrowDot {
+  width: 7px;
+  height: 7px;
+  flex: none;
   border-radius: 50%;
   background: var(--caramelo);
-  display: inline-block;
 }
 
-/* @media (max-width: 768px) — tablet */
-@media (max-width: 768px) {
-  .ctaRow { flex-direction: column; align-items: center; }
-  .ctaRow :global(.btn) { width: 100%; max-width: 360px; justify-content: center; }
-  .ctaMeta { flex-wrap: wrap; justify-content: center; gap: 16px; }
+.title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(40px, 4.6vw, 66px);
+  line-height: 1.02;
+}
+
+.title em { color: var(--vinho); }
+
+.sub {
+  max-width: 480px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.meta {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metaDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--caramelo);
+}
+
+/* ---- Cachorro e gato nos cantos ---- */
+.dog,
+.cat {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.dog {
+  left: clamp(0px, 3vw, 48px);
+  width: clamp(150px, 15vw, 220px);
+}
+
+.cat {
+  right: clamp(0px, 3vw, 48px);
+  width: clamp(130px, 13vw, 190px);
+}
+
+.bubble {
+  opacity: 0;
+  transform: scale(0.5);
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+  transition: opacity 0.45s cubic-bezier(0.2, 1.4, 0.4, 1), transform 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+.bubbleOn {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- iPad retrato (768–1023px): bichos menores, sem invadir o texto ---- */
+@media (max-width: 1023.98px) {
+  .content { padding-bottom: 150px; }
+  .dog { width: 130px; }
+  .cat { width: 112px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit { animation: none; }
+  .ringsG,
+  .bubble { transition: none; }
 }

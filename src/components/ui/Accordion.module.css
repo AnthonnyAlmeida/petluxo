@@ -1,66 +1,59 @@
-/* PetLuxo — Accordion.module.css */
+/* PetLuxo — Accordion.module.css (detalhes da ficha, layout desktop) */
 
 .accordion {
-  display: flex;
-  flex-direction: column;
+  border-bottom: 1px solid var(--dourado);
 }
 
-.item {
-  border-bottom: 1px solid var(--bege);
-}
-.item:first-child {
-  border-top: 1px solid var(--bege);
-}
+.item { border-top: 1px solid var(--dourado); }
 
-.heading {
-  margin: 0;
-}
+.heading { font-weight: inherit; }
 
 .trigger {
-  all: unset;
-  box-sizing: border-box;
+  width: 100%;
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  width: 100%;
-  padding: 22px 2px;
-  cursor: pointer;
+  gap: 24px;
+  padding: 8px 0;
+  text-align: left;
   font-family: var(--serif);
-  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
-  color: var(--ink);
-  transition: color 0.25s;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
 }
-.trigger:hover,
-.trigger:focus-visible {
+
+.icon {
+  flex: none;
   color: var(--vinho);
-}
-.trigger:focus-visible {
-  outline: 2px solid var(--vinho);
-  outline-offset: 4px;
-  border-radius: 2px;
+  transition: transform 0.4s var(--ease-out-expo);
 }
 
-.chevron {
-  flex-shrink: 0;
-  color: var(--caramelo);
-  transition: transform 0.3s ease;
-}
-.chevronOpen {
-  transform: rotate(180deg);
-}
+.iconOpen { transform: rotate(45deg); }
 
+/* Recolhimento por grid-template-rows (0fr → 1fr) */
 .panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s ease;
+  visibility: hidden;
+  transition: grid-template-rows 0.45s var(--ease-out-expo), visibility 0s linear 0.45s;
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 0.45s var(--ease-out-expo), visibility 0s;
 }
 
 .panelInner {
-  overflow: hidden;
   min-height: 0;
+  overflow: hidden;
 }
 
-.panelContent {
-  padding: 0 2px 22px;
+.panelContent { padding-bottom: 24px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .icon,
+  .panel,
+  .panelOpen { transition: none; }
 }

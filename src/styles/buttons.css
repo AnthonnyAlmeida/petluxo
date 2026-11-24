@@ -1,71 +1,97 @@
 /*
- * buttons.css — GLOBAL CONTROLADO
+ * buttons.css — GLOBAL CONTROLADO (só o layout desktop, ≥ 768px)
  * Contém APENAS: .btn e variantes, .wa-icon
  * NUNCA adicionar: cards, inputs, títulos, layouts
- * Evolução futura: Button.jsx component quando variantes > 6
+ * O mobile (< 768px) não usa estas classes: tem os próprios botões em
+ * components/mobile/ui/MobileUI.module.css.
  */
 
-/* ---------- Buttons ---------- */
+/* ---------- Base: pílula, mono 12px, caixa alta ---------- */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 28px;
+  min-height: 52px;
+  padding: 0 32px;
   border-radius: 999px;
-  font-size: 13px;
-  letter-spacing: 0.08em;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-weight: 500;
-  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, filter 0.3s, box-shadow 0.3s;
 }
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Vinho cheio */
 .btn-primary {
   background: var(--vinho);
   color: var(--offwhite);
-  box-shadow: 0 10px 30px -12px rgba(107, 30, 43, 0.5), inset 0 1px 0 rgba(255,255,255,0.08);
 }
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 40px -12px rgba(107, 30, 43, 0.55), inset 0 1px 0 rgba(255,255,255,0.12);
-  background: var(--vinho-soft);
-}
-.btn-primary .arr { transition: transform 0.4s; }
-.btn-primary:hover .arr { transform: translateX(4px); }
+.btn-primary:hover:not(:disabled) { background: var(--vinho-soft); }
+
+/* Contorno escuro: enche de tinta no hover */
 .btn-ghost {
   background: transparent;
   color: var(--ink);
-  border: 1px solid rgba(42, 37, 34, 0.18);
+  border: 1px solid var(--ink);
 }
-.btn-ghost:hover {
-  border-color: var(--caramelo);
-  background: rgba(232, 222, 210, 0.5);
+.btn-ghost:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--offwhite);
 }
+
+/* Contorno vinho */
 .btn-outline {
   background: transparent;
   color: var(--vinho);
-  border: 1.5px solid var(--vinho);
+  border: 1px solid var(--vinho);
 }
-.btn-outline:hover {
-  background: rgba(107, 30, 43, 0.06);
+.btn-outline:hover:not(:disabled) {
+  background: var(--vinho);
+  color: var(--offwhite);
 }
+
+/* Dourado: texto escuro sobre degradê */
+.btn-gold {
+  background: linear-gradient(135deg, #D3B87A 0%, #C6A96B 50%, #B8936F 100%);
+  color: var(--ink);
+  box-shadow: 0 14px 30px -12px rgba(176, 137, 104, 0.6);
+}
+.btn-gold:hover:not(:disabled) { filter: brightness(1.05); }
+
+/* Sombra vinho (CTA final, ficha, 404) */
+.btn-raised { box-shadow: 0 14px 30px -14px rgba(107, 30, 43, 0.55); }
+
+/* Compacto (Navbar) */
+.btn-sm {
+  min-height: 44px;
+  padding: 0 22px;
+  gap: 10px;
+  letter-spacing: 0.14em;
+}
+
+/* Largura total (ficha de produto) */
 .btn-full {
   width: 100%;
+  min-height: 54px;
   justify-content: center;
 }
-.btn-gold {
-  background: linear-gradient(135deg, #D4BC85 0%, #C6A96B 50%, #B08968 100%);
-  color: #fff;
-  box-shadow: 0 10px 26px -10px rgba(176,137,104,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
-}
-.btn-gold:hover { transform: translateY(-2px); }
 
 .wa-icon {
-  width: 16px; height: 16px;
+  width: 16px;
+  height: 16px;
+  flex: none;
   display: inline-block;
 }
 
-/* @media (max-width: 480px) — mobile */
-@media (max-width: 480px) {
-  .btn { padding: 14px 22px; font-size: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
 }

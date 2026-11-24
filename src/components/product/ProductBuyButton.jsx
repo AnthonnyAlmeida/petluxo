@@ -29,9 +29,9 @@ export function ProductBuyButton({ product, activeBuyLink, selectedSize, activeP
     return (
       <>
         <button
+          type="button"
           className="btn btn-primary btn-full"
           disabled
-          style={{ opacity: 0.5, cursor: 'not-allowed' }}
         >
           ESGOTADO
         </button>
@@ -55,7 +55,7 @@ export function ProductBuyButton({ product, activeBuyLink, selectedSize, activeP
             COMPRAR AGORA
           </a>
         )}
-        <a className="btn btn-primary btn-full" href={waLink} target="_blank" rel="noopener noreferrer">
+        <a className="btn btn-primary btn-full btn-raised" href={waLink} target="_blank" rel="noopener noreferrer">
           <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
         </a>
       </>
@@ -70,7 +70,7 @@ export function ProductBuyButton({ product, activeBuyLink, selectedSize, activeP
             COMPRAR AGORA
           </a>
         )}
-        <a className="btn btn-primary btn-full" href={waLink} target="_blank" rel="noopener noreferrer">
+        <a className="btn btn-primary btn-full btn-raised" href={waLink} target="_blank" rel="noopener noreferrer">
           <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
         </a>
       </>
@@ -78,7 +78,7 @@ export function ProductBuyButton({ product, activeBuyLink, selectedSize, activeP
   }
 
   return (
-    <a className="btn btn-primary btn-full" href={waLink} target="_blank" rel="noopener noreferrer">
+    <a className="btn btn-primary btn-full btn-raised" href={waLink} target="_blank" rel="noopener noreferrer">
       <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
     </a>
   );

@@ -1,10 +1,17 @@
-/* PetLuxo — ProductGallery (imagem principal + fotos adicionais da ficha completa) */
+/* PetLuxo — ProductGallery (galeria da ficha, layout desktop)
+ * ≥ 640px: miniaturas na vertical à esquerda, foto principal 5:4 com setas,
+ * contador e zoom por hover (escala 1.35 a partir do ponto do cursor) em
+ * ponteiro fino. Em toque (pointer: coarse), o toque na foto abre o
+ * lightbox (React.lazy). < 640px: carrossel arrastável com pontos (na prática
+ * só alcançável abaixo de 768px, onde a ficha mobile assume). */
 
 import React from 'react';
 import { Icon } from '../../icons.jsx';
 import styles from './ProductGallery.module.css';
 
 const ProductLightbox = React.lazy(() => import('./ProductLightbox.jsx'));
+
+const cx = (...c) => c.filter(Boolean).join(' ');
 
 function useIsMobile(breakpoint = 640) {
   const getIsMobile = () => typeof window !== 'undefined' && window.innerWidth < breakpoint;
@@ -38,21 +45,11 @@ function usePointerCoarse() {
   return isCoarse;
 }
 
-const ArrowLeft = (p) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" width="16" height="16" {...p}>
-    <path d="M19 12H5M11 5l-7 7 7 7" />
-  </svg>
-);
-const ArrowRight = (p) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" width="16" height="16" {...p}>
-    <path d="M5 12h14M13 5l7 7-7 7" />
-  </svg>
-);
+const clamp = (v) => Math.min(100, Math.max(0, v));
 
 export function ProductGallery({ images, alt }) {
   const [activeIndex, setActiveIndex] = React.useState(0);
-  const [zoomEnabled, setZoomEnabled] = React.useState(false);
-  const [zoomPos, setZoomPos] = React.useState({ x: 50, y: 50 });
+  const [zoom, setZoom] = React.useState(null);
   const [lightboxOpen, setLightboxOpen] = React.useState(false);
   const [lightboxIndex, setLightboxIndex] = React.useState(0);
   const isMobile = useIsMobile();
@@ -87,12 +84,18 @@ export function ProductGallery({ images, alt }) {
     setActiveIndex(i);
   }
 
-  function onImageMouseMove(e) {
-    if (!zoomEnabled) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setZoomPos({ x: Math.min(100, Math.max(0, x)), y: Math.min(100, Math.max(0, y)) });
+  /* Zoom por hover: só com ponteiro fino; a origem acompanha o cursor. */
+  function onZoomMove(e) {
+    if (isTouch) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    setZoom({
+      x: clamp(((e.clientX - r.left) / r.width) * 100),
+      y: clamp(((e.clientY - r.top) / r.height) * 100),
+    });
+  }
+
+  function onZoomLeave() {
+    setZoom(null);
   }
 
   function onTouchStart(e) {
@@ -144,20 +147,33 @@ export function ProductGallery({ images, alt }) {
     </React.Suspense>
   );
 
+  const mainImage = (index, imgAlt) => (
+    <div
+      className={cx(styles.mainImageWrap, !isTouch && styles.zoomable, zoom && styles.zoomOn)}
+      style={zoom ? { '--zx': `${zoom.x}%`, '--zy': `${zoom.y}%` } : undefined}
+      onMouseMove={onZoomMove}
+      onMouseLeave={onZoomLeave}
+      onClick={isTouch ? () => openLightbox(index) : undefined}
+      onKeyDown={isTouch ? (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(index);
+        }
+      } : undefined}
+      role={isTouch ? 'button' : undefined}
+      tabIndex={isTouch ? 0 : undefined}
+      aria-label={isTouch ? 'Ampliar foto' : undefined}
+    >
+      <img src={images[index]} alt={imgAlt} className={styles.mainImage} />
+    </div>
+  );
+
   let content;
 
   if (images.length <= 1) {
     content = (
       <div className={styles.gallery}>
-        <div
-          className={styles.mainImageWrap}
-          onClick={isTouch ? () => openLightbox(0) : undefined}
-          role={isTouch ? 'button' : undefined}
-          tabIndex={isTouch ? 0 : undefined}
-          aria-label={isTouch ? 'Ampliar foto' : undefined}
-        >
-          <img src={images[0]} alt={alt} className={styles.mainImage} />
-        </div>
+        <div className={styles.stage}>{mainImage(0, alt)}</div>
       </div>
     );
   } else {
@@ -165,21 +181,21 @@ export function ProductGallery({ images, alt }) {
       <>
         <button
           type="button"
-          className={[styles.navArrow, styles.navArrowLeft].join(' ')}
+          className={cx(styles.navArrow, styles.navArrowLeft)}
           onClick={goPrev}
           disabled={!canPrev}
           aria-label="Foto anterior"
         >
-          <ArrowLeft />
+          <Icon.ArrowL />
         </button>
         <button
           type="button"
-          className={[styles.navArrow, styles.navArrowRight].join(' ')}
+          className={cx(styles.navArrow, styles.navArrowRight)}
           onClick={goNext}
           disabled={!canNext}
           aria-label="Próxima foto"
         >
-          <ArrowRight />
+          <Icon.ArrowR />
         </button>
       </>
     );
@@ -196,13 +212,10 @@ export function ProductGallery({ images, alt }) {
             >
               <div
                 className={styles.mobileTrack}
-                style={{
-                  width: `${images.length * 100}%`,
-                  transform: `translateX(-${(activeIndex / images.length) * 100}%)`,
-                }}
+                style={{ '--n': images.length, '--i': activeIndex }}
               >
                 {images.map((src, i) => (
-                  <div key={src} className={styles.mobileSlide} style={{ width: `${100 / images.length}%` }}>
+                  <div key={src} className={styles.mobileSlide}>
                     <img src={src} alt={`${alt} — foto ${i + 1}`} className={styles.mainImage} loading={i === 0 ? undefined : 'lazy'} />
                   </div>
                 ))}
@@ -215,7 +228,7 @@ export function ProductGallery({ images, alt }) {
               <button
                 key={i}
                 type="button"
-                className={[styles.dot, i === activeIndex && styles.dotActive].filter(Boolean).join(' ')}
+                className={cx(styles.dot, i === activeIndex && styles.dotActive)}
                 onClick={() => setActiveIndex(i)}
                 aria-label={`Ver foto ${i + 1}`}
                 aria-current={i === activeIndex ? 'true' : undefined}
@@ -226,13 +239,13 @@ export function ProductGallery({ images, alt }) {
       );
     } else {
       content = (
-        <div className={[styles.gallery, styles.galleryWithThumbs].join(' ')}>
+        <div className={cx(styles.gallery, styles.galleryWithThumbs)}>
           <div className={styles.thumbs}>
             {images.map((src, i) => (
               <button
                 key={src}
                 type="button"
-                className={[styles.thumb, i === activeIndex && styles.thumbActive].filter(Boolean).join(' ')}
+                className={cx(styles.thumb, i === activeIndex && styles.thumbActive)}
                 onClick={() => setActiveIndex(i)}
                 aria-label={`Ver foto ${i + 1}`}
                 aria-current={i === activeIndex ? 'true' : undefined}
@@ -242,35 +255,9 @@ export function ProductGallery({ images, alt }) {
             ))}
           </div>
           <div className={styles.stage}>
-            <div
-              className={[styles.mainImageWrap, zoomEnabled && styles.mainImageWrapZoomActive].filter(Boolean).join(' ')}
-              onMouseMove={onImageMouseMove}
-              onClick={isTouch ? () => openLightbox(activeIndex) : undefined}
-              role={isTouch ? 'button' : undefined}
-              tabIndex={isTouch ? 0 : undefined}
-              aria-label={isTouch ? 'Ampliar foto' : undefined}
-            >
-              <img src={images[activeIndex]} alt={`${alt} — foto ${activeIndex + 1}`} className={styles.mainImage} />
-              <div
-                className={styles.zoomOverlay}
-                style={{
-                  backgroundImage: `url(${images[activeIndex]})`,
-                  backgroundPosition: `${zoomPos.x}% ${zoomPos.y}%`,
-                }}
-              />
-              {!isTouch && (
-                <button
-                  type="button"
-                  className={[styles.zoomBadge, zoomEnabled && styles.zoomBadgeActive].filter(Boolean).join(' ')}
-                  onClick={() => setZoomEnabled((z) => !z)}
-                  aria-pressed={zoomEnabled}
-                  aria-label={zoomEnabled ? 'Desativar zoom da imagem' : 'Ativar zoom da imagem'}
-                >
-                  <Icon.Search width="14" height="14" />
-                </button>
-              )}
-            </div>
+            {mainImage(activeIndex, `${alt} — foto ${activeIndex + 1}`)}
             {NavArrows}
+            <span className={styles.counter} aria-hidden="true">{activeIndex + 1} / {images.length}</span>
           </div>
         </div>
       );

@@ -2,5 +2,5 @@
 
 /* /produtos no desktop: espaço para a Navbar fixa */
 @media (min-width: 768px) {
-  .catalogMain { padding-top: 96px; }
+  .catalogMain { padding-top: var(--nav-h); }
 }

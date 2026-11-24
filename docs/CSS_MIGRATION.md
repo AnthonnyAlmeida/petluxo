@@ -129,13 +129,13 @@ CSS Modules no Vite processa nomes de keyframes como identificadores locais. Key
 
 **Regra:** Se um componente usa `animation:` em seu módulo, declare os `@keyframes` necessários diretamente no próprio `.module.css`.
 
-Hoje os keyframes usados estão declarados em `Hero.module.css` (`heroRise`, `heroFade`, `heroFloaty`, `stageRotate`, `scrollCueLine`) e `Products.module.css` (`resultFadeIn`); o arquivo global `animations.css` não existe mais.
+Hoje cada módulo que anima declara os próprios: `Hero.module.css` (`dash`), `Products.module.css` (`resultFadeIn`), `ui/art/art.module.css` (`sway`, `swing`, `swingB`, `flipx`, `flipxB`, `wag`, `tilt`, `swish`, `blink`, `nod`, `twinkle`) e os de `Story`, `Differentials`, `CTA`, `FAQ`, `NotFound`, `AnalyticsConsent` e do mobile; o arquivo global `animations.css` não existe mais. Os nomes `heroRise`, `heroFade`, `heroFloaty`, `stageRotate` e `scrollCueLine` da lista do Passo 0 são do desktop anterior e não existem mais.
 
 Exemplo correto:
 ```css
 /* Hero.module.css */
-@keyframes heroFade { to { opacity: 1; } }
-.heroSub { animation: heroFade 1s forwards; }
+@keyframes dash { to { opacity: 1; } }
+.trail { animation: dash 2.4s var(--ease-out-expo) 1; }
 ```
 
 ---

@@ -1,200 +1,315 @@
-/* PetLuxo — ProductPage.module.css */
+/* PetLuxo — ProductPage.module.css (ficha, layout desktop) */
 
-/* padding-top fixo (não em vw): o MinimalNavbar tem no máximo ~74px de altura
- * real (padding 18px + brandMark ~38px), e um clamp baseado em vw encolhia
- * abaixo disso em telas estreitas, sobrepondo o backLink no mobile. */
-.page {
-  padding: 96px 0 clamp(80px, 12vh, 120px);
+.page { padding-top: var(--nav-h); }
+
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 56px;
 }
 
 .backLink {
-  display: inline-block;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  text-decoration: none;
-  margin-bottom: 32px;
-  transition: color 0.3s;
-}
-.backLink:hover {
-  color: var(--vinho);
-}
-
-/* ---------- Layout principal: galeria + info ---------- */
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(32px, 5vw, 64px);
-  margin-bottom: clamp(56px, 8vh, 96px);
-}
-
-@media (max-width: 900px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---------- Selo "Por que escolher a PetLuxo?" ---------- */
-.brandSealBlock {
-  margin-bottom: clamp(40px, 6vh, 64px);
-}
-
-.info h1.name {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  line-height: 1.15;
-  color: var(--ink);
-  margin-bottom: 8px;
-}
-.subtitle {
-  color: var(--ink-soft);
-  font-size: 15px;
-  margin-bottom: 20px;
-}
-.priceOriginal {
+  align-self: flex-start;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--mono);
   font-size: 12px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--ink-soft);
-  text-decoration: line-through;
-  margin-bottom: 4px;
+  transition: color 0.3s;
 }
-.price {
-  font-size: 30px;
-  color: var(--vinho);
-  margin-bottom: 20px;
+
+.backLink:hover { color: var(--vinho); }
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 32px 56px;
 }
-.description {
-  color: var(--ink-soft);
-  font-size: 15px;
-  line-height: 1.75;
-  margin-bottom: 24px;
+
+.galleryCol {
+  flex: 1 1 560px;
+  min-width: 0;
+  max-width: 680px;
 }
-.bullets {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 28px;
+
+/* ---- Informações ---- */
+.info {
+  flex: 1 1 400px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.titleBlock {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.bullets li {
-  font-size: 14px;
-  color: var(--ink-soft);
-  line-height: 1.5;
-  padding-left: 18px;
-  position: relative;
-}
-.bullets li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  color: var(--caramelo);
-  font-size: 11px;
+
+.name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(36px, 3.6vw, 52px);
+  line-height: 1.04;
+  text-wrap: balance;
 }
 
-.buyStack {
+.subtitle {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 21px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.priceOriginal {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--ink-soft);
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 1;
+}
+
+/* ---- Abas Descrição / Destaques ---- */
+.tabs {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 420px;
+}
+
+.tabList {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--bege-deep);
+}
+
+.tab {
+  min-height: 44px;
+  margin-bottom: -1px;
+  padding: 0 16px;
+  border-bottom: 2px solid transparent;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.tab:hover { color: var(--vinho); }
+
+.tabOn {
+  border-bottom-color: var(--vinho);
+  color: var(--vinho);
+}
+
+.tabPanel { min-height: 150px; }
+
+.description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 15px;
+}
+
+.bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dourado);
+}
+
+/* ---- Compra ---- */
+.buyStack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .deliveryNote {
-  margin: 0;
-  font-size: 0.8125rem;
+  font-size: 13px;
   line-height: 1.5;
   color: var(--ink-soft);
 }
 
-/* ---------- Seções de conteúdo expandido (acordeão) ---------- */
+/* ---- Faixa "Por que escolher a PetLuxo?" ---- */
+.sealBand { background: var(--bege-soft); }
+
+/* ---- Detalhes da peça ---- */
 .details {
-  padding-top: clamp(40px, 6vh, 64px);
-  border-top: 1px solid var(--bege);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 72px;
+  padding-top: 64px;
+  padding-bottom: 64px;
 }
+
+.detailsTitle {
+  flex: 1 1 280px;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(34px, 3.4vw, 48px);
+  line-height: 1.05;
+}
+
+.detailsTitle em { color: var(--vinho); }
+
+.detailsBody {
+  flex: 2 1 560px;
+  min-width: 0;
+}
+
 .sectionText {
-  color: var(--ink-soft);
+  max-width: 640px;
   font-size: 15px;
-  line-height: 1.75;
-  margin: 0;
+  line-height: 1.7;
+  color: var(--ink-soft);
 }
+
+.sizeList {
+  margin: 12px 0 12px 24px;
+}
+
+.sizePara { margin-top: 12px; }
 
 .specsList {
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: minmax(140px, 220px) 1fr;
   gap: 10px 24px;
-  margin: 0;
-}
-.specsList dt {
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  white-space: nowrap;
-}
-.specsList dd {
-  margin: 0;
-  color: var(--ink);
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
-.tableWrap {
-  overflow-x: auto;
+.specsList dt {
+  padding-top: 2px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
+
+.specsList dd { color: var(--ink); }
+
+.tableWrap { overflow-x: auto; }
+
 .sizeTable {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
+
 .sizeTable th,
 .sizeTable td {
-  padding: 10px 16px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--bege-deep);
   text-align: left;
-  border-bottom: 1px solid var(--bege);
   white-space: nowrap;
 }
+
 .sizeTable th {
+  font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 1px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  font-weight: 500;
 }
 
 .plainList {
   list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-.plainList li {
-  font-size: 14px;
+  gap: 7px;
+  font-size: 15px;
+  line-height: 1.6;
   color: var(--ink-soft);
-  padding-left: 18px;
-  position: relative;
 }
+
+.plainList li {
+  position: relative;
+  padding-left: 15px;
+}
+
 .plainList li::before {
-  content: "—";
+  content: "";
   position: absolute;
   left: 0;
-  color: var(--caramelo);
-  font-size: 11px;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--dourado);
 }
 
 .faqList {
+  max-width: 680px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
+
 .faqItem h4 {
-  font-family: var(--sans);
-  font-size: 15px;
+  margin-bottom: 4px;
+  font-family: var(--serif);
+  font-size: 20px;
   font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 6px;
 }
+
 .faqItem p {
-  margin: 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* ---- 1024–1279px: galeria e informações seguem lado a lado ---- */
+@media (max-width: 1279.98px) {
+  .layout { gap: 32px 40px; }
+  .galleryCol { flex-basis: 480px; }
+  .info { flex-basis: 340px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backLink,
+  .tab { transition: none; }
 }

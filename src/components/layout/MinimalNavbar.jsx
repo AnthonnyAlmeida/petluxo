@@ -1,13 +1,20 @@
-/* PetLuxo — MinimalNavbar: header reduzido para a ProductPage.
- * Mostra só a marca (logo + link para a home) — sem menu de seções e sem
- * hambúrguer/drawer, já que não faz sentido oferecer navegação para
- * "Produtos"/"Sobre"/etc. quando o cliente já está numa ficha de produto. */
+/* PetLuxo — MinimalNavbar: cabeçalho reduzido (ficha, políticas, 404).
+ * Marca (Link para a home) e WhatsApp, sem âncoras de seção nem hambúrguer,
+ * já que elas só existem na home. Mesmo estilo e altura (--nav-h) da
+ * Navbar. Abaixo de 768px: MobileHeader. */
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Icon } from '../../icons.jsx';
+import { wa } from '../../lib/whatsapp.js';
+import { NAV_TEXT, WA_MESSAGES } from '../../data/siteContent.js';
 import { useIsMobile } from '../../hooks/useMediaQuery.js';
 import { MobileHeader } from '../mobile/layout/MobileHeader.jsx';
+import { BrandMark } from '../ui/BrandMark.jsx';
+import '../../styles/buttons.css';
 import navStyles from './Navbar.module.css';
+
+const cx = (...c) => c.filter(Boolean).join(' ');
 
 export function MinimalNavbar() {
   const [scrolled, setScrolled] = React.useState(false);
@@ -15,19 +22,28 @@ export function MinimalNavbar() {
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   if (isMobile) return <MobileHeader padded/>;
 
   return (
-    <header className={[navStyles.nav, scrolled && navStyles.navScrolled].filter(Boolean).join(' ')}>
-      <div className="wrap">
-        <Link to="/" className={navStyles.brandMark}>
-          <span className={navStyles.logoDisc}></span>
-          <span><b>PETLUXO</b></span>
+    <header className={cx(navStyles.nav, scrolled && navStyles.navScrolled)}>
+      <div className={cx('wrap', navStyles.inner)}>
+        <Link to="/" className={navStyles.brand}>
+          <BrandMark/>
         </Link>
+        <a
+          className="btn btn-ghost btn-sm"
+          href={wa(WA_MESSAGES.general)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icon.Wa className="wa-icon"/>
+          {NAV_TEXT.whatsapp}
+        </a>
       </div>
     </header>
   );

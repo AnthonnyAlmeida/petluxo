@@ -1,28 +1,20 @@
-/* PetLuxo — ProductBuyButton.module.css */
+/* PetLuxo — ProductBuyButton.module.css (layout desktop)
+ * Link secundário de WhatsApp (só no estado ESGOTADO, ou se HIDE_BUY_CTA
+ * voltar a false). */
 
 .waLink {
+  width: 100%;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  font-family: var(--mono);
   font-size: 12px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  background: none;
-  border: none;
-  padding: 8px 0;
-  cursor: pointer;
   transition: color 0.3s;
-  width: 100%;
 }
 
-.waLink:hover {
-  color: var(--vinho);
-}
-
-.waLink svg {
-  width: 14px;
-  height: 14px;
-  opacity: 0.6;
-}
+.waLink:hover { color: var(--vinho); }

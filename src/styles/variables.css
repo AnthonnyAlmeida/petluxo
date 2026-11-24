@@ -25,6 +25,13 @@
   --line-on-dark: rgba(248, 246, 243, 0.14);
   --scrim: rgba(42, 37, 34, 0.5);
 
+  /* Desktop (≥ 768px): cores e degradê do redesign desktop */
+  --bege-deep: #D9CBB9;         /* linhas finas, chão da arte, separadores */
+  --dourado-claro: #E3CE96;     /* brilho das medalhas */
+
+  /* Desktop: altura da Navbar fixa (20px + 44px + 20px) */
+  --nav-h: 84px;
+
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   --max: 1320px;

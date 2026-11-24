@@ -1,33 +1,70 @@
+/* PetLuxo — Ícones de traço do layout desktop.
+ * Decorativos por padrão (aria-hidden): o nome acessível fica no botão ou
+ * link que os contém. Herdam a cor por currentColor. */
+
+const line = (size, strokeWidth) => ({
+  viewBox: '0 0 24 24',
+  width: size,
+  height: size,
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+  'aria-hidden': true,
+  focusable: false,
+});
 
 export const Icon = {
   Search: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16" {...p}>
-      <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
-    </svg>
+    <svg {...line(18, 1.5)} {...p}><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
   ),
+  /* Balão de conversa (WhatsApp) em traço, como no desenho */
   Wa: (p) => (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" {...p}>
-      <path d="M20.52 3.48A11.86 11.86 0 0 0 12.04 0C5.46 0 .12 5.34.12 11.92c0 2.1.55 4.15 1.6 5.96L0 24l6.27-1.65a11.9 11.9 0 0 0 5.77 1.47h.01c6.58 0 11.92-5.34 11.92-11.92 0-3.18-1.24-6.18-3.45-8.42ZM12.05 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.72.97 1-3.62-.24-.37a9.87 9.87 0 0 1-1.51-5.27c0-5.46 4.45-9.91 9.92-9.91a9.85 9.85 0 0 1 7.01 2.9 9.84 9.84 0 0 1 2.9 7.01c0 5.46-4.45 9.91-9.95 9.91Zm5.45-7.42c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.66.15-.2.3-.76.97-.93 1.16-.17.2-.34.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.76-1.66-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.6-.91-2.18-.24-.58-.49-.5-.66-.51l-.56-.01c-.2 0-.51.07-.78.37-.27.3-1.02 1-1.02 2.43 0 1.43 1.05 2.82 1.2 3.02.15.2 2.07 3.16 5.02 4.43.7.3 1.25.48 1.68.62.7.22 1.35.19 1.85.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.34Z"/>
-    </svg>
+    <svg {...line(16, 1.6)} {...p}><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
   ),
   ArrowR: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="14" height="14" {...p}>
-      <path d="M5 12h14M13 5l7 7-7 7"/>
-    </svg>
+    <svg {...line(16, 1.6)} {...p}><path d="M5 12h14M13 6l6 6-6 6"/></svg>
   ),
-  ArrowUp: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="14" height="14" {...p}>
-      <path d="m7 17 10-10M9 7h8v8"/>
-    </svg>
+  ArrowL: (p) => (
+    <svg {...line(16, 1.5)} {...p}><path d="M19 12H5M11 5l-7 7 7 7"/></svg>
+  ),
+  ArrowDown: (p) => (
+    <svg {...line(16, 1.5)} {...p}><path d="M12 5v14M5 12l7 7 7-7"/></svg>
   ),
   Plus: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="14" height="14" {...p}>
-      <path d="M12 5v14M5 12h14"/>
-    </svg>
+    <svg {...line(20, 1.6)} {...p}><path d="M12 5v14M5 12h14"/></svg>
+  ),
+  /* Selos e faixa de confiança (traço 1.5, 20px por padrão) */
+  Shield: (p) => (
+    <svg {...line(20, 1.5)} {...p}><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/></svg>
+  ),
+  Truck: (p) => (
+    <svg {...line(20, 1.5)} {...p}><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7zM7 19a1.5 1.5 0 1 0 0-.01M17 19a1.5 1.5 0 1 0 0-.01"/></svg>
+  ),
+  Star: (p) => (
+    <svg {...line(20, 1.5)} {...p}><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.7 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/></svg>
+  ),
+  Heart: (p) => (
+    <svg {...line(20, 1.5)} {...p}><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg>
+  ),
+  Rays: (p) => (
+    <svg {...line(20, 1.5)} {...p}><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/></svg>
+  ),
+  /* Garantias da ficha (traço 1.6, 14px por padrão) */
+  Lock: (p) => (
+    <svg {...line(14, 1.6)} {...p}><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+  ),
+  Return: (p) => (
+    <svg {...line(14, 1.6)} {...p}><path d="M9 14L4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+  ),
+  Box: (p) => (
+    <svg {...line(14, 1.6)} {...p}><path d="M21 8l-9-5-9 5v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/></svg>
   ),
   Chevron: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" width="16" height="16" {...p}>
-      <path d="m6 9 6 6 6-6"/>
-    </svg>
+    <svg {...line(16, 1.4)} {...p}><path d="m6 9 6 6 6-6"/></svg>
+  ),
+  Close: (p) => (
+    <svg {...line(14, 1.6)} {...p}><path d="M18 6 6 18M6 6l12 12"/></svg>
   ),
 };

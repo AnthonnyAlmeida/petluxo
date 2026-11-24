@@ -1,183 +1,205 @@
-/* ---------- Products — cabeçalho da seção ---------- */
-.productsHead {
+/* PetLuxo — Products.module.css (layout desktop, ≥ 768px) */
+
+@keyframes resultFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.products {
+  padding: 40px 0 48px;
+  scroll-margin-top: var(--nav-h);
+}
+
+.inner {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- Cabeçalho: título + busca ---------- */
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
   justify-content: space-between;
-  align-items: end;
-  margin-bottom: 36px;
-  gap: 40px;
-}
-.productsHead h2 {
-  font-size: clamp(32px, 3.5vw, 52px);
-  line-height: 1;
+  gap: 16px 40px;
 }
 
-/* ---------- Products — expansão de categorias ---------- */
-.productsExpand {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.productsExpandOpen {
-  grid-template-rows: 1fr;
-}
-.productsExpandInner {
-  overflow: hidden;
-  /* padding lateral > margin negativa do .carouselOuter (12px) para que as
-     setas laterais fiquem dentro da padding box e não sejam cortadas */
-  padding: 0 16px;
-}
-.productsCategoryBlock {
-  margin-top: 64px;
-  padding-top: 48px;
-  border-top: 1px solid rgba(176, 137, 104, 0.18);
-}
-
-/* ---------- @media (max-width: 768px) ---------- */
-@media (max-width: 768px) {
-  .productsHead {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 40px;
-    gap: 20px;
-  }
-  .productsHead .right { flex-wrap: wrap; }
-}
-
-/* ---------- Busca ---------- */
-.searchWrap {
+.headText {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 12px;
 }
-.searchBox {
+
+.title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(32px, 3.2vw, 46px);
+  line-height: 1.05;
+}
+
+.title em { color: var(--vinho); }
+
+.search {
   position: relative;
-  display: flex;
-  align-items: center;
   width: 100%;
-  max-width: 480px;
-  background: var(--bege-soft);
-  border-radius: 2px;
-  border: 1px solid transparent;
-  transition: border-color 0.2s ease;
-}
-.searchBox:focus-within {
-  border-color: var(--dourado);
-  outline: none;
-}
-.searchIcon {
+  max-width: 380px;
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  color: var(--caramelo);
-  pointer-events: none;
-  flex-shrink: 0;
+  background: var(--bege-soft);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: border-color 0.3s;
 }
+
+.search:focus-within {
+  border-color: var(--dourado);
+  /* a borda dourada (1,84:1) não basta como indicador: contorno vinho */
+  outline: 2px solid var(--vinho);
+  outline-offset: 3px;
+}
+
+.searchIcon {
+  flex: none;
+  margin: 0 12px;
+  color: var(--ink-soft);
+}
+
 .searchInput {
   flex: 1;
+  min-width: 0;
+  min-height: 48px;
   background: transparent;
-  border: none;
+  border: 0;
   outline: none;
-  /* font-size >= 16px é o limiar que o iOS Safari usa para decidir se dá
-   * zoom automático da página ao focar um campo de texto — abaixo disso
-   * (era 13px) o navegador amplia a viewport sozinho ao tocar aqui, uma das
-   * causas do zoom "grudado" fora do ProductLightbox. padding e line-height
-   * foram ajustados junto para manter a altura da barra de busca quase
-   * idêntica à anterior (13px/padding 12px ≈ 39px de altura total; 16px com
-   * este padding e line-height fica em ~39px também) — o texto em si fica
-   * um pouco maior, mas o contêiner visual não muda de tamanho.
-   */
-  padding: 10px 0;
-  line-height: 1.2;
   font-family: var(--sans);
   font-size: 16px;
+  font-style: italic;
   color: var(--ink);
-  font-style: italic;
 }
-.searchInput::placeholder {
-  color: var(--ink-soft);
-  font-style: italic;
-}
-.searchClear {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0 12px;
-  color: var(--ink-soft);
-  flex-shrink: 0;
-  transition: color 0.2s ease;
-}
-.searchClear:hover { color: var(--ink); }
 
-/* ---------- Pills de categoria ---------- */
-.pillsWrap {
-  margin-bottom: 40px;
-  overflow: hidden;
+.searchInput::placeholder { color: var(--ink-soft); }
+
+.searchClear {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--ink-soft);
+  transition: color 0.3s;
 }
-.pillsScroll {
+
+.searchClear:hover { color: var(--vinho); }
+
+/* ---------- Filtros: pills + Ver mais ---------- */
+.filterRow {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
 }
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .pill {
-  background: transparent;
-  border: 1px solid rgba(176, 137, 104, 0.3);
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(42, 37, 34, 0.3);
   border-radius: 999px;
-  padding: 6px 14px;
+  background: transparent;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--ink-soft);
-  cursor: pointer;
-  transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
   white-space: nowrap;
+  color: var(--ink-soft);
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
-.pill:hover {
-  border-color: var(--caramelo);
-  color: var(--caramelo);
-}
-.pillActive {
-  background: var(--vinho);
-  border-color: var(--vinho);
-  color: #fff;
-}
+
+.pill:hover { border-color: var(--vinho); color: var(--vinho); }
+
+.pillActive,
 .pillActive:hover {
-  background: var(--vinho);
   border-color: var(--vinho);
-  color: #fff;
+  background: var(--vinho);
+  color: var(--offwhite);
+}
+
+.moreBtn {
+  flex: none;
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0 24px;
+}
+
+.moreIcon { transition: transform 0.4s; }
+.moreIconUp { transform: rotate(180deg); }
+
+/* Pills (≥ 641px) × seletor em folha (≤ 640px). Abaixo de 768px o mobile
+ * tem catálogo próprio, então na prática só os pills aparecem. */
+.categoryFilterDesktop {
+  display: none;
+  flex: 1 1 0;
+  min-width: 0;
+}
+.categoryFilterMobile { display: block; }
+
+@media (min-width: 641px) {
+  .categoryFilterDesktop { display: block; }
+  .categoryFilterMobile { display: none; }
+}
+
+/* ---------- Expansão: demais categorias ---------- */
+.expand {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.7s var(--ease-out-expo), visibility 0s linear 0.7s;
+}
+
+.expandOpen {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 0.7s var(--ease-out-expo), visibility 0s;
+}
+
+.expandInner {
+  min-height: 0;
+  overflow: hidden;
+  /* espaço para as setas laterais (margem negativa de 12px no carrossel) */
+  padding: 0 12px;
+  margin: 0 -12px;
+}
+
+.categoryBlock {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid var(--bege-deep);
 }
 
 /* ---------- Grid de resultados ---------- */
 .resultsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 40px 24px;
 }
+
 .resultCard {
   opacity: 0;
   animation: resultFadeIn 0.4s ease forwards;
 }
-@keyframes resultFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
 
-/* ---------- Encerramento da seleção (só com categoria ativa) ----------
- * Ponto final editorial entre o último produto da categoria filtrada e a
- * seção "Sobre Nós". Entra depois do .resultsGrid, nunca depois dos
- * carrosséis do catálogo normal.
- * Animação: `resultFadeIn` (a mesma dos cards) em vez de `.reveal` — não
- * depende do IntersectionObserver local para ficar visível. */
+/* ---------- Encerramento da seleção (só com categoria ativa) ---------- */
 .endNotice {
-  margin-top: clamp(36px, 5vh, 60px);
-  padding-top: clamp(24px, 3.5vh, 36px);
-  padding-bottom: clamp(4px, 1vh, 12px);
-  /* Divisor sutil — mesmo idioma de .productsCategoryBlock */
-  border-top: 1px solid rgba(176, 137, 104, 0.18);
+  margin-top: 24px;
+  padding-top: 40px;
+  border-top: 1px solid var(--bege-deep);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -186,90 +208,90 @@
   opacity: 0;
   animation: resultFadeIn 0.5s ease forwards;
 }
-/* O .section-tag global traz margin-bottom próprio; aqui o espaçamento é
- * controlado pelo gap do flex, para não somar as duas coisas. */
-.endNotice > :global(.section-tag) {
-  margin-bottom: 0;
-}
+
 .endNoticeTitle {
-  margin: 0;
-  font-size: clamp(21px, 2.4vw, 30px);
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.5vw, 32px);
   line-height: 1.25;
-  color: var(--ink);
 }
 
 /* ---------- Estado vazio ---------- */
 .emptyState {
-  text-align: center;
-  padding: 80px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  padding: 56px 24px;
+  text-align: center;
 }
+
 .emptyDot {
   font-size: 14px;
-  color: var(--dourado);
   letter-spacing: 0.3em;
+  color: var(--vinho);
 }
+
 .emptyTitle {
-  font-size: clamp(22px, 2.5vw, 32px);
-  color: var(--ink);
-  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.5vw, 32px);
 }
+
 .emptySubtitle {
-  font-family: var(--sans);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--ink-soft);
-  margin: 0;
 }
+
 .emptyLink {
-  color: var(--caramelo);
+  color: var(--vinho);
   text-decoration: underline;
-  text-decoration-color: rgba(176, 137, 104, 0.4);
   text-underline-offset: 3px;
-  transition: color 0.2s ease;
-}
-.emptyLink:hover { color: var(--dourado); }
-
-/* ---------- @media (max-width: 980px) ---------- */
-@media (max-width: 980px) {
-  .resultsGrid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ---------- Switch desktop/mobile entre pills e selector ----------
- * Mobile-first: o selector (CategorySelector) é o padrão; os pills são
- * mostrados apenas em telas largas. O seletor continua renderizado no DOM
- * em desktop, mas display:none não ocupa layout nem tab order. */
-.categoryFilterDesktop { display: none; }
-.categoryFilterMobile {
-  display: block;
-  margin-bottom: 40px;
-}
-
-/* ---------- @media (min-width: 641px) — desktop ----------
- * (breakpoint complementa o max-width:640px já usado no .pillsScroll abaixo) */
-@media (min-width: 641px) {
-  .categoryFilterDesktop { display: block; }
-  .categoryFilterMobile { display: none; }
-}
-
-/* ---------- @media (max-width: 640px) ---------- */
-@media (max-width: 640px) {
-  .resultsGrid { grid-template-columns: 1fr; }
-  .pillsScroll {
+/* ---- Telas baixas: a seção precisa caber na altura útil ----
+ * Abaixo de 900px de altura (e, de 768 a 1023px de largura, até 969px) as
+ * pills ficam numa linha só, com rolagem horizontal (todas continuam
+ * alcançáveis, inclusive por Tab). Abaixo de
+ * 760px o respiro vertical, o título e o palco dos cards diminuem
+ * (--stage-ratio é lida por ProductCard.module.css); abaixo de 680px mais um
+ * passo. */
+@media (max-height: 899.98px), (max-width: 1023.98px) and (max-height: 969.98px) {
+  .pills {
     flex-wrap: nowrap;
     overflow-x: auto;
-    justify-content: flex-start;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--bege-deep) transparent;
   }
-  .pillsScroll::-webkit-scrollbar { display: none; }
-  /* Pausa menor no mobile — o bloco não pode competir com o grid nem
-   * empurrar o "Sobre Nós" para longe demais. */
+}
+
+@media (max-height: 759.98px) {
+  .products {
+    --stage-ratio: 3 / 2;
+    padding: 24px 0 28px;
+  }
+  .inner { gap: 14px; }
+  .headText { gap: 8px; }
+  .title { font-size: clamp(30px, 3vw, 38px); }
+}
+
+@media (max-height: 679.98px) {
+  .products {
+    --stage-ratio: 16 / 9;
+    padding: 16px 0 20px;
+  }
+  .inner { gap: 10px; }
+  .title { font-size: clamp(28px, 2.6vw, 32px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resultCard,
   .endNotice {
-    margin-top: 32px;
-    padding-top: 24px;
-    gap: 14px;
+    opacity: 1;
+    animation: none;
   }
+  .expand,
+  .expandOpen,
+  .moreIcon,
+  .pill,
+  .search { transition: none; }
 }
