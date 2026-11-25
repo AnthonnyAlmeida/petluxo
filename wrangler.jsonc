@@ -8,6 +8,6 @@
     "directory": "./dist",
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/produto/*"]
+    "run_worker_first": ["/*", "!/assets/*", "!/images/*", "!/favicon.*", "!/og-image.*", "!/robots.txt", "!/sitemap.xml"]
   }
 }

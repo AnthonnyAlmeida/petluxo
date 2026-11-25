@@ -82,7 +82,7 @@ petluxo/
 │   ├── validate-catalog.js # Validador do catálogo, roda antes do build
 │   ├── generate-sitemap.js # Gera dist/sitemap.xml depois do vite build
 │   └── check-seo.js        # Checagens de SEO (npm run test:seo)
-├── worker/              # Worker de SEO de /produto/* (index.js, seo.js)
+├── worker/              # Worker de SEO e 404 real (index.js, seo.js)
 ├── tests/
 │   └── analytics-consent.spec.js # 9 testes Playwright do consentimento GA4
 ├── playwright.config.js

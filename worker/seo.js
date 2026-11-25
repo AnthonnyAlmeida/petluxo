@@ -18,6 +18,24 @@ export function parseProductPath(pathname) {
   return { id: Number(digits), canonical: !trailingSlash && !leadingZero };
 }
 
+/* Rotas estáticas do app (src/app/page.jsx), com ou sem barra final.
+ * /produto/:id é tratada à parte (parseProductPath). Qualquer outro caminho
+ * que chegue ao Worker é URL inexistente: 404 + noindex. */
+const STATIC_ROUTES = new Set([
+  '/',
+  '/produtos',
+  '/buscar',
+  '/politica-de-privacidade',
+  '/politica-de-troca-e-devolucao',
+  '/politica-de-frete-e-entrega',
+  '/termos-de-uso',
+]);
+
+export function isStaticRoute(pathname) {
+  const path = /^\/.*[^/]\/$/.test(pathname) ? pathname.slice(0, -1) : pathname;
+  return STATIC_ROUTES.has(path);
+}
+
 /* Mesma regra do ProductPage.jsx: existe e visible !== false. */
 export function findVisibleProduct(id) {
   const product = PRODUCTS.find((p) => p.id === id);
@@ -68,4 +86,61 @@ export function buildProductMeta(product) {
     url: `${SITE}/produto/${product.id}`,
     image: `${SITE}${product.image}`,
   };
+}
+
+/* 'R$ 1.379,90' / 'a partir de R$ 379,90' → '1379.90'. null se não houver valor. */
+export function parsePriceBRL(text) {
+  const match = /R\$\s*(\d{1,3}(?:\.\d{3})*|\d+),(\d{2})/.exec(String(text ?? ''));
+  if (!match) return null;
+  return `${match[1].replace(/\./g, '')}.${match[2]}`;
+}
+
+/* JSON-LD schema.org/Product. Com preços diferentes por tamanho vira
+ * AggregateOffer (menor e maior preço); senão (preço único ou igual em todos os
+ * tamanhos), Offer. Sem preço legível, sem "offers".
+ * Esgotado (badge) → OutOfStock. Devolve null se o produto não tiver nome. */
+export function buildProductJsonLd(product) {
+  if (!product?.name) return null;
+  const meta = buildProductMeta(product);
+  const availability = product.badge === 'ESGOTADO'
+    ? 'https://schema.org/OutOfStock'
+    : 'https://schema.org/InStock';
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: meta.description,
+    image: [meta.image],
+    url: meta.url,
+    brand: { '@type': 'Brand', name: 'PetLuxo' },
+  };
+  const variantPrices = (product.prices ?? []).map((p) => parsePriceBRL(p.price)).filter(Boolean).map(Number);
+  const single = parsePriceBRL(product.price);
+  const low = variantPrices.length ? Math.min(...variantPrices) : null;
+  const high = variantPrices.length ? Math.max(...variantPrices) : null;
+  if (variantPrices.length > 1 && low !== high) {
+    json.offers = {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'BRL',
+      lowPrice: low.toFixed(2),
+      highPrice: high.toFixed(2),
+      offerCount: variantPrices.length,
+      availability,
+      url: meta.url,
+    };
+  } else if (single || variantPrices.length === 1) {
+    json.offers = {
+      '@type': 'Offer',
+      priceCurrency: 'BRL',
+      price: variantPrices.length > 1 ? low.toFixed(2) : single ?? low.toFixed(2),
+      availability,
+      url: meta.url,
+    };
+  }
+  return json;
+}
+
+/* Serialização segura para dentro de <script>: escapa "<" (evita "</script>"). */
+export function jsonLdScript(json) {
+  return `<script type="application/ld+json">${JSON.stringify(json).replace(/</g, '\\u003c')}</script>`;
 }

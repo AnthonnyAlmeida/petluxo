@@ -47,15 +47,17 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
 - [x] **13. Privacidade e consentimento do GA4 (LGPD)** 🟡
       Definir a base legal e o mecanismo de consentimento aplicável ao GA4; impedir o carregamento do `gtag.js` antes da autorização quando exigida pela estratégia adotada; revisar a política de privacidade. A implementação (banner ou outro mecanismo) decorre dessa análise.
 
-- [ ] **6. Eventos do GA4 para clique no WhatsApp** 🟡
-      Desbloqueado: o item 13 está concluído. O evento deve identificar produto e origem do clique (Navbar, Featured, CTA, FAQ, Footer, busca sem resultado em `Products.jsx` e no mobile, ficha de produto via `ProductBuyButton` e o botão do mobile), sem enviar dados pessoais em parâmetros ou URL, e respeitar o consentimento adotado.
+- [x] **6. Eventos do GA4 para clique no WhatsApp** 🟡
+      Feito (2026-11-24): evento `whatsapp_click` por listener único em `src/lib/analytics.js`; origem em `data-wa-origin` e produto em `data-wa-product-id/-name` nos links; respeita o consentimento; testes em `tests/analytics-consent.spec.js`. Falta só cadastrar `origin`/`product_id` como dimensões personalizadas no GA4 (painel do Google). Texto original: o item 13 está concluído. O evento deve identificar produto e origem do clique (Navbar, Featured, CTA, FAQ, Footer, busca sem resultado em `Products.jsx` e no mobile, ficha de produto via `ProductBuyButton` e o botão do mobile), sem enviar dados pessoais em parâmetros ou URL, e respeitar o consentimento adotado.
 
 - [ ] **1. Rotas de produto e tratamento de 404** 🟡
       As rotas dependem do fallback de SPA do Worker (`public/404.html` e a restauração em `main.jsx` foram removidos). Verificar e documentar o comportamento real de `/produto/:id` em acesso direto (status HTTP recebido, e como Google e apps de mensagem tratam) antes de presumir a causa.
 
   O fallback de SPA do Worker (`not_found_handling`) resolve o carregamento direto, mas também faz URLs inexistentes devolverem o app com status 200 (soft 404).
 
-  Estado atual: `/produto/*` passa pelo Worker (`worker/index.js`): produto inexistente, oculto ou formato inválido devolve o shell com HTTP 404 e `noindex`; produto visível carrega a ficha (200). Falta: o soft 404 continua fora de `/produto/*` (qualquer outra URL inexistente devolve 200 com o `NotFound` do app, sem `noindex`), porque o fallback de SPA do Worker de assets responde antes. Status validado no domínio real em 2026-11-17 por `curl` (item 2).
+  Atualização (2026-11-24, ainda não publicado): o Worker passou a rodar em todas as rotas, exceto arquivos estáticos (`run_worker_first` com exclusões em `wrangler.jsonc`). Rota do app (`isStaticRoute` em `worker/seo.js`) devolve 200; qualquer outra URL devolve o shell com 404 + `noindex`. Validado em `wrangler dev --local`; falta validar no preview/produção. Limite: arquivo inexistente em `/assets/*` e `/images/*` ainda cai no fallback de SPA (200).
+
+  Estado anterior: `/produto/*` passa pelo Worker (`worker/index.js`): produto inexistente, oculto ou formato inválido devolve o shell com HTTP 404 e `noindex`; produto visível carrega a ficha (200). Falta: o soft 404 continua fora de `/produto/*` (qualquer outra URL inexistente devolve 200 com o `NotFound` do app, sem `noindex`), porque o fallback de SPA do Worker de assets responde antes. Status validado no domínio real em 2026-11-17 por `curl` (item 2).
 
   Critérios de conclusão:
   - acesso direto a `/produto/:id` de produto visível carrega a ficha;
@@ -63,7 +65,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
   - o status HTTP foi validado no deploy de preview.
 
 - [ ] **2. Meta tags por produto** 🟡
-      Feito e validado em produção em 2026-11-17 por `curl`: `/produto/44` devolve título, canonical e `og:image` próprios; produto oculto ou inexistente devolve 404 + `noindex`; formatos alternativos da URL recebem 301; o sitemap tem 29 URLs. A prévia do WhatsApp de `/produto/44` foi validada (foto, título e descrição), então o `og:image` em WebP vertical funciona e o JPG 1200×630 por produto não é mais pendência. A descrição é o início de `description`, cortado no fim de frase dentro de 155 caracteres (se o trecho tiver ao menos 60 caracteres; senão, corte por palavra com "…"). Pendências: (a) soft 404 fora de `/produto/*` (item 1); (b) em navegação interna (clique de card) o `<title>` não muda, porque só o HTML inicial é reescrito; (c) as políticas herdam title/description da home. `/produtos` tem título, descrição e canonical próprios e `/buscar` tem `noindex`, ambos definidos no cliente (`useDocumentHead`); como o Worker não reescreve essas rotas, só quem executa JavaScript os vê.
+      Feito e validado em produção em 2026-11-17 por `curl`: `/produto/44` devolve título, canonical e `og:image` próprios; produto oculto ou inexistente devolve 404 + `noindex`; formatos alternativos da URL recebem 301; o sitemap tem 29 URLs. A prévia do WhatsApp de `/produto/44` foi validada (foto, título e descrição), então o `og:image` em WebP vertical funciona e o JPG 1200×630 por produto não é mais pendência. A descrição é o início de `description`, cortado no fim de frase dentro de 155 caracteres (se o trecho tiver ao menos 60 caracteres; senão, corte por palavra com "…"). Atualização (2026-11-24, ainda não publicado): (a) soft 404 tratado pelo item 1; (b) navegação interna agora atualiza título, descrição e canonical da ficha (`useDocumentHead` em `ProductPage.jsx`); (c) as políticas, `/produtos` e `/buscar` têm título, descrição e canonical (ou noindex) também no HTML inicial, via Worker e `src/data/routeMeta.js`. Falta validar no preview/produção e rever o texto das descrições das políticas (escritas por mim, sem citar prazos nem rastreamento). `/produtos` tem título, descrição e canonical próprios e `/buscar` tem `noindex`, ambos definidos no cliente (`useDocumentHead`); como o Worker não reescreve essas rotas, só quem executa JavaScript os vê.
 
   Critérios de aceite:
   - cada produto gera título, descrição, URL canônica e imagem próprios;
@@ -92,7 +94,7 @@ Legenda de esforço: 🟢 minutos · 🟡 algumas horas · 🔴 projeto maior
       Garantia (2026-11-20): as 25 chaves de `PRODUCT_DETAILS` têm agora o mesmo `warranty`: "Garantia legal de 90 dias contra defeitos de fabricação, a contar do recebimento, conforme o art. 26 do CDC." (frase padrão do advogado, 2026-11-19). Isso inclui os ids 20, 41 e 42, que estavam sem o campo desde 2026-11-17, e os ids 2, 8 e 10 (o id 10 perdeu o "6 meses"). Não foram criadas fichas novas. A garantia contratual de 6 meses do id 10 e dos ids 2 e 8 só volta com confirmação do fornecedor (item 37).
 
 - [ ] **10. Dados estruturados e sitemap** 🟡
-      Sitemap feito: `scripts/generate-sitemap.js` gera `dist/sitemap.xml` no build (home, `/produtos` e produtos visíveis, sem `lastmod`). `public/sitemap.xml` não existe mais no repositório. Pendente: JSON-LD `Product` nas fichas (o preço é texto livre, como `'R$ 379,90'`, e precisaria de conversão).
+      Sitemap feito: `scripts/generate-sitemap.js` gera `dist/sitemap.xml` no build (home, `/produtos` e produtos visíveis, sem `lastmod`). `public/sitemap.xml` não existe mais no repositório. JSON-LD `Product` feito (2026-11-24, ainda não publicado): o Worker injeta o script no head da ficha (`buildProductJsonLd` em `worker/seo.js`, preço convertido de texto, `AggregateOffer` quando há tamanhos, checado em `scripts/check-seo.js`). Pendente: validar no Teste de Resultados Avançados do Google após o deploy; a disponibilidade assume `InStock` salvo `ESGOTADO` (confirmar com a dona do negócio se há produto sob encomenda).
 
 ---
 

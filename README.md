@@ -101,7 +101,7 @@ petluxo/
 │       ├── variables.css    # Design tokens (cores, tipografia, espaçamentos)
 │       ├── globals.css      # Reset, utilitárias globais, tipografia e .reveal (166 linhas)
 │       └── buttons.css      # Estilos globais de botões (.btn e variantes)
-├── worker/                      # Worker de SEO de /produto/* (index.js, seo.js)
+├── worker/                      # Worker de SEO e 404 real (index.js, seo.js)
 ├── scripts/validate-catalog.js  # Validador do catálogo (roda antes do build)
 ├── scripts/generate-sitemap.js  # Gera dist/sitemap.xml (roda depois do vite build)
 ├── scripts/check-seo.js         # Checagens de SEO (npm run test:seo, depois do build)

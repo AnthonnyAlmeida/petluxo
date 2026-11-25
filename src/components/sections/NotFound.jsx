@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MinimalNavbar } from '../layout/MinimalNavbar.jsx';
 import { Footer } from '../layout/Footer.jsx';
+import { useDocumentHead } from '../../hooks/useDocumentHead.js';
 import { useIsMobile } from '../../hooks/useMediaQuery.js';
 import { MobileNotFound } from '../mobile/notfound/MobileNotFound.jsx';
 import { NOT_FOUND_TEXT } from '../../data/siteContent.js';
@@ -102,6 +103,7 @@ export function NotFound() {
  * próprios); acima, MinimalNavbar + NotFound + Footer. */
 export function NotFoundPage() {
   const isMobile = useIsMobile();
+  useDocumentHead({ robots: 'noindex' });
   if (isMobile) return <MobileNotFound/>;
   return (
     <>

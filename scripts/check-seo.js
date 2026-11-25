@@ -7,7 +7,7 @@ import { existsSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { PRODUCTS } from '../src/data/products.js';
-import { SITE, parseProductPath, findVisibleProduct, buildProductMeta } from '../worker/seo.js';
+import { SITE, buildProductJsonLd, jsonLdScript, parsePriceBRL, isStaticRoute, parseProductPath, findVisibleProduct, buildProductMeta } from '../worker/seo.js';
 
 let passed = 0;
 function check(name, fn) {
@@ -106,5 +106,47 @@ check('sitemap: nenhum oculto', () => {
 });
 check('sitemap: sem lastmod/changefreq/priority', () =>
   assert.ok(!/lastmod|changefreq|priority/.test(xml)));
+
+for (const ok of ['/', '/produtos', '/produtos/', '/buscar', '/politica-de-privacidade', '/termos-de-uso']) {
+  check(`isStaticRoute ${ok}`, () => assert.equal(isStaticRoute(ok), true));
+}
+for (const bad of ['/xyz', '/produto', '/produtos/x', '/index.html', '/politica', '//']) {
+  check(`isStaticRoute ${bad} => false`, () => assert.equal(isStaticRoute(bad), false));
+}
+
+check('parsePriceBRL', () => {
+  assert.equal(parsePriceBRL('R$ 379,90'), '379.90');
+  assert.equal(parsePriceBRL('a partir de R$ 1.379,90'), '1379.90');
+  assert.equal(parsePriceBRL('consulte'), null);
+});
+check('JSON-LD: todo produto visível tem Product com oferta em BRL e URL canônica', () => {
+  for (const p of PRODUCTS.filter((x) => x.visible !== false)) {
+    const j = buildProductJsonLd(p);
+    assert.equal(j['@type'], 'Product');
+    assert.equal(j.url, `${SITE}/produto/${p.id}`);
+    assert.ok(j.offers, `produto ${p.id} sem offers`);
+    assert.equal(j.offers.priceCurrency, 'BRL');
+    const price = j.offers.price ?? j.offers.lowPrice;
+    assert.match(price, /^\d+\.\d{2}$/, `produto ${p.id}: preço ${price}`);
+  }
+});
+check('JSON-LD: AggregateOffer quando os preços por tamanho diferem', () => {
+  for (const id of [2, 8, 14, 21, 28, 41, 42, 46]) {
+    const { offers } = buildProductJsonLd(findVisibleProduct(id));
+    assert.equal(offers['@type'], 'AggregateOffer', `produto ${id}`);
+    assert.ok(Number(offers.lowPrice) < Number(offers.highPrice), `produto ${id}`);
+  }
+});
+check('JSON-LD: Offer quando todos os tamanhos têm o mesmo preço', () => {
+  for (const [id, price] of [[33, '297.00'], [43, '999.90'], [44, '379.90']]) {
+    const { offers } = buildProductJsonLd(findVisibleProduct(id));
+    assert.equal(offers['@type'], 'Offer', `produto ${id}`);
+    assert.equal(offers.price, price, `produto ${id}`);
+  }
+});
+check('JSON-LD: "<" é escapado dentro do script', () => {
+  const out = jsonLdScript({ name: '</script><b>' });
+  assert.ok(!out.slice(0, -9).includes('</script'));
+});
 
 console.log(`\n${passed} checagens passaram.`);

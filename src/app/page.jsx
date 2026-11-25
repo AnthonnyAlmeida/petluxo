@@ -20,6 +20,7 @@ import ShippingPolicyPage from '../components/pages/ShippingPolicyPage.jsx';
 import TermsPage from '../components/pages/TermsPage.jsx';
 import { useScrollEffects } from '../hooks/useScroll.js';
 import { useIsMobile } from '../hooks/useMediaQuery.js';
+import { ROUTE_META, getRouteMeta } from '../data/routeMeta.js';
 import { useDocumentHead } from '../hooks/useDocumentHead.js';
 import { trackPageView, isConsentGranted } from '../lib/analytics.js';
 import AnalyticsConsent from '../components/ui/AnalyticsConsent.jsx';
@@ -67,20 +68,13 @@ function HomePage() {
   return isMobile ? <MobileHome/> : <DesktopHome/>;
 }
 
-const CATALOG_TITLE = 'Produtos | PetLuxo — Camas, coleiras de couro e acessórios premium';
-const CATALOG_DESCRIPTION =
-  'Catálogo PetLuxo: camas de luxo, coleiras de couro, comedouros e acessórios premium para cães e gatos. Escolha pela categoria e compre via WhatsApp.';
 
 /* Catálogo em rota própria. Abaixo de 768px: catálogo mobile (chips e grade
  * de 2 colunas). Acima: a seção de produtos da home (busca, filtros e
  * carrosséis) com Navbar e Footer. */
 function CatalogPage() {
   const isMobile = useIsMobile();
-  useDocumentHead({
-    title: CATALOG_TITLE,
-    description: CATALOG_DESCRIPTION,
-    path: '/produtos',
-  });
+  useDocumentHead({ ...ROUTE_META['/produtos'], path: '/produtos' });
   if (isMobile) return <MobileCatalog/>;
   return (
     <>
@@ -102,6 +96,11 @@ function SearchPage() {
 
 export default function App() {
   const location = useLocation();
+
+  // Políticas e termos: título/descrição/canonical próprios (o /produtos e o
+  // /buscar aplicam os seus nas próprias páginas).
+  const legalMeta = /^\/(politica-|termos-)/.test(location.pathname) ? getRouteMeta(location.pathname) : null;
+  useDocumentHead(legalMeta ?? {});
 
   useEffect(() => {
     if (isConsentGranted()) {

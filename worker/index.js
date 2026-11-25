@@ -1,10 +1,13 @@
-/* PetLuxo — Worker de SEO por produto.
- * Roda só em /produto/* (assets.run_worker_first no wrangler.jsonc).
- * Reescreve o head do shell HTML (index.html) para produto válido e devolve
+/* PetLuxo — Worker de SEO por produto e de 404 real.
+ * Roda em tudo, menos nos arquivos estáticos (assets.run_worker_first no
+ * wrangler.jsonc, com exclusões). Rota estática do app → shell 200; qualquer
+ * outro caminho → shell com 404 + noindex (o fallback de SPA dos assets
+ * devolveria 200). Para /produto/*, reescreve o head do shell HTML (index.html) para produto válido e devolve
  * 404 + noindex para produto inexistente/oculto ou formato inválido.
  * O app React continua montando normalmente (NotFound incluso). */
 
-import { parseProductPath, findVisibleProduct, buildProductMeta } from './seo.js';
+import { getRouteMeta } from '../src/data/routeMeta.js';
+import { parseProductPath, findVisibleProduct, buildProductMeta, buildProductJsonLd, jsonLdScript, isStaticRoute, SITE } from './seo.js';
 
 const SECURITY_HEADERS = {
   'Strict-Transport-Security': 'max-age=63072000',
@@ -49,7 +52,8 @@ function setContent(rewriter, selector, value) {
   });
 }
 
-function rewriteProduct(shell, meta, productName) {
+function rewriteProduct(shell, meta, product) {
+  const productName = product.name;
   const rewriter = new HTMLRewriter();
   rewriter.on('title', {
     element(el) {
@@ -76,6 +80,31 @@ function rewriteProduct(shell, meta, productName) {
     element(el) {
       // url vem de SITE + id numérico; escapado por precaução.
       el.append(`<link rel="canonical" href="${escapeAttr(meta.url)}"/>`, { html: true });
+      const jsonLd = buildProductJsonLd(product);
+      if (jsonLd) el.append(jsonLdScript(jsonLd), { html: true });
+    },
+  });
+  return rewriter.transform(shell);
+}
+
+/* Rota estática: só título, descrição e canonical (a imagem social da home vale). */
+function rewriteRoute(shell, { title, description, path }) {
+  const url = `${SITE}${path}`;
+  const rewriter = new HTMLRewriter();
+  rewriter.on('title', {
+    element(el) {
+      el.setInnerContent(title);
+    },
+  });
+  setContent(rewriter, 'meta[name="description"]', description);
+  setContent(rewriter, 'meta[property="og:title"]', title);
+  setContent(rewriter, 'meta[property="og:description"]', description);
+  setContent(rewriter, 'meta[property="og:url"]', url);
+  setContent(rewriter, 'meta[name="twitter:title"]', title);
+  setContent(rewriter, 'meta[name="twitter:description"]', description);
+  rewriter.on('head', {
+    element(el) {
+      el.append(`<link rel="canonical" href="${escapeAttr(url)}"/>`, { html: true });
     },
   });
   return rewriter.transform(shell);
@@ -98,6 +127,20 @@ export default {
     }
 
     const url = new URL(request.url);
+
+    // Rota estática do app: shell 200; título/descrição/canonical próprios
+    // (ou noindex) para as rotas com dados em src/data/routeMeta.js.
+    if (isStaticRoute(url.pathname)) {
+      const routeMeta = getRouteMeta(url.pathname);
+      if (!routeMeta) return env.ASSETS.fetch(request);
+      const shell = await fetchShell(request, env);
+      if (!shell.ok) return shell;
+      if (routeMeta.noindex) {
+        return finish(request, rewriteNoindex(shell).body, 200, withHeaders(shell, { 'X-Robots-Tag': 'noindex' }));
+      }
+      return finish(request, rewriteRoute(shell, routeMeta).body, 200, withHeaders(shell));
+    }
+
     const parsed = parseProductPath(url.pathname);
     const product = parsed ? findVisibleProduct(parsed.id) : null;
 
@@ -121,6 +164,6 @@ export default {
     // Caso C: produto válido e canônico.
     const meta = buildProductMeta(product);
     const headers = withHeaders(shell);
-    return finish(request, rewriteProduct(shell, meta, product.name).body, 200, headers);
+    return finish(request, rewriteProduct(shell, meta, product).body, 200, headers);
   },
 };

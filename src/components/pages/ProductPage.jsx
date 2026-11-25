@@ -27,6 +27,8 @@ import { useIsMobile } from '../../hooks/useMediaQuery.js';
 import MobileProductFull from '../mobile/product/MobileProductFull.jsx';
 import MobileProductSimple from '../mobile/product/MobileProductSimple.jsx';
 import styles from './ProductPage.module.css';
+import { useDocumentHead } from '../../hooks/useDocumentHead.js';
+import { buildProductMeta } from '../../../worker/seo.js';
 
 const cx = (...c) => c.filter(Boolean).join(' ');
 
@@ -34,6 +36,14 @@ export default function ProductPage() {
   const { id } = useParams();
   const product = PRODUCTS.find((p) => p.id === Number(id));
   const isMobile = useIsMobile();
+  const visible = product && product.visible !== false;
+  const meta = visible ? buildProductMeta(product) : null;
+  // Navegação interna: o Worker só reescreve o HTML inicial.
+  useDocumentHead({
+    title: meta?.title,
+    description: meta?.description,
+    path: visible ? `/produto/${product.id}` : undefined,
+  });
 
   if (!product || product.visible === false) {
     return <NotFoundPage/>;
