@@ -97,7 +97,7 @@ export function BuyBar({ product, selectedSize, activePrice }) {
       </div>
       <a
         className={cx(ui.mBtn, ui.mBtnPrimary, styles.mBarBtn)}
-        href={productWaLink(product, selectedSize, activePrice)}
+        href={productWaLink(product, selectedSize, activePrice)} data-wa-origin="ficha-produto-barra" data-wa-product-id={product.id} data-wa-product-name={product.name}
         target="_blank"
         rel="noopener noreferrer"
       >

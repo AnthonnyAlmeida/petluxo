@@ -35,7 +35,7 @@ export function ProductBuyButton({ product, activeBuyLink, selectedSize, activeP
         >
           ESGOTADO
         </button>
-        <a className={styles.waLink} href={waLink} target="_blank" rel="noopener noreferrer">
+        <a className={styles.waLink} href={waLink} data-wa-origin="ficha-produto" data-wa-product-id={product.id} data-wa-product-name={product.name} target="_blank" rel="noopener noreferrer">
           <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
         </a>
       </>
@@ -55,7 +55,7 @@ export function ProductBuyButton({ product, activeBuyLink, selectedSize, activeP
             COMPRAR AGORA
           </a>
         )}
-        <a className="btn btn-primary btn-full btn-raised" href={waLink} target="_blank" rel="noopener noreferrer">
+        <a className="btn btn-primary btn-full btn-raised" href={waLink} data-wa-origin="ficha-produto" data-wa-product-id={product.id} data-wa-product-name={product.name} target="_blank" rel="noopener noreferrer">
           <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
         </a>
       </>
@@ -70,7 +70,7 @@ export function ProductBuyButton({ product, activeBuyLink, selectedSize, activeP
             COMPRAR AGORA
           </a>
         )}
-        <a className="btn btn-primary btn-full btn-raised" href={waLink} target="_blank" rel="noopener noreferrer">
+        <a className="btn btn-primary btn-full btn-raised" href={waLink} data-wa-origin="ficha-produto" data-wa-product-id={product.id} data-wa-product-name={product.name} target="_blank" rel="noopener noreferrer">
           <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
         </a>
       </>
@@ -78,7 +78,7 @@ export function ProductBuyButton({ product, activeBuyLink, selectedSize, activeP
   }
 
   return (
-    <a className="btn btn-primary btn-full btn-raised" href={waLink} target="_blank" rel="noopener noreferrer">
+    <a className="btn btn-primary btn-full btn-raised" href={waLink} data-wa-origin="ficha-produto" data-wa-product-id={product.id} data-wa-product-name={product.name} target="_blank" rel="noopener noreferrer">
       <Icon.Wa className="wa-icon"/> CONSULTAR VIA WHATSAPP
     </a>
   );

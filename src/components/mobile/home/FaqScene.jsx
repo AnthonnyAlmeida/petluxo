@@ -63,7 +63,7 @@ export function FaqScene() {
         </p>
         <a
           className={cx(ui.mBtn, ui.mBtnPrimary, ui.mBtnLs12, styles.mFaqMoreBtn)}
-          href={wa(WA_MESSAGES.question)}
+          href={wa(WA_MESSAGES.question)} data-wa-origin="faq"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -79,7 +79,7 @@ export function FaqScene() {
             <p className={styles.mFaqSheetA}><Answer item={item} onNavigate={close}/></p>
             <a
               className={cx(ui.mBtn, ui.mBtnPrimary, ui.mBtnLs12, styles.mFaqSheetWa)}
-              href={wa(WA_MESSAGES.question)}
+              href={wa(WA_MESSAGES.question)} data-wa-origin="faq"
               target="_blank"
               rel="noopener noreferrer"
             >

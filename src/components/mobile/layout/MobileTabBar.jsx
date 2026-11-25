@@ -43,7 +43,7 @@ export function MobileTabBar({ onHomeClick }) {
         </Link>
         <a
           className={cx(styles.mTab, styles.mTabWa)}
-          href={wa(WA_MESSAGES.general)}
+          href={wa(WA_MESSAGES.general)} data-wa-origin="tabbar"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Falar pelo WhatsApp"

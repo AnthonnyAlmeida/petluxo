@@ -50,7 +50,7 @@ export function CTA() {
           </a>
           <a
             className="btn btn-gold"
-            href={wa(CTA_TEXT.waMessage)}
+            href={wa(CTA_TEXT.waMessage)} data-wa-origin="cta"
             target="_blank"
             rel="noopener noreferrer"
             {...react('chat')}

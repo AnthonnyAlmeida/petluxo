@@ -87,7 +87,7 @@ export function FeaturedScene() {
         <p className={styles.mFeatDesc}>{product.description}</p>
         <a
           className={cx(ui.mBtn, ui.mBtnPrimary, styles.mFeatCta)}
-          href={wa(WA_MESSAGES.product(product.name))}
+          href={wa(WA_MESSAGES.product(product.name))} data-wa-origin="destaque" data-wa-product-id={product.id} data-wa-product-name={product.name}
           target="_blank"
           rel="noopener noreferrer"
         >

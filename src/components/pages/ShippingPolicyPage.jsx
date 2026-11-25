@@ -47,7 +47,7 @@ export default function ShippingPolicyPage() {
       <p>
         Contato: <a href="mailto:petluxo.service@gmail.com">petluxo.service@gmail.com</a> |{' '}
         <a
-            href="https://wa.me/5561994063917"
+            href="https://wa.me/5561994063917" data-wa-origin="politica"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -85,7 +85,7 @@ export function MobilePolicyLayout({ title, updated, highlights, children }) {
           <p className={styles.mPolMoreText}>
             Fale pelo WhatsApp ou pelo e-mail <a href={`mailto:${FOOTER.email}`}>{FOOTER.email}</a>
           </p>
-          <a className={cx(ui.mBtn, ui.mBtnPrimary, ui.mBtnLs12)} href={wa(WA_MESSAGES.question)} target="_blank" rel="noopener noreferrer">
+          <a className={cx(ui.mBtn, ui.mBtnPrimary, ui.mBtnLs12)} href={wa(WA_MESSAGES.question)} data-wa-origin="politica" target="_blank" rel="noopener noreferrer">
             <MIcon.Wa/>
             Falar via WhatsApp
           </a>

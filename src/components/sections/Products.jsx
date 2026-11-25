@@ -201,7 +201,7 @@ export function Products({ asPage = false }) {
               <p className={styles.emptySubtitle}>
                 Tente outro termo ou{' '}
                 <a
-                  href={wa(WA_MESSAGES.searching)}
+                  href={wa(WA_MESSAGES.searching)} data-wa-origin="busca-sem-resultado"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.emptyLink}

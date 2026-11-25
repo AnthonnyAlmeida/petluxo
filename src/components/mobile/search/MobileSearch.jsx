@@ -108,7 +108,7 @@ export default function MobileSearch() {
                 <p className={styles.mSearchEmptyText}>Fale com a gente pelo WhatsApp. Adoramos ajudar.</p>
                 <a
                   className={cx(ui.mBtn, ui.mBtnPrimary, styles.mSearchEmptyBtn)}
-                  href={wa(WA_MESSAGES.searching)}
+                  href={wa(WA_MESSAGES.searching)} data-wa-origin="busca-sem-resultado"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

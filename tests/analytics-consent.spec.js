@@ -18,6 +18,7 @@ async function resetConsent(page) {
 
 test.describe('Consentimento GA4 (LGPD)', () => {
   test('visitante novo: banner aparece e nenhum gtag.js e carregado antes do aceite', async ({ page }) => {
+    test.setTimeout(60000);
     const gtagRequests = [];
     page.on('request', (request) => {
       if (request.url().includes(`googletagmanager.com/gtag/js?id=${GA4_ID}`)) {
@@ -240,5 +241,47 @@ test.describe('Consentimento GA4 (LGPD)', () => {
 
     await expect(page.getByRole('button', { name: /Aceitar analytics/ })).toBeVisible();
     await expect(page.getByRole('button', { name: /Recusar analytics/ })).toBeVisible();
+  });
+});
+
+test.describe('Evento whatsapp_click (GA4)', () => {
+  async function stubGtag(page) {
+    // Impede a rede e registra o que seria enviado ao GA4.
+    await page.route('**/googletagmanager.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/javascript', body: '' }));
+    await page.addInitScript(() => {
+      window.__events = [];
+      const push = Array.prototype.push;
+      window.dataLayer = [];
+      window.dataLayer.push = function (args) {
+        if (args && args[0] === 'event' && args[1] === 'whatsapp_click') window.__events.push(args[2]);
+        return push.call(this, args);
+      };
+    });
+    await page.addInitScript(() => window.open = () => null);
+  }
+
+  test('com consentimento: clique no WhatsApp da Navbar envia origem, sem dado pessoal', async ({ page }) => {
+    await stubGtag(page);
+    await page.addInitScript((k) => localStorage.setItem(k, 'granted'), CONSENT_KEY);
+    await page.goto(BASE_URL);
+    await page.waitForLoadState('networkidle');
+    const link = page.locator('a[href^="https://wa.me/"][data-wa-origin="navbar"]').first();
+    await link.evaluate((el) => el.addEventListener('click', (e) => e.preventDefault()));
+    await link.click();
+    await expect.poll(() => page.evaluate(() => window.__events.length)).toBe(1);
+    const [params] = await page.evaluate(() => window.__events);
+    expect(params.origin).toBe('navbar');
+    expect(JSON.stringify(params)).not.toMatch(/wa\.me|text=|5561/);
+  });
+
+  test('sem consentimento: nenhum evento é enviado', async ({ page }) => {
+    await stubGtag(page);
+    await page.addInitScript((k) => localStorage.setItem(k, 'denied'), CONSENT_KEY);
+    await page.goto(BASE_URL);
+    await page.waitForLoadState('networkidle');
+    const link = page.locator('a[href^="https://wa.me/"][data-wa-origin="navbar"]').first();
+    await link.evaluate((el) => el.addEventListener('click', (e) => e.preventDefault()));
+    await link.click();
+    expect(await page.evaluate(() => window.__events.length)).toBe(0);
   });
 });

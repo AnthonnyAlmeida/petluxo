@@ -36,7 +36,7 @@ export function Footer() {
             <p className={styles.tagline}>{FOOTER.tagline}</p>
             <a
               className={styles.waBtn}
-              href={wa(WA_MESSAGES.general)}
+              href={wa(WA_MESSAGES.general)} data-wa-origin="footer"
               target="_blank"
               rel="noopener noreferrer"
             >

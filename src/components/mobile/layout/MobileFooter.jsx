@@ -38,7 +38,7 @@ export function MobileFooter() {
 
       <h2 className={[styles.mFootLabel, styles.mFootLabelContact].join(' ')}>{FOOTER.contactTitle}</h2>
       <div className={styles.mFootContacts}>
-        <a className={styles.mFootContact} href={wa(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer">
+        <a className={styles.mFootContact} href={wa(WA_MESSAGES.general)} data-wa-origin="footer" target="_blank" rel="noopener noreferrer">
           <MIcon.Wa size={20} strokeWidth={1.6}/>WhatsApp
         </a>
         <a className={styles.mFootContact} href={`mailto:${FOOTER.email}`}>

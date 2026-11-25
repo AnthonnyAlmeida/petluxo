@@ -56,7 +56,7 @@ export default function ReturnPolicyPage() {
         </p>
         <p>
           <a
-            href="https://wa.me/5561994063917"
+            href="https://wa.me/5561994063917" data-wa-origin="politica"
             target="_blank"
             rel="noopener noreferrer"
           >

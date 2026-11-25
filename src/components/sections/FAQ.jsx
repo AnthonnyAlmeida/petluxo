@@ -125,7 +125,7 @@ export function FAQ() {
           <BellScene/>
           <p className={styles.more}>
             {FAQ_TEXT.moreTitle} {FAQ_DESKTOP.moreBefore}{' '}
-            <a href={wa(WA_MESSAGES.question)} target="_blank" rel="noopener noreferrer" className={styles.link}>
+            <a href={wa(WA_MESSAGES.question)} data-wa-origin="faq" target="_blank" rel="noopener noreferrer" className={styles.link}>
               {FAQ_DESKTOP.moreWa}
             </a>
             {' '}{FAQ_DESKTOP.moreMid}{' '}

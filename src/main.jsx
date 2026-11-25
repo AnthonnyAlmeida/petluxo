@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './app/page.jsx';
+import { initWhatsAppTracking } from './lib/analytics.js';
 import '@fontsource/cormorant-garamond/latin-400.css';
 import '@fontsource/cormorant-garamond/latin-500.css';
 import '@fontsource/cormorant-garamond/latin-400-italic.css';
@@ -14,6 +15,8 @@ import '@fontsource/jetbrains-mono/latin-400.css';
 import '@fontsource/jetbrains-mono/latin-500.css';
 import './styles/variables.css';
 import './styles/globals.css';
+
+initWhatsAppTracking();
 
 ReactDOM.createRoot(document.getElementById('app')).render(
   <BrowserRouter>

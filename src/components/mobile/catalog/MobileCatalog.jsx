@@ -132,7 +132,7 @@ export default function MobileCatalog() {
             <p className={styles.mCatEmptyText}>Tente outro termo ou fale com a gente pelo WhatsApp. Adoramos ajudar.</p>
             <a
               className={cx(ui.mBtn, ui.mBtnPrimary, styles.mCatEmptyBtn)}
-              href={wa(WA_MESSAGES.searching)}
+              href={wa(WA_MESSAGES.searching)} data-wa-origin="busca-sem-resultado"
               target="_blank"
               rel="noopener noreferrer"
             >

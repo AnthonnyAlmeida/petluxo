@@ -27,6 +27,7 @@ let gtagReady = false;
 let gtagLoadError = false;
 let gtagLoadPromise = null;
 const pendingPageViews = [];
+const pendingEvents = [];
 
 export const ANALYTICS_ID = GA4_MEASUREMENT_ID;
 
@@ -154,6 +155,9 @@ export function initGA4() {
   window.gtag('event', 'page_view', { page_path: path });
       });
       pendingPageViews.length = 0;
+      pendingEvents.splice(0).forEach(([name, params]) => {
+        window.gtag('event', name, params);
+      });
     })
     .catch(() => {
       gtagReady = false;
@@ -184,4 +188,40 @@ export function clearPendingPageViews() {
 /* Retorna se houve falha no carregamento do gtag.js. */
 export function isGtagLoadError() {
   return gtagLoadError;
+}
+
+/* Envia um evento do GA4. Respeita o consentimento: sem 'granted', não envia
+ * nem enfileira nada. */
+function trackEvent(name, params) {
+  if (!isConsentGranted()) return;
+  if (!gtagReady) {
+    initGA4();
+    pendingEvents.push([name, params]);
+    return;
+  }
+  window.gtag('event', name, params);
+}
+
+/* Clique no WhatsApp: só origem e produto (id e nome do catálogo). Nenhum
+ * dado pessoal e nenhum texto da mensagem vão nos parâmetros. */
+export function trackWhatsAppClick({ origin, productId, productName }) {
+  const params = { origin: origin || 'desconhecida', page_path: window.location.pathname };
+  if (productId) params.product_id = String(productId);
+  if (productName) params.product_name = productName;
+  trackEvent('whatsapp_click', params);
+}
+
+/* Um único listener no documento: todo <a href="https://wa.me/…"> vira evento,
+ * com origem em data-wa-origin e produto em data-wa-product-id/-name. */
+export function initWhatsAppTracking() {
+  if (typeof document === 'undefined') return;
+  document.addEventListener('click', (event) => {
+    const link = event.target instanceof Element ? event.target.closest('a[href^="https://wa.me/"]') : null;
+    if (!link) return;
+    trackWhatsAppClick({
+      origin: link.dataset.waOrigin,
+      productId: link.dataset.waProductId,
+      productName: link.dataset.waProductName,
+    });
+  });
 }

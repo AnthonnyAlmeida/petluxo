@@ -37,7 +37,7 @@ export function MinimalNavbar() {
         </Link>
         <a
           className="btn btn-ghost btn-sm"
-          href={wa(WA_MESSAGES.general)}
+          href={wa(WA_MESSAGES.general)} data-wa-origin="navbar"
           target="_blank"
           rel="noopener noreferrer"
         >

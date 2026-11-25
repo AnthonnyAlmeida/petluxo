@@ -59,7 +59,7 @@ export default function PolicyLayout({ title, updated, highlights, children }) {
               <div className={styles.help}>
                 <p className={styles.helpTitle}>{POLICY_TEXT.helpTitle}</p>
                 <a href={`mailto:${FOOTER.email}`} className={styles.helpLink}>{FOOTER.email}</a>
-                <a href={wa(WA_MESSAGES.general)} target="_blank" rel="noopener noreferrer" className={styles.helpLink}>
+                <a href={wa(WA_MESSAGES.general)} data-wa-origin="politica" target="_blank" rel="noopener noreferrer" className={styles.helpLink}>
                   {POLICY_TEXT.whatsappPrefix} {CONTACT.phoneDisplay}
                 </a>
               </div>

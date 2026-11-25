@@ -66,7 +66,7 @@ export function Featured() {
           {product.subtitle && <p className={cx(styles.subtitle, 'reveal', 'd3')}>{product.subtitle}</p>}
           {product.description && <p className={cx(styles.description, 'reveal', 'd3')}>{product.description}</p>}
           <div className={cx(styles.buyRow, 'reveal', 'd4')}>
-            <a className="btn btn-primary" href={waHref} target="_blank" rel="noopener noreferrer">
+            <a className="btn btn-primary" href={waHref} data-wa-origin="destaque" data-wa-product-id={product.id} data-wa-product-name={product.name} target="_blank" rel="noopener noreferrer">
               <Icon.Wa className="wa-icon"/>
               {FEATURED_TEXT.cta}
             </a>
